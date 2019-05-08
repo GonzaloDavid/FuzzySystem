@@ -13,6 +13,28 @@
     <class>com.epn.fuzzydelphi.methodfuzzydelphi.Catalogue</class>
     <class>com.epn.fuzzydelphi.methodfuzzydelphi.Menu</class>
     <class>com.epn.fuzzydelphi.methodfuzzydelphi.QuestionItem</class>
+    <class>com.epn.fd.entities.AdminisEmail</class>
+    <class>com.epn.fd.entities.Catalogue</class>
+    <class>com.epn.fd.entities.Catalogueitem</class>
+    <class>com.epn.fd.entities.GraphicsParam</class>
+    <class>com.epn.fd.entities.Quiz</class>
+    <class>com.epn.fd.entities.QuestionItem</class>
+    <class>com.epn.fd.entities.GraphicsData</class>
+    <class>com.epn.fd.entities.Person</class>
+    <class>com.epn.fd.entities.Questions</class>
+    <class>com.epn.fd.entities.DelphiCalculations</class>
+    <class>com.epn.fd.entities.Menu</class>
+    <class>com.epn.entities.Questions</class>
+    <class>com.epn.entities.Menu</class>
+    <class>com.epn.entities.Quiz</class>
+    <class>com.epn.entities.Catalogueitem</class>
+    <class>com.epn.entities.GraphicsParam</class>
+    <class>com.epn.entities.Person</class>
+    <class>com.epn.entities.QuestionItem</class>
+    <class>com.epn.entities.Catalogue</class>
+    <class>com.epn.entities.AdminisEmail</class>
+    <class>com.epn.entities.GraphicsData</class>
+    <class>com.epn.entities.DelphiCalculations</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DephiFuzzyMethod?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -1,0 +1,8 @@
+ALTER TABLE DephiFuzzyMethod.QuestionItem DROP FOREIGN KEY QuestionItem_catalogue_FK;
+ALTER TABLE DephiFuzzyMethod.QuestionItem ADD maximunValue varchar(50) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.QuestionItem CHANGE maximunValue maximunValue varchar(50) NOT NULL AFTER statusItem;
+ALTER TABLE DephiFuzzyMethod.QuestionItem ADD minimumValue varchar(100) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.QuestionItem CHANGE minimumValue minimumValue varchar(100) NOT NULL AFTER maximunValue;
+ALTER TABLE DephiFuzzyMethod.QuestionItem ADD jumpNext varchar(100) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.QuestionItem CHANGE jumpNext jumpNext varchar(100) NOT NULL AFTER minimumValue;
+

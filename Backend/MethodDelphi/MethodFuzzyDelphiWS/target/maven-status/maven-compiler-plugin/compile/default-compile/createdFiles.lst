@@ -1,0 +1,12 @@
+com/epn/fd/WS/AdminisEmailFacadeREST.class
+com/epn/fd/WS/QuizFacadeREST.class
+com/epn/fd/WS/QuestionItemFacadeREST.class
+com/epn/fd/WS/PersonFacadeREST.class
+com/epn/fd/WS/MenuFacadeREST.class
+com/epn/fd/WS/GraphicsParamFacadeREST.class
+com/epn/fd/WS/GraphicsDataFacadeREST.class
+com/epn/fd/WS/QuestionsFacadeREST.class
+com/epn/fd/WS/CatalogueitemFacadeREST.class
+com/epn/fd/WS/DelphiCalculationsFacadeREST.class
+com/epn/fd/WS/AbstractFacade.class
+com/epn/fd/WS/CatalogueFacadeREST.class
