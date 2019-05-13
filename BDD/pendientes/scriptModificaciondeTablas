@@ -5,4 +5,5 @@ ALTER TABLE DephiFuzzyMethod.QuestionItem ADD minimumValue varchar(100) NOT NULL
 ALTER TABLE DephiFuzzyMethod.QuestionItem CHANGE minimumValue minimumValue varchar(100) NOT NULL AFTER maximunValue;
 ALTER TABLE DephiFuzzyMethod.QuestionItem ADD jumpNext varchar(100) NOT NULL;
 ALTER TABLE DephiFuzzyMethod.QuestionItem CHANGE jumpNext jumpNext varchar(100) NOT NULL AFTER minimumValue;
+ALTER TABLE DephiFuzzyMethod.QuestionItem DROP COLUMN itemCat;
 

@@ -31,6 +31,24 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+             <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>2.11.1</version>
+            <type>jar</type>
+        </dependency>
+           <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.26-b09</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
