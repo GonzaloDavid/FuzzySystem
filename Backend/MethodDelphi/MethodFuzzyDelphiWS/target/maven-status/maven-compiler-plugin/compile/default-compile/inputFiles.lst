@@ -4,6 +4,7 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/QuizFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/DelphiCalculationsFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/CatalogueitemFacadeREST.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/GenericDAO.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/MenuFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/GraphicsParamFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/NewCrossOriginResourceSharingFilter.java
@@ -12,3 +13,4 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/ApplicationConfig.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/CatalogueFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/PersonFacadeREST.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/PersonDAO.java

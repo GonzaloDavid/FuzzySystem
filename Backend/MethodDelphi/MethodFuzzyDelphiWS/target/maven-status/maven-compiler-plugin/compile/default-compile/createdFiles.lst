@@ -1,6 +1,7 @@
 com/epn/fd/WS/AdminisEmailFacadeREST.class
 com/epn/fd/WS/QuizFacadeREST.class
 com/epn/fd/WS/ApplicationConfig.class
+com/epn/fd/dao/GenericDAO$1.class
 com/epn/fd/WS/QuestionItemFacadeREST.class
 com/epn/fd/WS/PersonFacadeREST.class
 com/epn/fd/WS/MenuFacadeREST.class
@@ -8,7 +9,9 @@ com/epn/fd/WS/GraphicsParamFacadeREST.class
 com/epn/fd/WS/GraphicsDataFacadeREST.class
 com/epn/fd/WS/QuestionsFacadeREST.class
 com/epn/fd/WS/CatalogueitemFacadeREST.class
+com/epn/fd/dao/GenericDAO.class
+com/epn/fd/WS/NewCrossOriginResourceSharingFilter.class
 com/epn/fd/WS/DelphiCalculationsFacadeREST.class
 com/epn/fd/WS/AbstractFacade.class
-NewCrossOriginResourceSharingFilter.class
+com/epn/fd/dao/PersonDAO.class
 com/epn/fd/WS/CatalogueFacadeREST.class

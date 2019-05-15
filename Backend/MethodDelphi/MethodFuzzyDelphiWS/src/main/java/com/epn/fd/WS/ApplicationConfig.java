@@ -30,7 +30,6 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
-        resources.add(NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.AdminisEmailFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
@@ -38,6 +37,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.epn.fd.WS.GraphicsDataFacadeREST.class);
         resources.add(com.epn.fd.WS.GraphicsParamFacadeREST.class);
         resources.add(com.epn.fd.WS.MenuFacadeREST.class);
+        resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionItemFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionsFacadeREST.class);
