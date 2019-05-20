@@ -85,6 +85,26 @@ public class Person implements Serializable {
     @Basic(optional = false)
     @Column(name = "sex")
     private String sex;
+    @Column(name = "typePersonCat")
+    private String typePersonCat;
+    @Column(name = "typePerson")
+    private String typePerson;
+    @Column(name = "typeIdentifyCat")
+    private String typeIdentifyCat;
+    @Column(name = "typeIdentify")
+    private String typeIdentify;
+    @Column(name = "academicDegreeCat")
+    private String academicDegreeCat;
+    @Column(name = "academicDegree")
+    private String academicDegree;
+    @Column(name = "countryCat")
+    private String countryCat;
+    @Column(name = "country")
+    private String country;
+    @Column(name = "statusCat")
+    private String statusCat;
+    @Column(name = "status")
+    private String status;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -102,28 +122,28 @@ public class Person implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<AdminisEmail> adminisEmailList;
     @JoinColumns({
-        @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "typePerson", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "typePerson", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
     @JoinColumns({
-        @JoinColumn(name = "typeIdentifyCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "typeIdentify", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "typeIdentifyCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "typeIdentify", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem1;
     @JoinColumns({
-        @JoinColumn(name = "academicDegreeCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "academicDegree", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "academicDegreeCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "academicDegree", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem2;
     @JoinColumns({
-        @JoinColumn(name = "countryCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "country", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "countryCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "country", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem3;
     @JoinColumns({
-        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "status", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem4;
 
@@ -152,6 +172,70 @@ public class Person implements Serializable {
 
     public Long getCodePerson() {
         return codePerson;
+    }
+
+    public String getTypePersonCat() {
+        return typePersonCat;
+    }
+
+    public void setTypePersonCat(String typePersonCat) {
+        this.typePersonCat = typePersonCat;
+    }
+
+    public String getTypeIdentifyCat() {
+        return typeIdentifyCat;
+    }
+
+    public void setTypeIdentifyCat(String typeIdentifyCat) {
+        this.typeIdentifyCat = typeIdentifyCat;
+    }
+
+    public String getAcademicDegree() {
+        return academicDegree;
+    }
+
+    public void setAcademicDegree(String academicDegree) {
+        this.academicDegree = academicDegree;
+    }
+
+    public String getCountryCat() {
+        return countryCat;
+    }
+
+    public void setCountryCat(String countryCat) {
+        this.countryCat = countryCat;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getStatusCat() {
+        return statusCat;
+    }
+
+    public void setStatusCat(String statusCat) {
+        this.statusCat = statusCat;
+    }
+
+    public String getTypeIdentify() {
+        return typeIdentify;
+    }
+
+    public void setTypeIdentify(String typeIdentify) {
+        this.typeIdentify = typeIdentify;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setCodePerson(Long codePerson) {
@@ -200,6 +284,22 @@ public class Person implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getTypePerson() {
+        return typePerson;
+    }
+
+    public void setTypePerson(String typePerson) {
+        this.typePerson = typePerson;
+    }
+
+    public String getAcademicDegreeCat() {
+        return academicDegreeCat;
+    }
+
+    public void setAcademicDegreeCat(String academicDegreeCat) {
+        this.academicDegreeCat = academicDegreeCat;
     }
 
     public void setName(String name) {
@@ -335,5 +435,5 @@ public class Person implements Serializable {
     public String toString() {
         return "com.epn.entities.Person[ codePerson=" + codePerson + " ]";
     }
-    
+
 }

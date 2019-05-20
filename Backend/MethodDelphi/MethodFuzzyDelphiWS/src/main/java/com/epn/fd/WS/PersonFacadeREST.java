@@ -45,7 +45,7 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
     @GET
     @Path("person")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getWarningsign(
+    public String getPerson(
             @QueryParam("from") Integer from,
             @QueryParam("to") Integer to
     ) throws JsonProcessingException {

@@ -6,12 +6,17 @@
 package com.epn.fd.dao;
 
 import com.epn.dtos.ListAndCountContainer;
+import com.epn.dtos.PersonContainer;
 import com.epn.entities.Person;
 import com.epn.entities.SearchObject;
+import com.epn.mapper.PersonMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import javax.ejb.Stateless;
+import org.mapstruct.factory.Mappers;
+
+
 
 /**
  *
@@ -23,12 +28,12 @@ public class PersonDAO extends GenericDAO<Person> {
     public PersonDAO() {
         super(Person.class);
     }
+   private final PersonMapper personMapper = Mappers.getMapper(PersonMapper.class);
 
-    public String getallperson(Integer to, Integer from)  throws JsonProcessingException {
-                    
+    public String getallperson(Integer from, Integer to) throws JsonProcessingException {
         SearchObject search = new SearchObject("codePerson");
- //     search.addParameter("codePerson.codeCompany", FilterTypes.EQUAL, codeCompany);
- //     search.addParameter("regularPhrase", FilterTypes.LIKE, regularPhrase);
+        //search.addParameter("codePerson.codeCompany", FilterTypes.EQUAL, codeCompany);
+        //search.addParameter("regularPhrase", FilterTypes.LIKE, regularPhrase);
         search.setOrderPropertyName("codePerson");
         search.desc();
         long count = search(search).size();
@@ -36,11 +41,11 @@ public class PersonDAO extends GenericDAO<Person> {
         search.setTo(to);
 
         List<Person> resultList = search(search);
-        
-        ListAndCountContainer patientlistandcount = new ListAndCountContainer(count, resultList);
+        List<PersonContainer> personContainer = personMapper.sourceListToDestination(resultList);
+        ListAndCountContainer patientlistandcount = new ListAndCountContainer(count, personContainer);
+
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(patientlistandcount);
         return response;
-
     }
 }
