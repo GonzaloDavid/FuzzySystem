@@ -48,4 +48,13 @@ public class PersonDAO extends GenericDAO<Person> {
         String response = mapper.writeValueAsString(patientlistandcount);
         return response;
     }
+    public Person savePerson(Person person)
+    {
+        Person p=new Person();
+        update(person);
+         em.flush();
+         p=person;
+         return p;
+         
+    }
 }

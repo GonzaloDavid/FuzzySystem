@@ -7,8 +7,10 @@ package com.epn.fd.WS;
 
 import com.epn.entities.Catalogueitem;
 import com.epn.entities.CatalogueitemPK;
+import com.epn.fd.dao.CatalogueItemDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -19,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -30,6 +33,7 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.catalogueitem")
 public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
 
+    @Inject CatalogueItemDAO catalogueItemDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -56,6 +60,16 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
 
     public CatalogueitemFacadeREST() {
         super(Catalogueitem.class);
+    }
+
+    @GET
+    @Path("catalogue")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Catalogueitem> getPerson(
+            @QueryParam("codeCat") String codeCat
+    ) {
+
+        return catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
     }
 
     @POST
@@ -112,5 +126,5 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

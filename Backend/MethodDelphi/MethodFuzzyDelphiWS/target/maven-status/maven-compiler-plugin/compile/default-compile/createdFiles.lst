@@ -10,6 +10,7 @@ com/epn/fd/WS/GraphicsDataFacadeREST.class
 com/epn/fd/WS/QuestionsFacadeREST.class
 com/epn/fd/WS/CatalogueitemFacadeREST.class
 com/epn/fd/dao/GenericDAO.class
+com/epn/fd/dao/CatalogueItemDAO.class
 com/epn/fd/WS/NewCrossOriginResourceSharingFilter.class
 com/epn/fd/WS/DelphiCalculationsFacadeREST.class
 com/epn/fd/WS/AbstractFacade.class

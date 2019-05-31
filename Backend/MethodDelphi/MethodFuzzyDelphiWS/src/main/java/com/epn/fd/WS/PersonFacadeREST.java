@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -49,8 +50,18 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
             @QueryParam("from") Integer from,
             @QueryParam("to") Integer to
     ) throws JsonProcessingException {
-       
-        return  personDAO.getallperson(from, to);
+
+        return personDAO.getallperson(from, to);
+    }
+
+    @POST
+    @Path("save")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Person saveperson(Person person) {
+
+        Person personsaved = personDAO.savePerson(person);
+        return personsaved;
     }
 
     @POST
