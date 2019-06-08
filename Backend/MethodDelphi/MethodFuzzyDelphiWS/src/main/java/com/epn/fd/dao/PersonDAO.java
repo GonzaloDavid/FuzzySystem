@@ -35,7 +35,7 @@ public class PersonDAO extends GenericDAO<Person> {
         //search.addParameter("codePerson.codeCompany", FilterTypes.EQUAL, codeCompany);
         //search.addParameter("regularPhrase", FilterTypes.LIKE, regularPhrase);
         search.setOrderPropertyName("codePerson");
-        search.desc();
+        search.asc();
         long count = search(search).size();
         search.setFrom(from);
         search.setTo(to);

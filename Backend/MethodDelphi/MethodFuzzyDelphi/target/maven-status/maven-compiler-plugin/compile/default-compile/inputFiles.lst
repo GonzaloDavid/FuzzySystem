@@ -4,9 +4,11 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/AdminisEmailPK.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/mapper/PersonMapper.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/QuestionItem.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/mapper/CatalogueItemMapper.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/FilterTypes.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/Catalogueitem.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/DelphiCalculations.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/dtos/CatalogueItemContainer.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/Catalogue.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/AdminisEmail.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/Questions.java

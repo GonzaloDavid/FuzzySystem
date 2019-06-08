@@ -82,6 +82,8 @@ public class Person implements Serializable {
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;
+    @Column(name = "sexCat")
+    private String sexCat;
     @Basic(optional = false)
     @Column(name = "sex")
     private String sex;
@@ -97,8 +99,6 @@ public class Person implements Serializable {
     private String academicDegreeCat;
     @Column(name = "academicDegree")
     private String academicDegree;
-    @Column(name = "countryCat")
-    private String countryCat;
     @Column(name = "country")
     private String country;
     @Column(name = "statusCat")
@@ -136,11 +136,6 @@ public class Person implements Serializable {
         , @JoinColumn(name = "academicDegree", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem2;
-    @JoinColumns({
-        @JoinColumn(name = "countryCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
-        , @JoinColumn(name = "country", referencedColumnName = "codeItem", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Catalogueitem catalogueitem3;
     @JoinColumns({
         @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
         , @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
@@ -198,14 +193,6 @@ public class Person implements Serializable {
         this.academicDegree = academicDegree;
     }
 
-    public String getCountryCat() {
-        return countryCat;
-    }
-
-    public void setCountryCat(String countryCat) {
-        this.countryCat = countryCat;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -222,6 +209,14 @@ public class Person implements Serializable {
         this.statusCat = statusCat;
     }
 
+    public String getSexCat() {
+        return sexCat;
+    }
+
+    public void setSexCat(String sexCat) {
+        this.sexCat = sexCat;
+    }
+    
     public String getTypeIdentify() {
         return typeIdentify;
     }
@@ -393,14 +388,6 @@ public class Person implements Serializable {
 
     public void setCatalogueitem2(Catalogueitem catalogueitem2) {
         this.catalogueitem2 = catalogueitem2;
-    }
-
-    public Catalogueitem getCatalogueitem3() {
-        return catalogueitem3;
-    }
-
-    public void setCatalogueitem3(Catalogueitem catalogueitem3) {
-        this.catalogueitem3 = catalogueitem3;
     }
 
     public Catalogueitem getCatalogueitem4() {

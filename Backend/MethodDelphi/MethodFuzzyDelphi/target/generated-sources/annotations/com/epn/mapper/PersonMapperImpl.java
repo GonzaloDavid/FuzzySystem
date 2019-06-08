@@ -16,7 +16,7 @@ import javax.annotation.Generated;
 
     value = "org.mapstruct.ap.MappingProcessor",
 
-    date = "2019-05-30T19:21:20-0500",
+    date = "2019-06-03T18:33:11-0500",
 
     comments = "version: 1.1.0.Final, compiler: javac, environment: Java 1.8.0_181 (Oracle Corporation)"
 
@@ -56,8 +56,6 @@ public class PersonMapperImpl implements PersonMapper {
 
         personContainer.setAcademicDegree( source.getAcademicDegree() );
 
-        personContainer.setCountryCat( source.getCountryCat() );
-
         personContainer.setCountry( source.getCountry() );
 
         personContainer.setStatusCat( source.getStatusCat() );
@@ -91,6 +89,8 @@ public class PersonMapperImpl implements PersonMapper {
         personContainer.setUserCreate( source.getUserCreate() );
 
         personContainer.setUserLastModify( source.getUserLastModify() );
+
+        personContainer.setSexCat( source.getSexCat() );
 
         return personContainer;
     }

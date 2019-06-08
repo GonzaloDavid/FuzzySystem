@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.entities.Catalogueitem;
 import com.epn.entities.CatalogueitemPK;
 import com.epn.fd.dao.CatalogueItemDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -65,9 +66,10 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
     @GET
     @Path("catalogue")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Catalogueitem> getPerson(
+    public String getPerson(
             @QueryParam("codeCat") String codeCat
-    ) {
+    )throws JsonProcessingException
+    {
 
         return catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
     }

@@ -77,8 +77,6 @@ public class Catalogueitem implements Serializable {
     private List<Person> personList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem2")
     private List<Person> personList2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem3")
-    private List<Person> personList3;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem4")
     private List<Person> personList4;
 
@@ -212,14 +210,6 @@ public class Catalogueitem implements Serializable {
         this.personList2 = personList2;
     }
 
-    @XmlTransient
-    public List<Person> getPersonList3() {
-        return personList3;
-    }
-
-    public void setPersonList3(List<Person> personList3) {
-        this.personList3 = personList3;
-    }
 
     @XmlTransient
     public List<Person> getPersonList4() {

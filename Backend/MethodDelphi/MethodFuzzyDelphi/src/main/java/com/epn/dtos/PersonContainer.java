@@ -24,6 +24,7 @@ public class PersonContainer {
     private String name;
     private String email;
     private Date birthday;
+    private String sexCat;
     private String sex;
     private Date dateCreate;
     private Date dateLastModify;
@@ -36,7 +37,6 @@ public class PersonContainer {
     private String typeIdentify;
     private String academicDegreeCat;
     private String academicDegree;
-    private String countryCat;
     private String country;
     private String statusCat;
     private String status;
@@ -44,7 +44,7 @@ public class PersonContainer {
     public PersonContainer() {
     }
 
-    public PersonContainer(Long codePerson, String identify, String firstName, String middleName, String lastName, String lastNameMatern, String name, String email, Date birthday, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String countryCat, String country, String statusCat, String status) {
+    public PersonContainer(Long codePerson, String identify, String firstName, String middleName, String lastName, String lastNameMatern, String name, String email, Date birthday, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status) {
         this.codePerson = codePerson;
         this.identify = identify;
         this.firstName = firstName;
@@ -66,7 +66,6 @@ public class PersonContainer {
         this.typeIdentify = typeIdentify;
         this.academicDegreeCat = academicDegreeCat;
         this.academicDegree = academicDegree;
-        this.countryCat = countryCat;
         this.country = country;
         this.statusCat = statusCat;
         this.status = status;
@@ -126,14 +125,6 @@ public class PersonContainer {
 
     public void setAcademicDegree(String academicDegree) {
         this.academicDegree = academicDegree;
-    }
-
-    public String getCountryCat() {
-        return countryCat;
-    }
-
-    public void setCountryCat(String countryCat) {
-        this.countryCat = countryCat;
     }
 
     public String getCountry() {
@@ -272,5 +263,14 @@ public class PersonContainer {
     public void setUserLastModify(long userLastModify) {
         this.userLastModify = userLastModify;
     }
+
+    public String getSexCat() {
+        return sexCat;
+    }
+
+    public void setSexCat(String sexCat) {
+        this.sexCat = sexCat;
+    }
+    
 
 }
