@@ -5,9 +5,12 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.QuizContainer;
 import com.epn.entities.Quiz;
+import com.epn.fd.dao.QuizDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -18,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -28,11 +32,22 @@ import javax.ws.rs.core.MediaType;
 @Path("com.epn.entities.quiz")
 public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
+    @Inject QuizDAO quizDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
     public QuizFacadeREST() {
         super(Quiz.class);
+    }
+
+    @GET
+    @Path("getquiz")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<QuizContainer> getQuizbycode(
+            @QueryParam("codeQuiz") Long codeQuiz
+    )  {
+
+        return quizDAO.getQuizbycode(codeQuiz);
     }
 
     @POST
@@ -87,5 +102,5 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

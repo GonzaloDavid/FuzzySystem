@@ -70,7 +70,17 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
     public void create(Person entity) {
         super.create(entity);
     }
+    @POST
+    @Path("delete")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void delete(
+             List<Long> idlist
+    ) {
 
+        personDAO.deletePerson(idlist);
+    }
+    
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

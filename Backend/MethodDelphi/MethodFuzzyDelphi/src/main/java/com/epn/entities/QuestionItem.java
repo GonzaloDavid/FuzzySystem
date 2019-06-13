@@ -36,8 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "QuestionItem.findAll", query = "SELECT q FROM QuestionItem q")
     , @NamedQuery(name = "QuestionItem.findByCodeQuizItem", query = "SELECT q FROM QuestionItem q WHERE q.codeQuizItem = :codeQuizItem")
-    , @NamedQuery(name = "QuestionItem.findByStatusItemCat", query = "SELECT q FROM QuestionItem q WHERE q.statusItemCat = :statusItemCat")
-    , @NamedQuery(name = "QuestionItem.findByStatusItem", query = "SELECT q FROM QuestionItem q WHERE q.statusItem = :statusItem")
     , @NamedQuery(name = "QuestionItem.findByMaximunValue", query = "SELECT q FROM QuestionItem q WHERE q.maximunValue = :maximunValue")
     , @NamedQuery(name = "QuestionItem.findByMinimumValue", query = "SELECT q FROM QuestionItem q WHERE q.minimumValue = :minimumValue")
     , @NamedQuery(name = "QuestionItem.findByJumpNext", query = "SELECT q FROM QuestionItem q WHERE q.jumpNext = :jumpNext")
@@ -54,17 +52,20 @@ public class QuestionItem implements Serializable {
     @Column(name = "codeQuizItem")
     private Long codeQuizItem;
     @Basic(optional = false)
-    @Column(name = "statusItemCat")
-    private String statusItemCat;
-    @Basic(optional = false)
-    @Column(name = "statusItem")
-    private String statusItem;
+    @Column(name = "itemLabel")
+    private String itemLabel;
     @Basic(optional = false)
     @Column(name = "maximunValue")
     private String maximunValue;
     @Basic(optional = false)
     @Column(name = "minimumValue")
     private String minimumValue;
+    @Column(name = "averageValue")
+    private String averageValue;
+     @Column(name = "maximumParameterSetting")
+    private String maximumParameterSetting;
+      @Column(name = "minimumParameterSetting")
+    private String minimumParameterSetting;
     @Basic(optional = false)
     @Column(name = "jumpNext")
     private String jumpNext;
@@ -97,18 +98,25 @@ public class QuestionItem implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public QuestionItem(Long codeQuizItem, String statusItemCat, String statusItem, String maximunValue, String minimumValue, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<DelphiCalculations> delphiCalculationsList, List<GraphicsData> graphicsDataList, Questions codeQuestions) {
         this.codeQuizItem = codeQuizItem;
-        this.statusItemCat = statusItemCat;
-        this.statusItem = statusItem;
+        this.itemLabel = itemLabel;
         this.maximunValue = maximunValue;
         this.minimumValue = minimumValue;
+        this.averageValue = averageValue;
+        this.maximumParameterSetting = maximumParameterSetting;
+        this.minimumParameterSetting = minimumParameterSetting;
         this.jumpNext = jumpNext;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+        this.delphiCalculationsList = delphiCalculationsList;
+        this.graphicsDataList = graphicsDataList;
+        this.codeQuestions = codeQuestions;
     }
+
+  
 
     public Long getCodeQuizItem() {
         return codeQuizItem;
@@ -118,20 +126,36 @@ public class QuestionItem implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public String getStatusItemCat() {
-        return statusItemCat;
+    public String getItemLabel() {
+        return itemLabel;
     }
 
-    public void setStatusItemCat(String statusItemCat) {
-        this.statusItemCat = statusItemCat;
+    public void setItemLabel(String itemLabel) {
+        this.itemLabel = itemLabel;
     }
 
-    public String getStatusItem() {
-        return statusItem;
+    public String getAverageValue() {
+        return averageValue;
     }
 
-    public void setStatusItem(String statusItem) {
-        this.statusItem = statusItem;
+    public void setAverageValue(String averageValue) {
+        this.averageValue = averageValue;
+    }
+
+    public String getMaximumParameterSetting() {
+        return maximumParameterSetting;
+    }
+
+    public void setMaximumParameterSetting(String maximumParameterSetting) {
+        this.maximumParameterSetting = maximumParameterSetting;
+    }
+
+    public String getMinimumParameterSetting() {
+        return minimumParameterSetting;
+    }
+
+    public void setMinimumParameterSetting(String minimumParameterSetting) {
+        this.minimumParameterSetting = minimumParameterSetting;
     }
 
     public String getMaximunValue() {
@@ -240,5 +264,5 @@ public class QuestionItem implements Serializable {
     public String toString() {
         return "com.epn.entities.QuestionItem[ codeQuizItem=" + codeQuizItem + " ]";
     }
-    
+
 }

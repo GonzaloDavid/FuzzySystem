@@ -55,6 +55,18 @@ public class PersonDAO extends GenericDAO<Person> {
          em.flush();
          p=person;
          return p;
+    }
+    public void deletePerson(List<Long> idlist)
+    {     
+          idlist.forEach(elementremove->{
+             Person foundelement= new Person();
+             foundelement=find(elementremove);
+         
+             if(foundelement!=null)
+             {
+                 remove(foundelement);
+             }
+       });
          
     }
 }

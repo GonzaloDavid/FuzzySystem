@@ -2,6 +2,8 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/AbstractFacade.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/QuestionItemFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/QuizFacadeREST.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/QuestionDAO.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/QuizDAO.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/DelphiCalculationsFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/CatalogueitemFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/GenericDAO.java
@@ -14,4 +16,5 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/ApplicationConfig.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/CatalogueFacadeREST.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/WS/PersonFacadeREST.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/ItemQuestionDAO.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphiWS/src/main/java/com/epn/fd/dao/PersonDAO.java

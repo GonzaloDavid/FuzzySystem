@@ -61,6 +61,10 @@ public class Quiz implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
+    @Column(name = "statusCat")
+    private String statusCat;
+    @Column(name = "status")
+    private String status;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,8 +84,8 @@ public class Quiz implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
     private List<DelphiCalculations> delphiCalculationsList;
     @JoinColumns({
-        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "status", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false)
+        , @JoinColumn(name = "status", referencedColumnName = "codeItem",insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
@@ -178,6 +182,22 @@ public class Quiz implements Serializable {
         this.adminisEmailList = adminisEmailList;
     }
 
+    public String getStatusCat() {
+        return statusCat;
+    }
+
+    public void setStatusCat(String statusCat) {
+        this.statusCat = statusCat;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     @XmlTransient
     public List<DelphiCalculations> getDelphiCalculationsList() {
         return delphiCalculationsList;
@@ -228,5 +248,5 @@ public class Quiz implements Serializable {
     public String toString() {
         return "com.epn.entities.Quiz[ codeQuiz=" + codeQuiz + " ]";
     }
-    
+
 }

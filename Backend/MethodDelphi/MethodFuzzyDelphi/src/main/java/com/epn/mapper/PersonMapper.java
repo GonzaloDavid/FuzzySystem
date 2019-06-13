@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Mapper
 public interface PersonMapper {

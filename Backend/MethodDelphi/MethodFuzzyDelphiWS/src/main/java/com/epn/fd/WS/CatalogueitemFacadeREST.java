@@ -69,9 +69,7 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
     public String getPerson(
             @QueryParam("codeCat") String codeCat
     )throws JsonProcessingException
-    {
-
-        return catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
+    {        return catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
     }
 
     @POST
