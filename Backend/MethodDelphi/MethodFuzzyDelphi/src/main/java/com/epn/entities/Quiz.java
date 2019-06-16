@@ -90,6 +90,8 @@ public class Quiz implements Serializable {
     private Catalogueitem catalogueitem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
     private List<GraphicsData> graphicsDataList;
+ //   @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
+ //   private List<Questions> questions;
 
     public Quiz() {
     }
@@ -223,7 +225,16 @@ public class Quiz implements Serializable {
     public void setGraphicsDataList(List<GraphicsData> graphicsDataList) {
         this.graphicsDataList = graphicsDataList;
     }
+/*
+    public List<Questions> getQuestions() {
+        return questions;
+    }
 
+    public void setQuestions(List<Questions> questions) {
+        this.questions = questions;
+    }
+
+  */  
     @Override
     public int hashCode() {
         int hash = 0;

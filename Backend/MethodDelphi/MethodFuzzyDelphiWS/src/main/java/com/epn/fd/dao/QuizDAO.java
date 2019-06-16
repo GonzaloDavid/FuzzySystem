@@ -32,6 +32,8 @@ public class QuizDAO extends GenericDAO<Quiz> {
         search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz);
 
         List<Quiz> resultList = search(search);
+      
+      
         List<QuizContainer> containers = quizMapper.sourceListToDestination(resultList);
         return containers;
     }
