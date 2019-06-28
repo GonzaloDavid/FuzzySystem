@@ -10,7 +10,9 @@ package com.epn.dtos;
  * @author david
  */
 public class ItemQuestionContainer {
-
+    
+    private Long codeQuiz;
+    private Long codeQuestions;
     private Long codeQuizItem;
     private String itemLabel;
     private String maximunValue;
@@ -117,5 +119,24 @@ public class ItemQuestionContainer {
     public void setUserLastModify(long userLastModify) {
         this.userLastModify = userLastModify;
     }
+
+    public Long getCodeQuiz() {
+        return codeQuiz;
+    }
+
+    public void setCodeQuiz(Long codeQuiz) {
+        this.codeQuiz = codeQuiz;
+    }
+
+    public Long getCodeQuestions() {
+        return codeQuestions;
+    }
+
+    public void setCodeQuestions(Long codeQuestions) {
+        this.codeQuestions = codeQuestions;
+    }
+
+  
+    
     
 }

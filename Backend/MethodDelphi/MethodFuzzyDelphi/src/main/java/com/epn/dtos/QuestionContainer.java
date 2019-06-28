@@ -21,12 +21,12 @@ public class QuestionContainer {
     private String status;
     private Long userCreate;
     private Long userLastModify;
-    private List<ItemQuestionContainer> itemlist;
+    private List<ItemQuestionContainer> questionItemList;
 
     public QuestionContainer() {
     }
 
-    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, Long userCreate, Long userLastModify, List<ItemQuestionContainer> itemlist) {
+    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, Long userCreate, Long userLastModify) {
         this.codeQuestions = codeQuestions;
         this.codeQuiz = codeQuiz;
         this.question = question;
@@ -35,7 +35,6 @@ public class QuestionContainer {
         this.status = status;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.itemlist = itemlist;
     }
 
     public Long getCodeQuestions() {
@@ -102,12 +101,12 @@ public class QuestionContainer {
         this.userLastModify = userLastModify;
     }
 
-    public List<ItemQuestionContainer> getItemlist() {
-        return itemlist;
+    public List<ItemQuestionContainer> getQuestionItemList() {
+        return questionItemList;
     }
 
-    public void setItemlist(List<ItemQuestionContainer> itemlist) {
-        this.itemlist = itemlist;
+    public void setQuestionItemList(List<ItemQuestionContainer> questionItemList) {
+        this.questionItemList = questionItemList;
     }
-    
+
 }

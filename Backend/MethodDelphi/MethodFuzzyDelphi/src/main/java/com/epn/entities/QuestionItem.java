@@ -15,8 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -51,6 +49,8 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "codeQuizItem")
     private Long codeQuizItem;
+    @Column(name = "codeQuestions")
+    private Long codeQuestions;
     @Basic(optional = false)
     @Column(name = "itemLabel")
     private String itemLabel;
@@ -62,9 +62,9 @@ public class QuestionItem implements Serializable {
     private String minimumValue;
     @Column(name = "averageValue")
     private String averageValue;
-     @Column(name = "maximumParameterSetting")
+    @Column(name = "maximumParameterSetting")
     private String maximumParameterSetting;
-      @Column(name = "minimumParameterSetting")
+    @Column(name = "minimumParameterSetting")
     private String minimumParameterSetting;
     @Basic(optional = false)
     @Column(name = "jumpNext")
@@ -87,10 +87,10 @@ public class QuestionItem implements Serializable {
     private List<DelphiCalculations> delphiCalculationsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuizItem")
     private List<GraphicsData> graphicsDataList;
-    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions")
+  /*  @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Questions codeQuestions;
-
+*/
     public QuestionItem() {
     }
 
@@ -98,7 +98,7 @@ public class QuestionItem implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<DelphiCalculations> delphiCalculationsList, List<GraphicsData> graphicsDataList, Questions codeQuestions) {
+    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<DelphiCalculations> delphiCalculationsList, List<GraphicsData> graphicsDataList, Long codeQuestions) {
         this.codeQuizItem = codeQuizItem;
         this.itemLabel = itemLabel;
         this.maximunValue = maximunValue;
@@ -115,8 +115,6 @@ public class QuestionItem implements Serializable {
         this.graphicsDataList = graphicsDataList;
         this.codeQuestions = codeQuestions;
     }
-
-  
 
     public Long getCodeQuizItem() {
         return codeQuizItem;
@@ -232,13 +230,15 @@ public class QuestionItem implements Serializable {
         this.graphicsDataList = graphicsDataList;
     }
 
-    public Questions getCodeQuestions() {
+    public Long getCodeQuestions() {
         return codeQuestions;
     }
 
-    public void setCodeQuestions(Questions codeQuestions) {
+    public void setCodeQuestions(Long codeQuestions) {
         this.codeQuestions = codeQuestions;
     }
+
+
 
     @Override
     public int hashCode() {

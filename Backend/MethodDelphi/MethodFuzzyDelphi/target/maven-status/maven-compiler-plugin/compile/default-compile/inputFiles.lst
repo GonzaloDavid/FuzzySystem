@@ -17,6 +17,7 @@
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/dtos/CatalogueItemContainer.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/Catalogue.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/AdminisEmail.java
+/home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/dtos/QuizSave.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/dtos/ItemQuestionContainer.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/dtos/ListAndCountContainer.java
 /home/desarrollador/DelphiSystem/FuzzySystem/Backend/MethodDelphi/MethodFuzzyDelphi/src/main/java/com/epn/entities/OrderByProperty.java

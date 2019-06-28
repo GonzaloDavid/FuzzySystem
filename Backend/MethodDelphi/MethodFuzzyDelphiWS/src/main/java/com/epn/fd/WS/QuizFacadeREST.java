@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,7 +33,8 @@ import javax.ws.rs.core.MediaType;
 @Path("com.epn.entities.quiz")
 public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
-    @Inject QuizDAO quizDAO;
+    @Inject
+    QuizDAO quizDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -45,9 +47,20 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Produces({MediaType.APPLICATION_JSON})
     public List<QuizContainer> getQuizbycode(
             @QueryParam("codeQuiz") Long codeQuiz
-    )  {
+    ) {
 
         return quizDAO.getQuizbycode(codeQuiz);
+    }
+
+    @POST
+    @Path("save")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void saveQuiz(QuizContainer quizcontainer) {
+
+        quizDAO.saveQuiz(quizcontainer);
+
     }
 
     @POST

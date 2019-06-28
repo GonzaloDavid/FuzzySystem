@@ -17,6 +17,7 @@ com/epn/entities/FilterTypes.class
 com/epn/mapper/PersonMapper.class
 com/epn/entities/AdminisEmail.class
 com/epn/entities/Menu.class
+com/epn/dtos/QuizSave.class
 com/epn/dtos/ItemQuestionContainer.class
 com/epn/mapper/QuestionMapper.class
 com/epn/entities/OrderByProperty.class

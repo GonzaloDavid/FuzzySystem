@@ -5,6 +5,8 @@
  */
 package com.epn.dtos;
 
+import java.util.List;
+
 /**
  *
  * @author david
@@ -17,28 +19,44 @@ public class QuizContainer {
     private String description;
     private String status;
     private String statusCat;
- //   private List<Questions> questionlist;
-//    private List<QuestionItem> questionItemList;
+    private List<QuestionContainer> questionlist;
+    private List<ItemQuestionContainer> questionItemList;
     private Long userCreate;
     private Long userLastModify;
 
     public QuizContainer() {
     }
 
-    public QuizContainer(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, Long userCreate, Long userLastModify) {
+    public QuizContainer(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, List<QuestionContainer> questionlist, List<ItemQuestionContainer> questionItemList, Long userCreate, Long userLastModify) {
         this.codeQuiz = codeQuiz;
         this.nameQuiz = nameQuiz;
         this.shortNameQuiz = shortNameQuiz;
         this.description = description;
         this.status = status;
         this.statusCat = statusCat;
-//        this.questionlist = questionlist;
-     //   this.questionItemList = questionItemList;
+        this.questionlist = questionlist;
+        this.questionItemList = questionItemList;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
     }
 
- 
+    public List<QuestionContainer> getQuestionlist() {
+        return questionlist;
+    }
+
+    public void setQuestionlist(List<QuestionContainer> questionlist) {
+        this.questionlist = questionlist;
+    }
+
+    public List<ItemQuestionContainer> getQuestionItemList() {
+        return questionItemList;
+    }
+
+    public void setQuestionItemList(List<ItemQuestionContainer> questionItemList) {
+        this.questionItemList = questionItemList;
+    }
+
+  
 
     public Long getCodeQuiz() {
         return codeQuiz;

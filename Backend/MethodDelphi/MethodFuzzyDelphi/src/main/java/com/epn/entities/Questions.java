@@ -84,9 +84,9 @@ public class Questions implements Serializable {
     private List<DelphiCalculations> delphiCalculationsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
     private List<GraphicsData> graphicsDataList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
+  /*  @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
     private List<QuestionItem> questionItemList;
-
+*/
     public Questions() {
     }
 
@@ -204,7 +204,7 @@ public class Questions implements Serializable {
     public void setGraphicsDataList(List<GraphicsData> graphicsDataList) {
         this.graphicsDataList = graphicsDataList;
     }
-
+/*
     @XmlTransient
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
@@ -213,7 +213,7 @@ public class Questions implements Serializable {
     public void setQuestionItemList(List<QuestionItem> questionItemList) {
         this.questionItemList = questionItemList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;
