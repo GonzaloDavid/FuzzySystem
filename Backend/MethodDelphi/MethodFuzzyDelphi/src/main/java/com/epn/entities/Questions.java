@@ -78,7 +78,7 @@ public class Questions implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
+    @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz")
     @ManyToOne(optional = false)
     private Quiz codeQuiz;
     
