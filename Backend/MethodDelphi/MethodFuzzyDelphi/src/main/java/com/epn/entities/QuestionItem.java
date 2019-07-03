@@ -83,7 +83,7 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions")
+    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions",insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Questions codeQuestions;
 
