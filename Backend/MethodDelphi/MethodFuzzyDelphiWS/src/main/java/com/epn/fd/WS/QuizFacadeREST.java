@@ -6,8 +6,12 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.Quiz;
 import com.epn.fd.dao.QuizDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -44,12 +48,17 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
     @GET
     @Path("getquiz")
+    @Transactional
     @Produces({MediaType.APPLICATION_JSON})
-    public List<QuizContainer> getQuizbycode(
+    public String getQuizbycode(
             @QueryParam("codeQuiz") Long codeQuiz
-    ) {
-
-        return quizDAO.getQuizbycode(codeQuiz);
+    ) throws JsonProcessingException {
+        List<QuizContainer> containers = new ArrayList<>();
+        containers = quizDAO.getQuizbycode(codeQuiz);
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(containers);
+        return response;
+        
     }
 
     @POST
@@ -58,7 +67,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public void saveQuiz(QuizContainer quizcontainer) {
-
+        
         quizDAO.saveQuiz(quizcontainer);
 
     }

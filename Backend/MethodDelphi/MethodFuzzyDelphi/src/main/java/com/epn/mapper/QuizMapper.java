@@ -14,11 +14,11 @@ import org.mapstruct.Mapper;
  *
  * @author david
  */
-@Mapper
+@Mapper(uses = {QuestionMapper.class}) 
 public interface QuizMapper {
 
    // @Mapping(target = "questionlist", expression = "java(source.getQuestions())")
  //   @Mapping(target = "questionItemList", expression = "java(source.getQuestions().questionItemList())")
-    QuizContainer sourceToDestination(Quiz source);
+   QuizContainer sourceToDestination(Quiz source);
     List<QuizContainer> sourceListToDestination(List<Quiz> source);
 }

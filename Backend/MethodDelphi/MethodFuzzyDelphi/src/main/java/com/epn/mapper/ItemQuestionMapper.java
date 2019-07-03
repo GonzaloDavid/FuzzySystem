@@ -9,6 +9,7 @@ import com.epn.dtos.ItemQuestionContainer;
 import com.epn.entities.QuestionItem;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  *
@@ -16,6 +17,10 @@ import org.mapstruct.Mapper;
  */
 @Mapper
 public interface ItemQuestionMapper {
-      ItemQuestionContainer sourceToDestination(QuestionItem source);
+
+    @Mapping(target = "codeQuestions", expression = "java(source.getCodeQuestions().getCodeQuestions())")
+    @Mapping(target = "codeQuiz", expression = "java(source.getCodeQuestions().getCodeQuiz().getCodeQuiz())")
+    ItemQuestionContainer sourceToDestination(QuestionItem source);
+
     List<ItemQuestionContainer> sourceListToDestination(List<QuestionItem> source);
 }

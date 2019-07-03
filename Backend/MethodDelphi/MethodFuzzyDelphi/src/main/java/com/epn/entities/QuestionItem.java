@@ -7,40 +7,42 @@ package com.epn.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Entity
 @Table(name = "QuestionItem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "QuestionItem.findAll", query = "SELECT q FROM QuestionItem q")
-    , @NamedQuery(name = "QuestionItem.findByCodeQuizItem", query = "SELECT q FROM QuestionItem q WHERE q.codeQuizItem = :codeQuizItem")
-    , @NamedQuery(name = "QuestionItem.findByMaximunValue", query = "SELECT q FROM QuestionItem q WHERE q.maximunValue = :maximunValue")
-    , @NamedQuery(name = "QuestionItem.findByMinimumValue", query = "SELECT q FROM QuestionItem q WHERE q.minimumValue = :minimumValue")
-    , @NamedQuery(name = "QuestionItem.findByJumpNext", query = "SELECT q FROM QuestionItem q WHERE q.jumpNext = :jumpNext")
-    , @NamedQuery(name = "QuestionItem.findByDateCreate", query = "SELECT q FROM QuestionItem q WHERE q.dateCreate = :dateCreate")
-    , @NamedQuery(name = "QuestionItem.findByDateLastModify", query = "SELECT q FROM QuestionItem q WHERE q.dateLastModify = :dateLastModify")
-    , @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate")
-    , @NamedQuery(name = "QuestionItem.findByUserLastModify", query = "SELECT q FROM QuestionItem q WHERE q.userLastModify = :userLastModify")})
+    @NamedQuery(name = "QuestionItem.findAll", query = "SELECT q FROM QuestionItem q"),
+    @NamedQuery(name = "QuestionItem.findByCodeQuizItem", query = "SELECT q FROM QuestionItem q WHERE q.codeQuizItem = :codeQuizItem"),
+    @NamedQuery(name = "QuestionItem.findByItemLabel", query = "SELECT q FROM QuestionItem q WHERE q.itemLabel = :itemLabel"),
+    @NamedQuery(name = "QuestionItem.findByMaximunValue", query = "SELECT q FROM QuestionItem q WHERE q.maximunValue = :maximunValue"),
+    @NamedQuery(name = "QuestionItem.findByMinimumValue", query = "SELECT q FROM QuestionItem q WHERE q.minimumValue = :minimumValue"),
+    @NamedQuery(name = "QuestionItem.findByAverageValue", query = "SELECT q FROM QuestionItem q WHERE q.averageValue = :averageValue"),
+    @NamedQuery(name = "QuestionItem.findByMinimumParameterSetting", query = "SELECT q FROM QuestionItem q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
+    @NamedQuery(name = "QuestionItem.findByMaximumParameterSetting", query = "SELECT q FROM QuestionItem q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
+    @NamedQuery(name = "QuestionItem.findByJumpNext", query = "SELECT q FROM QuestionItem q WHERE q.jumpNext = :jumpNext"),
+    @NamedQuery(name = "QuestionItem.findByDateCreate", query = "SELECT q FROM QuestionItem q WHERE q.dateCreate = :dateCreate"),
+    @NamedQuery(name = "QuestionItem.findByDateLastModify", query = "SELECT q FROM QuestionItem q WHERE q.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "QuestionItem.findByUserLastModify", query = "SELECT q FROM QuestionItem q WHERE q.userLastModify = :userLastModify")})
 public class QuestionItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,23 +51,21 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "codeQuizItem")
     private Long codeQuizItem;
-    @Column(name = "codeQuestions")
-    private Long codeQuestions;
     @Basic(optional = false)
     @Column(name = "itemLabel")
     private String itemLabel;
-    @Basic(optional = false)
     @Column(name = "maximunValue")
     private String maximunValue;
-    @Basic(optional = false)
     @Column(name = "minimumValue")
     private String minimumValue;
     @Column(name = "averageValue")
     private String averageValue;
-    @Column(name = "maximumParameterSetting")
-    private String maximumParameterSetting;
+    @Basic(optional = false)
     @Column(name = "minimumParameterSetting")
     private String minimumParameterSetting;
+    @Basic(optional = false)
+    @Column(name = "maximumParameterSetting")
+    private String maximumParameterSetting;
     @Basic(optional = false)
     @Column(name = "jumpNext")
     private String jumpNext;
@@ -83,14 +83,10 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuizItem")
-    private List<DelphiCalculations> delphiCalculationsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuizItem")
-    private List<GraphicsData> graphicsDataList;
-  /*  @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false)
+    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions")
     @ManyToOne(optional = false)
     private Questions codeQuestions;
-*/
+
     public QuestionItem() {
     }
 
@@ -98,22 +94,16 @@ public class QuestionItem implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<DelphiCalculations> delphiCalculationsList, List<GraphicsData> graphicsDataList, Long codeQuestions) {
+    public QuestionItem(Long codeQuizItem, String itemLabel, String minimumParameterSetting, String maximumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.codeQuizItem = codeQuizItem;
         this.itemLabel = itemLabel;
-        this.maximunValue = maximunValue;
-        this.minimumValue = minimumValue;
-        this.averageValue = averageValue;
-        this.maximumParameterSetting = maximumParameterSetting;
         this.minimumParameterSetting = minimumParameterSetting;
+        this.maximumParameterSetting = maximumParameterSetting;
         this.jumpNext = jumpNext;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.delphiCalculationsList = delphiCalculationsList;
-        this.graphicsDataList = graphicsDataList;
-        this.codeQuestions = codeQuestions;
     }
 
     public Long getCodeQuizItem() {
@@ -132,30 +122,6 @@ public class QuestionItem implements Serializable {
         this.itemLabel = itemLabel;
     }
 
-    public String getAverageValue() {
-        return averageValue;
-    }
-
-    public void setAverageValue(String averageValue) {
-        this.averageValue = averageValue;
-    }
-
-    public String getMaximumParameterSetting() {
-        return maximumParameterSetting;
-    }
-
-    public void setMaximumParameterSetting(String maximumParameterSetting) {
-        this.maximumParameterSetting = maximumParameterSetting;
-    }
-
-    public String getMinimumParameterSetting() {
-        return minimumParameterSetting;
-    }
-
-    public void setMinimumParameterSetting(String minimumParameterSetting) {
-        this.minimumParameterSetting = minimumParameterSetting;
-    }
-
     public String getMaximunValue() {
         return maximunValue;
     }
@@ -170,6 +136,30 @@ public class QuestionItem implements Serializable {
 
     public void setMinimumValue(String minimumValue) {
         this.minimumValue = minimumValue;
+    }
+
+    public String getAverageValue() {
+        return averageValue;
+    }
+
+    public void setAverageValue(String averageValue) {
+        this.averageValue = averageValue;
+    }
+
+    public String getMinimumParameterSetting() {
+        return minimumParameterSetting;
+    }
+
+    public void setMinimumParameterSetting(String minimumParameterSetting) {
+        this.minimumParameterSetting = minimumParameterSetting;
+    }
+
+    public String getMaximumParameterSetting() {
+        return maximumParameterSetting;
+    }
+
+    public void setMaximumParameterSetting(String maximumParameterSetting) {
+        this.maximumParameterSetting = maximumParameterSetting;
     }
 
     public String getJumpNext() {
@@ -212,33 +202,13 @@ public class QuestionItem implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    @XmlTransient
-    public List<DelphiCalculations> getDelphiCalculationsList() {
-        return delphiCalculationsList;
-    }
-
-    public void setDelphiCalculationsList(List<DelphiCalculations> delphiCalculationsList) {
-        this.delphiCalculationsList = delphiCalculationsList;
-    }
-
-    @XmlTransient
-    public List<GraphicsData> getGraphicsDataList() {
-        return graphicsDataList;
-    }
-
-    public void setGraphicsDataList(List<GraphicsData> graphicsDataList) {
-        this.graphicsDataList = graphicsDataList;
-    }
-
-    public Long getCodeQuestions() {
+    public Questions getCodeQuestions() {
         return codeQuestions;
     }
 
-    public void setCodeQuestions(Long codeQuestions) {
+    public void setCodeQuestions(Questions codeQuestions) {
         this.codeQuestions = codeQuestions;
     }
-
-
 
     @Override
     public int hashCode() {
@@ -264,5 +234,5 @@ public class QuestionItem implements Serializable {
     public String toString() {
         return "com.epn.entities.QuestionItem[ codeQuizItem=" + codeQuizItem + " ]";
     }
-
+    
 }

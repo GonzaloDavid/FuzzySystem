@@ -5,12 +5,14 @@
  */
 package com.epn.dtos;
 
+import com.epn.entities.Questions;
+
 /**
  *
  * @author david
  */
 public class ItemQuestionContainer {
-    
+
     private Long codeQuiz;
     private Long codeQuestions;
     private Long codeQuizItem;
@@ -27,7 +29,9 @@ public class ItemQuestionContainer {
     public ItemQuestionContainer() {
     }
 
-    public ItemQuestionContainer(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, long userCreate, long userLastModify) {
+    public ItemQuestionContainer(Long codeQuiz, Long codeQuestions, Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, long userCreate, long userLastModify) {
+        this.codeQuiz = codeQuiz;
+        this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
         this.itemLabel = itemLabel;
         this.maximunValue = maximunValue;
@@ -136,7 +140,5 @@ public class ItemQuestionContainer {
         this.codeQuestions = codeQuestions;
     }
 
-  
-    
-    
+   
 }

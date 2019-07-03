@@ -9,13 +9,18 @@ import com.epn.dtos.QuestionContainer;
 import com.epn.entities.Questions;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  *
  * @author david
  */
-@Mapper
+@Mapper(uses = {ItemQuestionMapper.class})
 public interface QuestionMapper {
-      QuestionContainer sourceToDestination(Questions source);
+
+    @Mapping(target = "codeQuiz", expression = "java(source.getCodeQuiz().getCodeQuiz())")
+    QuestionContainer sourceToDestination(Questions source);
+
     List<QuestionContainer> sourceListToDestination(List<Questions> source);
+    // List<Questions> sourceListQuestionContainertoQuestion(List<QuestionContainer> source);
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.epn.dtos;
-
+import com.epn.entities.Quiz;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class QuestionContainer {
     public QuestionContainer() {
     }
 
-    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, Long userCreate, Long userLastModify) {
+    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
         this.codeQuestions = codeQuestions;
         this.codeQuiz = codeQuiz;
         this.question = question;
@@ -35,6 +35,7 @@ public class QuestionContainer {
         this.status = status;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+        this.questionItemList = questionItemList;
     }
 
     public Long getCodeQuestions() {

@@ -29,21 +29,21 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Entity
 @Table(name = "Quiz")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Quiz.findAll", query = "SELECT q FROM Quiz q")
-    , @NamedQuery(name = "Quiz.findByCodeQuiz", query = "SELECT q FROM Quiz q WHERE q.codeQuiz = :codeQuiz")
-    , @NamedQuery(name = "Quiz.findByNameQuiz", query = "SELECT q FROM Quiz q WHERE q.nameQuiz = :nameQuiz")
-    , @NamedQuery(name = "Quiz.findByShortNameQuiz", query = "SELECT q FROM Quiz q WHERE q.shortNameQuiz = :shortNameQuiz")
-    , @NamedQuery(name = "Quiz.findByDescription", query = "SELECT q FROM Quiz q WHERE q.description = :description")
-    , @NamedQuery(name = "Quiz.findByDateCreate", query = "SELECT q FROM Quiz q WHERE q.dateCreate = :dateCreate")
-    , @NamedQuery(name = "Quiz.findByDateLastModify", query = "SELECT q FROM Quiz q WHERE q.dateLastModify = :dateLastModify")
-    , @NamedQuery(name = "Quiz.findByUserCreate", query = "SELECT q FROM Quiz q WHERE q.userCreate = :userCreate")
-    , @NamedQuery(name = "Quiz.findByUserLastModify", query = "SELECT q FROM Quiz q WHERE q.userLastModify = :userLastModify")})
+    @NamedQuery(name = "Quiz.findAll", query = "SELECT q FROM Quiz q"),
+    @NamedQuery(name = "Quiz.findByCodeQuiz", query = "SELECT q FROM Quiz q WHERE q.codeQuiz = :codeQuiz"),
+    @NamedQuery(name = "Quiz.findByNameQuiz", query = "SELECT q FROM Quiz q WHERE q.nameQuiz = :nameQuiz"),
+    @NamedQuery(name = "Quiz.findByShortNameQuiz", query = "SELECT q FROM Quiz q WHERE q.shortNameQuiz = :shortNameQuiz"),
+    @NamedQuery(name = "Quiz.findByDescription", query = "SELECT q FROM Quiz q WHERE q.description = :description"),
+    @NamedQuery(name = "Quiz.findByDateCreate", query = "SELECT q FROM Quiz q WHERE q.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Quiz.findByDateLastModify", query = "SELECT q FROM Quiz q WHERE q.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Quiz.findByUserCreate", query = "SELECT q FROM Quiz q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "Quiz.findByUserLastModify", query = "SELECT q FROM Quiz q WHERE q.userLastModify = :userLastModify")})
 public class Quiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,10 +61,10 @@ public class Quiz implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @Column(name = "statusCat")
-    private String statusCat;
     @Column(name = "status")
     private String status;
+    @Column(name = "statusCat")
+    private String statusCat;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -79,19 +79,13 @@ public class Quiz implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
-    private List<AdminisEmail> adminisEmailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
-    private List<DelphiCalculations> delphiCalculationsList;
     @JoinColumns({
-        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false)
-        , @JoinColumn(name = "status", referencedColumnName = "codeItem",insertable = false, updatable = false)})
+        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
-    private List<GraphicsData> graphicsDataList;
- //   @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuiz")
- //   private List<Questions> questions;
+    private List<Questions> questionsList;
 
     public Quiz() {
     }
@@ -175,13 +169,29 @@ public class Quiz implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    @XmlTransient
-    public List<AdminisEmail> getAdminisEmailList() {
-        return adminisEmailList;
+    public Catalogueitem getCatalogueitem() {
+        return catalogueitem;
     }
 
-    public void setAdminisEmailList(List<AdminisEmail> adminisEmailList) {
-        this.adminisEmailList = adminisEmailList;
+    public void setCatalogueitem(Catalogueitem catalogueitem) {
+        this.catalogueitem = catalogueitem;
+    }
+
+    @XmlTransient
+    public List<Questions> getQuestionsList() {
+        return questionsList;
+    }
+
+    public void setQuestionsList(List<Questions> questionsList) {
+        this.questionsList = questionsList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getStatusCat() {
@@ -192,49 +202,6 @@ public class Quiz implements Serializable {
         this.statusCat = statusCat;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    @XmlTransient
-    public List<DelphiCalculations> getDelphiCalculationsList() {
-        return delphiCalculationsList;
-    }
-
-    public void setDelphiCalculationsList(List<DelphiCalculations> delphiCalculationsList) {
-        this.delphiCalculationsList = delphiCalculationsList;
-    }
-
-    public Catalogueitem getCatalogueitem() {
-        return catalogueitem;
-    }
-
-    public void setCatalogueitem(Catalogueitem catalogueitem) {
-        this.catalogueitem = catalogueitem;
-    }
-
-    @XmlTransient
-    public List<GraphicsData> getGraphicsDataList() {
-        return graphicsDataList;
-    }
-
-    public void setGraphicsDataList(List<GraphicsData> graphicsDataList) {
-        this.graphicsDataList = graphicsDataList;
-    }
-/*
-    public List<Questions> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Questions> questions) {
-        this.questions = questions;
-    }
-
-  */  
     @Override
     public int hashCode() {
         int hash = 0;

@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,23 +28,22 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Entity
 @Table(name = "Questions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q")
-    , @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.codeQuestions = :codeQuestions")
-    , @NamedQuery(name = "Questions.findByCodeQuiz", query = "SELECT q FROM Questions q WHERE q.codeQuiz = :codeQuiz")
-    , @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question")
-    , @NamedQuery(name = "Questions.findByDescription", query = "SELECT q FROM Questions q WHERE q.description = :description")
-    , @NamedQuery(name = "Questions.findByStatusCat", query = "SELECT q FROM Questions q WHERE q.statusCat = :statusCat")
-    , @NamedQuery(name = "Questions.findByStatus", query = "SELECT q FROM Questions q WHERE q.status = :status")
-    , @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate")
-    , @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify")
-    , @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate")
-    , @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
+    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
+    @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.codeQuestions = :codeQuestions"),
+    @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question"),
+    @NamedQuery(name = "Questions.findByDescription", query = "SELECT q FROM Questions q WHERE q.description = :description"),
+    @NamedQuery(name = "Questions.findByStatusCat", query = "SELECT q FROM Questions q WHERE q.statusCat = :statusCat"),
+    @NamedQuery(name = "Questions.findByStatus", query = "SELECT q FROM Questions q WHERE q.status = :status"),
+    @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,9 +52,6 @@ public class Questions implements Serializable {
     @Basic(optional = false)
     @Column(name = "codeQuestions")
     private Long codeQuestions;
-    @Basic(optional = false)
-    @Column(name = "codeQuiz")
-    private long codeQuiz;
     @Basic(optional = false)
     @Column(name = "question")
     private String question;
@@ -80,13 +78,13 @@ public class Questions implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
+    @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Quiz codeQuiz;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
-    private List<DelphiCalculations> delphiCalculationsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
-    private List<GraphicsData> graphicsDataList;
-  /*  @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
     private List<QuestionItem> questionItemList;
-*/
+
     public Questions() {
     }
 
@@ -94,9 +92,8 @@ public class Questions implements Serializable {
         this.codeQuestions = codeQuestions;
     }
 
-    public Questions(Long codeQuestions, long codeQuiz, String question, String description, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public Questions(Long codeQuestions, String question, String description, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.codeQuestions = codeQuestions;
-        this.codeQuiz = codeQuiz;
         this.question = question;
         this.description = description;
         this.statusCat = statusCat;
@@ -113,14 +110,6 @@ public class Questions implements Serializable {
 
     public void setCodeQuestions(Long codeQuestions) {
         this.codeQuestions = codeQuestions;
-    }
-
-    public long getCodeQuiz() {
-        return codeQuiz;
-    }
-
-    public void setCodeQuiz(long codeQuiz) {
-        this.codeQuiz = codeQuiz;
     }
 
     public String getQuestion() {
@@ -187,25 +176,14 @@ public class Questions implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    @XmlTransient
-    public List<DelphiCalculations> getDelphiCalculationsList() {
-        return delphiCalculationsList;
+    public Quiz getCodeQuiz() {
+        return codeQuiz;
     }
 
-    public void setDelphiCalculationsList(List<DelphiCalculations> delphiCalculationsList) {
-        this.delphiCalculationsList = delphiCalculationsList;
+    public void setCodeQuiz(Quiz codeQuiz) {
+        this.codeQuiz = codeQuiz;
     }
 
-    @XmlTransient
-    public List<GraphicsData> getGraphicsDataList() {
-        return graphicsDataList;
-    }
-
-    public void setGraphicsDataList(List<GraphicsData> graphicsDataList) {
-        this.graphicsDataList = graphicsDataList;
-    }
-/*
-    @XmlTransient
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
     }
@@ -213,7 +191,7 @@ public class Questions implements Serializable {
     public void setQuestionItemList(List<QuestionItem> questionItemList) {
         this.questionItemList = questionItemList;
     }
-*/
+
     @Override
     public int hashCode() {
         int hash = 0;

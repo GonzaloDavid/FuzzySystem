@@ -1,5 +1,7 @@
 package com.epn.mapper;
 
+import com.epn.dtos.QuestionContainer;
+
 import com.epn.dtos.QuizContainer;
 
 import com.epn.entities.Quiz;
@@ -10,17 +12,21 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import org.mapstruct.factory.Mappers;
+
 @Generated(
 
     value = "org.mapstruct.ap.MappingProcessor",
 
-    date = "2019-06-28T08:57:14-0500",
+    date = "2019-07-03T14:31:13-0500",
 
-    comments = "version: 1.1.0.Final, compiler: javac, environment: Java 1.8.0_181 (Oracle Corporation)"
+    comments = "version: 1.1.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 
 )
 
 public class QuizMapperImpl implements QuizMapper {
+
+    private final QuestionMapper questionMapper = Mappers.getMapper( QuestionMapper.class );
 
     @Override
 
@@ -32,6 +38,13 @@ public class QuizMapperImpl implements QuizMapper {
         }
 
         QuizContainer quizContainer = new QuizContainer();
+
+        List<QuestionContainer> list = questionMapper.sourceListToDestination( source.getQuestionsList() );
+
+        if ( list != null ) {
+
+            quizContainer.setQuestionsList( list );
+        }
 
         quizContainer.setCodeQuiz( source.getCodeQuiz() );
 

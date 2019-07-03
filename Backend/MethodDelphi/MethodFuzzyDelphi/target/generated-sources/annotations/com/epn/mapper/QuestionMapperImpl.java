@@ -1,5 +1,7 @@
 package com.epn.mapper;
 
+import com.epn.dtos.ItemQuestionContainer;
+
 import com.epn.dtos.QuestionContainer;
 
 import com.epn.entities.Questions;
@@ -10,17 +12,21 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import org.mapstruct.factory.Mappers;
+
 @Generated(
 
     value = "org.mapstruct.ap.MappingProcessor",
 
-    date = "2019-06-28T08:57:14-0500",
+    date = "2019-07-03T14:31:13-0500",
 
-    comments = "version: 1.1.0.Final, compiler: javac, environment: Java 1.8.0_181 (Oracle Corporation)"
+    comments = "version: 1.1.0.Final, compiler: javac, environment: Java 1.8.0_191 (Oracle Corporation)"
 
 )
 
 public class QuestionMapperImpl implements QuestionMapper {
+
+    private final ItemQuestionMapper itemQuestionMapper = Mappers.getMapper( ItemQuestionMapper.class );
 
     @Override
 
@@ -35,8 +41,6 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         questionContainer.setCodeQuestions( source.getCodeQuestions() );
 
-        questionContainer.setCodeQuiz( source.getCodeQuiz() );
-
         questionContainer.setQuestion( source.getQuestion() );
 
         questionContainer.setDescription( source.getDescription() );
@@ -48,6 +52,15 @@ public class QuestionMapperImpl implements QuestionMapper {
         questionContainer.setUserCreate( source.getUserCreate() );
 
         questionContainer.setUserLastModify( source.getUserLastModify() );
+
+        List<ItemQuestionContainer> list = itemQuestionMapper.sourceListToDestination( source.getQuestionItemList() );
+
+        if ( list != null ) {
+
+            questionContainer.setQuestionItemList( list );
+        }
+
+        questionContainer.setCodeQuiz( source.getCodeQuiz().getCodeQuiz() );
 
         return questionContainer;
     }

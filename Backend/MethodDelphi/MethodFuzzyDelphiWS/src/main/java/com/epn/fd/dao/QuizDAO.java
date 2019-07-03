@@ -8,7 +8,9 @@ package com.epn.fd.dao;
 import com.epn.dtos.ItemQuestionContainer;
 import com.epn.dtos.QuestionContainer;
 import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
+import com.epn.entities.Questions;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.QuizMapper;
@@ -42,21 +44,24 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
         List<Quiz> resultList = search(search);
         List<QuizContainer> containers = quizMapper.sourceListToDestination(resultList);
-        List<QuestionContainer> questioncontainer = questionDAO.getQuestionbycodequiz(codeQuiz);
-        containers.get(0).setQuestionlist(questioncontainer);
-        List<ItemQuestionContainer> itemQuestionContainersaux = new ArrayList();
-        questioncontainer.forEach(item -> {
-            List<ItemQuestionContainer> itemQuestionContainers = itemQuestionDAO.getItembycodeQuestion(item.getCodeQuestions());
-            itemQuestionContainers.forEach(itemaux->{
-                
-                itemQuestionContainersaux.add(itemaux);
-            });
-        });
-        containers.get(0).setQuestionItemList(itemQuestionContainersaux);
         return containers;
     }
-    public void saveQuiz(QuizContainer quizcontainer)
-    {
-       // update(instance);
+
+    public Quiz saveQuiz(QuizContainer quizcontainer) {
+        Quiz quiz = new Quiz();
+        if(quizcontainer.getCodeQuiz()!=null){
+        quiz.setCodeQuiz(quizcontainer.getCodeQuiz());
+        }
+        quiz.setNameQuiz(quizcontainer.getNameQuiz());
+        quiz.setDescription(quizcontainer.getDescription());
+        quiz.setShortNameQuiz(quizcontainer.getShortNameQuiz());
+        quiz.setStatusCat(quizcontainer.getStatusCat());
+        quiz.setStatus(quizcontainer.getStatus());
+        //  quiz.setUserCreate(quizcontainer.getUserCreate());
+        //quiz.setUserLastModify(quizcontainer.getUserLastModify());
+        update(quiz);
+        em.flush();
+        questionDAO.saveQuestion(quizcontainer,quiz);
+        return quiz;
     }
 }
