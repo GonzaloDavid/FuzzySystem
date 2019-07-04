@@ -58,7 +58,19 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(containers);
         return response;
-        
+
+    }
+
+    @GET
+    @Path("getSurveys")
+    @Transactional
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getSurveys(
+            @QueryParam("from") Integer from,
+            @QueryParam("to") Integer to
+    ) throws JsonProcessingException {
+        String listSurveys = quizDAO.getSurveys(from, to);
+        return listSurveys;
     }
 
     @POST
@@ -67,7 +79,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public void saveQuiz(QuizContainer quizcontainer) {
-        
+
         quizDAO.saveQuiz(quizcontainer);
 
     }

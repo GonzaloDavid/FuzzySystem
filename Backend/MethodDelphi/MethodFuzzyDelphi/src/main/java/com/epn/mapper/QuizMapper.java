@@ -6,6 +6,7 @@
 package com.epn.mapper;
 
 import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizContainerList;
 import com.epn.entities.Quiz;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -16,9 +17,11 @@ import org.mapstruct.Mapper;
  */
 @Mapper(uses = {QuestionMapper.class}) 
 public interface QuizMapper {
-
-   // @Mapping(target = "questionlist", expression = "java(source.getQuestions())")
- //   @Mapping(target = "questionItemList", expression = "java(source.getQuestions().questionItemList())")
-   QuizContainer sourceToDestination(Quiz source);
-    List<QuizContainer> sourceListToDestination(List<Quiz> source);
+    
+   QuizContainer sourceToDestination(Quiz source); //Mapear objetos
+    List<QuizContainer> sourceListToDestination(List<Quiz> source); //Mapear lista
+   
+    
+    QuizContainerList sourceToDestinationList(Quiz source); //Mapear objetos
+    List<QuizContainerList> sourceListToDestinationList(List<Quiz> source); //Mapear lista
 }
