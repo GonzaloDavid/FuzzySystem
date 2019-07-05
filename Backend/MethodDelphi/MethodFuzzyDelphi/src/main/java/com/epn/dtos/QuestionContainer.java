@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.epn.dtos;
+
 import com.epn.entities.Quiz;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class QuestionContainer {
     private String description;
     private String statusCat;
     private String status;
+    private String maximumParameterSetting;
+    private String minimumParameterSetting;
+    private String jumpNext;
     private Long userCreate;
     private Long userLastModify;
     private List<ItemQuestionContainer> questionItemList;
@@ -26,13 +30,16 @@ public class QuestionContainer {
     public QuestionContainer() {
     }
 
-    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
+    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
         this.codeQuestions = codeQuestions;
         this.codeQuiz = codeQuiz;
         this.question = question;
         this.description = description;
         this.statusCat = statusCat;
         this.status = status;
+        this.maximumParameterSetting = maximumParameterSetting;
+        this.minimumParameterSetting = minimumParameterSetting;
+        this.jumpNext = jumpNext;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
         this.questionItemList = questionItemList;
@@ -109,5 +116,30 @@ public class QuestionContainer {
     public void setQuestionItemList(List<ItemQuestionContainer> questionItemList) {
         this.questionItemList = questionItemList;
     }
+
+    public String getMaximumParameterSetting() {
+        return maximumParameterSetting;
+    }
+
+    public void setMaximumParameterSetting(String maximumParameterSetting) {
+        this.maximumParameterSetting = maximumParameterSetting;
+    }
+
+    public String getMinimumParameterSetting() {
+        return minimumParameterSetting;
+    }
+
+    public void setMinimumParameterSetting(String minimumParameterSetting) {
+        this.minimumParameterSetting = minimumParameterSetting;
+    }
+
+    public String getJumpNext() {
+        return jumpNext;
+    }
+
+    public void setJumpNext(String jumpNext) {
+        this.jumpNext = jumpNext;
+    }
+    
 
 }

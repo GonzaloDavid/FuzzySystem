@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "QuestionItem.findByMaximunValue", query = "SELECT q FROM QuestionItem q WHERE q.maximunValue = :maximunValue"),
     @NamedQuery(name = "QuestionItem.findByMinimumValue", query = "SELECT q FROM QuestionItem q WHERE q.minimumValue = :minimumValue"),
     @NamedQuery(name = "QuestionItem.findByAverageValue", query = "SELECT q FROM QuestionItem q WHERE q.averageValue = :averageValue"),
-    @NamedQuery(name = "QuestionItem.findByMinimumParameterSetting", query = "SELECT q FROM QuestionItem q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
-    @NamedQuery(name = "QuestionItem.findByMaximumParameterSetting", query = "SELECT q FROM QuestionItem q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
-    @NamedQuery(name = "QuestionItem.findByJumpNext", query = "SELECT q FROM QuestionItem q WHERE q.jumpNext = :jumpNext"),
     @NamedQuery(name = "QuestionItem.findByDateCreate", query = "SELECT q FROM QuestionItem q WHERE q.dateCreate = :dateCreate"),
     @NamedQuery(name = "QuestionItem.findByDateLastModify", query = "SELECT q FROM QuestionItem q WHERE q.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate"),
@@ -60,15 +57,6 @@ public class QuestionItem implements Serializable {
     private String minimumValue;
     @Column(name = "averageValue")
     private String averageValue;
-    @Basic(optional = false)
-    @Column(name = "minimumParameterSetting")
-    private String minimumParameterSetting;
-    @Basic(optional = false)
-    @Column(name = "maximumParameterSetting")
-    private String maximumParameterSetting;
-    @Basic(optional = false)
-    @Column(name = "jumpNext")
-    private String jumpNext;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -94,16 +82,17 @@ public class QuestionItem implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public QuestionItem(Long codeQuizItem, String itemLabel, String minimumParameterSetting, String maximumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, Questions codeQuestions) {
         this.codeQuizItem = codeQuizItem;
         this.itemLabel = itemLabel;
-        this.minimumParameterSetting = minimumParameterSetting;
-        this.maximumParameterSetting = maximumParameterSetting;
-        this.jumpNext = jumpNext;
+        this.maximunValue = maximunValue;
+        this.minimumValue = minimumValue;
+        this.averageValue = averageValue;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+        this.codeQuestions = codeQuestions;
     }
 
     public Long getCodeQuizItem() {
@@ -144,30 +133,6 @@ public class QuestionItem implements Serializable {
 
     public void setAverageValue(String averageValue) {
         this.averageValue = averageValue;
-    }
-
-    public String getMinimumParameterSetting() {
-        return minimumParameterSetting;
-    }
-
-    public void setMinimumParameterSetting(String minimumParameterSetting) {
-        this.minimumParameterSetting = minimumParameterSetting;
-    }
-
-    public String getMaximumParameterSetting() {
-        return maximumParameterSetting;
-    }
-
-    public void setMaximumParameterSetting(String maximumParameterSetting) {
-        this.maximumParameterSetting = maximumParameterSetting;
-    }
-
-    public String getJumpNext() {
-        return jumpNext;
-    }
-
-    public void setJumpNext(String jumpNext) {
-        this.jumpNext = jumpNext;
     }
 
     public Date getDateCreate() {

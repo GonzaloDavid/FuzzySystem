@@ -29,6 +29,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
     private final QuestionMapper questionMapper = Mappers.getMapper(QuestionMapper.class);
+
     public QuestionDAO() {
         super(Questions.class);
     }
@@ -41,20 +42,24 @@ public class QuestionDAO extends GenericDAO<Questions> {
         List<QuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
         return containers;
     }
-    public void saveQuestion(QuizContainer quizContainer,Quiz quiz){
-       
-        quizContainer.getQuestionsList().forEach(question->{
-        Questions questionstemp=new Questions();
-        questionstemp.setCodeQuestions(question.getCodeQuestions());
-        questionstemp.setDescription(question.getDescription());
-        questionstemp.setStatus(question.getStatus());
-        questionstemp.setStatusCat(question.getStatusCat());
-        questionstemp.setQuestion(question.getQuestion());
-        questionstemp.setCodeQuiz(quiz);
-        update(questionstemp);
-        itemQuestionDAO.saveItem(questionstemp,question.getQuestionItemList());
+
+    public void saveQuestion(QuizContainer quizContainer, Quiz quiz) {
+
+        quizContainer.getQuestionsList().forEach(question -> {
+            Questions questionstemp = new Questions();
+            questionstemp.setCodeQuestions(question.getCodeQuestions());
+            questionstemp.setDescription(question.getDescription());
+            questionstemp.setStatus(question.getStatus());
+            questionstemp.setStatusCat(question.getStatusCat());
+            questionstemp.setQuestion(question.getQuestion());
+            questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
+            questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
+            questionstemp.setJumpNext(question.getJumpNext());
+            questionstemp.setCodeQuiz(quiz);
+            update(questionstemp);
+            em.flush();
+            itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
         });
-        em.flush();
-        
+
     }
 }

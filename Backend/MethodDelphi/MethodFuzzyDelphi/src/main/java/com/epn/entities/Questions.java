@@ -43,7 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
     @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "Questions.findByMinimumParameterSetting", query = "SELECT q FROM Questions q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
+    @NamedQuery(name = "Questions.findByMaximumParameterSetting", query = "SELECT q FROM Questions q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
+    @NamedQuery(name = "Questions.findByJumpNext", query = "SELECT q FROM Questions q WHERE q.jumpNext = :jumpNext"),
     @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
+
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +69,15 @@ public class Questions implements Serializable {
     @Column(name = "status")
     private String status;
     @Basic(optional = false)
+    @Column(name = "minimumParameterSetting")
+    private String minimumParameterSetting;
+    @Basic(optional = false)
+    @Column(name = "maximumParameterSetting")
+    private String maximumParameterSetting;
+    @Basic(optional = false)
+    @Column(name = "jumpNext")
+    private String jumpNext;
+    @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
@@ -81,7 +94,7 @@ public class Questions implements Serializable {
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz")
     @ManyToOne(optional = false)
     private Quiz codeQuiz;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
     private List<QuestionItem> questionItemList;
 
@@ -184,6 +197,30 @@ public class Questions implements Serializable {
         this.codeQuiz = codeQuiz;
     }
 
+    public String getMinimumParameterSetting() {
+        return minimumParameterSetting;
+    }
+
+    public void setMinimumParameterSetting(String minimumParameterSetting) {
+        this.minimumParameterSetting = minimumParameterSetting;
+    }
+
+    public String getMaximumParameterSetting() {
+        return maximumParameterSetting;
+    }
+
+    public void setMaximumParameterSetting(String maximumParameterSetting) {
+        this.maximumParameterSetting = maximumParameterSetting;
+    }
+
+    public String getJumpNext() {
+        return jumpNext;
+    }
+
+    public void setJumpNext(String jumpNext) {
+        this.jumpNext = jumpNext;
+    }
+
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
     }
@@ -216,5 +253,5 @@ public class Questions implements Serializable {
     public String toString() {
         return "com.epn.entities.Questions[ codeQuestions=" + codeQuestions + " ]";
     }
-    
+
 }

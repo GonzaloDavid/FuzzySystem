@@ -45,10 +45,8 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
             }
             questionItem.setCodeQuestions(questions);
             questionItem.setItemLabel(item.getItemLabel());
-            questionItem.setMinimumParameterSetting(item.getMinimumParameterSetting());
-            questionItem.setMaximumParameterSetting(item.getMaximumParameterSetting());
-            questionItem.setJumpNext(item.getJumpNext());
             update(questionItem);
+            em.flush();
         });
     }
     

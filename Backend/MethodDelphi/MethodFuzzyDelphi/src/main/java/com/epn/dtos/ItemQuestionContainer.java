@@ -5,8 +5,6 @@
  */
 package com.epn.dtos;
 
-import com.epn.entities.Questions;
-
 /**
  *
  * @author david
@@ -20,16 +18,13 @@ public class ItemQuestionContainer {
     private String maximunValue;
     private String minimumValue;
     private String averageValue;
-    private String maximumParameterSetting;
-    private String minimumParameterSetting;
-    private String jumpNext;
     private long userCreate;
     private long userLastModify;
 
     public ItemQuestionContainer() {
     }
 
-    public ItemQuestionContainer(Long codeQuiz, Long codeQuestions, Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, long userCreate, long userLastModify) {
+    public ItemQuestionContainer(Long codeQuiz, Long codeQuestions, Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, long userCreate, long userLastModify) {
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
@@ -37,9 +32,6 @@ public class ItemQuestionContainer {
         this.maximunValue = maximunValue;
         this.minimumValue = minimumValue;
         this.averageValue = averageValue;
-        this.maximumParameterSetting = maximumParameterSetting;
-        this.minimumParameterSetting = minimumParameterSetting;
-        this.jumpNext = jumpNext;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
     }
@@ -82,30 +74,6 @@ public class ItemQuestionContainer {
 
     public void setAverageValue(String averageValue) {
         this.averageValue = averageValue;
-    }
-
-    public String getMaximumParameterSetting() {
-        return maximumParameterSetting;
-    }
-
-    public void setMaximumParameterSetting(String maximumParameterSetting) {
-        this.maximumParameterSetting = maximumParameterSetting;
-    }
-
-    public String getMinimumParameterSetting() {
-        return minimumParameterSetting;
-    }
-
-    public void setMinimumParameterSetting(String minimumParameterSetting) {
-        this.minimumParameterSetting = minimumParameterSetting;
-    }
-
-    public String getJumpNext() {
-        return jumpNext;
-    }
-
-    public void setJumpNext(String jumpNext) {
-        this.jumpNext = jumpNext;
     }
 
     public long getUserCreate() {

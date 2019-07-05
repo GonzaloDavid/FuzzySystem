@@ -5,20 +5,16 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.dtos.ItemQuestionContainer;
 import com.epn.dtos.ListAndCountContainer;
-import com.epn.dtos.QuestionContainer;
+
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizContainerList;
-import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
-import com.epn.entities.Questions;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.QuizMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -55,16 +51,20 @@ public class QuizDAO extends GenericDAO<Quiz> {
         Quiz quiz = new Quiz();
         if (quizcontainer.getCodeQuiz() != null) {
             quiz.setCodeQuiz(quizcontainer.getCodeQuiz());
+        }else{
+         quiz.setCodeQuiz(new Long(0));
         }
         quiz.setNameQuiz(quizcontainer.getNameQuiz());
         quiz.setDescription(quizcontainer.getDescription());
         quiz.setShortNameQuiz(quizcontainer.getShortNameQuiz());
         quiz.setStatusCat(quizcontainer.getStatusCat());
         quiz.setStatus(quizcontainer.getStatus());
-        //  quiz.setUserCreate(quizcontainer.getUserCreate());
+        //quiz.setUserCreate(quizcontainer.getUserCreate());
         //quiz.setUserLastModify(quizcontainer.getUserLastModify());
-        update(quiz);
+        // update(quiz);
+        em.merge(quiz);
         em.flush();
+        
         questionDAO.saveQuestion(quizcontainer, quiz);
         return quiz;
     }
@@ -81,9 +81,18 @@ public class QuizDAO extends GenericDAO<Quiz> {
         List<QuizContainerList> containers = quizMapper.sourceListToDestinationList(resultList);
 
         ListAndCountContainer surveysListAndCount = new ListAndCountContainer(count, containers);
-        
+
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(surveysListAndCount);
         return response;
+    }
+
+    public void deletequiz(Quiz quiz) {
+
+        Quiz foundelement = new Quiz();
+        foundelement = find(quiz.getCodeQuiz());
+        if (foundelement != null) {
+            remove(foundelement);
+        }
     }
 }

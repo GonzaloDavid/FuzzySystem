@@ -56,11 +56,11 @@ public class PersonDAO extends GenericDAO<Person> {
          p=person;
          return p;
     }
-    public void deletePerson(List<Long> idlist)
+    public void deletePerson(List<Person> idlist)
     {     
           idlist.forEach(elementremove->{
              Person foundelement= new Person();
-             foundelement=find(elementremove);
+             foundelement=find(elementremove.getCodePerson());
          
              if(foundelement!=null)
              {

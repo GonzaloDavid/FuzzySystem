@@ -177,7 +177,6 @@ public class Quiz implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
-    @XmlTransient
     public List<Questions> getQuestionsList() {
         return questionsList;
     }

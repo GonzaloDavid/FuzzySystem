@@ -85,6 +85,17 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     }
 
     @POST
+    @Path("delete")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void deleteQuiz(Quiz quiz) {
+
+        quizDAO.deletequiz(quiz);
+
+    }
+
+    @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Quiz entity) {
