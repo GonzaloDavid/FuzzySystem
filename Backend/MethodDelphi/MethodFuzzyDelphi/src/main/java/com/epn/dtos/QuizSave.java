@@ -5,6 +5,7 @@
  */
 package com.epn.dtos;
 
+import com.epn.entities.QuestionItem;
 import com.epn.entities.Questions;
 import java.util.List;
 
@@ -20,11 +21,27 @@ public class QuizSave {
     private String description;
     private String status;
     private String statusCat;
-    private List<Questions> questionsList;
+    private List<QuestionContainer> questionsList;
+    private List<Questions> questiondeleted;
+    private List<QuestionItem> questionItemdeleted;
     private Long userCreate;
     private Long userLastModify;
 
     public QuizSave() {
+    }
+
+    public QuizSave(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, List<QuestionContainer> questionsList, List<Questions> questiondeleted, List<QuestionItem> questionItemdeleted, Long userCreate, Long userLastModify) {
+        this.codeQuiz = codeQuiz;
+        this.nameQuiz = nameQuiz;
+        this.shortNameQuiz = shortNameQuiz;
+        this.description = description;
+        this.status = status;
+        this.statusCat = statusCat;
+        this.questionsList = questionsList;
+        this.questiondeleted = questiondeleted;
+        this.questionItemdeleted = questionItemdeleted;
+        this.userCreate = userCreate;
+        this.userLastModify = userLastModify;
     }
 
     public Long getCodeQuiz() {
@@ -75,12 +92,28 @@ public class QuizSave {
         this.statusCat = statusCat;
     }
 
-    public List<Questions> getQuestionsList() {
+    public List<QuestionContainer> getQuestionsList() {
         return questionsList;
     }
 
-    public void setQuestionsList(List<Questions> questionsList) {
+    public void setQuestionsList(List<QuestionContainer> questionsList) {
         this.questionsList = questionsList;
+    }
+
+    public List<Questions> getQuestiondeleted() {
+        return questiondeleted;
+    }
+
+    public void setQuestiondeleted(List<Questions> questiondeleted) {
+        this.questiondeleted = questiondeleted;
+    }
+
+    public List<QuestionItem> getQuestionItemdeleted() {
+        return questionItemdeleted;
+    }
+
+    public void setQuestionItemdeleted(List<QuestionItem> questionItemdeleted) {
+        this.questionItemdeleted = questionItemdeleted;
     }
 
     public Long getUserCreate() {
@@ -98,6 +131,4 @@ public class QuizSave {
     public void setUserLastModify(Long userLastModify) {
         this.userLastModify = userLastModify;
     }
-    
-    
 }

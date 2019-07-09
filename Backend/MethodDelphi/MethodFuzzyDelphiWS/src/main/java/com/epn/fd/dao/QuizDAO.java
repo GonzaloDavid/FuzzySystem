@@ -5,10 +5,12 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.EmailContainer;
 import com.epn.dtos.ListAndCountContainer;
 
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizContainerList;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
@@ -31,6 +33,8 @@ public class QuizDAO extends GenericDAO<Quiz> {
     QuestionDAO questionDAO;
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
+    @Inject
+    Mail mail;
 
     private final QuizMapper quizMapper = Mappers.getMapper(QuizMapper.class);
 
@@ -47,12 +51,12 @@ public class QuizDAO extends GenericDAO<Quiz> {
         return containers;
     }
 
-    public Quiz saveQuiz(QuizContainer quizcontainer) {
+    public Quiz saveQuiz(QuizSave quizcontainer) {
         Quiz quiz = new Quiz();
         if (quizcontainer.getCodeQuiz() != null) {
             quiz.setCodeQuiz(quizcontainer.getCodeQuiz());
-        }else{
-         quiz.setCodeQuiz(new Long(0));
+        } else {
+            quiz.setCodeQuiz(new Long(0));
         }
         quiz.setNameQuiz(quizcontainer.getNameQuiz());
         quiz.setDescription(quizcontainer.getDescription());
@@ -61,10 +65,11 @@ public class QuizDAO extends GenericDAO<Quiz> {
         quiz.setStatus(quizcontainer.getStatus());
         //quiz.setUserCreate(quizcontainer.getUserCreate());
         //quiz.setUserLastModify(quizcontainer.getUserLastModify());
-        // update(quiz);
-        em.merge(quiz);
-        em.flush();
-        
+        //update(quiz);
+        update(quiz);
+        //flush();
+        questionDAO.deleteQuestion(quizcontainer);
+        itemQuestionDAO.deleteItem(quizcontainer);
         questionDAO.saveQuestion(quizcontainer, quiz);
         return quiz;
     }
@@ -94,5 +99,16 @@ public class QuizDAO extends GenericDAO<Quiz> {
         if (foundelement != null) {
             remove(foundelement);
         }
+    }
+
+    public void sendquiz(EmailContainer emailcontainer) {
+        List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getCodeQuiz());
+        emailcontainer.getPersons().forEach(person -> {
+            String msg="Saludos Estimad@ "+person.getName()+" ha sido seleccionado para participar en una encuesta acerca de "+quiz.get(0).getDescription();
+            String footer="\nPor favor de click en el siguiente enlace para continuar ...";
+            String body=msg+"\n"+footer;
+            mail.sendEmail(person.getEmail(), quiz.get(0).getNameQuiz(), body);
+        });
+
     }
 }

@@ -6,6 +6,7 @@
 package com.epn.fd.dao;
 
 import com.epn.dtos.ItemQuestionContainer;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.QuestionItem;
 import com.epn.entities.Questions;
@@ -21,17 +22,17 @@ import org.mapstruct.factory.Mappers;
  */
 @Stateless
 public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
-    
+
     private final ItemQuestionMapper questionMapper = Mappers.getMapper(ItemQuestionMapper.class);
-    
+
     public ItemQuestionDAO() {
         super(QuestionItem.class);
     }
-    
+
     public List<ItemQuestionContainer> getItembycodeQuestion(Long codeQuestion) {
         SearchObject search = new SearchObject("codeQuizItem");
         search.addParameter("codeQuestions.codeQuestions", FilterTypes.EQUAL, codeQuestion);
-        
+
         List<QuestionItem> resultList = search(search);
         List<ItemQuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
         return containers;
@@ -49,5 +50,17 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
             em.flush();
         });
     }
-    
+
+    public void deleteItem(QuizSave quizContainer) {
+        quizContainer.getQuestionItemdeleted().forEach(elementremove -> {
+            QuestionItem foundelement = new QuestionItem();
+            if (elementremove.getCodeQuizItem() != null) {
+                foundelement = find(elementremove.getCodeQuizItem());
+                if (foundelement != null) {
+                    remove(foundelement);
+                }
+            }
+        });
+    }
+
 }

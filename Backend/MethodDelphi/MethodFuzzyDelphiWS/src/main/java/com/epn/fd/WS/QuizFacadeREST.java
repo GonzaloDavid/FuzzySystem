@@ -5,6 +5,7 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.EmailContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
 import com.epn.entities.Quiz;
@@ -50,9 +51,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Path("getquiz")
     @Transactional
     @Produces({MediaType.APPLICATION_JSON})
-    public String getQuizbycode(
-            @QueryParam("codeQuiz") Long codeQuiz
-    ) throws JsonProcessingException {
+    public String getQuizbycode(@QueryParam("codeQuiz") Long codeQuiz) throws JsonProcessingException {
         List<QuizContainer> containers = new ArrayList<>();
         containers = quizDAO.getQuizbycode(codeQuiz);
         ObjectMapper mapper = new ObjectMapper();
@@ -78,7 +77,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void saveQuiz(QuizContainer quizcontainer) {
+    public void saveQuiz(QuizSave quizcontainer) {
 
         quizDAO.saveQuiz(quizcontainer);
 
@@ -107,6 +106,16 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Quiz entity) {
         super.edit(entity);
+    }
+
+    @POST
+    @Path("sendmail")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void sendMail(EmailContainer emailcontainer) {
+
+        quizDAO.sendquiz(emailcontainer);
+
     }
 
     @DELETE

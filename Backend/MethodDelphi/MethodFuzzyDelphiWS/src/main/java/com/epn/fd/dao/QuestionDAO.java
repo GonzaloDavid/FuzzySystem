@@ -43,7 +43,19 @@ public class QuestionDAO extends GenericDAO<Questions> {
         return containers;
     }
 
-    public void saveQuestion(QuizContainer quizContainer, Quiz quiz) {
+    public void deleteQuestion(QuizSave quizContainer) {
+        quizContainer.getQuestiondeleted().forEach(elementremove -> {
+            Questions foundelement = new Questions();
+            if (elementremove.getCodeQuestions() != null) {
+                foundelement = find(elementremove.getCodeQuestions());
+                if (foundelement != null) {
+                    remove(foundelement);
+                }
+            }
+        });
+    }
+
+    public void saveQuestion(QuizSave quizContainer, Quiz quiz) {
 
         quizContainer.getQuestionsList().forEach(question -> {
             Questions questionstemp = new Questions();

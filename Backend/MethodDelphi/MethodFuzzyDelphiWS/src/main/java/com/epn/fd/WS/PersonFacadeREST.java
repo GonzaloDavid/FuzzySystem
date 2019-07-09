@@ -5,7 +5,9 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.EmailContainer;
 import com.epn.entities.Person;
+import com.epn.fd.dao.Mail;
 import com.epn.fd.dao.PersonDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -70,6 +72,7 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
     public void create(Person entity) {
         super.create(entity);
     }
+
     @POST
     @Path("delete")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -77,7 +80,8 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
 
         personDAO.deletePerson(idlist);
     }
-    
+
+
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
