@@ -38,10 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
     , @NamedQuery(name = "Person.findByCodePerson", query = "SELECT p FROM Person p WHERE p.codePerson = :codePerson")
     , @NamedQuery(name = "Person.findByIdentify", query = "SELECT p FROM Person p WHERE p.identify = :identify")
-    , @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName")
-    , @NamedQuery(name = "Person.findByMiddleName", query = "SELECT p FROM Person p WHERE p.middleName = :middleName")
-    , @NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")
-    , @NamedQuery(name = "Person.findByLastNameMatern", query = "SELECT p FROM Person p WHERE p.lastNameMatern = :lastNameMatern")
     , @NamedQuery(name = "Person.findByName", query = "SELECT p FROM Person p WHERE p.name = :name")
     , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
     , @NamedQuery(name = "Person.findByBirthday", query = "SELECT p FROM Person p WHERE p.birthday = :birthday")
@@ -62,17 +58,11 @@ public class Person implements Serializable {
     @Column(name = "identify")
     private String identify;
     @Basic(optional = false)
-    @Column(name = "firstName")
-    private String firstName;
+    @Column(name = "names")
+    private String names;
     @Basic(optional = false)
-    @Column(name = "middleName")
-    private String middleName;
-    @Basic(optional = false)
-    @Column(name = "lastName")
-    private String lastName;
-    @Basic(optional = false)
-    @Column(name = "lastNameMatern")
-    private String lastNameMatern;
+    @Column(name = "lastNames")
+    private String lastNames;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -149,20 +139,50 @@ public class Person implements Serializable {
         this.codePerson = codePerson;
     }
 
-    public Person(Long codePerson, String identify, String firstName, String middleName, String lastName, String lastNameMatern, String name, String email, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public Person(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, Catalogueitem catalogueitem, Catalogueitem catalogueitem1, Catalogueitem catalogueitem2, Catalogueitem catalogueitem4) {
         this.codePerson = codePerson;
         this.identify = identify;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.lastNameMatern = lastNameMatern;
+        this.names = names;
+        this.lastNames = lastNames;
         this.name = name;
         this.email = email;
+        this.birthday = birthday;
+        this.sexCat = sexCat;
         this.sex = sex;
+        this.typePersonCat = typePersonCat;
+        this.typePerson = typePerson;
+        this.typeIdentifyCat = typeIdentifyCat;
+        this.typeIdentify = typeIdentify;
+        this.academicDegreeCat = academicDegreeCat;
+        this.academicDegree = academicDegree;
+        this.country = country;
+        this.statusCat = statusCat;
+        this.status = status;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+        this.adminisEmailList = adminisEmailList;
+        this.catalogueitem = catalogueitem;
+        this.catalogueitem1 = catalogueitem1;
+        this.catalogueitem2 = catalogueitem2;
+        this.catalogueitem4 = catalogueitem4;
+    }
+
+    public String getNames() {
+        return names;
+    }
+
+    public void setNames(String names) {
+        this.names = names;
+    }
+
+    public String getLastNames() {
+        return lastNames;
+    }
+
+    public void setLastNames(String lastNames) {
+        this.lastNames = lastNames;
     }
 
     public Long getCodePerson() {
@@ -216,7 +236,7 @@ public class Person implements Serializable {
     public void setSexCat(String sexCat) {
         this.sexCat = sexCat;
     }
-    
+
     public String getTypeIdentify() {
         return typeIdentify;
     }
@@ -243,38 +263,6 @@ public class Person implements Serializable {
 
     public void setIdentify(String identify) {
         this.identify = identify;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLastNameMatern() {
-        return lastNameMatern;
-    }
-
-    public void setLastNameMatern(String lastNameMatern) {
-        this.lastNameMatern = lastNameMatern;
     }
 
     public String getName() {

@@ -17,10 +17,8 @@ public class PersonContainer {
 
     private Long codePerson;
     private String identify;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String lastNameMatern;
+    private String names;
+    private String lastNames;
     private String name;
     private String email;
     private Date birthday;
@@ -44,16 +42,15 @@ public class PersonContainer {
     public PersonContainer() {
     }
 
-    public PersonContainer(Long codePerson, String identify, String firstName, String middleName, String lastName, String lastNameMatern, String name, String email, Date birthday, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status) {
+    public PersonContainer(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status) {
         this.codePerson = codePerson;
         this.identify = identify;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.lastNameMatern = lastNameMatern;
+        this.names = names;
+        this.lastNames = lastNames;
         this.name = name;
         this.email = email;
         this.birthday = birthday;
+        this.sexCat = sexCat;
         this.sex = sex;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
@@ -69,6 +66,22 @@ public class PersonContainer {
         this.country = country;
         this.statusCat = statusCat;
         this.status = status;
+    }
+
+    public String getNames() {
+        return names;
+    }
+
+    public void setNames(String names) {
+        this.names = names;
+    }
+
+    public String getLastNames() {
+        return lastNames;
+    }
+
+    public void setLastNames(String lastNames) {
+        this.lastNames = lastNames;
     }
 
     public List<AdminisEmail> getAdminisEmailList() {
@@ -151,7 +164,6 @@ public class PersonContainer {
         this.status = status;
     }
 
-   
     public Long getCodePerson() {
         return codePerson;
     }
@@ -166,38 +178,6 @@ public class PersonContainer {
 
     public void setIdentify(String identify) {
         this.identify = identify;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getLastNameMatern() {
-        return lastNameMatern;
-    }
-
-    public void setLastNameMatern(String lastNameMatern) {
-        this.lastNameMatern = lastNameMatern;
     }
 
     public String getName() {
@@ -271,6 +251,5 @@ public class PersonContainer {
     public void setSexCat(String sexCat) {
         this.sexCat = sexCat;
     }
-    
 
 }
