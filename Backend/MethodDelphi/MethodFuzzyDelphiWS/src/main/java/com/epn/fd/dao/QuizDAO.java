@@ -14,6 +14,7 @@ import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
+import com.epn.exception.AppException;
 import com.epn.mapper.QuizMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,8 +81,10 @@ public class QuizDAO extends GenericDAO<Quiz> {
         // search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz); para filtrar u ordenar con like,order,equal
 
         long count = search(searchObject).size();
+
         searchObject.setFrom(from);
         searchObject.setTo(to);
+
         List<Quiz> resultList = search(searchObject);
         List<QuizContainerList> containers = quizMapper.sourceListToDestinationList(resultList);
 
@@ -89,6 +92,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(surveysListAndCount);
+
         return response;
     }
 
@@ -96,18 +100,28 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
         Quiz foundelement = new Quiz();
         foundelement = find(quiz.getCodeQuiz());
-        if (foundelement != null) {
-            remove(foundelement);
+        try {
+            if (foundelement != null) {
+                remove(foundelement);
+            }
+        } catch (Exception e) {
+            throw new AppException(e.toString(), "NO SE ELIMINO CORRECTAMENTE");
         }
+
     }
 
     public void sendquiz(EmailContainer emailcontainer) {
         List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
-            String msg="Saludos Estimad@ "+person.getName()+" ha sido seleccionado para participar en una encuesta acerca de "+quiz.get(0).getDescription();
-            String footer="\nPor favor de click en el siguiente enlace para continuar ...";
-            String body=msg+"\n"+footer;
-            mail.sendEmail(person.getEmail(), quiz.get(0).getNameQuiz(), body);
+            try {
+                String msg = "Saludos Estimad@ " + person.getName() + " ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription();
+                String footer = "\nPor favor de click en el siguiente enlace para continuar ...";
+                String body = msg + "\n" + footer;
+                mail.sendEmail(person.getEmail(), quiz.get(0).getNameQuiz(), body);
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "NO SE ENVIO EMAIL");
+            }
+
         });
 
     }

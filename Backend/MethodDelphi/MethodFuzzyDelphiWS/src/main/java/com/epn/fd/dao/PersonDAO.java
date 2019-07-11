@@ -9,14 +9,13 @@ import com.epn.dtos.ListAndCountContainer;
 import com.epn.dtos.PersonContainer;
 import com.epn.entities.Person;
 import com.epn.entities.SearchObject;
+import com.epn.exception.AppException;
 import com.epn.mapper.PersonMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import javax.ejb.Stateless;
 import org.mapstruct.factory.Mappers;
-
-
 
 /**
  *
@@ -28,7 +27,7 @@ public class PersonDAO extends GenericDAO<Person> {
     public PersonDAO() {
         super(Person.class);
     }
-   private final PersonMapper personMapper = Mappers.getMapper(PersonMapper.class);
+    private final PersonMapper personMapper = Mappers.getMapper(PersonMapper.class);
 
     public String getallperson(Integer from, Integer to) throws JsonProcessingException {
         SearchObject search = new SearchObject("codePerson");
@@ -48,26 +47,32 @@ public class PersonDAO extends GenericDAO<Person> {
         String response = mapper.writeValueAsString(patientlistandcount);
         return response;
     }
-    public Person savePerson(Person person)
-    {
-        Person p=new Person();
-        update(person);
-         em.flush();
-         p=person;
-         return p;
+
+    public Person savePerson(Person person) {
+        Person p = new Person();
+        try {
+            update(person);
+            p = person;
+        } catch (Exception e) {
+            throw new AppException(e.toString(), "NO SE GUARDO EXPERTO");
+        }
+        return p;
     }
-    public void deletePerson(List<Person> idlist)
-    {     
-          idlist.forEach(elementremove->{
-             Person foundelement= new Person();
-             foundelement=find(elementremove.getCodePerson());
-         
-             if(foundelement!=null)
-             {
-                 remove(foundelement);
-             }
-       });
-         
+
+    public void deletePerson(List<Person> idlist) {
+        idlist.forEach(elementremove -> {
+            Person foundelement = new Person();
+            foundelement = find(elementremove.getCodePerson());
+            try {
+                if (foundelement != null) {
+                remove(foundelement);
+            }
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
+            }
+            
+        });
+
     }
-    
+
 }

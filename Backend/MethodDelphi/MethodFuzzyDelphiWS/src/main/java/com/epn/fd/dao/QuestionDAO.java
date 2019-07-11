@@ -12,6 +12,7 @@ import com.epn.entities.FilterTypes;
 import com.epn.entities.Questions;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
+import com.epn.exception.AppException;
 import com.epn.mapper.QuestionMapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,32 +46,45 @@ public class QuestionDAO extends GenericDAO<Questions> {
 
     public void deleteQuestion(QuizSave quizContainer) {
         quizContainer.getQuestiondeleted().forEach(elementremove -> {
-            Questions foundelement = new Questions();
-            if (elementremove.getCodeQuestions() != null) {
-                foundelement = find(elementremove.getCodeQuestions());
-                if (foundelement != null) {
-                    remove(foundelement);
+            try {
+                Questions foundelement = new Questions();
+                if (elementremove.getCodeQuestions() != null) {
+                    foundelement = find(elementremove.getCodeQuestions());
+                    if (foundelement != null) {
+                        remove(foundelement);
+                    }
                 }
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "NO PUDO ELIMINAR LAS PREGUNTAS");
             }
+
         });
     }
 
     public void saveQuestion(QuizSave quizContainer, Quiz quiz) {
 
         quizContainer.getQuestionsList().forEach(question -> {
-            Questions questionstemp = new Questions();
-            questionstemp.setCodeQuestions(question.getCodeQuestions());
-            questionstemp.setDescription(question.getDescription());
-            questionstemp.setStatus(question.getStatus());
-            questionstemp.setStatusCat(question.getStatusCat());
-            questionstemp.setQuestion(question.getQuestion());
-            questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
-            questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
-            questionstemp.setJumpNext(question.getJumpNext());
-            questionstemp.setCodeQuiz(quiz);
-            update(questionstemp);
-            em.flush();
-            itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
+            try {
+                Questions questionstemp = new Questions();
+                questionstemp.setCodeQuestions(question.getCodeQuestions());
+                questionstemp.setDescription(question.getDescription());
+                questionstemp.setStatus(question.getStatus());
+                questionstemp.setStatusCat(question.getStatusCat());
+                questionstemp.setQuestion(question.getQuestion());
+                questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
+                questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
+                questionstemp.setJumpNext(question.getJumpNext());
+                questionstemp.setCodeQuiz(quiz);
+                update(questionstemp);
+                try {
+                    itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
+                } catch (Exception ex) {
+                     throw new AppException(ex.toString(), "NO SE GUARDO ITEMS DE PREGUNTAS");
+                }
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "NO SE GUARDO PREGUNTAS");
+            }
+
         });
 
     }
