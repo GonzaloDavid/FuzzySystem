@@ -9,17 +9,18 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,11 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "QuestionItem.findAll", query = "SELECT q FROM QuestionItem q"),
-    @NamedQuery(name = "QuestionItem.findByCodeQuizItem", query = "SELECT q FROM QuestionItem q WHERE q.codeQuizItem = :codeQuizItem"),
+    @NamedQuery(name = "QuestionItem.findByCodeQuizItem", query = "SELECT q FROM QuestionItem q WHERE q.questionItemPK.codeQuizItem = :codeQuizItem"),
+    @NamedQuery(name = "QuestionItem.findByCodeQuestions", query = "SELECT q FROM QuestionItem q WHERE q.questionItemPK.codeQuestions = :codeQuestions"),
+    @NamedQuery(name = "QuestionItem.findByCodeQuiz", query = "SELECT q FROM QuestionItem q WHERE q.questionItemPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "QuestionItem.findByItemLabel", query = "SELECT q FROM QuestionItem q WHERE q.itemLabel = :itemLabel"),
-    @NamedQuery(name = "QuestionItem.findByMaximunValue", query = "SELECT q FROM QuestionItem q WHERE q.maximunValue = :maximunValue"),
-    @NamedQuery(name = "QuestionItem.findByMinimumValue", query = "SELECT q FROM QuestionItem q WHERE q.minimumValue = :minimumValue"),
-    @NamedQuery(name = "QuestionItem.findByAverageValue", query = "SELECT q FROM QuestionItem q WHERE q.averageValue = :averageValue"),
     @NamedQuery(name = "QuestionItem.findByDateCreate", query = "SELECT q FROM QuestionItem q WHERE q.dateCreate = :dateCreate"),
     @NamedQuery(name = "QuestionItem.findByDateLastModify", query = "SELECT q FROM QuestionItem q WHERE q.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate"),
@@ -43,64 +43,63 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class QuestionItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    protected QuestionItemPK questionItemPK;
     @Basic(optional = false)
-    @Column(name = "codeQuizItem")
-    private Long codeQuizItem;
-    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "itemLabel")
     private String itemLabel;
-    @Column(name = "maximunValue")
-    private String maximunValue;
-    @Column(name = "minimumValue")
-    private String minimumValue;
-    @Column(name = "averageValue")
-    private String averageValue;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions")
+    @JoinColumns({
+        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Questions codeQuestions;
+    private Questions questions;
 
     public QuestionItem() {
     }
 
-    public QuestionItem(Long codeQuizItem) {
-        this.codeQuizItem = codeQuizItem;
+    public QuestionItem(QuestionItemPK questionItemPK) {
+        this.questionItemPK = questionItemPK;
     }
 
-    public QuestionItem(Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, Questions codeQuestions) {
-        this.codeQuizItem = codeQuizItem;
+    public QuestionItem(QuestionItemPK questionItemPK, String itemLabel, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+        this.questionItemPK = questionItemPK;
         this.itemLabel = itemLabel;
-        this.maximunValue = maximunValue;
-        this.minimumValue = minimumValue;
-        this.averageValue = averageValue;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.codeQuestions = codeQuestions;
     }
 
-    public Long getCodeQuizItem() {
-        return codeQuizItem;
+    public QuestionItem(long codeQuizItem, long codeQuestions, long codeQuiz) {
+        this.questionItemPK = new QuestionItemPK(codeQuizItem, codeQuestions, codeQuiz);
     }
 
-    public void setCodeQuizItem(Long codeQuizItem) {
-        this.codeQuizItem = codeQuizItem;
+    public QuestionItemPK getQuestionItemPK() {
+        return questionItemPK;
+    }
+
+    public void setQuestionItemPK(QuestionItemPK questionItemPK) {
+        this.questionItemPK = questionItemPK;
     }
 
     public String getItemLabel() {
@@ -109,30 +108,6 @@ public class QuestionItem implements Serializable {
 
     public void setItemLabel(String itemLabel) {
         this.itemLabel = itemLabel;
-    }
-
-    public String getMaximunValue() {
-        return maximunValue;
-    }
-
-    public void setMaximunValue(String maximunValue) {
-        this.maximunValue = maximunValue;
-    }
-
-    public String getMinimumValue() {
-        return minimumValue;
-    }
-
-    public void setMinimumValue(String minimumValue) {
-        this.minimumValue = minimumValue;
-    }
-
-    public String getAverageValue() {
-        return averageValue;
-    }
-
-    public void setAverageValue(String averageValue) {
-        this.averageValue = averageValue;
     }
 
     public Date getDateCreate() {
@@ -167,18 +142,18 @@ public class QuestionItem implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public Questions getCodeQuestions() {
-        return codeQuestions;
+    public Questions getQuestions() {
+        return questions;
     }
 
-    public void setCodeQuestions(Questions codeQuestions) {
-        this.codeQuestions = codeQuestions;
+    public void setQuestions(Questions questions) {
+        this.questions = questions;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codeQuizItem != null ? codeQuizItem.hashCode() : 0);
+        hash += (questionItemPK != null ? questionItemPK.hashCode() : 0);
         return hash;
     }
 
@@ -189,7 +164,7 @@ public class QuestionItem implements Serializable {
             return false;
         }
         QuestionItem other = (QuestionItem) object;
-        if ((this.codeQuizItem == null && other.codeQuizItem != null) || (this.codeQuizItem != null && !this.codeQuizItem.equals(other.codeQuizItem))) {
+        if ((this.questionItemPK == null && other.questionItemPK != null) || (this.questionItemPK != null && !this.questionItemPK.equals(other.questionItemPK))) {
             return false;
         }
         return true;
@@ -197,7 +172,7 @@ public class QuestionItem implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.QuestionItem[ codeQuizItem=" + codeQuizItem + " ]";
+        return "com.epn.entities.QuestionItem[ questionItemPK=" + questionItemPK + " ]";
     }
     
 }

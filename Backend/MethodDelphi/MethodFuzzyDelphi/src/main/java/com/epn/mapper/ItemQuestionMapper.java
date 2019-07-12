@@ -18,8 +18,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface ItemQuestionMapper {
 
-    @Mapping(target = "codeQuestions", expression = "java(source.getCodeQuestions().getCodeQuestions())")
-    @Mapping(target = "codeQuiz", expression = "java(source.getCodeQuestions().getCodeQuiz().getCodeQuiz())")
+   // @Mapping(target = "codeQuestions", expression = "java(source.getCodeQuestions().getCodeQuestions())")
+   // @Mapping(target = "codeQuiz", expression = "java(source.getCodeQuestions().getCodeQuiz().getCodeQuiz())")
     ItemQuestionContainer sourceToDestination(QuestionItem source);
 
     List<ItemQuestionContainer> sourceListToDestination(List<QuestionItem> source);

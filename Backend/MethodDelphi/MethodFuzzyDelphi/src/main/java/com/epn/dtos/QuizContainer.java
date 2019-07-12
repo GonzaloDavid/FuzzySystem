@@ -20,7 +20,6 @@ public class QuizContainer {
     private String status;
     private String statusCat;
     private List<QuestionContainer> questionsList;
-    //private List<ItemQuestionContainer> questionItemList;
     private Long userCreate;
     private Long userLastModify;
 
@@ -94,24 +93,6 @@ public class QuizContainer {
     public void setStatusCat(String statusCat) {
         this.statusCat = statusCat;
     }
-/*
-    public List<Questions> getQuestionlist() {
-        return questionlist;
-    }
-
-    public void setQuestionlist(List<Questions> questionlist) {
-        this.questionlist = questionlist;
-    }*/
-/*
-    public List<QuestionItem> getQuestionItemList() {
-        return questionItemList;
-    }
-
-    public void setQuestionItemList(List<QuestionItem> questionItemList) {
-        this.questionItemList = questionItemList;
-    }
-
- */
 
     public Long getUserCreate() {
         return userCreate;

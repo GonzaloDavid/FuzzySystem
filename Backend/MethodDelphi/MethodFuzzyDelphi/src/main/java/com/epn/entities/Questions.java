@@ -11,10 +11,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -23,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,94 +35,115 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
-    @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.codeQuestions = :codeQuestions"),
+    @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuestions = :codeQuestions"),
+    @NamedQuery(name = "Questions.findByCodeQuiz", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question"),
     @NamedQuery(name = "Questions.findByDescription", query = "SELECT q FROM Questions q WHERE q.description = :description"),
     @NamedQuery(name = "Questions.findByStatusCat", query = "SELECT q FROM Questions q WHERE q.statusCat = :statusCat"),
     @NamedQuery(name = "Questions.findByStatus", query = "SELECT q FROM Questions q WHERE q.status = :status"),
-    @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
-    @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
-    @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
     @NamedQuery(name = "Questions.findByMinimumParameterSetting", query = "SELECT q FROM Questions q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
     @NamedQuery(name = "Questions.findByMaximumParameterSetting", query = "SELECT q FROM Questions q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
     @NamedQuery(name = "Questions.findByJumpNext", query = "SELECT q FROM Questions q WHERE q.jumpNext = :jumpNext"),
+    @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
     @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
-
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    protected QuestionsPK questionsPK;
     @Basic(optional = false)
-    @Column(name = "codeQuestions")
-    private Long codeQuestions;
-    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "question")
     private String question;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "statusCat")
     private String statusCat;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "status")
     private String status;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "minimumParameterSetting")
     private String minimumParameterSetting;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "maximumParameterSetting")
     private String maximumParameterSetting;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "jumpNext")
     private String jumpNext;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz")
+    @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Quiz codeQuiz;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeQuestions")
+    private Quiz quiz;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
     private List<QuestionItem> questionItemList;
 
     public Questions() {
     }
 
-    public Questions(Long codeQuestions) {
-        this.codeQuestions = codeQuestions;
+    public Questions(QuestionsPK questionsPK) {
+        this.questionsPK = questionsPK;
     }
 
-    public Questions(Long codeQuestions, String question, String description, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
-        this.codeQuestions = codeQuestions;
+    public Questions(QuestionsPK questionsPK, String question, String description, String statusCat, String status, String minimumParameterSetting, String maximumParameterSetting, String jumpNext, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+        this.questionsPK = questionsPK;
         this.question = question;
         this.description = description;
         this.statusCat = statusCat;
         this.status = status;
+        this.minimumParameterSetting = minimumParameterSetting;
+        this.maximumParameterSetting = maximumParameterSetting;
+        this.jumpNext = jumpNext;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
     }
 
-    public Long getCodeQuestions() {
-        return codeQuestions;
+    public Questions(long codeQuestions, long codeQuiz) {
+        this.questionsPK = new QuestionsPK(codeQuestions, codeQuiz);
     }
 
-    public void setCodeQuestions(Long codeQuestions) {
-        this.codeQuestions = codeQuestions;
+    public QuestionsPK getQuestionsPK() {
+        return questionsPK;
+    }
+
+    public void setQuestionsPK(QuestionsPK questionsPK) {
+        this.questionsPK = questionsPK;
     }
 
     public String getQuestion() {
@@ -157,6 +178,30 @@ public class Questions implements Serializable {
         this.status = status;
     }
 
+    public String getMinimumParameterSetting() {
+        return minimumParameterSetting;
+    }
+
+    public void setMinimumParameterSetting(String minimumParameterSetting) {
+        this.minimumParameterSetting = minimumParameterSetting;
+    }
+
+    public String getMaximumParameterSetting() {
+        return maximumParameterSetting;
+    }
+
+    public void setMaximumParameterSetting(String maximumParameterSetting) {
+        this.maximumParameterSetting = maximumParameterSetting;
+    }
+
+    public String getJumpNext() {
+        return jumpNext;
+    }
+
+    public void setJumpNext(String jumpNext) {
+        this.jumpNext = jumpNext;
+    }
+
     public Date getDateCreate() {
         return dateCreate;
     }
@@ -189,38 +234,15 @@ public class Questions implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public Quiz getCodeQuiz() {
-        return codeQuiz;
+    public Quiz getQuiz() {
+        return quiz;
     }
 
-    public void setCodeQuiz(Quiz codeQuiz) {
-        this.codeQuiz = codeQuiz;
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
-    public String getMinimumParameterSetting() {
-        return minimumParameterSetting;
-    }
-
-    public void setMinimumParameterSetting(String minimumParameterSetting) {
-        this.minimumParameterSetting = minimumParameterSetting;
-    }
-
-    public String getMaximumParameterSetting() {
-        return maximumParameterSetting;
-    }
-
-    public void setMaximumParameterSetting(String maximumParameterSetting) {
-        this.maximumParameterSetting = maximumParameterSetting;
-    }
-
-    public String getJumpNext() {
-        return jumpNext;
-    }
-
-    public void setJumpNext(String jumpNext) {
-        this.jumpNext = jumpNext;
-    }
-
+    @XmlTransient
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
     }
@@ -232,7 +254,7 @@ public class Questions implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codeQuestions != null ? codeQuestions.hashCode() : 0);
+        hash += (questionsPK != null ? questionsPK.hashCode() : 0);
         return hash;
     }
 
@@ -243,7 +265,7 @@ public class Questions implements Serializable {
             return false;
         }
         Questions other = (Questions) object;
-        if ((this.codeQuestions == null && other.codeQuestions != null) || (this.codeQuestions != null && !this.codeQuestions.equals(other.codeQuestions))) {
+        if ((this.questionsPK == null && other.questionsPK != null) || (this.questionsPK != null && !this.questionsPK.equals(other.questionsPK))) {
             return false;
         }
         return true;
@@ -251,7 +273,7 @@ public class Questions implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.Questions[ codeQuestions=" + codeQuestions + " ]";
+        return "com.epn.entities.Questions[ questionsPK=" + questionsPK + " ]";
     }
-
+    
 }

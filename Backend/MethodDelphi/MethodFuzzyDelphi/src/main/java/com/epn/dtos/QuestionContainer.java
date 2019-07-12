@@ -5,7 +5,7 @@
  */
 package com.epn.dtos;
 
-import com.epn.entities.Quiz;
+import com.epn.entities.QuestionsPK;
 import java.util.List;
 
 /**
@@ -14,8 +14,7 @@ import java.util.List;
  */
 public class QuestionContainer {
 
-    private Long codeQuestions;
-    private Long codeQuiz;
+    private QuestionsPK questionsPK;
     private String question;
     private String description;
     private String statusCat;
@@ -30,9 +29,8 @@ public class QuestionContainer {
     public QuestionContainer() {
     }
 
-    public QuestionContainer(Long codeQuestions, Long codeQuiz, String question, String description, String statusCat, String status, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
-        this.codeQuestions = codeQuestions;
-        this.codeQuiz = codeQuiz;
+    public QuestionContainer(QuestionsPK questionsPK, String question, String description, String statusCat, String status, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
+        this.questionsPK = questionsPK;
         this.question = question;
         this.description = description;
         this.statusCat = statusCat;
@@ -45,22 +43,14 @@ public class QuestionContainer {
         this.questionItemList = questionItemList;
     }
 
-    public Long getCodeQuestions() {
-        return codeQuestions;
+    public QuestionsPK getQuestionsPK() {
+        return questionsPK;
     }
 
-    public void setCodeQuestions(Long codeQuestions) {
-        this.codeQuestions = codeQuestions;
+    public void setQuestionsPK(QuestionsPK questionsPK) {
+        this.questionsPK = questionsPK;
     }
-
-    public Long getCodeQuiz() {
-        return codeQuiz;
-    }
-
-    public void setCodeQuiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
-    }
-
+    
     public String getQuestion() {
         return question;
     }

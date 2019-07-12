@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Stateless
 @Path("com.epn.entities.catalogue")

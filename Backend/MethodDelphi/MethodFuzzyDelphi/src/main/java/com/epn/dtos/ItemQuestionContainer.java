@@ -5,15 +5,15 @@
  */
 package com.epn.dtos;
 
+import com.epn.entities.QuestionItemPK;
+
 /**
  *
  * @author david
  */
 public class ItemQuestionContainer {
 
-    private Long codeQuiz;
-    private Long codeQuestions;
-    private Long codeQuizItem;
+    private QuestionItemPK questionItemPK;
     private String itemLabel;
     private String maximunValue;
     private String minimumValue;
@@ -24,24 +24,18 @@ public class ItemQuestionContainer {
     public ItemQuestionContainer() {
     }
 
-    public ItemQuestionContainer(Long codeQuiz, Long codeQuestions, Long codeQuizItem, String itemLabel, String maximunValue, String minimumValue, String averageValue, long userCreate, long userLastModify) {
-        this.codeQuiz = codeQuiz;
-        this.codeQuestions = codeQuestions;
-        this.codeQuizItem = codeQuizItem;
+    public ItemQuestionContainer(QuestionItemPK questionItemPK) {
+        this.questionItemPK = questionItemPK;
+    }
+
+    public ItemQuestionContainer(QuestionItemPK questionItemPK, String itemLabel, String maximunValue, String minimumValue, String averageValue, long userCreate, long userLastModify) {
+        this.questionItemPK = questionItemPK;
         this.itemLabel = itemLabel;
         this.maximunValue = maximunValue;
         this.minimumValue = minimumValue;
         this.averageValue = averageValue;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-    }
-
-    public Long getCodeQuizItem() {
-        return codeQuizItem;
-    }
-
-    public void setCodeQuizItem(Long codeQuizItem) {
-        this.codeQuizItem = codeQuizItem;
     }
 
     public String getItemLabel() {
@@ -92,21 +86,12 @@ public class ItemQuestionContainer {
         this.userLastModify = userLastModify;
     }
 
-    public Long getCodeQuiz() {
-        return codeQuiz;
+    public QuestionItemPK getQuestionItemPK() {
+        return questionItemPK;
     }
 
-    public void setCodeQuiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
+    public void setQuestionItemPK(QuestionItemPK questionItemPK) {
+        this.questionItemPK = questionItemPK;
     }
-
-    public Long getCodeQuestions() {
-        return codeQuestions;
-    }
-
-    public void setCodeQuestions(Long codeQuestions) {
-        this.codeQuestions = codeQuestions;
-    }
-
    
 }

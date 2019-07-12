@@ -48,8 +48,8 @@ public class QuestionDAO extends GenericDAO<Questions> {
         quizContainer.getQuestiondeleted().forEach(elementremove -> {
             try {
                 Questions foundelement = new Questions();
-                if (elementremove.getCodeQuestions() != null) {
-                    foundelement = find(elementremove.getCodeQuestions());
+                if (elementremove.getQuestionsPK().getCodeQuestions() != 0) {
+                    foundelement = find(elementremove.getQuestionsPK().getCodeQuestions());
                     if (foundelement != null) {
                         remove(foundelement);
                     }
@@ -66,7 +66,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
         quizContainer.getQuestionsList().forEach(question -> {
             try {
                 Questions questionstemp = new Questions();
-                questionstemp.setCodeQuestions(question.getCodeQuestions());
+                questionstemp.getQuestionsPK().setCodeQuestions(question.getQuestionsPK().getCodeQuestions());
                 questionstemp.setDescription(question.getDescription());
                 questionstemp.setStatus(question.getStatus());
                 questionstemp.setStatusCat(question.getStatusCat());
@@ -74,7 +74,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
                 questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
                 questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
                 questionstemp.setJumpNext(question.getJumpNext());
-                questionstemp.setCodeQuiz(quiz);
+                questionstemp.setQuiz(quiz);
                 update(questionstemp);
                 try {
                     itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());

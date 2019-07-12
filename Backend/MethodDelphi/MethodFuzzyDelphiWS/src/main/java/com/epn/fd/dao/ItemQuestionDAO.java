@@ -42,10 +42,10 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
     public void saveItem(Questions questions, List<ItemQuestionContainer> questionItemList) {
         questionItemList.forEach(item -> {
                 QuestionItem questionItem = new QuestionItem();
-                if (item.getCodeQuizItem() != null) {
-                    questionItem.setCodeQuizItem(item.getCodeQuizItem());
+                if (item.getQuestionItemPK().getCodeQuizItem() != 0) {
+                    questionItem.getQuestionItemPK().setCodeQuizItem(item.getQuestionItemPK().getCodeQuizItem());
                 }
-                questionItem.setCodeQuestions(questions);
+                questionItem.setQuestions(questions);
                 questionItem.setItemLabel(item.getItemLabel());
                 update(questionItem);
         });
@@ -55,8 +55,8 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
         quizContainer.getQuestionItemdeleted().forEach(elementremove -> {
             QuestionItem foundelement = new QuestionItem();
             try {
-                if (elementremove.getCodeQuizItem() != null) {
-                    foundelement = find(elementremove.getCodeQuizItem());
+                if (elementremove.getQuestionItemPK().getCodeQuizItem()!= 0) {
+                    foundelement = find(elementremove.getQuestionItemPK().getCodeQuizItem());
                     if (foundelement != null) {
                         remove(foundelement);
                     }

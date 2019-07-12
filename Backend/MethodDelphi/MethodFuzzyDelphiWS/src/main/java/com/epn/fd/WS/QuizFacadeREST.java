@@ -32,7 +32,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Stateless
 @Path("com.epn.entities.quiz")
@@ -156,5 +156,5 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
 }
