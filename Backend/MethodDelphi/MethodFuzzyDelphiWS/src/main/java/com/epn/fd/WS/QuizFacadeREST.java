@@ -77,9 +77,9 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void saveQuiz(QuizSave quizcontainer) {
+    public QuizContainer saveQuiz(QuizSave quizcontainer) {
 
-        quizDAO.saveQuiz(quizcontainer);
+       return quizDAO.saveQuiz(quizcontainer);
 
     }
 

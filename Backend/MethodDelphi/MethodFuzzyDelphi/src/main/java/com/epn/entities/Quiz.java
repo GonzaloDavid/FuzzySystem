@@ -24,10 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -50,9 +47,9 @@ public class Quiz implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "codeQuiz")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codeQuiz;
     @Basic(optional = false)
     @Column(name = "nameQuiz")
@@ -68,21 +65,17 @@ public class Quiz implements Serializable {
     @Column(name = "statusCat")
     private String statusCat;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
     @JoinColumns({

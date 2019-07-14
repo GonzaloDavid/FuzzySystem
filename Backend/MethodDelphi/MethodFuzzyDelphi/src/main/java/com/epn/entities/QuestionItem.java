@@ -46,26 +46,21 @@ public class QuestionItem implements Serializable {
     @EmbeddedId
     protected QuestionItemPK questionItemPK;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "itemLabel")
     private String itemLabel;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
     @JoinColumns({

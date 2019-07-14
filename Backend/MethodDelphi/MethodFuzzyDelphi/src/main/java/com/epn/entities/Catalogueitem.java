@@ -63,10 +63,6 @@ public class Catalogueitem implements Serializable {
     @Column(name = "userLastModify")
     private long userLastModify;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem")
-    private List<AdminisEmail> adminisEmailList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem")
-    private List<DelphiCalculations> delphiCalculationsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem")
     private List<Quiz> quizList;
     @JoinColumn(name = "codeCatalogue", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -146,24 +142,6 @@ public class Catalogueitem implements Serializable {
 
     public void setUserLastModify(long userLastModify) {
         this.userLastModify = userLastModify;
-    }
-
-    @XmlTransient
-    public List<AdminisEmail> getAdminisEmailList() {
-        return adminisEmailList;
-    }
-
-    public void setAdminisEmailList(List<AdminisEmail> adminisEmailList) {
-        this.adminisEmailList = adminisEmailList;
-    }
-
-    @XmlTransient
-    public List<DelphiCalculations> getDelphiCalculationsList() {
-        return delphiCalculationsList;
-    }
-
-    public void setDelphiCalculationsList(List<DelphiCalculations> delphiCalculationsList) {
-        this.delphiCalculationsList = delphiCalculationsList;
     }
 
     @XmlTransient

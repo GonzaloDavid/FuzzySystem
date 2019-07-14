@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,6 +22,7 @@ public class QuestionsPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "codeQuestions")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codeQuestions;
     @Basic(optional = false)
     @NotNull

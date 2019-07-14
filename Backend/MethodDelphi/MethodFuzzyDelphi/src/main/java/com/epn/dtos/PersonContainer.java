@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package com.epn.dtos;
-
-import com.epn.entities.AdminisEmail;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class PersonContainer {
     private Date dateLastModify;
     private long userCreate;
     private long userLastModify;
-    private List<AdminisEmail> adminisEmailList;
+//    private List<AdminisEmail> adminisEmailList;
     private String typePersonCat;
     private String typePerson;
     private String typeIdentifyCat;
@@ -42,7 +40,7 @@ public class PersonContainer {
     public PersonContainer() {
     }
 
-    public PersonContainer(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status) {
+    public PersonContainer(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status) {
         this.codePerson = codePerson;
         this.identify = identify;
         this.names = names;
@@ -56,7 +54,6 @@ public class PersonContainer {
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.adminisEmailList = adminisEmailList;
         this.typePersonCat = typePersonCat;
         this.typePerson = typePerson;
         this.typeIdentifyCat = typeIdentifyCat;
@@ -82,14 +79,6 @@ public class PersonContainer {
 
     public void setLastNames(String lastNames) {
         this.lastNames = lastNames;
-    }
-
-    public List<AdminisEmail> getAdminisEmailList() {
-        return adminisEmailList;
-    }
-
-    public void setAdminisEmailList(List<AdminisEmail> adminisEmailList) {
-        this.adminisEmailList = adminisEmailList;
     }
 
     public String getTypePersonCat() {

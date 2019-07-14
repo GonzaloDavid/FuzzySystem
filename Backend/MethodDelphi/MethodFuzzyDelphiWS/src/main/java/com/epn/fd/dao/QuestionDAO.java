@@ -9,7 +9,9 @@ import com.epn.dtos.QuestionContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
+import com.epn.entities.QuestionItem;
 import com.epn.entities.Questions;
+import com.epn.entities.QuestionsPK;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
@@ -36,8 +38,8 @@ public class QuestionDAO extends GenericDAO<Questions> {
     }
 
     public List<QuestionContainer> getQuestionbycodequiz(Long codeQuiz) {
-        SearchObject search = new SearchObject("codeQuestions");
-        search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        SearchObject search = new SearchObject("questionsPK");
+        search.addParameter("questionsPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
 
         List<Questions> resultList = search(search);
         List<QuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
@@ -46,46 +48,48 @@ public class QuestionDAO extends GenericDAO<Questions> {
 
     public void deleteQuestion(QuizSave quizContainer) {
         quizContainer.getQuestiondeleted().forEach(elementremove -> {
-            try {
-                Questions foundelement = new Questions();
-                if (elementremove.getQuestionsPK().getCodeQuestions() != 0) {
-                    foundelement = find(elementremove.getQuestionsPK().getCodeQuestions());
-                    if (foundelement != null) {
+            if (elementremove.getQuestionsPK().getCodeQuestions() != 0) {
+                Questions foundelement = find(elementremove.getQuestionsPK());
+                if (foundelement != null) {
+                    try {
                         remove(foundelement);
+                    } catch (Exception e) {
+                        throw new AppException(e.toString(), "NO PUDO ELIMINAR LAS PREGUNTAS");
                     }
                 }
-            } catch (Exception e) {
-                throw new AppException(e.toString(), "NO PUDO ELIMINAR LAS PREGUNTAS");
             }
 
         });
     }
 
-    public void saveQuestion(QuizSave quizContainer, Quiz quiz) {
+    public List<Questions> saveQuestion(QuizSave quizContainer, Quiz quiz) {
+        List<Questions> questionsaved = new ArrayList();
+        quizContainer.getQuiz().getQuestionsList().forEach(question -> {
 
-        quizContainer.getQuestionsList().forEach(question -> {
+            QuestionsPK questionsPK = new QuestionsPK();
+            questionsPK.setCodeQuestions(question.getQuestionsPK().getCodeQuestions());
+            questionsPK.setCodeQuiz(quiz.getCodeQuiz());
+            Questions questionstemp = new Questions(questionsPK);
+            questionstemp.setDescription(question.getDescription());
+            questionstemp.setStatus(question.getStatus());
+            questionstemp.setStatusCat(question.getStatusCat());
+            questionstemp.setQuestion(question.getQuestion());
+            questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
+            questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
+            questionstemp.setJumpNext(question.getJumpNext());
+            //  questionstemp.setQuiz(quiz);
             try {
-                Questions questionstemp = new Questions();
-                questionstemp.getQuestionsPK().setCodeQuestions(question.getQuestionsPK().getCodeQuestions());
-                questionstemp.setDescription(question.getDescription());
-                questionstemp.setStatus(question.getStatus());
-                questionstemp.setStatusCat(question.getStatusCat());
-                questionstemp.setQuestion(question.getQuestion());
-                questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
-                questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
-                questionstemp.setJumpNext(question.getJumpNext());
-                questionstemp.setQuiz(quiz);
                 update(questionstemp);
-                try {
-                    itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
-                } catch (Exception ex) {
-                     throw new AppException(ex.toString(), "NO SE GUARDO ITEMS DE PREGUNTAS");
-                }
+                Questions questionsaux = new Questions();
+                questionsaux = questionstemp;
+
+                List<QuestionItem> questionItemListsaved = itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
+                questionsaux.setQuestionItemList(questionItemListsaved);
+                questionsaved.add(questionsaux);
             } catch (Exception e) {
                 throw new AppException(e.toString(), "NO SE GUARDO PREGUNTAS");
             }
-
         });
-
+        return questionsaved;
     }
 }

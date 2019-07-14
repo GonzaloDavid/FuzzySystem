@@ -109,8 +109,8 @@ public class Person implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private List<AdminisEmail> adminisEmailList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+   // private List<AdminisEmail> adminisEmailList;
     @JoinColumns({
         @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
         , @JoinColumn(name = "typePerson", referencedColumnName = "codeItem", insertable = false, updatable = false)})
@@ -139,7 +139,7 @@ public class Person implements Serializable {
         this.codePerson = codePerson;
     }
 
-    public Person(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, List<AdminisEmail> adminisEmailList, Catalogueitem catalogueitem, Catalogueitem catalogueitem1, Catalogueitem catalogueitem2, Catalogueitem catalogueitem4) {
+    public Person(Long codePerson, String identify, String names, String lastNames, String name, String email, Date birthday, String sexCat, String sex, String typePersonCat, String typePerson, String typeIdentifyCat, String typeIdentify, String academicDegreeCat, String academicDegree, String country, String statusCat, String status, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, Catalogueitem catalogueitem, Catalogueitem catalogueitem1, Catalogueitem catalogueitem2, Catalogueitem catalogueitem4) {
         this.codePerson = codePerson;
         this.identify = identify;
         this.names = names;
@@ -162,7 +162,6 @@ public class Person implements Serializable {
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.adminisEmailList = adminisEmailList;
         this.catalogueitem = catalogueitem;
         this.catalogueitem1 = catalogueitem1;
         this.catalogueitem2 = catalogueitem2;
@@ -343,15 +342,6 @@ public class Person implements Serializable {
 
     public void setUserLastModify(long userLastModify) {
         this.userLastModify = userLastModify;
-    }
-
-    @XmlTransient
-    public List<AdminisEmail> getAdminisEmailList() {
-        return adminisEmailList;
-    }
-
-    public void setAdminisEmailList(List<AdminisEmail> adminisEmailList) {
-        this.adminisEmailList = adminisEmailList;
     }
 
     public Catalogueitem getCatalogueitem() {

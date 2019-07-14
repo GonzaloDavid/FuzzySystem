@@ -12,6 +12,7 @@ import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizContainerList;
 import com.epn.dtos.QuizSave;
 import com.epn.entities.FilterTypes;
+import com.epn.entities.Questions;
 import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
@@ -52,26 +53,26 @@ public class QuizDAO extends GenericDAO<Quiz> {
         return containers;
     }
 
-    public Quiz saveQuiz(QuizSave quizcontainer) {
-        Quiz quiz = new Quiz();
-        if (quizcontainer.getCodeQuiz() != null) {
-            quiz.setCodeQuiz(quizcontainer.getCodeQuiz());
-        } else {
-            quiz.setCodeQuiz(new Long(0));
-        }
-        quiz.setNameQuiz(quizcontainer.getNameQuiz());
-        quiz.setDescription(quizcontainer.getDescription());
-        quiz.setShortNameQuiz(quizcontainer.getShortNameQuiz());
-        quiz.setStatusCat(quizcontainer.getStatusCat());
-        quiz.setStatus(quizcontainer.getStatus());
-        //quiz.setUserCreate(quizcontainer.getUserCreate());
-        //quiz.setUserLastModify(quizcontainer.getUserLastModify());
+    public QuizContainer saveQuiz(QuizSave quizcontainer) {
+
+        Quiz quiz = new Quiz(quizcontainer.getQuiz().getCodeQuiz());
+        Quiz quizaux = new Quiz();
+        quiz.setCodeQuiz(quizcontainer.getQuiz().getCodeQuiz());
+        quiz.setNameQuiz(quizcontainer.getQuiz().getNameQuiz());
+        quiz.setDescription(quizcontainer.getQuiz().getDescription());
+        quiz.setShortNameQuiz(quizcontainer.getQuiz().getShortNameQuiz());
+        quiz.setStatusCat(quizcontainer.getQuiz().getStatusCat());
+        quiz.setStatus(quizcontainer.getQuiz().getStatus());
+        quiz.setUserCreate(quizcontainer.getQuiz().getUserCreate());
+        quiz.setUserLastModify(quizcontainer.getQuiz().getUserLastModify());
         update(quiz);
-        //flush();
+        quizaux = quiz;
         questionDAO.deleteQuestion(quizcontainer);
         itemQuestionDAO.deleteItem(quizcontainer);
-        questionDAO.saveQuestion(quizcontainer, quiz);
-        return quiz;
+        List<Questions> questionsaved = questionDAO.saveQuestion(quizcontainer, quiz);
+        quizaux.setQuestionsList(questionsaved);
+        QuizContainer containers = quizMapper.sourceToDestination(quizaux);
+        return containers;
     }
 
     public String getSurveys(Integer from, Integer to) throws JsonProcessingException {
@@ -114,20 +115,20 @@ public class QuizDAO extends GenericDAO<Quiz> {
         emailcontainer.getPersons().forEach(person -> {
             try {
                 String link = "http://localhost:4200/admin/surveys/client/" + person.getCodePerson() + "/" + quiz.get(0).getCodeQuiz();
-                String msg = "<span>Saludos Estimad@ " + person.getName() + "</span><br><span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription() + "</span>";
+                String nameQuiz = quiz.get(0).getShortNameQuiz();
+                String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
+                String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
+                String message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription() + "</span>";
                 String footer = "<br><span>Por favor de click en el siguiente enlace para continuar ...</span><br>";
-                String body = msg + footer + "<div style=\"text-align:center\">\n"
-                        + "        <p style=\"color: aquamarine\">hola mundo</p>\n"
-                        + "        <input type=\"button\" value=\"Click me\" onclick=\"msg()\">\n"
-                        + "</div>"
-                        + "<br><span>" + link + "</span>";
-                String s = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+                String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                         + "  <head>\n"
                         + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n"
-                        + "    <title>Fuzzy System</title>\n"
+                        + "    <title>";
+                String title = "Fuzzy System";
+                html += title;
+                html += "</title>\n"
                         + "  </head>\n"
-                        + "\n"
                         + "  <body yahoo=\"\" bgcolor=\"#f6f8f1\" style=\"margin: 0;padding: 0; min-width: 100% !important;\">\n"
                         + "    <table width=\"100%\" bgcolor=\"#f6f8f1\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"
                         + "      <tbody>\n"
@@ -182,8 +183,9 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                  >\n"
                         + "                                    <span>\n"
                         + "                                      <strong>\n"
-                        + "                                        FUZZY SYSTEM\n"
-                        + "                                      </strong>\n"
+                        + "                       ";
+                html += "FUZZY SYSTEM";
+                html += "  </strong>\n"
                         + "                                    </span>\n"
                         + "                                  </td>\n"
                         + "                                </tr>\n"
@@ -191,9 +193,9 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                  <td\n"
                         + "                                    class=\"h1\"\n"
                         + "                                    style=\"padding: 5px 0 0 0;color: #ffffff; font-family: sans-serif;font-size: 33px; line-height: 38px; font-weight: bold;\"\n"
-                        + "                                  >\n"
-                        + "                                    ENCUESTA PREGRADO\n"
-                        + "                                  </td>\n"
+                        + "                                  >";
+                html += nameQuiz;
+                html += " </td>\n"
                         + "                                </tr>\n"
                         + "                              </tbody>\n"
                         + "                            </table>\n"
@@ -214,18 +216,17 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                          <td\n"
                         + "                            class=\"h2\"\n"
                         + "                            style=\"color: #153643; font-family: sans-serif;padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;\"\n"
-                        + "                          >\n"
-                        + "                            Sr. Edison Loza\n"
-                        + "                          </td>\n"
+                        + "                          >";
+                html += nameperson;
+                html += " </td>\n"
                         + "                        </tr>\n"
                         + "                        <tr>\n"
                         + "                          <td\n"
                         + "                            class=\"bodycopy\"\n"
                         + "                            style=\"padding: 5px 0 0 0;color: #153643; font-family: sans-serif;font-size: 16px; line-height: 22px;text-align:justify\"\n"
-                        + "                          >\n"
-                        + "                            Usted a sido seleccionado para participar en el programa de selección de POSTGRADO de la\n"
-                        + "                            Facultad de Ingeniería en Sistemas.\n"
-                        + "                          </td>\n"
+                        + "                          >";
+                html += footer;
+                html += "  </td>\n"
                         + "                        </tr>\n"
                         + "                      </tbody>\n"
                         + "                    </table>\n"
@@ -270,9 +271,9 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                  <td\n"
                         + "                                    class=\"bodycopy\"\n"
                         + "                                    style=\"padding: 5px 0 0 0;color: #153643; font-family: sans-serif;font-size: 16px; line-height: 22px;\"\n"
-                        + "                                  >\n"
-                        + "                                    Para continuar con la encuesta por favor dar click en el siguiente enlace.\n"
-                        + "                                  </td>\n"
+                        + "                                  >";
+                html += message;
+                html += "  </td>\n"
                         + "                                </tr>\n"
                         + "                                <tr>\n"
                         + "                                  <td style=\"padding: 20px 0 0 0;\">\n"
@@ -288,12 +289,14 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                        <tr>\n"
                         + "                                          <td class=\"button\" height=\"45\">\n"
                         + "                                            <a\n"
-                        + "                                              href=\"https://www.youtube.com/watch?v=x6e4kDh6vao\"\n"
+                        + "                                              href=\"";
+                html += linkfake;
+                html += "\"\n"
                         + "                                              target=\"_blank\"\n"
                         + "                                              style=\"padding: 8px 40px 8px 40px; border: 1px solid #1E88E5; border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;\"\n"
-                        + "                                            >\n"
-                        + "                                              Ir a la Encuesta\n"
-                        + "                                            </a>\n"
+                        + "                                            >";
+                html += "Ir a la Encuesta";
+                html += "   </a>\n"
                         + "                                          </td>\n"
                         + "                                        </tr>\n"
                         + "                                      </tbody>\n"
@@ -367,7 +370,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "    </table>\n"
                         + "  </body>\n"
                         + "</html>";
-                mail.sendEmail(person.getEmail(), quiz.get(0).getNameQuiz(), s);
+                mail.sendEmail(person.getEmail(), quiz.get(0).getNameQuiz(), html);
             } catch (Exception e) {
                 throw new AppException(e.toString(), "NO SE ENVIO EMAIL");
             }

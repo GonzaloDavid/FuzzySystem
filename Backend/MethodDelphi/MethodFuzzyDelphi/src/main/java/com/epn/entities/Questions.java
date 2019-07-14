@@ -54,56 +54,45 @@ public class Questions implements Serializable {
     @EmbeddedId
     protected QuestionsPK questionsPK;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "question")
     private String question;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "statusCat")
     private String statusCat;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "status")
     private String status;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "minimumParameterSetting")
     private String minimumParameterSetting;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "maximumParameterSetting")
     private String maximumParameterSetting;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "jumpNext")
     private String jumpNext;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
@@ -242,7 +231,6 @@ public class Questions implements Serializable {
         this.quiz = quiz;
     }
 
-    @XmlTransient
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
     }
