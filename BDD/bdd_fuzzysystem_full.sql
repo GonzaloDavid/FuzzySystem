@@ -38,7 +38,6 @@ CREATE TABLE `AdminisEmail` (
   KEY `AdminisEmail_Quiz_FK` (`codeQuiz`),
   KEY `AdminisEmail_catalogueitem_FK` (`statusEmailCat`,`statusEmail`),
   CONSTRAINT `AdminisEmail_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
-  CONSTRAINT `AdminisEmail_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
   CONSTRAINT `AdminisEmail_catalogueitem_FK` FOREIGN KEY (`statusEmailCat`, `statusEmail`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -79,9 +78,6 @@ CREATE TABLE `DelphiCalculations` (
   KEY `DelphiCalculations_Questions_FK` (`codeQuestions`),
   KEY `DelphiCalculations_QuestionItem_FK` (`codeQuizItem`),
   KEY `DelphiCalculations_catalogueitem_FK` (`statusResultCat`,`statusResult`),
-  CONSTRAINT `DelphiCalculations_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`) REFERENCES `QuestionItem` (`codeQuizItem`),
-  CONSTRAINT `DelphiCalculations_Questions_FK` FOREIGN KEY (`codeQuestions`) REFERENCES `Questions` (`codeQuestions`),
-  CONSTRAINT `DelphiCalculations_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
   CONSTRAINT `DelphiCalculations_catalogueitem_FK` FOREIGN KEY (`statusResultCat`, `statusResult`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,10 +116,7 @@ CREATE TABLE `GraphicsData` (
   KEY `GraphicsData_Quiz_FK` (`codeQuiz`),
   KEY `GraphicsData_Questions_FK` (`codeQuestions`),
   KEY `GraphicsData_QuestionItem_FK` (`codeQuizItem`),
-  CONSTRAINT `GraphicsData_GraphicsParam_FK` FOREIGN KEY (`codeGraphicsParam`) REFERENCES `GraphicsParam` (`codeGraphicsParam`),
-  CONSTRAINT `GraphicsData_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`) REFERENCES `QuestionItem` (`codeQuizItem`),
-  CONSTRAINT `GraphicsData_Questions_FK` FOREIGN KEY (`codeQuestions`) REFERENCES `Questions` (`codeQuestions`),
-  CONSTRAINT `GraphicsData_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
+  CONSTRAINT `GraphicsData_GraphicsParam_FK` FOREIGN KEY (`codeGraphicsParam`) REFERENCES `GraphicsParam` (`codeGraphicsParam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -248,7 +241,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','','','GRACE ADRIANA PROAÑO Chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','0','2019-07-05 15:26:30','2019-07-05 15:26:30',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','','','321 321 3213 321','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-06-18 22:06:04','2019-07-08 20:54:03',0,0),(14,'1111','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','','','GONZALO dddd ddd ddd','davidgonzalomejia@gmail.com','aaaa','2019-07-25','STATUSCAT','1','SEXCAT','1','2019-07-05 15:26:14','2019-07-08 20:54:03',0,0);
+INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','0','SEXCAT','0','2019-07-12 20:51:08','2019-07-12 20:51:08',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','Grace Adriana ','Proaño Chicaiza','Grace Adriana  Proaño Chicaiza','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-07-10 19:28:57','2019-07-10 19:28:57',0,0),(14,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','byron.lopez@epn.edu.ec','Quito','2019-07-06','STATUSCAT','1','SEXCAT','1','2019-07-14 02:59:17','2019-07-14 02:59:17',0,0);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,19 +255,18 @@ DROP TABLE IF EXISTS `QuestionItem`;
 CREATE TABLE `QuestionItem` (
   `codeQuizItem` bigint(20) NOT NULL AUTO_INCREMENT,
   `codeQuestions` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
   `itemLabel` varchar(100) NOT NULL,
-  `maximunValue` varchar(50) DEFAULT NULL,
-  `minimumValue` varchar(100) DEFAULT NULL,
-  `averageValue` varchar(100) DEFAULT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`codeQuizItem`),
+  PRIMARY KEY (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
   UNIQUE KEY `codeQuizItem_UNIQUE` (`codeQuizItem`),
   KEY `QuestionItem_Questions_FK` (`codeQuestions`),
-  CONSTRAINT `QuestionItem_Questions_FK` FOREIGN KEY (`codeQuestions`) REFERENCES `Questions` (`codeQuestions`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `QuestionItem_Questions_FK1` (`codeQuestions`,`codeQuiz`),
+  CONSTRAINT `QuestionItem_Questions_FK1` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,6 +275,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
+INSERT INTO `QuestionItem` VALUES (10,29,1,'www','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(13,29,1,'knkkn','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(20,29,1,'sss','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(21,29,1,'Africa','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(22,29,1,'malta','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,11 +300,11 @@ CREATE TABLE `Questions` (
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`codeQuestions`),
+  PRIMARY KEY (`codeQuestions`,`codeQuiz`),
   UNIQUE KEY `codeQuestions_UNIQUE` (`codeQuestions`),
   KEY `Questions_Quiz_FK` (`codeQuiz`),
   CONSTRAINT `Questions_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,6 +313,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
+INSERT INTO `Questions` VALUES (29,1,'aww','dwww','STATUSCAT','1','1','1','1','2019-07-14 17:12:23','2019-07-14 17:12:23',0,0);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -345,7 +339,7 @@ CREATE TABLE `Quiz` (
   UNIQUE KEY `codeQuiz_UNIQUE` (`codeQuiz`),
   KEY `Quiz_catalogueitem_FK` (`statusCat`,`status`),
   CONSTRAINT `Quiz_catalogueitem_FK` FOREIGN KEY (`statusCat`, `status`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,8 +348,43 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (101,'ENCUESTA NO BORRAR','ENCUESTA NO BORRAR','DESCRIPCION ENCUESTA NO BORRAR','STATUSCAT','1','2019-07-08 21:12:24','2019-07-08 21:12:24',0,0);
+INSERT INTO `Quiz` VALUES (1,'ENcuesta sobre el mejor equipo de america','asddas','sdas','STATUSCAT','1','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(38,'ss','ss','sss','STATUSCAT','1','2019-07-14 17:15:47','2019-07-14 17:15:47',1,1),(39,'ss','ss','sss','STATUSCAT','1','2019-07-14 17:14:01','2019-07-14 17:14:01',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Quizvalues`
+--
+
+DROP TABLE IF EXISTS `Quizvalues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Quizvalues` (
+  `codePerson` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `codeQuizItem` bigint(20) NOT NULL,
+  `minimumValue` varchar(100) NOT NULL,
+  `averageValue` varchar(100) NOT NULL,
+  `maximunValue` varchar(100) NOT NULL,
+  PRIMARY KEY (`codePerson`,`codeQuiz`,`codeQuestions`,`codeQuizItem`),
+  KEY `Quizvalues_Quiz_FK` (`codeQuiz`),
+  KEY `Quizvalues_Questions_FK` (`codeQuestions`),
+  KEY `Quizvalues_QuestionItem_FK` (`codeQuizItem`),
+  CONSTRAINT `Quizvalues_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
+  CONSTRAINT `Quizvalues_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`) REFERENCES `QuestionItem` (`codeQuizItem`),
+  CONSTRAINT `Quizvalues_Questions_FK` FOREIGN KEY (`codeQuestions`) REFERENCES `Questions` (`codeQuestions`),
+  CONSTRAINT `Quizvalues_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Quizvalues`
+--
+
+LOCK TABLES `Quizvalues` WRITE;
+/*!40000 ALTER TABLE `Quizvalues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Quizvalues` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -456,4 +485,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-10 12:56:04
+-- Dump completed on 2019-07-14 12:22:50
