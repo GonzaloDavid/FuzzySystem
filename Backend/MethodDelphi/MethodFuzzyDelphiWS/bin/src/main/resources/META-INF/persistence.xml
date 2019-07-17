@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU" transaction-type="JTA">
+        <jta-data-source>java/app/jdbc/fuzzySystem</jta-data-source>
+        <class>com.epn.entities.Person</class>
+        <class>com.epn.entities.Catalogue</class>
+        <class>com.epn.entities.Catalogueitem</class>
+        <class>com.epn.entities.Menu</class>
+        <class>com.epn.entities.QuestionItem</class>
+        <class>com.epn.entities.Questions</class>
+        <class>com.epn.entities.Quiz</class>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.cache.shared.default" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
