@@ -4,6 +4,7 @@
 /Backend/MethodDelphi/MethodFuzzyDelphi/nb-configuration.xml
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/dist/
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/nb-configuration.xml
+/Exception/target
 
 *.DS_Store
 .project
