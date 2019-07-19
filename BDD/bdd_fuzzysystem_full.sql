@@ -241,7 +241,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','0','SEXCAT','0','2019-07-12 20:51:08','2019-07-12 20:51:08',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','Grace Adriana ','Proaño Chicaiza','Grace Adriana  Proaño Chicaiza','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-07-10 19:28:57','2019-07-10 19:28:57',0,0),(14,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','byron.lopez@epn.edu.ec','Quito','2019-07-06','STATUSCAT','1','SEXCAT','1','2019-07-14 02:59:17','2019-07-14 02:59:17',0,0);
+INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','0','SEXCAT','0','2019-07-14 17:26:56','2019-07-14 17:26:56',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','Grace Adriana ','Proaño Chicaiza','Grace Adriana  Proaño Chicaiza','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-07-10 19:28:57','2019-07-10 19:28:57',0,0),(14,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','byron.lopez@epn.edu.ec','Quito','2019-07-06','STATUSCAT','1','SEXCAT','1','2019-07-14 02:59:17','2019-07-14 02:59:17',0,0);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +266,7 @@ CREATE TABLE `QuestionItem` (
   KEY `QuestionItem_Questions_FK` (`codeQuestions`),
   KEY `QuestionItem_Questions_FK1` (`codeQuestions`,`codeQuiz`),
   CONSTRAINT `QuestionItem_Questions_FK1` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
-INSERT INTO `QuestionItem` VALUES (10,29,1,'www','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(13,29,1,'knkkn','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(20,29,1,'sss','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(21,29,1,'Africa','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(22,29,1,'malta','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1);
+INSERT INTO `QuestionItem` VALUES (1,1,1,'Mexico','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(2,1,1,'Brasil','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(3,1,1,'Colombia','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(4,1,1,'Ecuador','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(5,1,1,'Argentina','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +304,7 @@ CREATE TABLE `Questions` (
   UNIQUE KEY `codeQuestions_UNIQUE` (`codeQuestions`),
   KEY `Questions_Quiz_FK` (`codeQuiz`),
   CONSTRAINT `Questions_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (29,1,'aww','dwww','STATUSCAT','1','1','1','1','2019-07-14 17:12:23','2019-07-14 17:12:23',0,0);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2004','Acerca de la copa america que se realizara en ecuador en 2024','STATUSCAT','1','1','1','1','2019-07-19 20:59:56','2019-07-19 20:59:56',0,0);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +348,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'ENcuesta sobre el mejor equipo de america','asddas','sdas','STATUSCAT','1','2019-07-14 17:12:23','2019-07-14 17:12:23',1,1),(38,'ss','ss','sss','STATUSCAT','1','2019-07-14 17:15:47','2019-07-14 17:15:47',1,1),(39,'ss','ss','sss','STATUSCAT','1','2019-07-14 17:14:01','2019-07-14 17:14:01',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa america','STATUSCAT','1','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,4 +485,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-14 12:22:50
+-- Dump completed on 2019-07-19 16:05:50
