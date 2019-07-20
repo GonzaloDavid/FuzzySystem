@@ -119,7 +119,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
                 String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
                 String message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription() + "</span>";
-                String footer = "<br><span>Por favor de click en el siguiente enlace para continuar ...</span><br>";
+                String footer = "<br><span>Por favor de click en el siguiente enlace para continuar ...</span><br>"+link;
                 String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                         + "  <head>\n"

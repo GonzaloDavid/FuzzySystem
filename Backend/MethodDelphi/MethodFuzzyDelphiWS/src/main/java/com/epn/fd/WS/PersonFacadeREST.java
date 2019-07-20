@@ -56,6 +56,16 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
         return personDAO.getallperson(from, to);
     }
 
+    @GET
+    @Path("personbycode")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonbycode(
+            @QueryParam("codeperson") Long codeperson
+    ) throws JsonProcessingException {
+
+        return personDAO.getpersonbycode(codeperson);
+    }
+
     @POST
     @Path("save")
     @Transactional
@@ -80,7 +90,6 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
 
         personDAO.deletePerson(idlist);
     }
-
 
     @PUT
     @Path("{id}")
