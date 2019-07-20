@@ -8,9 +8,11 @@ package com.epn.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quiz.findAll", query = "SELECT q FROM Quiz q"),
-    @NamedQuery(name = "Quiz.findByCodeQuiz", query = "SELECT q FROM Quiz q WHERE q.codeQuiz = :codeQuiz"),
+    @NamedQuery(name = "Quiz.findByCodeQuiz", query = "SELECT q FROM Quiz q WHERE q.quizPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "Quiz.findByNameQuiz", query = "SELECT q FROM Quiz q WHERE q.nameQuiz = :nameQuiz"),
     @NamedQuery(name = "Quiz.findByShortNameQuiz", query = "SELECT q FROM Quiz q WHERE q.shortNameQuiz = :shortNameQuiz"),
     @NamedQuery(name = "Quiz.findByDescription", query = "SELECT q FROM Quiz q WHERE q.description = :description"),
@@ -45,12 +47,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Quiz.findByUserLastModify", query = "SELECT q FROM Quiz q WHERE q.userLastModify = :userLastModify")})
 public class Quiz implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "codeQuiz")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codeQuiz;
+   private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected QuizPK quizPK;
     @Basic(optional = false)
     @Column(name = "nameQuiz")
     private String nameQuiz;
@@ -89,27 +88,31 @@ public class Quiz implements Serializable {
     public Quiz() {
     }
 
-    public Quiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
+    public Quiz(QuizPK quizPK) {
+        this.quizPK = quizPK;
     }
 
-    public Quiz(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
-        this.codeQuiz = codeQuiz;
+    public Quiz(QuizPK quizPK, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, Catalogueitem catalogueitem, List<Questions> questionsList) {
+        this.quizPK = quizPK;
         this.nameQuiz = nameQuiz;
         this.shortNameQuiz = shortNameQuiz;
         this.description = description;
+        this.status = status;
+        this.statusCat = statusCat;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+        this.catalogueitem = catalogueitem;
+        this.questionsList = questionsList;
     }
 
-    public Long getCodeQuiz() {
-        return codeQuiz;
+    public QuizPK getQuizPK() {
+        return quizPK;
     }
 
-    public void setCodeQuiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
+    public void setQuizPK(QuizPK quizPK) {
+        this.quizPK = quizPK;
     }
 
     public String getNameQuiz() {
@@ -202,19 +205,24 @@ public class Quiz implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (codeQuiz != null ? codeQuiz.hashCode() : 0);
+        int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.quizPK);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Quiz)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Quiz other = (Quiz) object;
-        if ((this.codeQuiz == null && other.codeQuiz != null) || (this.codeQuiz != null && !this.codeQuiz.equals(other.codeQuiz))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Quiz other = (Quiz) obj;
+        if (!Objects.equals(this.quizPK, other.quizPK)) {
             return false;
         }
         return true;
@@ -222,7 +230,6 @@ public class Quiz implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.Quiz[ codeQuiz=" + codeQuiz + " ]";
+        return "Quiz{" + "quizPK=" + quizPK + ", nameQuiz=" + nameQuiz + ", shortNameQuiz=" + shortNameQuiz + ", description=" + description + ", status=" + status + ", statusCat=" + statusCat + ", dateCreate=" + dateCreate + ", dateLastModify=" + dateLastModify + ", userCreate=" + userCreate + ", userLastModify=" + userLastModify + ", catalogueitem=" + catalogueitem + ", questionsList=" + questionsList + '}';
     }
-    
 }

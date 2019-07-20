@@ -8,7 +8,9 @@ package com.epn.fd.WS;
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
+import com.epn.entities.QuestionsPK;
 import com.epn.entities.Quiz;
+import com.epn.entities.QuizPK;
 import com.epn.fd.dao.QuizDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +31,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.PathSegment;
 
 /**
  *
@@ -42,6 +45,23 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     QuizDAO quizDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
+    
+     private QuizPK getPrimaryKey(PathSegment pathSegment) {
+        /*
+         * pathSemgent represents a URI path segment and any associated matrix parameters.
+         * URI path part is supposed to be in form of 'somePath;codeQuestions=codeQuestionsValue;codeQuiz=codeQuizValue'.
+         * Here 'somePath' is a result of getPath() method invocation and
+         * it is ignored in the following code.
+         * Matrix parameters are used as field names to build a primary key instance.
+         */
+        com.epn.entities.QuizPK key = new com.epn.entities.QuizPK();
+        javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
+        java.util.List<String> codeQuestions = map.get("codeQuiz");
+        if (codeQuestions != null && !codeQuestions.isEmpty()) {
+            key.setCodeQuiz(new java.lang.Long(codeQuestions.get(0)));
+        }
+        return key;
+    }
 
     public QuizFacadeREST() {
         super(Quiz.class);

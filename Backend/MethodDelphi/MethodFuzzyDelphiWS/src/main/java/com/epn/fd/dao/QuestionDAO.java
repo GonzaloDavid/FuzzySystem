@@ -68,7 +68,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
 
             QuestionsPK questionsPK = new QuestionsPK();
             questionsPK.setCodeQuestions(question.getQuestionsPK().getCodeQuestions());
-            questionsPK.setCodeQuiz(quiz.getCodeQuiz());
+            questionsPK.setCodeQuiz(quiz.getQuizPK().getCodeQuiz());
             Questions questionstemp = new Questions(questionsPK);
             questionstemp.setDescription(question.getDescription());
             questionstemp.setStatus(question.getStatus());

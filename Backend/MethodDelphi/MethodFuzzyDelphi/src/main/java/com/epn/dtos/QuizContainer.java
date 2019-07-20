@@ -5,6 +5,7 @@
  */
 package com.epn.dtos;
 
+import com.epn.entities.QuizPK;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class QuizContainer {
 
-    private Long codeQuiz;
+    private QuizPK quizPK;
     private String nameQuiz;
     private String shortNameQuiz;
     private String description;
@@ -26,8 +27,8 @@ public class QuizContainer {
     public QuizContainer() {
     }
 
-    public QuizContainer(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, List<QuestionContainer> questionsList, Long userCreate, Long userLastModify) {
-        this.codeQuiz = codeQuiz;
+    public QuizContainer(QuizPK quizPK, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, List<QuestionContainer> questionsList, Long userCreate, Long userLastModify) {
+        this.quizPK = quizPK;
         this.nameQuiz = nameQuiz;
         this.shortNameQuiz = shortNameQuiz;
         this.description = description;
@@ -38,6 +39,7 @@ public class QuizContainer {
         this.userLastModify = userLastModify;
     }
 
+   
     public List<QuestionContainer> getQuestionsList() {
         return questionsList;
     }
@@ -46,12 +48,12 @@ public class QuizContainer {
         this.questionsList = questionsList;
     }
 
-    public Long getCodeQuiz() {
-        return codeQuiz;
+    public QuizPK getQuizPK() {
+        return quizPK;
     }
 
-    public void setCodeQuiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
+    public void setQuizPK(QuizPK quizPK) {
+        this.quizPK = quizPK;
     }
 
     public String getNameQuiz() {

@@ -45,8 +45,8 @@ public class QuizDAO extends GenericDAO<Quiz> {
     }
 
     public List<QuizContainer> getQuizbycode(Long codeQuiz) {
-        SearchObject search = new SearchObject("codeQuiz");
-        search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        SearchObject search = new SearchObject("quizPK");
+        search.addParameter("quizPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
 
         List<Quiz> resultList = search(search);
         List<QuizContainer> containers = quizMapper.sourceListToDestination(resultList);
@@ -55,9 +55,9 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
     public QuizContainer saveQuiz(QuizSave quizcontainer) {
 
-        Quiz quiz = new Quiz(quizcontainer.getQuiz().getCodeQuiz());
+        Quiz quiz = new Quiz(quizcontainer.getQuiz().getQuizPK());
         Quiz quizaux = new Quiz();
-        quiz.setCodeQuiz(quizcontainer.getQuiz().getCodeQuiz());
+        quiz.getQuizPK().setCodeQuiz(quizcontainer.getQuiz().getQuizPK().getCodeQuiz());
         quiz.setNameQuiz(quizcontainer.getQuiz().getNameQuiz());
         quiz.setDescription(quizcontainer.getQuiz().getDescription());
         quiz.setShortNameQuiz(quizcontainer.getQuiz().getShortNameQuiz());
@@ -99,7 +99,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
     public void deletequiz(Quiz quiz) {
 
         Quiz foundelement = new Quiz();
-        foundelement = find(quiz.getCodeQuiz());
+        foundelement = find(quiz.getQuizPK());
         try {
             if (foundelement != null) {
                 remove(foundelement);
@@ -111,10 +111,10 @@ public class QuizDAO extends GenericDAO<Quiz> {
     }
 
     public void sendquiz(EmailContainer emailcontainer) {
-        List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getCodeQuiz());
+        List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
             try {
-                String link = "http://localhost:4200/admin/surveys/client/" + person.getCodePerson() + "/" + quiz.get(0).getCodeQuiz();
+                String link = "http://localhost:4200/admin/surveys/client/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
                 String nameQuiz = quiz.get(0).getShortNameQuiz();
                 String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
