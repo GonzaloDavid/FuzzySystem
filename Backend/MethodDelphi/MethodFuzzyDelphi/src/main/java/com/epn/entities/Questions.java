@@ -231,6 +231,7 @@ public class Questions implements Serializable {
         this.quiz = quiz;
     }
 
+    @XmlTransient
     public List<QuestionItem> getQuestionItemList() {
         return questionItemList;
     }

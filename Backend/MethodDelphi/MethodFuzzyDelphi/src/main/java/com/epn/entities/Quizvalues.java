@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quizvalues.findAll", query = "SELECT q FROM Quizvalues q"),
+    @NamedQuery(name = "Quizvalues.findByRoundNumber", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.roundNumber = :roundNumber"),
     @NamedQuery(name = "Quizvalues.findByCodePerson", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codePerson = :codePerson"),
     @NamedQuery(name = "Quizvalues.findByCodeQuiz", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "Quizvalues.findByCodeQuestions", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codeQuestions = :codeQuestions"),
@@ -58,10 +60,15 @@ public class Quizvalues implements Serializable {
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
-    @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private QuestionItem questionItem;
-    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Questions questions;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
@@ -82,8 +89,8 @@ public class Quizvalues implements Serializable {
         this.maximunValue = maximunValue;
     }
 
-    public Quizvalues(long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
-        this.quizvaluesPK = new QuizvaluesPK(codePerson, codeQuiz, codeQuestions, codeQuizItem);
+    public Quizvalues(long roundNumber, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
+        this.quizvaluesPK = new QuizvaluesPK(roundNumber, codePerson, codeQuiz, codeQuestions, codeQuizItem);
     }
 
     public QuizvaluesPK getQuizvaluesPK() {
