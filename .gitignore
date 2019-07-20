@@ -1,10 +1,11 @@
 /Backend/MethodDelphi/MethodFuzzyDelphi/target
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/target
+/Backend/MethodDelphi/MethodFuzzyDelphi/bin/target
+/Backend/MethodDelphi/MethodFuzzyDelphiWS/bin/target
 /Backend/MethodDelphi/MethodFuzzyDelphi/dist/
 /Backend/MethodDelphi/MethodFuzzyDelphi/nb-configuration.xml
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/dist/
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/nb-configuration.xml
-/Exception/target
 
 *.DS_Store
 .project
