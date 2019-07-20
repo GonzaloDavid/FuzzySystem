@@ -1,21 +1,31 @@
 package app;
 
 /**
- * Item
+ * Item: Lista de criterios
  */
 public class Item {
 
-    public int min;
-    public int med;
-    public int max;
+    private int id; // id del criterio
+    private int min;
+    private int med;
+    private int max;
 
     public Item() {
     }
 
-    public Item(int min, int med, int max) {
+    public Item(int id, int min, int med, int max) {
+        this.id = id;
         this.min = min;
         this.med = med;
         this.max = max;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getMin() {
