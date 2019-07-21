@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Quizvalues.findByMinimumValue", query = "SELECT q FROM Quizvalues q WHERE q.minimumValue = :minimumValue"),
     @NamedQuery(name = "Quizvalues.findByAverageValue", query = "SELECT q FROM Quizvalues q WHERE q.averageValue = :averageValue"),
     @NamedQuery(name = "Quizvalues.findByMaximunValue", query = "SELECT q FROM Quizvalues q WHERE q.maximunValue = :maximunValue")})
-public class Quizvalues implements Serializable {
+    public class Quizvalues implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId

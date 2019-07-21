@@ -5,12 +5,16 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.entities.Person;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
+import com.epn.fd.dao.QuizValuesDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,6 +34,7 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.quizvalues")
 public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
 
+    @Inject() QuizValuesDAO quizValuesDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -70,6 +75,15 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
         super(Quizvalues.class);
     }
 
+    @POST
+    @Path("quizvalues")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void customerquizvalues(Quizvalues quiz) {
+
+        quizValuesDAO.savequizvalues(quiz);
+
+    }
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -124,5 +138,5 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
