@@ -42,6 +42,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.epn.fd.WS.QuestionsFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizvaluesFacadeREST.class);
+        resources.add(com.epn.fd.WS.RoundsFacadeREST.class);
     }
     
 }

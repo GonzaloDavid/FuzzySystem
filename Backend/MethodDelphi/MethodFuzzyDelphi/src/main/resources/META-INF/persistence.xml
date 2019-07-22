@@ -14,6 +14,7 @@
     <class>com.epn.entities.GraphicsData</class>
     <class>com.epn.entities.DelphiCalculations</class>
     <class>com.epn.entities.Quizvalues</class>
+    <class>com.epn.entities.Rounds</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DephiFuzzyMethod?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

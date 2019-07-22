@@ -10,6 +10,7 @@
         <class>com.epn.entities.Questions</class>
         <class>com.epn.entities.Quiz</class>
         <class>com.epn.entities.Quizvalues</class>
+        <class>com.epn.entities.Rounds</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.logging.level" value="FINE"/>

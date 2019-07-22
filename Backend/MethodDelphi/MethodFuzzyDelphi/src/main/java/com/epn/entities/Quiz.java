@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Quiz.findByUserLastModify", query = "SELECT q FROM Quiz q WHERE q.userLastModify = :userLastModify")})
 public class Quiz implements Serializable {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected QuizPK quizPK;
     @Basic(optional = false)
@@ -80,6 +80,8 @@ public class Quiz implements Serializable {
         @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
+    private List<Rounds> roundsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
     private List<Questions> questionsList;
 
@@ -177,6 +179,7 @@ public class Quiz implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
+    @XmlTransient
     public List<Questions> getQuestionsList() {
         return questionsList;
     }
@@ -199,6 +202,15 @@ public class Quiz implements Serializable {
 
     public void setStatusCat(String statusCat) {
         this.statusCat = statusCat;
+    }
+
+    @XmlTransient
+    public List<Rounds> getRoundsList() {
+        return roundsList;
+    }
+
+    public void setRoundsList(List<Rounds> roundsList) {
+        this.roundsList = roundsList;
     }
 
     @Override
