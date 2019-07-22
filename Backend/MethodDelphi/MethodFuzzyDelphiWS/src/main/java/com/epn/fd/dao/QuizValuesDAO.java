@@ -5,7 +5,10 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.Quizvalues;
+import com.epn.entities.QuizvaluesPK;
 import com.epn.exception.AppException;
 import javax.ejb.Stateless;
 
@@ -20,12 +23,29 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
         super(Quizvalues.class);
     }
 
-    public void savequizvalues(Quizvalues quiz) {
-        try {
-            em.merge(quiz);
-        } catch (Exception e) {
-            throw new AppException(e.toString(), "ENCUESTA YA INGRESADA");
-        }
+    public void savequizvalues(QuizContainer quiz, Long codePerson, Long roundnumber) {
+
+        quiz.getQuestionsList().forEach(question -> {
+            question.getQuestionItemList().forEach(item -> {
+
+                QuizvaluesPK quizvaluesPK = new QuizvaluesPK();
+                quizvaluesPK.setRoundNumber(roundnumber);
+                quizvaluesPK.setCodeQuiz(item.getQuestionItemPK().getCodeQuiz());
+                quizvaluesPK.setCodeQuestions(item.getQuestionItemPK().getCodeQuestions());
+                quizvaluesPK.setCodeQuizItem(item.getQuestionItemPK().getCodeQuizItem());
+                quizvaluesPK.setCodePerson(codePerson);
+                Quizvalues quizvalues = new Quizvalues(quizvaluesPK);
+                quizvalues.setMinimumValue(item.getMinimumValue());
+                quizvalues.setAverageValue(item.getAverageValue());
+                quizvalues.setMaximunValue(item.getMaximunValue());
+                try {
+                    em.persist(quizvalues);
+                } catch (Exception e) {
+                    throw new AppException(e.toString(), "ENCUESTA YA INGRESADA");
+                }
+            });
+        });
+
     }
 
 }

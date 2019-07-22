@@ -5,7 +5,7 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.entities.Person;
+import com.epn.dtos.QuizValueContainer;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
 import com.epn.fd.dao.QuizValuesDAO;
@@ -79,9 +79,9 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Path("quizvalues")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void customerquizvalues(Quizvalues quiz) {
+    public void customerquizvalues(QuizValueContainer quizvalues) {
 
-        quizValuesDAO.savequizvalues(quiz);
+        quizValuesDAO.savequizvalues(quizvalues.getQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber());
 
     }
     @POST
