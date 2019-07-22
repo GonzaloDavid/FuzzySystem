@@ -6,7 +6,6 @@
 package com.epn.fd.dao;
 
 import com.epn.dtos.QuizContainer;
-import com.epn.dtos.QuizSave;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
 import com.epn.exception.AppException;

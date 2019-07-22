@@ -266,7 +266,7 @@ CREATE TABLE `QuestionItem` (
   KEY `QuestionItem_Questions_FK` (`codeQuestions`),
   KEY `QuestionItem_Questions_FK1` (`codeQuestions`,`codeQuiz`),
   CONSTRAINT `QuestionItem_Questions_FK1` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
-INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(3,1,1,'Colombia','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(23,4,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(24,4,1,'Argentina','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(25,4,1,'Uruguay','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(26,5,1,'Venezuela','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(27,5,1,'Ecuador','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(36,3,1,'Estadio chucho benites','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(37,3,1,'Estadio Aucas','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(38,3,1,'Maracaná','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(39,1,1,'Alemania','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1);
+INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(3,1,1,'Colombia','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(23,4,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(24,4,1,'Argentina','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(25,4,1,'Uruguay','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(26,5,1,'Venezuela','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(27,5,1,'Ecuador','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(36,3,1,'Estadio chucho benites','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(37,3,1,'Estadio Aucas','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(38,3,1,'Maracaná','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(39,1,1,'Alemania','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(41,8,2,'david','2019-07-22 16:39:08','2019-07-22 16:39:08',1,1),(42,8,2,'gnzalo','2019-07-22 16:39:08','2019-07-22 16:39:08',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +313,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa america que se realizara en ecuador en 2024','STATUSCAT','1','1','10','2','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(8,2,'aaaaa','aaaa','STATUSCAT','1','1','1','1','2019-07-20 22:26:10','2019-07-20 22:26:10',0,0);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa america que se realizara en ecuador en 2024','STATUSCAT','1','1','10','2','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(8,2,'Mi nombre2','aaaa','STATUSCAT','1','1','1','1','2019-07-22 16:39:07','2019-07-22 16:39:07',0,0);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +348,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa america','STATUSCAT','1','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(2,'sss','sssss','ssss','STATUSCAT','1','2019-07-20 22:26:10','2019-07-20 22:26:10',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa america','STATUSCAT','1','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(2,'sss','sssss','ssss','STATUSCAT','1','2019-07-22 16:39:07','2019-07-22 16:39:07',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,10 +373,12 @@ CREATE TABLE `Quizvalues` (
   KEY `Quizvalues_Quiz_FK` (`codeQuiz`),
   KEY `Quizvalues_Questions_FK` (`codeQuestions`,`codeQuiz`),
   KEY `Quizvalues_QuestionItem_FK` (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
+  KEY `Quizvalues_Rounds_FK` (`roundNumber`,`codeQuiz`),
   CONSTRAINT `Quizvalues_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `Quizvalues_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
   CONSTRAINT `Quizvalues_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
-  CONSTRAINT `Quizvalues_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
+  CONSTRAINT `Quizvalues_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
+  CONSTRAINT `Quizvalues_Rounds_FK` FOREIGN KEY (`roundNumber`, `codeQuiz`) REFERENCES `Rounds` (`roundNumber`, `codeQuiz`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -387,6 +389,31 @@ CREATE TABLE `Quizvalues` (
 LOCK TABLES `Quizvalues` WRITE;
 /*!40000 ALTER TABLE `Quizvalues` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Quizvalues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Rounds`
+--
+
+DROP TABLE IF EXISTS `Rounds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Rounds` (
+  `roundNumber` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  PRIMARY KEY (`roundNumber`,`codeQuiz`),
+  KEY `Rounds_Quiz_FK` (`codeQuiz`),
+  CONSTRAINT `Rounds_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Rounds`
+--
+
+LOCK TABLES `Rounds` WRITE;
+/*!40000 ALTER TABLE `Rounds` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -487,4 +514,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-21 23:11:55
+-- Dump completed on 2019-07-22 15:49:39

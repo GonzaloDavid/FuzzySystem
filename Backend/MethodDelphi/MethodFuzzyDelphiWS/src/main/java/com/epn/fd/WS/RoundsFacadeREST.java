@@ -5,12 +5,19 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizSave;
+import com.epn.dtos.RoundsContainer;
 import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
+import com.epn.fd.dao.RoundsDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +26,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -30,6 +38,7 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.rounds")
 public class RoundsFacadeREST extends AbstractFacade<Rounds> {
 
+    @Inject() RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -56,6 +65,28 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
 
     public RoundsFacadeREST() {
         super(Rounds.class);
+    }
+
+    @GET
+    @Path("getround")
+    @Transactional
+    @Produces({MediaType.APPLICATION_JSON})
+    public RoundsContainer getLastRound(
+            @QueryParam("codequiz") Long codequiz
+    ) throws JsonProcessingException {
+
+        return roundsDAO.getLastRoundbycodeQuiz(codequiz);
+    }
+
+    @POST
+    @Path("save")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void saveRound(Rounds round) {
+
+        roundsDAO.save(round);
+
     }
 
     @POST
@@ -112,5 +143,5 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
