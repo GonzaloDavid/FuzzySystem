@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import org.mapstruct.factory.Mappers;
 
+
 /**
  *
  * @author david
@@ -23,21 +24,25 @@ import org.mapstruct.factory.Mappers;
 @Stateless
 public class RoundsDAO extends GenericDAO<Rounds> {
 
-    private final RoundsMapper roundsMapper = Mappers.getMapper(RoundsMapper.class);
+    //private final RoundsMapper roundsMapper1 = Mappers.getMapper(RoundsMapper.class);
 
     public RoundsDAO() {
         super(Rounds.class);
     }
-
-    public RoundsContainer getLastRoundbycodeQuiz(Long codequiz) throws JsonProcessingException {
+//     private final RoundsMapper personMapper12 = Mappers.getMapper(RoundsMapper.class);
+    public String getLastRoundbycodeQuiz(Long codequiz) throws JsonProcessingException {
         SearchObject search = new SearchObject("roundsPK");
         search.addParameter("roundsPK.codeQuiz", FilterTypes.EQUAL, codequiz);
         search.addOrderBy("roundsPK.roundNumber", Boolean.FALSE);
         List<Rounds> resultList = search(search);
-        RoundsContainer roundsContainers = roundsMapper.sourceToDestination(resultList.get(0));
-        return roundsContainers;
+        //List<RoundsContainer> roundsContainers = roundsMapper1.sourceListToDestination(resultList);
+        ObjectMapper mapper = new ObjectMapper();
+       // String response = mapper.writeValueAsString(roundsContainers);
+
+        return "";
     }
-    public void save(Rounds round){
+
+    public void save(Rounds round) {
         update(round);
     }
 }

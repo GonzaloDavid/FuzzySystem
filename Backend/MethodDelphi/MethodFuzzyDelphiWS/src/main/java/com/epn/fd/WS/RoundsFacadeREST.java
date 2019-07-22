@@ -5,9 +5,6 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.dtos.QuizContainer;
-import com.epn.dtos.QuizSave;
-import com.epn.dtos.RoundsContainer;
 import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.RoundsDAO;
@@ -71,7 +68,7 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
     @Path("getround")
     @Transactional
     @Produces({MediaType.APPLICATION_JSON})
-    public RoundsContainer getLastRound(
+    public String getLastRound(
             @QueryParam("codequiz") Long codequiz
     ) throws JsonProcessingException {
 

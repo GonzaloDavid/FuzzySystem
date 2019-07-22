@@ -15,13 +15,14 @@ import org.mapstruct.Mapper;
  *
  * @author david
  */
-@Mapper(uses = {QuestionMapper.class}) 
+@Mapper(uses = {QuestionMapper.class})
 public interface QuizMapper {
-    
-   QuizContainer sourceToDestination(Quiz source); //Mapear objetos
+
+    QuizContainer sourceToDestination(Quiz source); //Mapear objetos
+
     List<QuizContainer> sourceListToDestination(List<Quiz> source); //Mapear lista
-   
-    
+
     QuizContainerList sourceToDestinationList(Quiz source); //Mapear objetos
+
     List<QuizContainerList> sourceListToDestinationList(List<Quiz> source); //Mapear lista
 }
