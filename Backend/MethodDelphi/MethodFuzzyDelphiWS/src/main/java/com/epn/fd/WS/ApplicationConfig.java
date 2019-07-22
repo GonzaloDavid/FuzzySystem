@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionItemFacadeREST.class);
+        resources.add(com.epn.fd.WS.QuestionsFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizvaluesFacadeREST.class);
     }

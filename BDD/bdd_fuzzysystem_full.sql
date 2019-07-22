@@ -232,7 +232,7 @@ CREATE TABLE `Person` (
   CONSTRAINT `Person_catalogueitem_FK_1` FOREIGN KEY (`typeIdentifyCat`, `typeIdentify`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_2` FOREIGN KEY (`academicDegreeCat`, `academicDegree`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_4` FOREIGN KEY (`statusCat`, `status`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','0','SEXCAT','0','2019-07-14 17:26:56','2019-07-14 17:26:56',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','Grace Adriana ','Proaño Chicaiza','Grace Adriana  Proaño Chicaiza','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-07-10 19:28:57','2019-07-10 19:28:57',0,0),(14,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','byron.lopez@epn.edu.ec','Quito','2019-07-06','STATUSCAT','1','SEXCAT','1','2019-07-14 02:59:17','2019-07-14 02:59:17',0,0);
+INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','0','SEXCAT','1','2019-07-20 20:53:47','2019-07-20 20:53:47',0,0),(13,'32','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','RUC','ACADEMICDEGREECAT','Postgrados','Grace Adriana ','Proaño Chicaiza','Grace Adriana  Proaño Chicaiza','gonzalo.proano@epn.edu.ec','32131','2019-06-19','STATUSCAT','1','SEXCAT','1','2019-07-10 19:28:57','2019-07-10 19:28:57',0,0);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +266,7 @@ CREATE TABLE `QuestionItem` (
   KEY `QuestionItem_Questions_FK` (`codeQuestions`),
   KEY `QuestionItem_Questions_FK1` (`codeQuestions`,`codeQuiz`),
   CONSTRAINT `QuestionItem_Questions_FK1` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
-INSERT INTO `QuestionItem` VALUES (1,1,1,'Mexico','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(2,1,1,'Brasil','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(3,1,1,'Colombia','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(4,1,1,'Ecuador','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1),(5,1,1,'Argentina','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1);
+INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(3,1,1,'Colombia','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(23,4,1,'Brasil','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(24,4,1,'Argentina','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(25,4,1,'Uruguay','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(26,5,1,'Venezuela','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(27,5,1,'Ecuador','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(36,3,1,'Estadio chucho benites','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(37,3,1,'Estadio Aucas','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(38,3,1,'Maracaná','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(39,1,1,'Alemania','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +304,7 @@ CREATE TABLE `Questions` (
   UNIQUE KEY `codeQuestions_UNIQUE` (`codeQuestions`),
   KEY `Questions_Quiz_FK` (`codeQuiz`),
   CONSTRAINT `Questions_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2004','Acerca de la copa america que se realizara en ecuador en 2024','STATUSCAT','1','1','1','1','2019-07-19 20:59:56','2019-07-19 20:59:56',0,0);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa america que se realizara en ecuador en 2024','STATUSCAT','1','1','10','2','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1','2019-07-20 23:03:12','2019-07-20 23:03:12',0,0),(8,2,'aaaaa','aaaa','STATUSCAT','1','1','1','1','2019-07-20 22:26:10','2019-07-20 22:26:10',0,0);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +339,7 @@ CREATE TABLE `Quiz` (
   UNIQUE KEY `codeQuiz_UNIQUE` (`codeQuiz`),
   KEY `Quiz_catalogueitem_FK` (`statusCat`,`status`),
   CONSTRAINT `Quiz_catalogueitem_FK` FOREIGN KEY (`statusCat`, `status`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +348,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa america','STATUSCAT','1','2019-07-19 20:59:56','2019-07-19 20:59:56',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa america','STATUSCAT','1','2019-07-20 23:03:12','2019-07-20 23:03:12',1,1),(2,'sss','sssss','ssss','STATUSCAT','1','2019-07-20 22:26:10','2019-07-20 22:26:10',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,6 +360,7 @@ DROP TABLE IF EXISTS `Quizvalues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Quizvalues` (
+  `roundNumber` bigint(20) NOT NULL,
   `codePerson` bigint(20) NOT NULL,
   `codeQuiz` bigint(20) NOT NULL,
   `codeQuestions` bigint(20) NOT NULL,
@@ -367,13 +368,14 @@ CREATE TABLE `Quizvalues` (
   `minimumValue` varchar(100) NOT NULL,
   `averageValue` varchar(100) NOT NULL,
   `maximunValue` varchar(100) NOT NULL,
-  PRIMARY KEY (`codePerson`,`codeQuiz`,`codeQuestions`,`codeQuizItem`),
+  PRIMARY KEY (`roundNumber`,`codePerson`,`codeQuiz`,`codeQuestions`,`codeQuizItem`),
+  KEY `Quizvalues_Person_FK` (`codePerson`),
   KEY `Quizvalues_Quiz_FK` (`codeQuiz`),
-  KEY `Quizvalues_Questions_FK` (`codeQuestions`),
-  KEY `Quizvalues_QuestionItem_FK` (`codeQuizItem`),
+  KEY `Quizvalues_Questions_FK` (`codeQuestions`,`codeQuiz`),
+  KEY `Quizvalues_QuestionItem_FK` (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
   CONSTRAINT `Quizvalues_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
-  CONSTRAINT `Quizvalues_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`) REFERENCES `QuestionItem` (`codeQuizItem`),
-  CONSTRAINT `Quizvalues_Questions_FK` FOREIGN KEY (`codeQuestions`) REFERENCES `Questions` (`codeQuestions`),
+  CONSTRAINT `Quizvalues_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
+  CONSTRAINT `Quizvalues_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
   CONSTRAINT `Quizvalues_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -485,4 +487,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-19 16:05:50
+-- Dump completed on 2019-07-21 23:11:55
