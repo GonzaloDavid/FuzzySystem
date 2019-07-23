@@ -17,6 +17,7 @@ import java.util.List;
 public class EmailContainer {
     List<Person> persons=new ArrayList();
     Quiz quiz= new Quiz();
+    Long roundNumber;
 
     public EmailContainer() {
     }
@@ -36,4 +37,13 @@ public class EmailContainer {
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     } 
+
+    public Long getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(Long roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+    
 }

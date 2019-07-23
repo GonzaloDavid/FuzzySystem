@@ -9,11 +9,13 @@ package com.epn.mapper;
 import com.epn.dtos.RoundsContainer;
 import com.epn.entities.Rounds;
 import java.util.List;
+import org.mapstruct.Mapper;
 
 /**
  *
  * @author david
  */
+@Mapper
 public interface RoundsMapper {
 
     RoundsContainer sourceToDestination(Rounds source); 

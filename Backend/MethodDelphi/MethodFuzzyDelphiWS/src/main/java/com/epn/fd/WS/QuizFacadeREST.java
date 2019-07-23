@@ -11,7 +11,10 @@ import com.epn.dtos.QuizSave;
 import com.epn.entities.QuestionsPK;
 import com.epn.entities.Quiz;
 import com.epn.entities.QuizPK;
+import com.epn.entities.Rounds;
+import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.QuizDAO;
+import com.epn.fd.dao.RoundsDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -43,10 +46,12 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
     @Inject
     QuizDAO quizDAO;
+    @Inject
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
-    
-     private QuizPK getPrimaryKey(PathSegment pathSegment) {
+
+    private QuizPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
          * URI path part is supposed to be in form of 'somePath;codeQuestions=codeQuestionsValue;codeQuiz=codeQuizValue'.
@@ -99,7 +104,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Produces({MediaType.APPLICATION_JSON})
     public QuizContainer saveQuiz(QuizSave quizcontainer) {
 
-       return quizDAO.saveQuiz(quizcontainer);
+        return quizDAO.saveQuiz(quizcontainer);
 
     }
 
@@ -134,6 +139,13 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_JSON})
     public void sendMail(EmailContainer emailcontainer) {
 
+        RoundsPK roundPK = new RoundsPK();
+        roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
+        roundPK.setRoundNumber(emailcontainer.getRoundNumber());
+
+        Rounds round = new Rounds(roundPK);
+        round.setRoundsPK(roundPK);
+        roundsDAO.save(round);
         quizDAO.sendquiz(emailcontainer);
 
     }
@@ -176,5 +188,5 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

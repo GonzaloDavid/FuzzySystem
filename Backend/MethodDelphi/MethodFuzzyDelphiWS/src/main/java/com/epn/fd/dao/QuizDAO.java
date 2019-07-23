@@ -114,7 +114,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
         List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
             try {
-                String link = "http://localhost:4200/admin/surveys/client/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
+                String link = "http://localhost:4200/admin/surveys/quizclient/"+emailcontainer.getRoundNumber()+"/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
                 String nameQuiz = quiz.get(0).getShortNameQuiz();
                 String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
@@ -290,7 +290,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                          <td class=\"button\" height=\"45\">\n"
                         + "                                            <a\n"
                         + "                                              href=\"";
-                html += linkfake;
+                html += link;
                 html += "\"\n"
                         + "                                              target=\"_blank\"\n"
                         + "                                              style=\"padding: 8px 40px 8px 40px; border: 1px solid #1E88E5; border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;\"\n"
