@@ -20,6 +20,7 @@ public class QuizContainer {
     private String description;
     private String status;
     private String statusCat;
+    private String quizObservation;
     private List<QuestionContainer> questionsList;
     private Long userCreate;
     private Long userLastModify;
@@ -39,7 +40,6 @@ public class QuizContainer {
         this.userLastModify = userLastModify;
     }
 
-   
     public List<QuestionContainer> getQuestionsList() {
         return questionsList;
     }
@@ -111,5 +111,14 @@ public class QuizContainer {
     public void setUserLastModify(Long userLastModify) {
         this.userLastModify = userLastModify;
     }
+
+    public String getQuizObservation() {
+        return quizObservation;
+    }
+
+    public void setQuizObservation(String quizObservation) {
+        this.quizObservation = quizObservation;
+    }
+    
 
 }

@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package com.epn.dtos;
+
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -26,6 +26,7 @@ public class PersonContainer {
     private Date dateLastModify;
     private long userCreate;
     private long userLastModify;
+    private String workArea;
 //    private List<AdminisEmail> adminisEmailList;
     private String typePersonCat;
     private String typePerson;
@@ -241,4 +242,12 @@ public class PersonContainer {
         this.sexCat = sexCat;
     }
 
+    public String getWorkArea() {
+        return workArea;
+    }
+
+    public void setWorkArea(String workArea) {
+        this.workArea = workArea;
+    }
+    
 }

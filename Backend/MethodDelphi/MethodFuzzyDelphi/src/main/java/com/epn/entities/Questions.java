@@ -81,6 +81,8 @@ public class Questions implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "jumpNext")
     private String jumpNext;
+    @Column(name = "questionObservation")
+    private String questionObservation;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -239,6 +241,14 @@ public class Questions implements Serializable {
         this.questionItemList = questionItemList;
     }
 
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -263,5 +273,5 @@ public class Questions implements Serializable {
     public String toString() {
         return "com.epn.entities.Questions[ questionsPK=" + questionsPK + " ]";
     }
-    
+
 }

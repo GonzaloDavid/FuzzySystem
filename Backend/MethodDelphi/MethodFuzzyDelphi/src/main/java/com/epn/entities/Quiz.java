@@ -61,6 +61,8 @@ public class Quiz implements Serializable {
     private String status;
     @Column(name = "statusCat")
     private String statusCat;
+    @Column(name = "quizObservation")
+    private String quizObservation;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -210,6 +212,14 @@ public class Quiz implements Serializable {
 
     public void setRoundsList(List<Rounds> roundsList) {
         this.roundsList = roundsList;
+    }
+
+    public String getQuizObservation() {
+        return quizObservation;
+    }
+
+    public void setQuizObservation(String quizObservation) {
+        this.quizObservation = quizObservation;
     }
 
     @Override

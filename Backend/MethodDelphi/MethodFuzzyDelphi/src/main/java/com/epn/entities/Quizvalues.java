@@ -6,6 +6,7 @@
 package com.epn.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Quizvalues.findByMinimumValue", query = "SELECT q FROM Quizvalues q WHERE q.minimumValue = :minimumValue"),
     @NamedQuery(name = "Quizvalues.findByAverageValue", query = "SELECT q FROM Quizvalues q WHERE q.averageValue = :averageValue"),
     @NamedQuery(name = "Quizvalues.findByMaximunValue", query = "SELECT q FROM Quizvalues q WHERE q.maximunValue = :maximunValue")})
-    public class Quizvalues implements Serializable {
+public class Quizvalues implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -57,6 +60,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     @Size(min = 1, max = 100)
     @Column(name = "maximunValue")
     private String maximunValue;
+    @Column(name = "quizObservation")
+    private String quizObservation;
+    @Column(name = "questionObservation")
+    private String questionObservation;
+    @Basic(optional = false)
+    @Column(name = "dateCreate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreate;
+    @Basic(optional = false)
+    @Column(name = "dateLastModify")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateLastModify;
+    @Basic(optional = false)
+    @Column(name = "userCreate")
+    private long userCreate;
+    @Basic(optional = false)
+    @Column(name = "userLastModify")
+    private long userLastModify;
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
@@ -82,11 +103,21 @@ import javax.xml.bind.annotation.XmlRootElement;
         this.quizvaluesPK = quizvaluesPK;
     }
 
-    public Quizvalues(QuizvaluesPK quizvaluesPK, String minimumValue, String averageValue, String maximunValue) {
+    public Quizvalues(QuizvaluesPK quizvaluesPK, String minimumValue, String averageValue, String maximunValue, String quizObservation, String questionObservation, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify, Person person, QuestionItem questionItem, Questions questions, Quiz quiz) {
         this.quizvaluesPK = quizvaluesPK;
         this.minimumValue = minimumValue;
         this.averageValue = averageValue;
         this.maximunValue = maximunValue;
+        this.quizObservation = quizObservation;
+        this.questionObservation = questionObservation;
+        this.dateCreate = dateCreate;
+        this.dateLastModify = dateLastModify;
+        this.userCreate = userCreate;
+        this.userLastModify = userLastModify;
+        this.person = person;
+        this.questionItem = questionItem;
+        this.questions = questions;
+        this.quiz = quiz;
     }
 
     public Quizvalues(long roundNumber, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
@@ -157,6 +188,54 @@ import javax.xml.bind.annotation.XmlRootElement;
         this.quiz = quiz;
     }
 
+    public String getQuizObservation() {
+        return quizObservation;
+    }
+
+    public void setQuizObservation(String quizObservation) {
+        this.quizObservation = quizObservation;
+    }
+
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public Date getDateLastModify() {
+        return dateLastModify;
+    }
+
+    public void setDateLastModify(Date dateLastModify) {
+        this.dateLastModify = dateLastModify;
+    }
+
+    public long getUserCreate() {
+        return userCreate;
+    }
+
+    public void setUserCreate(long userCreate) {
+        this.userCreate = userCreate;
+    }
+
+    public long getUserLastModify() {
+        return userLastModify;
+    }
+
+    public void setUserLastModify(long userLastModify) {
+        this.userLastModify = userLastModify;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -181,5 +260,5 @@ import javax.xml.bind.annotation.XmlRootElement;
     public String toString() {
         return "com.epn.entities.Quizvalues[ quizvaluesPK=" + quizvaluesPK + " ]";
     }
-    
+
 }

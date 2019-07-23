@@ -22,6 +22,7 @@ public class QuestionContainer {
     private Long maximumParameterSetting;
     private Long minimumParameterSetting;
     private Long jumpNext;
+    private String questionObservation;
     private Long userCreate;
     private Long userLastModify;
     private List<ItemQuestionContainer> questionItemList;
@@ -131,6 +132,14 @@ public class QuestionContainer {
         this.jumpNext = jumpNext;
     }
 
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+    
        
 
 }

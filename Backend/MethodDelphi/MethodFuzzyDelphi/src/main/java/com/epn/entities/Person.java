@@ -35,17 +35,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Person")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
-    , @NamedQuery(name = "Person.findByCodePerson", query = "SELECT p FROM Person p WHERE p.codePerson = :codePerson")
-    , @NamedQuery(name = "Person.findByIdentify", query = "SELECT p FROM Person p WHERE p.identify = :identify")
-    , @NamedQuery(name = "Person.findByName", query = "SELECT p FROM Person p WHERE p.name = :name")
-    , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
-    , @NamedQuery(name = "Person.findByBirthday", query = "SELECT p FROM Person p WHERE p.birthday = :birthday")
-    , @NamedQuery(name = "Person.findBySex", query = "SELECT p FROM Person p WHERE p.sex = :sex")
-    , @NamedQuery(name = "Person.findByDateCreate", query = "SELECT p FROM Person p WHERE p.dateCreate = :dateCreate")
-    , @NamedQuery(name = "Person.findByDateLastModify", query = "SELECT p FROM Person p WHERE p.dateLastModify = :dateLastModify")
-    , @NamedQuery(name = "Person.findByUserCreate", query = "SELECT p FROM Person p WHERE p.userCreate = :userCreate")
-    , @NamedQuery(name = "Person.findByUserLastModify", query = "SELECT p FROM Person p WHERE p.userLastModify = :userLastModify")})
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+    @NamedQuery(name = "Person.findByCodePerson", query = "SELECT p FROM Person p WHERE p.codePerson = :codePerson"),
+    @NamedQuery(name = "Person.findByIdentify", query = "SELECT p FROM Person p WHERE p.identify = :identify"),
+    @NamedQuery(name = "Person.findByName", query = "SELECT p FROM Person p WHERE p.name = :name"),
+    @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+    @NamedQuery(name = "Person.findByBirthday", query = "SELECT p FROM Person p WHERE p.birthday = :birthday"),
+    @NamedQuery(name = "Person.findBySex", query = "SELECT p FROM Person p WHERE p.sex = :sex"),
+    @NamedQuery(name = "Person.findByDateCreate", query = "SELECT p FROM Person p WHERE p.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Person.findByDateLastModify", query = "SELECT p FROM Person p WHERE p.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Person.findByUserCreate", query = "SELECT p FROM Person p WHERE p.userCreate = :userCreate"),
+    @NamedQuery(name = "Person.findByUserLastModify", query = "SELECT p FROM Person p WHERE p.userLastModify = :userLastModify")})
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +69,9 @@ public class Person implements Serializable {
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @Column(name = "workArea")
+    private String workArea;
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;
@@ -110,25 +113,25 @@ public class Person implements Serializable {
     @Column(name = "userLastModify")
     private long userLastModify;
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-   // private List<AdminisEmail> adminisEmailList;
+    // private List<AdminisEmail> adminisEmailList;
     @JoinColumns({
-        @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
-        , @JoinColumn(name = "typePerson", referencedColumnName = "codeItem", insertable = false, updatable = false)})
+        @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "typePerson", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
     @JoinColumns({
-        @JoinColumn(name = "typeIdentifyCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
-        , @JoinColumn(name = "typeIdentify", referencedColumnName = "codeItem", insertable = false, updatable = false)})
+        @JoinColumn(name = "typeIdentifyCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "typeIdentify", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem1;
     @JoinColumns({
-        @JoinColumn(name = "academicDegreeCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
-        , @JoinColumn(name = "academicDegree", referencedColumnName = "codeItem", insertable = false, updatable = false)})
+        @JoinColumn(name = "academicDegreeCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "academicDegree", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem2;
     @JoinColumns({
-        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
-        , @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
+        @JoinColumn(name = "statusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "status", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem4;
 
@@ -383,6 +386,14 @@ public class Person implements Serializable {
         return hash;
     }
 
+    public String getWorkArea() {
+        return workArea;
+    }
+
+    public void setWorkArea(String workArea) {
+        this.workArea = workArea;
+    }
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
