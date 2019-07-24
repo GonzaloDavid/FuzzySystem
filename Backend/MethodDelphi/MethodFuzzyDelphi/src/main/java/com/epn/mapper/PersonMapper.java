@@ -10,12 +10,14 @@ import com.epn.entities.Person;
 import java.util.List;
 import org.mapstruct.Mapper;
 
+
 /**
  *
  * @author david
  */
 @Mapper
 public interface PersonMapper {
+   
     PersonContainer sourceToDestination(Person source);
 
     List<PersonContainer> sourceListToDestination(List<Person> source);

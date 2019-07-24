@@ -35,7 +35,8 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.rounds")
 public class RoundsFacadeREST extends AbstractFacade<Rounds> {
 
-    @Inject() RoundsDAO roundsDAO;
+    @Inject()
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -57,6 +58,10 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
         if (codeQuiz != null && !codeQuiz.isEmpty()) {
             key.setCodeQuiz(new java.lang.Long(codeQuiz.get(0)));
         }
+        java.util.List<String> codePerson = map.get("codePerson");
+        if (codePerson != null && !codePerson.isEmpty()) {
+            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
+        }
         return key;
     }
 
@@ -69,10 +74,11 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
     @Transactional
     @Produces({MediaType.APPLICATION_JSON})
     public String getLastRound(
-            @QueryParam("codequiz") Long codequiz
+            @QueryParam("codequiz") Long codequiz,
+            @QueryParam("roundNumber") Long roundNumber
     ) throws JsonProcessingException {
 
-        return roundsDAO.getLastRoundbycodeQuiz(codequiz);
+        return roundsDAO.getLastRoundbycodeQuiz(codequiz,roundNumber);
     }
 
     @POST

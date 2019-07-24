@@ -48,6 +48,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Person.findByUserLastModify", query = "SELECT p FROM Person p WHERE p.userLastModify = :userLastModify")})
 public class Person implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private List<Rounds> roundsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private List<Quizvalues> quizvaluesList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -410,6 +415,24 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return "com.epn.entities.Person[ codePerson=" + codePerson + " ]";
+    }
+
+    @XmlTransient
+    public List<Rounds> getRoundsList() {
+        return roundsList;
+    }
+
+    public void setRoundsList(List<Rounds> roundsList) {
+        this.roundsList = roundsList;
+    }
+
+    @XmlTransient
+    public List<Quizvalues> getQuizvaluesList() {
+        return quizvaluesList;
+    }
+
+    public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
+        this.quizvaluesList = quizvaluesList;
     }
 
 }

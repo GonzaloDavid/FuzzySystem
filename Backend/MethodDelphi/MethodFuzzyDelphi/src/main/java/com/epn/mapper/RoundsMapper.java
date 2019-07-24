@@ -10,6 +10,7 @@ import com.epn.dtos.RoundsContainer;
 import com.epn.entities.Rounds;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  *
@@ -17,7 +18,7 @@ import org.mapstruct.Mapper;
  */
 @Mapper
 public interface RoundsMapper {
-
+    @Mapping(target = "name", expression = "java(source.getPerson().getName())")
     RoundsContainer sourceToDestination(Rounds source); 
 
     List<RoundsContainer> sourceListToDestination(List<Rounds> source);

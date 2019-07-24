@@ -6,6 +6,7 @@
 package com.epn.dtos;
 
 import com.epn.entities.RoundsPK;
+import java.util.Date;
 
 /**
  *
@@ -14,6 +15,9 @@ import com.epn.entities.RoundsPK;
 public class RoundsContainer {
 
     private RoundsPK roundsPK;
+    private String name;
+    private Date dateLastModify;
+    private Date dateCreate;
 
     public RoundsContainer() {
     }
@@ -29,4 +33,30 @@ public class RoundsContainer {
     public void setRoundsPK(RoundsPK roundsPK) {
         this.roundsPK = roundsPK;
     }
+
+    public Date getDateLastModify() {
+        return dateLastModify;
+    }
+
+    public void setDateLastModify(Date dateLastModify) {
+        this.dateLastModify = dateLastModify;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 }

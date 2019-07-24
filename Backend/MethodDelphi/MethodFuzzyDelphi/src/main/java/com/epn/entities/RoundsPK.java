@@ -26,13 +26,18 @@ public class RoundsPK implements Serializable {
     @NotNull
     @Column(name = "codeQuiz")
     private long codeQuiz;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "codePerson")
+    private long codePerson;
 
     public RoundsPK() {
     }
 
-    public RoundsPK(long roundNumber, long codeQuiz) {
+    public RoundsPK(long roundNumber, long codeQuiz, long codePerson) {
         this.roundNumber = roundNumber;
         this.codeQuiz = codeQuiz;
+        this.codePerson = codePerson;
     }
 
     public long getRoundNumber() {
@@ -51,11 +56,20 @@ public class RoundsPK implements Serializable {
         this.codeQuiz = codeQuiz;
     }
 
+    public long getCodePerson() {
+        return codePerson;
+    }
+
+    public void setCodePerson(long codePerson) {
+        this.codePerson = codePerson;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) roundNumber;
         hash += (int) codeQuiz;
+        hash += (int) codePerson;
         return hash;
     }
 
@@ -72,12 +86,15 @@ public class RoundsPK implements Serializable {
         if (this.codeQuiz != other.codeQuiz) {
             return false;
         }
+        if (this.codePerson != other.codePerson) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.epn.entities.RoundsPK[ roundNumber=" + roundNumber + ", codeQuiz=" + codeQuiz + " ]";
+        return "com.epn.entities.RoundsPK[ roundNumber=" + roundNumber + ", codeQuiz=" + codeQuiz + ", codePerson=" + codePerson + " ]";
     }
     
 }

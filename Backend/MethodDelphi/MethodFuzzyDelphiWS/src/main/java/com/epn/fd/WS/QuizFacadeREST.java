@@ -139,13 +139,15 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_JSON})
     public void sendMail(EmailContainer emailcontainer) {
 
-        RoundsPK roundPK = new RoundsPK();
-        roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
-        roundPK.setRoundNumber(emailcontainer.getRoundNumber());
-
-        Rounds round = new Rounds(roundPK);
-        round.setRoundsPK(roundPK);
-        roundsDAO.save(round);
+        emailcontainer.getPersons().forEach(person -> {
+            RoundsPK roundPK = new RoundsPK();
+            roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
+            roundPK.setRoundNumber(emailcontainer.getRoundNumber());
+            roundPK.setCodePerson(person.getCodePerson());
+            Rounds round = new Rounds(roundPK);
+            round.setRoundsPK(roundPK);
+            roundsDAO.save(round);
+        });
         quizDAO.sendquiz(emailcontainer);
 
     }

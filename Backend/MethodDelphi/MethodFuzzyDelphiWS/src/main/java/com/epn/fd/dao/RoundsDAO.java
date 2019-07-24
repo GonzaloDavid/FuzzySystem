@@ -29,9 +29,10 @@ public class RoundsDAO extends GenericDAO<Rounds> {
         super(Rounds.class);
     }
 
-    public String getLastRoundbycodeQuiz(Long codequiz) throws JsonProcessingException {
+    public String getLastRoundbycodeQuiz(Long codequiz,Long roundNumber) throws JsonProcessingException {
         SearchObject search = new SearchObject("roundsPK");
         search.addParameter("roundsPK.codeQuiz", FilterTypes.EQUAL, codequiz);
+        search.addParameter("roundsPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addOrderBy("roundsPK.roundNumber", Boolean.FALSE);
         
         List<Rounds> resultList = search(search);
