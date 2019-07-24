@@ -382,12 +382,12 @@ CREATE TABLE `Quizvalues` (
   KEY `Quizvalues_Quiz_FK` (`codeQuiz`),
   KEY `Quizvalues_Questions_FK` (`codeQuestions`,`codeQuiz`),
   KEY `Quizvalues_QuestionItem_FK` (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
-  KEY `Quizvalues_Rounds_FK` (`roundNumber`,`codeQuiz`),
+  KEY `Quizvalues_Rounds_FK` (`roundNumber`,`codeQuiz`,`codePerson`),
   CONSTRAINT `Quizvalues_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `Quizvalues_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
   CONSTRAINT `Quizvalues_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
   CONSTRAINT `Quizvalues_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
-  CONSTRAINT `Quizvalues_Rounds_FK` FOREIGN KEY (`roundNumber`, `codeQuiz`) REFERENCES `Rounds` (`roundNumber`, `codeQuiz`)
+  CONSTRAINT `Quizvalues_Rounds_FK` FOREIGN KEY (`roundNumber`, `codeQuiz`, `codePerson`) REFERENCES `Rounds` (`roundNumber`, `codeQuiz`, `codePerson`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -397,7 +397,7 @@ CREATE TABLE `Quizvalues` (
 
 LOCK TABLES `Quizvalues` WRITE;
 /*!40000 ALTER TABLE `Quizvalues` DISABLE KEYS */;
-INSERT INTO `Quizvalues` VALUES (3,9,1,1,2,'1','2','4',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,1,3,'2','3','4',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,1,39,'1','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,36,'1','11','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,37,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,38,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,23,'1','11','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,24,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,25,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,5,26,'11','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,5,27,'11','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0);
+INSERT INTO `Quizvalues` VALUES (0,9,2,8,41,'1','2','3','',NULL,'2019-07-24 03:11:09','2019-07-24 03:11:09',0,0),(0,9,2,8,42,'4','5','6','',NULL,'2019-07-24 03:11:09','2019-07-24 03:11:09',0,0),(3,9,1,1,2,'1','2','4',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,1,3,'2','3','4',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,1,39,'1','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,36,'1','11','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,37,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,3,38,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,23,'1','11','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,24,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,4,25,'1','1','11',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,5,26,'11','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(3,9,1,5,27,'11','1','1',NULL,NULL,'2019-07-23 19:18:17','2019-07-23 19:20:05',0,0),(4,9,1,1,2,'1','2','3','encuesta observacion nuemro 1','onservacion pregunta 1','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,1,3,'4','4','44','encuesta observacion nuemro 1','onservacion pregunta 1','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,1,39,'4','4','4','encuesta observacion nuemro 1','onservacion pregunta 1','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,3,36,'2','2','22','encuesta observacion nuemro 1','observacion pregunta 2','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,3,37,'2','2','2','encuesta observacion nuemro 1','observacion pregunta 2','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,3,38,'22','2','2','encuesta observacion nuemro 1','observacion pregunta 2','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,4,23,'3','33','3','encuesta observacion nuemro 1','Onservacion pregunta 3','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,4,24,'3','3','33','encuesta observacion nuemro 1','Onservacion pregunta 3','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,4,25,'3','33','3','encuesta observacion nuemro 1','Onservacion pregunta 3','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,5,26,'4','44','4','encuesta observacion nuemro 1','pregunta 4','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(4,9,1,5,27,'4','44','4','encuesta observacion nuemro 1','pregunta 4','2019-07-24 06:48:29','2019-07-24 06:48:29',0,0),(5,9,1,1,2,'1','2','3','la encuesta estubo ok','Brasil es el mas opcionado y me parece que falta ecuador en los items','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,1,3,'4','5','6','la encuesta estubo ok','Brasil es el mas opcionado y me parece que falta ecuador en los items','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,1,39,'7','8','9','la encuesta estubo ok','Brasil es el mas opcionado y me parece que falta ecuador en los items','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,3,36,'7','8','9','la encuesta estubo ok','el mejor es el estadio del aucas','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,3,37,'10','11','12','la encuesta estubo ok','el mejor es el estadio del aucas','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,3,38,'13','14','15','la encuesta estubo ok','el mejor es el estadio del aucas','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,4,23,'16','17','18','la encuesta estubo ok','de ley brasil es el mejor','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,4,24,'19','20','21','la encuesta estubo ok','de ley brasil es el mejor','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,4,25,'22','23','24','la encuesta estubo ok','de ley brasil es el mejor','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,5,26,'25','26','27','la encuesta estubo ok','ecuador va ser futuro campeon solo esperen','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0),(5,9,1,5,27,'28','29','30','la encuesta estubo ok','ecuador va ser futuro campeon solo esperen','2019-07-24 15:15:36','2019-07-24 15:15:36',0,0);
 /*!40000 ALTER TABLE `Quizvalues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,8 +411,15 @@ DROP TABLE IF EXISTS `Rounds`;
 CREATE TABLE `Rounds` (
   `roundNumber` bigint(20) NOT NULL,
   `codeQuiz` bigint(20) NOT NULL,
-  PRIMARY KEY (`roundNumber`,`codeQuiz`),
+  `codePerson` bigint(20) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`roundNumber`,`codeQuiz`,`codePerson`),
   KEY `Rounds_Quiz_FK` (`codeQuiz`),
+  KEY `Rounds_Person_FK` (`codePerson`),
+  CONSTRAINT `Rounds_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `Rounds_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -423,7 +430,7 @@ CREATE TABLE `Rounds` (
 
 LOCK TABLES `Rounds` WRITE;
 /*!40000 ALTER TABLE `Rounds` DISABLE KEYS */;
-INSERT INTO `Rounds` VALUES (0,1),(1,1),(2,1),(3,1),(0,9);
+INSERT INTO `Rounds` VALUES (0,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(0,2,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(0,9,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(1,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(2,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(3,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(4,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(5,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(6,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(7,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0),(8,1,9,'2019-07-24 17:41:45','2019-07-24 17:42:59',0,0);
 /*!40000 ALTER TABLE `Rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,4 +532,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-23 20:50:58
+-- Dump completed on 2019-07-24 13:47:53
