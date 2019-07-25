@@ -8,8 +8,13 @@ package com.epn.fd.WS;
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
+import com.epn.entities.QuestionsPK;
 import com.epn.entities.Quiz;
+import com.epn.entities.QuizPK;
+import com.epn.entities.Rounds;
+import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.QuizDAO;
+import com.epn.fd.dao.RoundsDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -29,6 +34,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.PathSegment;
 
 /**
  *
@@ -40,8 +46,27 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
     @Inject
     QuizDAO quizDAO;
+    @Inject
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
+
+    private QuizPK getPrimaryKey(PathSegment pathSegment) {
+        /*
+         * pathSemgent represents a URI path segment and any associated matrix parameters.
+         * URI path part is supposed to be in form of 'somePath;codeQuestions=codeQuestionsValue;codeQuiz=codeQuizValue'.
+         * Here 'somePath' is a result of getPath() method invocation and
+         * it is ignored in the following code.
+         * Matrix parameters are used as field names to build a primary key instance.
+         */
+        com.epn.entities.QuizPK key = new com.epn.entities.QuizPK();
+        javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
+        java.util.List<String> codeQuestions = map.get("codeQuiz");
+        if (codeQuestions != null && !codeQuestions.isEmpty()) {
+            key.setCodeQuiz(new java.lang.Long(codeQuestions.get(0)));
+        }
+        return key;
+    }
 
     public QuizFacadeREST() {
         super(Quiz.class);
@@ -79,7 +104,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Produces({MediaType.APPLICATION_JSON})
     public QuizContainer saveQuiz(QuizSave quizcontainer) {
 
-       return quizDAO.saveQuiz(quizcontainer);
+        return quizDAO.saveQuiz(quizcontainer);
 
     }
 
@@ -114,6 +139,15 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Consumes({MediaType.APPLICATION_JSON})
     public void sendMail(EmailContainer emailcontainer) {
 
+        emailcontainer.getPersons().forEach(person -> {
+            RoundsPK roundPK = new RoundsPK();
+            roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
+            roundPK.setRoundNumber(emailcontainer.getRoundNumber());
+            roundPK.setCodePerson(person.getCodePerson());
+            Rounds round = new Rounds(roundPK);
+            round.setRoundsPK(roundPK);
+            roundsDAO.save(round);
+        });
         quizDAO.sendquiz(emailcontainer);
 
     }
@@ -156,5 +190,5 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

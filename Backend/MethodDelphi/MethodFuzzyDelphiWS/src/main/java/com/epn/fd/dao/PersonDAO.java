@@ -7,6 +7,7 @@ package com.epn.fd.dao;
 
 import com.epn.dtos.ListAndCountContainer;
 import com.epn.dtos.PersonContainer;
+import com.epn.entities.FilterTypes;
 import com.epn.entities.Person;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
@@ -45,6 +46,17 @@ public class PersonDAO extends GenericDAO<Person> {
 
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(patientlistandcount);
+        return response;
+    }
+    public String getpersonbycode(Long codeperson) throws JsonProcessingException {
+        SearchObject search = new SearchObject("codePerson");
+        search.addParameter("codePerson", FilterTypes.EQUAL, codeperson);
+
+        List<Person> resultList = search(search);
+        List<PersonContainer> personContainer = personMapper.sourceListToDestination(resultList);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(personContainer);
         return response;
     }
 

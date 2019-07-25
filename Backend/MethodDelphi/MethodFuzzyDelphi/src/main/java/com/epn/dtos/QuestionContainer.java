@@ -19,9 +19,10 @@ public class QuestionContainer {
     private String description;
     private String statusCat;
     private String status;
-    private String maximumParameterSetting;
-    private String minimumParameterSetting;
-    private String jumpNext;
+    private Long maximumParameterSetting;
+    private Long minimumParameterSetting;
+    private Long jumpNext;
+    private String questionObservation;
     private Long userCreate;
     private Long userLastModify;
     private List<ItemQuestionContainer> questionItemList;
@@ -29,7 +30,7 @@ public class QuestionContainer {
     public QuestionContainer() {
     }
 
-    public QuestionContainer(QuestionsPK questionsPK, String question, String description, String statusCat, String status, String maximumParameterSetting, String minimumParameterSetting, String jumpNext, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
+    public QuestionContainer(QuestionsPK questionsPK, String question, String description, String statusCat, String status, Long maximumParameterSetting, Long minimumParameterSetting, Long jumpNext, Long userCreate, Long userLastModify, List<ItemQuestionContainer> questionItemList) {
         this.questionsPK = questionsPK;
         this.question = question;
         this.description = description;
@@ -107,29 +108,38 @@ public class QuestionContainer {
         this.questionItemList = questionItemList;
     }
 
-    public String getMaximumParameterSetting() {
+    public Long getMaximumParameterSetting() {
         return maximumParameterSetting;
     }
 
-    public void setMaximumParameterSetting(String maximumParameterSetting) {
+    public void setMaximumParameterSetting(Long maximumParameterSetting) {
         this.maximumParameterSetting = maximumParameterSetting;
     }
 
-    public String getMinimumParameterSetting() {
+    public Long getMinimumParameterSetting() {
         return minimumParameterSetting;
     }
 
-    public void setMinimumParameterSetting(String minimumParameterSetting) {
+    public void setMinimumParameterSetting(Long minimumParameterSetting) {
         this.minimumParameterSetting = minimumParameterSetting;
     }
 
-    public String getJumpNext() {
+    public Long getJumpNext() {
         return jumpNext;
     }
 
-    public void setJumpNext(String jumpNext) {
+    public void setJumpNext(Long jumpNext) {
         this.jumpNext = jumpNext;
     }
+
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
     
+       
 
 }

@@ -6,15 +6,19 @@
 package com.epn.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,13 +32,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Quizvalues.findAll", query = "SELECT q FROM Quizvalues q"),
+    @NamedQuery(name = "Quizvalues.findByRoundNumber", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.roundNumber = :roundNumber"),
     @NamedQuery(name = "Quizvalues.findByCodePerson", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codePerson = :codePerson"),
     @NamedQuery(name = "Quizvalues.findByCodeQuiz", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "Quizvalues.findByCodeQuestions", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codeQuestions = :codeQuestions"),
     @NamedQuery(name = "Quizvalues.findByCodeQuizItem", query = "SELECT q FROM Quizvalues q WHERE q.quizvaluesPK.codeQuizItem = :codeQuizItem"),
     @NamedQuery(name = "Quizvalues.findByMinimumValue", query = "SELECT q FROM Quizvalues q WHERE q.minimumValue = :minimumValue"),
     @NamedQuery(name = "Quizvalues.findByAverageValue", query = "SELECT q FROM Quizvalues q WHERE q.averageValue = :averageValue"),
-    @NamedQuery(name = "Quizvalues.findByMaximunValue", query = "SELECT q FROM Quizvalues q WHERE q.maximunValue = :maximunValue")})
+    @NamedQuery(name = "Quizvalues.findByMaximunValue", query = "SELECT q FROM Quizvalues q WHERE q.maximunValue = :maximunValue"),
+    @NamedQuery(name = "Quizvalues.findByQuizObservation", query = "SELECT q FROM Quizvalues q WHERE q.quizObservation = :quizObservation"),
+    @NamedQuery(name = "Quizvalues.findByQuestionObservation", query = "SELECT q FROM Quizvalues q WHERE q.questionObservation = :questionObservation"),
+    @NamedQuery(name = "Quizvalues.findByDateCreate", query = "SELECT q FROM Quizvalues q WHERE q.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Quizvalues.findByDateLastModify", query = "SELECT q FROM Quizvalues q WHERE q.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Quizvalues.findByUserCreate", query = "SELECT q FROM Quizvalues q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "Quizvalues.findByUserLastModify", query = "SELECT q FROM Quizvalues q WHERE q.userLastModify = :userLastModify")})
 public class Quizvalues implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,18 +66,53 @@ public class Quizvalues implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "maximunValue")
     private String maximunValue;
+    @Size(max = 100)
+    @Column(name = "quizObservation")
+    private String quizObservation;
+    @Size(max = 100)
+    @Column(name = "questionObservation")
+    private String questionObservation;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "dateCreate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "dateLastModify")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateLastModify;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "userCreate")
+    private long userCreate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "userLastModify")
+    private long userLastModify;
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
-    @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private QuestionItem questionItem;
-    @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Questions questions;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
+    @JoinColumns({
+        @JoinColumn(name = "roundNumber", referencedColumnName = "roundNumber", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false),
+        @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Rounds rounds;
 
     public Quizvalues() {
     }
@@ -75,15 +121,19 @@ public class Quizvalues implements Serializable {
         this.quizvaluesPK = quizvaluesPK;
     }
 
-    public Quizvalues(QuizvaluesPK quizvaluesPK, String minimumValue, String averageValue, String maximunValue) {
+    public Quizvalues(QuizvaluesPK quizvaluesPK, String minimumValue, String averageValue, String maximunValue, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.quizvaluesPK = quizvaluesPK;
         this.minimumValue = minimumValue;
         this.averageValue = averageValue;
         this.maximunValue = maximunValue;
+        this.dateCreate = dateCreate;
+        this.dateLastModify = dateLastModify;
+        this.userCreate = userCreate;
+        this.userLastModify = userLastModify;
     }
 
-    public Quizvalues(long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
-        this.quizvaluesPK = new QuizvaluesPK(codePerson, codeQuiz, codeQuestions, codeQuizItem);
+    public Quizvalues(long roundNumber, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
+        this.quizvaluesPK = new QuizvaluesPK(roundNumber, codePerson, codeQuiz, codeQuestions, codeQuizItem);
     }
 
     public QuizvaluesPK getQuizvaluesPK() {
@@ -118,6 +168,54 @@ public class Quizvalues implements Serializable {
         this.maximunValue = maximunValue;
     }
 
+    public String getQuizObservation() {
+        return quizObservation;
+    }
+
+    public void setQuizObservation(String quizObservation) {
+        this.quizObservation = quizObservation;
+    }
+
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public Date getDateLastModify() {
+        return dateLastModify;
+    }
+
+    public void setDateLastModify(Date dateLastModify) {
+        this.dateLastModify = dateLastModify;
+    }
+
+    public long getUserCreate() {
+        return userCreate;
+    }
+
+    public void setUserCreate(long userCreate) {
+        this.userCreate = userCreate;
+    }
+
+    public long getUserLastModify() {
+        return userLastModify;
+    }
+
+    public void setUserLastModify(long userLastModify) {
+        this.userLastModify = userLastModify;
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -148,6 +246,14 @@ public class Quizvalues implements Serializable {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public Rounds getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(Rounds rounds) {
+        this.rounds = rounds;
     }
 
     @Override

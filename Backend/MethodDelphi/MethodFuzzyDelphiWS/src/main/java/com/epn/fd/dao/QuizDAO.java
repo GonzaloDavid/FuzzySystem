@@ -45,8 +45,8 @@ public class QuizDAO extends GenericDAO<Quiz> {
     }
 
     public List<QuizContainer> getQuizbycode(Long codeQuiz) {
-        SearchObject search = new SearchObject("codeQuiz");
-        search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        SearchObject search = new SearchObject("quizPK");
+        search.addParameter("quizPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
 
         List<Quiz> resultList = search(search);
         List<QuizContainer> containers = quizMapper.sourceListToDestination(resultList);
@@ -55,9 +55,9 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
     public QuizContainer saveQuiz(QuizSave quizcontainer) {
 
-        Quiz quiz = new Quiz(quizcontainer.getQuiz().getCodeQuiz());
+        Quiz quiz = new Quiz(quizcontainer.getQuiz().getQuizPK());
         Quiz quizaux = new Quiz();
-        quiz.setCodeQuiz(quizcontainer.getQuiz().getCodeQuiz());
+        quiz.getQuizPK().setCodeQuiz(quizcontainer.getQuiz().getQuizPK().getCodeQuiz());
         quiz.setNameQuiz(quizcontainer.getQuiz().getNameQuiz());
         quiz.setDescription(quizcontainer.getQuiz().getDescription());
         quiz.setShortNameQuiz(quizcontainer.getQuiz().getShortNameQuiz());
@@ -99,7 +99,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
     public void deletequiz(Quiz quiz) {
 
         Quiz foundelement = new Quiz();
-        foundelement = find(quiz.getCodeQuiz());
+        foundelement = find(quiz.getQuizPK());
         try {
             if (foundelement != null) {
                 remove(foundelement);
@@ -111,15 +111,15 @@ public class QuizDAO extends GenericDAO<Quiz> {
     }
 
     public void sendquiz(EmailContainer emailcontainer) {
-        List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getCodeQuiz());
+        List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
             try {
-                String link = "http://localhost:4200/admin/surveys/client/" + person.getCodePerson() + "/" + quiz.get(0).getCodeQuiz();
+                String link = "http://localhost:4200/admin/surveys/quizclient/"+emailcontainer.getRoundNumber()+"/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
                 String nameQuiz = quiz.get(0).getShortNameQuiz();
                 String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
                 String message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription() + "</span>";
-                String footer = "<br><span>Por favor de click en el siguiente enlace para continuar ...</span><br>";
+                String footer = "<span>La información transmitida a través del sistema debe ser tratada con confidencialidad , al entrar usted al sistema acepta el compromiso de no divulgar la información que se presente a continuación.</span><br>";
                 String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                         + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                         + "  <head>\n"
@@ -223,7 +223,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                        <tr>\n"
                         + "                          <td\n"
                         + "                            class=\"bodycopy\"\n"
-                        + "                            style=\"padding: 5px 0 0 0;color: #153643; font-family: sans-serif;font-size: 16px; line-height: 22px;text-align:justify\"\n"
+                        + "                            style=\"padding: 5px 0 0 0;color: #153643; font-family: sans-serif;font-size: 10px; line-height: 22px;text-align:justify;background: antiquewhite\"\n"
                         + "                          >";
                 html += footer;
                 html += "  </td>\n"
@@ -290,7 +290,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
                         + "                                          <td class=\"button\" height=\"45\">\n"
                         + "                                            <a\n"
                         + "                                              href=\"";
-                html += linkfake;
+                html += link;
                 html += "\"\n"
                         + "                                              target=\"_blank\"\n"
                         + "                                              style=\"padding: 8px 40px 8px 40px; border: 1px solid #1E88E5; border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;\"\n"

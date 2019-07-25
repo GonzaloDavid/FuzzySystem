@@ -20,6 +20,10 @@ public class QuizvaluesPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Column(name = "roundNumber")
+    private long roundNumber;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "codePerson")
     private long codePerson;
     @Basic(optional = false)
@@ -38,11 +42,20 @@ public class QuizvaluesPK implements Serializable {
     public QuizvaluesPK() {
     }
 
-    public QuizvaluesPK(long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
+    public QuizvaluesPK(long roundNumber, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem) {
+        this.roundNumber = roundNumber;
         this.codePerson = codePerson;
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
+    }
+
+    public long getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(long roundNumber) {
+        this.roundNumber = roundNumber;
     }
 
     public long getCodePerson() {
@@ -80,6 +93,7 @@ public class QuizvaluesPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
+        hash += (int) roundNumber;
         hash += (int) codePerson;
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
@@ -94,6 +108,9 @@ public class QuizvaluesPK implements Serializable {
             return false;
         }
         QuizvaluesPK other = (QuizvaluesPK) object;
+        if (this.roundNumber != other.roundNumber) {
+            return false;
+        }
         if (this.codePerson != other.codePerson) {
             return false;
         }
@@ -111,7 +128,7 @@ public class QuizvaluesPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.QuizvaluesPK[ codePerson=" + codePerson + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + " ]";
+        return "com.epn.entities.QuizvaluesPK[ roundNumber=" + roundNumber + ", codePerson=" + codePerson + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + " ]";
     }
     
 }

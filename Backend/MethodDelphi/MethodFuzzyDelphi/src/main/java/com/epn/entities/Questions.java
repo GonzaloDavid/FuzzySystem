@@ -50,6 +50,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
 public class Questions implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
+    private List<Quizvalues> quizvaluesList;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected QuestionsPK questionsPK;
@@ -81,6 +84,8 @@ public class Questions implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "jumpNext")
     private String jumpNext;
+    @Column(name = "questionObservation")
+    private String questionObservation;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -239,6 +244,14 @@ public class Questions implements Serializable {
         this.questionItemList = questionItemList;
     }
 
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -263,5 +276,14 @@ public class Questions implements Serializable {
     public String toString() {
         return "com.epn.entities.Questions[ questionsPK=" + questionsPK + " ]";
     }
-    
+
+    @XmlTransient
+    public List<Quizvalues> getQuizvaluesList() {
+        return quizvaluesList;
+    }
+
+    public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
+        this.quizvaluesList = quizvaluesList;
+    }
+
 }

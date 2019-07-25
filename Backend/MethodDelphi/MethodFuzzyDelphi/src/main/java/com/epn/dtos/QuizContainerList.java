@@ -5,13 +5,15 @@
  */
 package com.epn.dtos;
 
+import com.epn.entities.QuizPK;
+
 /**
  *
  * @author ka
  */
 public class QuizContainerList {
 
-    private Long codeQuiz;
+       private QuizPK quizPK;
     private String nameQuiz;
     private String shortNameQuiz;
     private String description;
@@ -23,22 +25,23 @@ public class QuizContainerList {
     public QuizContainerList() {
     }
 
-    public QuizContainerList(Long codeQuiz, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, Long userCreate) {
-        this.codeQuiz = codeQuiz;
+    public QuizPK getQuizPK() {
+        return quizPK;
+    }
+
+    public void setQuizPK(QuizPK quizPK) {
+        this.quizPK = quizPK;
+    }
+
+    public QuizContainerList(QuizPK quizPK, String nameQuiz, String shortNameQuiz, String description, String status, String statusCat, Long userCreate, Long userLastModify) {
+        this.quizPK = quizPK;
         this.nameQuiz = nameQuiz;
         this.shortNameQuiz = shortNameQuiz;
         this.description = description;
         this.status = status;
         this.statusCat = statusCat;
         this.userCreate = userCreate;
-    }
-
-    public Long getCodeQuiz() {
-        return codeQuiz;
-    }
-
-    public void setCodeQuiz(Long codeQuiz) {
-        this.codeQuiz = codeQuiz;
+        this.userLastModify = userLastModify;
     }
 
     public String getNameQuiz() {
