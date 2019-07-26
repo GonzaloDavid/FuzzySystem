@@ -28,9 +28,9 @@ public class App {
         pregunta1.add(new Item(3, 5, 5, 7, 8));
         pregunta1.add(new Item(3, 6, 4, 7, 9));
 
-        Question preguntaExperto1 = new Question(7, pregunta1);
+        Question preguntaExperto1 = new Question(pregunta1, 7, 6);
 
-        System.out.println(preguntaExperto1.toString());
+        System.out.println(preguntaExperto1);
         System.out.println("=========================================");
 
     }

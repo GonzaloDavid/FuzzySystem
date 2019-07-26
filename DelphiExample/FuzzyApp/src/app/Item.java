@@ -7,16 +7,26 @@ public class Item {
 
     private int idExperto; // id del criterio
     private int idItem; // id del criterio
-    private int min;
-    private int med;
-    private int max;
+    private double min;
+    private double med;
+    private double max;
+    private double promedioSj;
 
-    public Item(int idExperto, int id, int min, int med, int max) {
+    public Item(int idExperto, int idItem, double min, double med, double max) {
         this.idExperto = idExperto;
-        this.idItem = id;
+        this.idItem = idItem;
         this.min = min;
         this.med = med;
         this.max = max;
+    }
+
+    public Item(int idExperto, int idItem, double min, double med, double max, double promedioSj) {
+        this.idExperto = idExperto;
+        this.idItem = idItem;
+        this.min = min;
+        this.med = med;
+        this.max = max;
+        this.promedioSj = promedioSj;
     }
 
     public int getIdExperto() {
@@ -31,63 +41,47 @@ public class Item {
         return this.idItem;
     }
 
-    public void setIdItem(int id) {
-        this.idItem = id;
+    public void setIdItem(int idItem) {
+        this.idItem = idItem;
     }
 
-    public int getMin() {
+    public double getMin() {
         return this.min;
     }
 
-    public void setMin(int min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public int getMed() {
+    public double getMed() {
         return this.med;
     }
 
-    public void setMed(int med) {
+    public void setMed(double med) {
         this.med = med;
     }
 
-    public int getMax() {
+    public double getMax() {
         return this.max;
     }
 
-    public void setMax(int max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
-    public Item idExperto(int idExperto) {
-        this.idExperto = idExperto;
-        return this;
+    public double getPromedioSj() {
+        return this.promedioSj;
     }
 
-    public Item id(int id) {
-        this.idItem = id;
-        return this;
-    }
-
-    public Item min(int min) {
-        this.min = min;
-        return this;
-    }
-
-    public Item med(int med) {
-        this.med = med;
-        return this;
-    }
-
-    public Item max(int max) {
-        this.max = max;
-        return this;
+    public void setPromedioSj(double promedioSj) {
+        this.promedioSj = promedioSj;
     }
 
     @Override
     public String toString() {
-        return "{" + " idExperto='" + getIdExperto() + "'" + ", id='" + getIdItem() + "'" + ", min='" + getMin() + "'"
-                + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + "}";
+        return "{" + " idExperto='" + getIdExperto() + "'" + ", idItem='" + getIdItem() + "'" + ", min='" + getMin()
+                + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + ", promedioSj='" + getPromedioSj()
+                + "'" + "}";
     }
 
 }

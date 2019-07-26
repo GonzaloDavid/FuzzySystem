@@ -9,44 +9,66 @@ import java.util.Collections;
 public class Question {
 
     private ArrayList<Item> itemList;
-    private ArrayList<Double> promedioSj; // Sj = ( min + ave + max)/3
-    private float determinante;
+    private ArrayList<Item> triangularFuzzyNumbers;
+    private ArrayList<Item> promedioSj; // Sj = ( min + ave + max)/3
+    private double determinante;
+    private int numberItems;
 
     protected static String MIN = "minimo";
     protected static String MED = "medio";
     protected static String MAX = "maximo";
 
-    public Question(float determinante, ArrayList<Item> itemList) {
+    public Question(ArrayList<Item> itemList, float determinante, int numberItems) {
         this.itemList = itemList;
-        this.promedioSj = new ArrayList<Double>();
+        this.numberItems = numberItems;
+        this.triangularFuzzyNumbers = new ArrayList<Item>();
+        this.promedioSj = new ArrayList<Item>();
         this.determinante = determinante;
     }
 
-    // Algoritmos !!! =========================
+    public ArrayList<Item> getTriangularFuzzyNumbers() {
 
-    public Item getTriangularFuzzyNumberPorItem(int idItem) {
+        for (int idItem = 1; idItem <= numberItems; idItem++) {
+            this.triangularFuzzyNumbers.add(getTriangularFuzzyNumberPorItem(idItem));
+        }
 
-        idItem = 1;
-        ArrayList<Integer> menores = getValuesPorItem(idItem, MIN);
-        ArrayList<Integer> medios = getValuesPorItem(idItem, MED);
-        ArrayList<Integer> mayores = getValuesPorItem(idItem, MAX);
-        menores.add(1);
-        menores.add(10);
-        menores.add(100);
+        return this.triangularFuzzyNumbers;
+    }
 
-        mayores.add(2);
-        mayores.add(60);
-        mayores.add(400);
-        Item itemTFN = new Item(0, idItem, 0, 0, 0);
+    public void setTriangularFuzzyNumbers(ArrayList<Item> triangularFuzzyNumbers) {
+        this.triangularFuzzyNumbers = triangularFuzzyNumbers;
+    }
 
-        System.out.println("getNumeroMenor: " + getNumeroMenor(menores));
-        System.out.println("getNumeroMedio: " + getNumeroMedio(medios));
-        System.out.println("getNumeroMaximo: " + getNumeroMaximo(mayores));
+    public ArrayList<Item> getPromedioSj() {
+        double promedio = 0.0;
+
+        for (Item item : this.triangularFuzzyNumbers) {
+            promedio = ((item.getMin() + item.getMed() + item.getMax()) / 3.0);
+            this.promedioSj.add(new Item(0, item.getIdItem(), item.getMin(), item.getMed(), item.getMax(), promedio));
+        }
+
+        return this.promedioSj;
+    }
+
+    private Item getTriangularFuzzyNumberPorItem(int idItem) {
+        ArrayList<Double> menores = getValuesPorItem(idItem, MIN);
+        ArrayList<Double> medios = getValuesPorItem(idItem, MED);
+        ArrayList<Double> mayores = getValuesPorItem(idItem, MAX);
+
+        double getNumeroMenor = getNumeroMenor(menores);
+        double getNumeroMedio = getNumeroMedio(medios);
+        double getNumeroMaximo = getNumeroMaximo(mayores);
+
+        System.out.println("getNumeroMenor: " + getNumeroMenor);
+        System.out.println("getNumeroMedio: " + getNumeroMedio);
+        System.out.println("getNumeroMaximo: " + getNumeroMaximo);
+        Item itemTFN = new Item(0, idItem, getNumeroMenor, getNumeroMedio, getNumeroMaximo);
+
         return itemTFN;
     }
 
-    private ArrayList<Integer> getValuesPorItem(int idItem, String tipoValue) {
-        ArrayList<Integer> valuesPorItem = new ArrayList<Integer>();
+    private ArrayList<Double> getValuesPorItem(int idItem, String tipoValue) {
+        ArrayList<Double> valuesPorItem = new ArrayList<Double>();
 
         if (tipoValue == MIN)
             for (Item item : this.itemList) {
@@ -69,46 +91,27 @@ public class Question {
         return valuesPorItem;
     }
 
-    private int getNumeroMenor(ArrayList<Integer> numeros) {
-        int menor = 0;
+    private double getNumeroMenor(ArrayList<Double> numeros) {
+        double menor = 0;
         menor = Collections.min(numeros);
         return menor;
     }
 
-    private double getNumeroMedio(ArrayList<Integer> numeros) {
+    private double getNumeroMedio(ArrayList<Double> numeros) {
         int total = numeros.size();
         double producto = 1.0;
 
-        for (int med : numeros) {
+        for (double med : numeros) {
             producto = producto * med;
         }
 
         return Math.pow(producto, (1.0 / total));
     }
 
-    private int getNumeroMaximo(ArrayList<Integer> numeros) {
-        int mayor = 0;
+    private double getNumeroMaximo(ArrayList<Double> numeros) {
+        double mayor = 0;
         mayor = Collections.max(numeros);
         return mayor;
-    }
-
-    public float getDeterminante() {
-        return this.determinante;
-    }
-
-    public void setDeterminante(float determinante) {
-        this.determinante = determinante;
-    }
-
-    public ArrayList<Double> getPromedioSj() {
-        return this.promedioSj;
-    }
-
-    public void setPromedioSj(ArrayList<Double> promedioSj) {
-        this.promedioSj = promedioSj;
-    }
-
-    public Question() {
     }
 
     public ArrayList<Item> getItemList() {
@@ -119,14 +122,31 @@ public class Question {
         this.itemList = itemList;
     }
 
-    public Question itemList(ArrayList<Item> itemList) {
-        this.itemList = itemList;
-        return this;
+    public void setPromedioSj(ArrayList<Item> promedioSj) {
+        this.promedioSj = promedioSj;
+    }
+
+    public double getDeterminante() {
+        return this.determinante;
+    }
+
+    public void setDeterminante(double determinante) {
+        this.determinante = determinante;
+    }
+
+    public int getNumberItems() {
+        return this.numberItems;
+    }
+
+    public void setNumberItems(int numberItems) {
+        this.numberItems = numberItems;
     }
 
     @Override
     public String toString() {
-        return "{" + " itemList='" + getItemList() + "'" + "}" + " " + getTriangularFuzzyNumberPorItem(1);
+        return "{" + " itemList='" + getItemList() + "'" + ", triangularFuzzyNumbers='" + getTriangularFuzzyNumbers()
+                + "'" + ", promedioSj='" + getPromedioSj() + "'" + ", determinante='" + getDeterminante() + "'"
+                + ", numberItems='" + getNumberItems() + "'" + "}";
     }
 
 }
