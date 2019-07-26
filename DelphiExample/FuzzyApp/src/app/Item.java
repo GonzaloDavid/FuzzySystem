@@ -5,19 +5,26 @@ package app;
  */
 public class Item {
 
+    private int idExperto; // id del criterio
     private int id; // id del criterio
     private int min;
     private int med;
     private int max;
 
-    public Item() {
-    }
-
-    public Item(int id, int min, int med, int max) {
+    public Item(int idExperto, int id, int min, int med, int max) {
+        this.idExperto = idExperto;
         this.id = id;
         this.min = min;
         this.med = med;
         this.max = max;
+    }
+
+    public int getIdExperto() {
+        return this.idExperto;
+    }
+
+    public void setIdExperto(int idExperto) {
+        this.idExperto = idExperto;
     }
 
     public int getId() {
@@ -52,6 +59,16 @@ public class Item {
         this.max = max;
     }
 
+    public Item idExperto(int idExperto) {
+        this.idExperto = idExperto;
+        return this;
+    }
+
+    public Item id(int id) {
+        this.id = id;
+        return this;
+    }
+
     public Item min(int min) {
         this.min = min;
         return this;
@@ -69,7 +86,8 @@ public class Item {
 
     @Override
     public String toString() {
-        return "{" + " min='" + getMin() + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + "}";
+        return "{" + " idExperto='" + getIdExperto() + "'" + ", id='" + getId() + "'" + ", min='" + getMin() + "'"
+                + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + "}";
     }
 
 }
