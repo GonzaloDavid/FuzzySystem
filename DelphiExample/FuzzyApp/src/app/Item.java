@@ -6,14 +6,14 @@ package app;
 public class Item {
 
     private int idExperto; // id del criterio
-    private int id; // id del criterio
+    private int idItem; // id del criterio
     private int min;
     private int med;
     private int max;
 
     public Item(int idExperto, int id, int min, int med, int max) {
         this.idExperto = idExperto;
-        this.id = id;
+        this.idItem = id;
         this.min = min;
         this.med = med;
         this.max = max;
@@ -27,12 +27,12 @@ public class Item {
         this.idExperto = idExperto;
     }
 
-    public int getId() {
-        return this.id;
+    public int getIdItem() {
+        return this.idItem;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdItem(int id) {
+        this.idItem = id;
     }
 
     public int getMin() {
@@ -65,7 +65,7 @@ public class Item {
     }
 
     public Item id(int id) {
-        this.id = id;
+        this.idItem = id;
         return this;
     }
 
@@ -86,7 +86,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "{" + " idExperto='" + getIdExperto() + "'" + ", id='" + getId() + "'" + ", min='" + getMin() + "'"
+        return "{" + " idExperto='" + getIdExperto() + "'" + ", id='" + getIdItem() + "'" + ", min='" + getMin() + "'"
                 + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + "}";
     }
 
