@@ -10,7 +10,7 @@ public class Question {
 
     private ArrayList<Item> itemList;
     private ArrayList<Item> triangularFuzzyNumbers;
-    private ArrayList<Item> promedioSj; // Sj = ( min + ave + max)/3
+    private ArrayList<PromedioSj> promedioSjLista; // Sj = ( min + ave + max)/3
     private double determinante;
     private int numberItems;
 
@@ -22,7 +22,7 @@ public class Question {
         this.itemList = itemList;
         this.numberItems = numberItems;
         this.triangularFuzzyNumbers = new ArrayList<Item>();
-        this.promedioSj = new ArrayList<Item>();
+        this.promedioSjLista = new ArrayList<PromedioSj>();
         this.determinante = determinante;
     }
 
@@ -39,15 +39,15 @@ public class Question {
         this.triangularFuzzyNumbers = triangularFuzzyNumbers;
     }
 
-    public ArrayList<Item> getPromedioSj() {
+    public ArrayList<PromedioSj> getPromedioSj() {
         double promedio = 0.0;
 
         for (Item item : this.triangularFuzzyNumbers) {
             promedio = ((item.getMin() + item.getMed() + item.getMax()) / 3.0);
-            this.promedioSj.add(new Item(0, item.getIdItem(), item.getMin(), item.getMed(), item.getMax(), promedio));
+            this.promedioSjLista.add(new PromedioSj(item.getIdItem(), promedio, this.determinante));
         }
 
-        return this.promedioSj;
+        return this.promedioSjLista;
     }
 
     private Item getTriangularFuzzyNumberPorItem(int idItem) {
@@ -122,8 +122,8 @@ public class Question {
         this.itemList = itemList;
     }
 
-    public void setPromedioSj(ArrayList<Item> promedioSj) {
-        this.promedioSj = promedioSj;
+    public void setPromedioSj(ArrayList<PromedioSj> promedioSj) {
+        this.promedioSjLista = promedioSj;
     }
 
     public double getDeterminante() {

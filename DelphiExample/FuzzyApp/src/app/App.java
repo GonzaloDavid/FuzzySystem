@@ -28,9 +28,9 @@ public class App {
         pregunta1.add(new Item(3, 5, 5, 7, 8));
         pregunta1.add(new Item(3, 6, 4, 7, 9));
 
-        Question preguntaExperto1 = new Question(pregunta1, 7, 6);
-
-        System.out.println(preguntaExperto1);
+        Question preguntaExperto1 = new Question(pregunta1, 6, 6);
+        preguntaExperto1.getTriangularFuzzyNumbers();
+        System.out.println(preguntaExperto1.getPromedioSj());
         System.out.println("=========================================");
 
     }

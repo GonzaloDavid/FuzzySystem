@@ -10,7 +10,6 @@ public class Item {
     private double min;
     private double med;
     private double max;
-    private double promedioSj;
 
     public Item(int idExperto, int idItem, double min, double med, double max) {
         this.idExperto = idExperto;
@@ -18,15 +17,6 @@ public class Item {
         this.min = min;
         this.med = med;
         this.max = max;
-    }
-
-    public Item(int idExperto, int idItem, double min, double med, double max, double promedioSj) {
-        this.idExperto = idExperto;
-        this.idItem = idItem;
-        this.min = min;
-        this.med = med;
-        this.max = max;
-        this.promedioSj = promedioSj;
     }
 
     public int getIdExperto() {
@@ -69,19 +59,10 @@ public class Item {
         this.max = max;
     }
 
-    public double getPromedioSj() {
-        return this.promedioSj;
-    }
-
-    public void setPromedioSj(double promedioSj) {
-        this.promedioSj = promedioSj;
-    }
-
     @Override
     public String toString() {
         return "{" + " idExperto='" + getIdExperto() + "'" + ", idItem='" + getIdItem() + "'" + ", min='" + getMin()
-                + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + ", promedioSj='" + getPromedioSj()
-                + "'" + "}";
+                + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'";
     }
 
 }
