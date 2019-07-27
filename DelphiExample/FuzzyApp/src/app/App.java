@@ -7,7 +7,7 @@ public class App {
 
         // Experto 1 ================================================
         ArrayList<Item> pregunta1 = new ArrayList<>();
-        pregunta1.add(new Item(1, 1, 6, 7, 8));
+        pregunta1.add(new Item(1, 1, 9, 9, 8));
         pregunta1.add(new Item(1, 2, 5, 8, 9));
         pregunta1.add(new Item(1, 3, 2, 7, 8));
         pregunta1.add(new Item(1, 4, 3, 6, 8));
@@ -28,10 +28,17 @@ public class App {
         pregunta1.add(new Item(3, 5, 5, 7, 8));
         pregunta1.add(new Item(3, 6, 4, 7, 9));
 
-        Question preguntaExperto1 = new Question(pregunta1, 6, 6);
+        int indice = 6;
+        int sizeItems = 6;
+        Question preguntaExperto1 = new Question(pregunta1, indice, sizeItems);
+
         preguntaExperto1.getTriangularFuzzyNumbers();
-        System.out.println(preguntaExperto1.getPromedioSj());
         System.out.println("=========================================");
+
+        preguntaExperto1.setValoresMenorMedioItems();
+        System.out.println(preguntaExperto1.toString());
+        System.out.println("=========================================");
+        System.out.println(" Anulados items: " + preguntaExperto1.getItemsAnulados());
 
     }
 

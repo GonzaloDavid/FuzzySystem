@@ -26,12 +26,36 @@ public class Question {
         this.determinante = determinante;
     }
 
+    public void setValoresMenorMedioItems() {
+        for (Item item : this.itemList) {
+            int idItem = item.getIdItem();
+            for (Item itemfuzzy : this.triangularFuzzyNumbers) {
+
+                if (itemfuzzy.getIdItem() == idItem) {
+                    item.setValorMenor(itemfuzzy.getMin());
+                    item.setValorMedio(itemfuzzy.getMed());
+                }
+            }
+        }
+
+    }
+
+    public ArrayList<Item> getItemsAnulados() {
+
+        ArrayList<Item> itemsAnulados = new ArrayList<Item>();
+
+        for (Item item : this.itemList) {
+            if (item.getEstadoRangoG() == 0 || item.getConsensoGC() == 0)
+                itemsAnulados.add(item);
+        }
+        return itemsAnulados;
+    }
+
     public ArrayList<Item> getTriangularFuzzyNumbers() {
 
         for (int idItem = 1; idItem <= numberItems; idItem++) {
             this.triangularFuzzyNumbers.add(getTriangularFuzzyNumberPorItem(idItem));
         }
-
         return this.triangularFuzzyNumbers;
     }
 
