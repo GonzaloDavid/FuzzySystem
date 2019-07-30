@@ -35,6 +35,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.epn.exception.NotFoundExceptionMapper.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
+        resources.add(com.epn.fd.WS.DelphicalculationsFacadeREST.class);
         resources.add(com.epn.fd.WS.MenuFacadeREST.class);
         resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
