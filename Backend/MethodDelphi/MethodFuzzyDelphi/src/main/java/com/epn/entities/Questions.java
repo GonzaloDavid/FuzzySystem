@@ -6,6 +6,7 @@
 package com.epn.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -84,7 +85,7 @@ public class Questions implements Serializable {
     @Column(name = "questionObservation")
     private String questionObservation;
     @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
-    private String diffuseDelphiDiscriminatorbyQuestion;
+    private BigDecimal diffuseDelphiDiscriminatorbyQuestion;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -104,8 +105,8 @@ public class Questions implements Serializable {
     private Quiz quiz;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
     private List<QuestionItem> questionItemList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
-    private List<Quizvalues> quizvaluesList;
+   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
+  //  private List<Quizvalues> quizvaluesList;
 
     public Questions() {
     }
@@ -253,11 +254,11 @@ public class Questions implements Serializable {
         this.questionObservation = questionObservation;
     }
 
-    public String getDiffuseDelphiDiscriminatorbyQuestion() {
+    public BigDecimal getDiffuseDelphiDiscriminatorbyQuestion() {
         return diffuseDelphiDiscriminatorbyQuestion;
     }
 
-    public void setDiffuseDelphiDiscriminatorbyQuestion(String diffuseDelphiDiscriminatorbyQuestion) {
+    public void setDiffuseDelphiDiscriminatorbyQuestion(BigDecimal diffuseDelphiDiscriminatorbyQuestion) {
         this.diffuseDelphiDiscriminatorbyQuestion = diffuseDelphiDiscriminatorbyQuestion;
     }
 
@@ -286,13 +287,13 @@ public class Questions implements Serializable {
         return "com.epn.entities.Questions[ questionsPK=" + questionsPK + " ]";
     }
 
-    @XmlTransient
+   /* @XmlTransient
     public List<Quizvalues> getQuizvaluesList() {
         return quizvaluesList;
     }
 
     public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
         this.quizvaluesList = quizvaluesList;
-    }
+    }*/
 
 }
