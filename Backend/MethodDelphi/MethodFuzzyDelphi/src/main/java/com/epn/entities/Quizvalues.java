@@ -52,42 +52,30 @@ public class Quizvalues implements Serializable {
     @EmbeddedId
     protected QuizvaluesPK quizvaluesPK;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "minimumValue")
     private String minimumValue;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "averageValue")
     private String averageValue;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "maximunValue")
     private String maximunValue;
-    @Size(max = 100)
     @Column(name = "quizObservation")
     private String quizObservation;
-    @Size(max = 100)
     @Column(name = "questionObservation")
     private String questionObservation;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "userLastModify")
     private long userLastModify;
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)

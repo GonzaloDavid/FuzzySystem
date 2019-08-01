@@ -74,6 +74,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
             questionstemp.setStatus(question.getStatus());
             questionstemp.setStatusCat(question.getStatusCat());
             questionstemp.setQuestion(question.getQuestion());
+            questionstemp.setDiffuseDelphiDiscriminatorbyQuestion(question.getDiffuseDelphiDiscriminatorbyQuestion());
             questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
             questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
             questionstemp.setJumpNext(question.getJumpNext());

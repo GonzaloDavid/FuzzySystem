@@ -39,6 +39,7 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
                 quizvalues.setMaximunValue(item.getMaximunValue());
                 quizvalues.setQuizObservation(quiz.getQuizObservation());
                 quizvalues.setQuestionObservation(question.getQuestionObservation());
+                // update(quizvalues);
                 try {
                     em.persist(quizvalues);
                 } catch (Exception e) {

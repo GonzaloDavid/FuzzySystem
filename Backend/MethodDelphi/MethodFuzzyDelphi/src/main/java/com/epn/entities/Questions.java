@@ -50,9 +50,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
 public class Questions implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
-    private List<Quizvalues> quizvaluesList;
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected QuestionsPK questionsPK;
@@ -86,6 +83,8 @@ public class Questions implements Serializable {
     private String jumpNext;
     @Column(name = "questionObservation")
     private String questionObservation;
+    @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
+    private String diffuseDelphiDiscriminatorbyQuestion;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -105,6 +104,8 @@ public class Questions implements Serializable {
     private Quiz quiz;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
     private List<QuestionItem> questionItemList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
+    private List<Quizvalues> quizvaluesList;
 
     public Questions() {
     }
@@ -251,7 +252,15 @@ public class Questions implements Serializable {
     public void setQuestionObservation(String questionObservation) {
         this.questionObservation = questionObservation;
     }
-    
+
+    public String getDiffuseDelphiDiscriminatorbyQuestion() {
+        return diffuseDelphiDiscriminatorbyQuestion;
+    }
+
+    public void setDiffuseDelphiDiscriminatorbyQuestion(String diffuseDelphiDiscriminatorbyQuestion) {
+        this.diffuseDelphiDiscriminatorbyQuestion = diffuseDelphiDiscriminatorbyQuestion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

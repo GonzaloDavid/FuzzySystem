@@ -6,6 +6,7 @@
 package com.epn.dtos;
 
 import com.epn.entities.QuestionsPK;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class QuestionContainer {
     private String questionObservation;
     private Long userCreate;
     private Long userLastModify;
+    private BigDecimal diffuseDelphiDiscriminator;
     private List<ItemQuestionContainer> questionItemList;
 
     public QuestionContainer() {
@@ -139,7 +141,13 @@ public class QuestionContainer {
     public void setQuestionObservation(String questionObservation) {
         this.questionObservation = questionObservation;
     }
-    
-       
+
+    public BigDecimal getDiffuseDelphiDiscriminator() {
+        return diffuseDelphiDiscriminator;
+    }
+
+    public void setDiffuseDelphiDiscriminator(BigDecimal diffuseDelphiDiscriminator) {
+        this.diffuseDelphiDiscriminator = diffuseDelphiDiscriminator;
+    }      
 
 }

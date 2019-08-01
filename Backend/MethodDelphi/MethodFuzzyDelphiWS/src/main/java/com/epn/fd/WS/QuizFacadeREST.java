@@ -8,7 +8,6 @@ package com.epn.fd.WS;
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
-import com.epn.entities.QuestionsPK;
 import com.epn.entities.Quiz;
 import com.epn.entities.QuizPK;
 import com.epn.entities.Rounds;

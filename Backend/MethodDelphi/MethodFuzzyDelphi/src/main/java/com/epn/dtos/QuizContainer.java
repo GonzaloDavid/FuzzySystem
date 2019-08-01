@@ -6,6 +6,7 @@
 package com.epn.dtos;
 
 import com.epn.entities.QuizPK;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class QuizContainer {
     private String status;
     private String statusCat;
     private String quizObservation;
+    private BigDecimal diffuseDelphiDiscriminator;
     private List<QuestionContainer> questionsList;
     private Long userCreate;
     private Long userLastModify;
@@ -118,6 +120,14 @@ public class QuizContainer {
 
     public void setQuizObservation(String quizObservation) {
         this.quizObservation = quizObservation;
+    }
+
+    public BigDecimal getDiffuseDelphiDiscriminator() {
+        return diffuseDelphiDiscriminator;
+    }
+
+    public void setDiffuseDelphiDiscriminator(BigDecimal diffuseDelphiDiscriminator) {
+        this.diffuseDelphiDiscriminator = diffuseDelphiDiscriminator;
     }
     
 
