@@ -45,10 +45,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Questions.findByMinimumParameterSetting", query = "SELECT q FROM Questions q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
     @NamedQuery(name = "Questions.findByMaximumParameterSetting", query = "SELECT q FROM Questions q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
     @NamedQuery(name = "Questions.findByJumpNext", query = "SELECT q FROM Questions q WHERE q.jumpNext = :jumpNext"),
+    @NamedQuery(name = "Questions.findByQuestionObservation", query = "SELECT q FROM Questions q WHERE q.questionObservation = :questionObservation"),
     @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
     @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
-    @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
+    @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify"),
+    @NamedQuery(name = "Questions.findByDiffuseDelphiDiscriminatorbyQuestion", query = "SELECT q FROM Questions q WHERE q.diffuseDelphiDiscriminatorbyQuestion = :diffuseDelphiDiscriminatorbyQuestion")})
 public class Questions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -84,8 +86,6 @@ public class Questions implements Serializable {
     private String jumpNext;
     @Column(name = "questionObservation")
     private String questionObservation;
-    @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
-    private BigDecimal diffuseDelphiDiscriminatorbyQuestion;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -100,13 +100,14 @@ public class Questions implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
+    private BigDecimal diffuseDelphiDiscriminatorbyQuestion;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
     private List<QuestionItem> questionItemList;
-   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "questions")
-  //  private List<Quizvalues> quizvaluesList;
 
     public Questions() {
     }
@@ -198,6 +199,14 @@ public class Questions implements Serializable {
         this.jumpNext = jumpNext;
     }
 
+    public String getQuestionObservation() {
+        return questionObservation;
+    }
+
+    public void setQuestionObservation(String questionObservation) {
+        this.questionObservation = questionObservation;
+    }
+
     public Date getDateCreate() {
         return dateCreate;
     }
@@ -230,6 +239,14 @@ public class Questions implements Serializable {
         this.userLastModify = userLastModify;
     }
 
+    public BigDecimal getDiffuseDelphiDiscriminatorbyQuestion() {
+        return diffuseDelphiDiscriminatorbyQuestion;
+    }
+
+    public void setDiffuseDelphiDiscriminatorbyQuestion(BigDecimal diffuseDelphiDiscriminatorbyQuestion) {
+        this.diffuseDelphiDiscriminatorbyQuestion = diffuseDelphiDiscriminatorbyQuestion;
+    }
+
     public Quiz getQuiz() {
         return quiz;
     }
@@ -244,22 +261,6 @@ public class Questions implements Serializable {
 
     public void setQuestionItemList(List<QuestionItem> questionItemList) {
         this.questionItemList = questionItemList;
-    }
-
-    public String getQuestionObservation() {
-        return questionObservation;
-    }
-
-    public void setQuestionObservation(String questionObservation) {
-        this.questionObservation = questionObservation;
-    }
-
-    public BigDecimal getDiffuseDelphiDiscriminatorbyQuestion() {
-        return diffuseDelphiDiscriminatorbyQuestion;
-    }
-
-    public void setDiffuseDelphiDiscriminatorbyQuestion(BigDecimal diffuseDelphiDiscriminatorbyQuestion) {
-        this.diffuseDelphiDiscriminatorbyQuestion = diffuseDelphiDiscriminatorbyQuestion;
     }
 
     @Override
@@ -286,14 +287,5 @@ public class Questions implements Serializable {
     public String toString() {
         return "com.epn.entities.Questions[ questionsPK=" + questionsPK + " ]";
     }
-
-   /* @XmlTransient
-    public List<Quizvalues> getQuizvaluesList() {
-        return quizvaluesList;
-    }
-
-    public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
-        this.quizvaluesList = quizvaluesList;
-    }*/
-
+    
 }
