@@ -63,7 +63,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
         quiz.setShortNameQuiz(quizcontainer.getQuiz().getShortNameQuiz());
         quiz.setStatusCat(quizcontainer.getQuiz().getStatusCat());
         quiz.setStatus(quizcontainer.getQuiz().getStatus());
-        quiz.setDiffuseDelphiDiscriminator(quizcontainer.getQuiz().getDiffuseDelphiDiscriminator());
+       // quiz.setDiffuseDelphiDiscriminator(quizcontainer.getQuiz().getDiffuseDelphiDiscriminator());
         quiz.setUserCreate(quizcontainer.getQuiz().getUserCreate());
         quiz.setUserLastModify(quizcontainer.getQuiz().getUserLastModify());
         update(quiz);

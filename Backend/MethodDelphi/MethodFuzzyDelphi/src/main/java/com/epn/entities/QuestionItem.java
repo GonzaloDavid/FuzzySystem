@@ -7,7 +7,9 @@ package com.epn.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,12 +18,14 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate"),
     @NamedQuery(name = "QuestionItem.findByUserLastModify", query = "SELECT q FROM QuestionItem q WHERE q.userLastModify = :userLastModify")})
 public class QuestionItem implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionItem")
+    private List<Quizvalues> quizvaluesList;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -168,6 +175,15 @@ public class QuestionItem implements Serializable {
     @Override
     public String toString() {
         return "com.epn.entities.QuestionItem[ questionItemPK=" + questionItemPK + " ]";
+    }
+
+    @XmlTransient
+    public List<Quizvalues> getQuizvaluesList() {
+        return quizvaluesList;
+    }
+
+    public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
+        this.quizvaluesList = quizvaluesList;
     }
     
 }
