@@ -26,6 +26,7 @@ public class QuizContainer {
     private List<QuestionContainer> questionsList;
     private Long userCreate;
     private Long userLastModify;
+    private boolean updatevalues;
 
     public QuizContainer() {
     }
@@ -128,6 +129,14 @@ public class QuizContainer {
 
     public void setDiffuseDelphiDiscriminator(BigDecimal diffuseDelphiDiscriminator) {
         this.diffuseDelphiDiscriminator = diffuseDelphiDiscriminator;
+    }
+
+    public boolean isUpdatevalues() {
+        return updatevalues;
+    }
+
+    public void setUpdatevalues(boolean updatevalues) {
+        this.updatevalues = updatevalues;
     }
     
 

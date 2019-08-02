@@ -26,7 +26,6 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
 
         quiz.getQuestionsList().forEach(question -> {
             question.getQuestionItemList().forEach(item -> {
-
                 QuizvaluesPK quizvaluesPK = new QuizvaluesPK();
                 quizvaluesPK.setRoundNumber(roundnumber);
                 quizvaluesPK.setCodeQuiz(item.getQuestionItemPK().getCodeQuiz());
@@ -39,11 +38,15 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
                 quizvalues.setMaximunValue(item.getMaximunValue());
                 quizvalues.setQuizObservation(quiz.getQuizObservation());
                 quizvalues.setQuestionObservation(question.getQuestionObservation());
-                // update(quizvalues);
-                try {
-                    em.persist(quizvalues);
-                } catch (Exception e) {
-                    throw new AppException(e.toString(), "ENCUESTA YA INGRESADA");
+
+                if (quiz.isUpdatevalues() == true) {
+                    update(quizvalues);
+                } else {
+                    try {
+                        em.persist(quizvalues);
+                    } catch (Exception e) {
+                        throw new AppException(e.toString(), "ENCUESTA YA INGRESADA");
+                    }
                 }
             });
         });
