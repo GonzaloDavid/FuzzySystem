@@ -74,19 +74,15 @@ public class QuestionDAO extends GenericDAO<Questions> {
             questionstemp.setStatus(question.getStatus());
             questionstemp.setStatusCat(question.getStatusCat());
             questionstemp.setQuestion(question.getQuestion());
-           // questionstemp.setDiffuseDelphiDiscriminatorbyQuestion(question.getDiffuseDelphiDiscriminatorbyQuestion());
+            questionstemp.setDiffuseDelphiDiscriminatorbyQuestion(question.getDiffuseDelphiDiscriminatorbyQuestion());
             questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
             questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
             questionstemp.setJumpNext(question.getJumpNext());
-            //  questionstemp.setQuiz(quiz);
             try {
                 update(questionstemp);
-                Questions questionsaux = new Questions();
-                questionsaux = questionstemp;
-
                 List<QuestionItem> questionItemListsaved = itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
-                questionsaux.setQuestionItemList(questionItemListsaved);
-                questionsaved.add(questionsaux);
+                questionstemp.setQuestionItemList(questionItemListsaved);
+                questionsaved.add(questionstemp);
             } catch (Exception e) {
                 throw new AppException(e.toString(), "NO SE GUARDO PREGUNTAS");
             }

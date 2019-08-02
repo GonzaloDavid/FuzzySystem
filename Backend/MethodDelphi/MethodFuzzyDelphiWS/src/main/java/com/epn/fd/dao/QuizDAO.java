@@ -63,7 +63,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
         quiz.setShortNameQuiz(quizcontainer.getQuiz().getShortNameQuiz());
         quiz.setStatusCat(quizcontainer.getQuiz().getStatusCat());
         quiz.setStatus(quizcontainer.getQuiz().getStatus());
-       // quiz.setDiffuseDelphiDiscriminator(quizcontainer.getQuiz().getDiffuseDelphiDiscriminator());
+        quiz.setDiffuseDelphiDiscriminator(quizcontainer.getQuiz().getDiffuseDelphiDiscriminator());
         quiz.setUserCreate(quizcontainer.getQuiz().getUserCreate());
         quiz.setUserLastModify(quizcontainer.getQuiz().getUserLastModify());
         update(quiz);
@@ -115,7 +115,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
         List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
             try {
-                String link = "http://localhost:4200/admin/surveys/quizclient/"+emailcontainer.getRoundNumber()+"/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
+                String link = "http://localhost:4200/admin/surveys/quizclient/" + emailcontainer.getRoundNumber() + "/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
                 String nameQuiz = quiz.get(0).getShortNameQuiz();
                 String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";

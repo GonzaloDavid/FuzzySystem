@@ -46,7 +46,7 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
             questionItemPK.setCodeQuizItem(item.getQuestionItemPK().getCodeQuizItem());
             questionItemPK.setCodeQuestions(questions.getQuestionsPK().getCodeQuestions());
             questionItemPK.setCodeQuiz(questions.getQuestionsPK().getCodeQuiz());
-           item.setQuestionItemPK(questionItemPK);
+            item.setQuestionItemPK(questionItemPK);
         });
         try {
             updateList(questionItemList);

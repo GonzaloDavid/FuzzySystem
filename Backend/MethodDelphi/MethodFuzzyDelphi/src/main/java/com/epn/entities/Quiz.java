@@ -6,6 +6,7 @@
 package com.epn.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -63,6 +64,8 @@ public class Quiz implements Serializable {
     private String statusCat;
     @Column(name = "quizObservation")
     private String quizObservation;
+    @Column(name = "diffuseDelphiDiscriminator")
+    private BigDecimal diffuseDelphiDiscriminator;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -205,6 +208,14 @@ public class Quiz implements Serializable {
         this.statusCat = statusCat;
     }
 
+    public BigDecimal getDiffuseDelphiDiscriminator() {
+        return diffuseDelphiDiscriminator;
+    }
+
+    public void setDiffuseDelphiDiscriminator(BigDecimal diffuseDelphiDiscriminator) {
+        this.diffuseDelphiDiscriminator = diffuseDelphiDiscriminator;
+    }
+
     @XmlTransient
     public List<Rounds> getRoundsList() {
         return roundsList;
@@ -251,4 +262,5 @@ public class Quiz implements Serializable {
     public String toString() {
         return "Quiz{" + "quizPK=" + quizPK + ", nameQuiz=" + nameQuiz + ", shortNameQuiz=" + shortNameQuiz + ", description=" + description + ", status=" + status + ", statusCat=" + statusCat + ", dateCreate=" + dateCreate + ", dateLastModify=" + dateLastModify + ", userCreate=" + userCreate + ", userLastModify=" + userLastModify + ", catalogueitem=" + catalogueitem + ", questionsList=" + questionsList + '}';
     }
+
 }

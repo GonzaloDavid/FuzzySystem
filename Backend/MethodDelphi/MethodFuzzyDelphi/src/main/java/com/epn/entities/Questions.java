@@ -6,6 +6,7 @@
 package com.epn.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -21,7 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -86,6 +86,8 @@ public class Questions implements Serializable {
     private String jumpNext;
     @Column(name = "questionObservation")
     private String questionObservation;
+    @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
+    private BigDecimal diffuseDelphiDiscriminatorbyQuestion;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -251,7 +253,15 @@ public class Questions implements Serializable {
     public void setQuestionObservation(String questionObservation) {
         this.questionObservation = questionObservation;
     }
-    
+
+    public BigDecimal getDiffuseDelphiDiscriminatorbyQuestion() {
+        return diffuseDelphiDiscriminatorbyQuestion;
+    }
+
+    public void setDiffuseDelphiDiscriminatorbyQuestion(BigDecimal diffuseDelphiDiscriminatorbyQuestion) {
+        this.diffuseDelphiDiscriminatorbyQuestion = diffuseDelphiDiscriminatorbyQuestion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

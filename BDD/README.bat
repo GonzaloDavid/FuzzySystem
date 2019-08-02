@@ -22,3 +22,5 @@ echo ===========================================================================
 echo ===== IMPORTAR si la BDD ya existe -------
 mysql -u root -p dephifuzzymethod < BDD/bdd_fuzzysystem_full.sql
 
+
+mysqldump -h localhost -u root -p DephiFuzzyMethod > bdd_fuzzysystem_full.sql
