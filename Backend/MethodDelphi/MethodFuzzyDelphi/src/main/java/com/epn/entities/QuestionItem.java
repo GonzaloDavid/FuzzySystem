@@ -56,6 +56,10 @@ public class QuestionItem implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "itemLabel")
     private String itemLabel;
+    @Column(name = "itemdescription")
+    private String itemdescription;
+    @Column(name = "itemobservation")
+    private String itemobservation;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -152,6 +156,22 @@ public class QuestionItem implements Serializable {
         this.questions = questions;
     }
 
+    public String getItemdescription() {
+        return itemdescription;
+    }
+
+    public void setItemdescription(String itemdescription) {
+        this.itemdescription = itemdescription;
+    }
+
+    public String getItemobservation() {
+        return itemobservation;
+    }
+
+    public void setItemobservation(String itemobservation) {
+        this.itemobservation = itemobservation;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -185,5 +205,5 @@ public class QuestionItem implements Serializable {
     public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
         this.quizvaluesList = quizvaluesList;
     }
-    
+
 }

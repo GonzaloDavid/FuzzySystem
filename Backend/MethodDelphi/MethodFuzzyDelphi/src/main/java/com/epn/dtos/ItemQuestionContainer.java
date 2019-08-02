@@ -18,6 +18,8 @@ public class ItemQuestionContainer {
     private String maximunValue;
     private String minimumValue;
     private String averageValue;
+    private String itemdescription;
+    private String itemobservation;
     private long userCreate;
     private long userLastModify;
 
@@ -93,5 +95,22 @@ public class ItemQuestionContainer {
     public void setQuestionItemPK(QuestionItemPK questionItemPK) {
         this.questionItemPK = questionItemPK;
     }
+
+    public String getItemdescription() {
+        return itemdescription;
+    }
+
+    public void setItemdescription(String itemdescription) {
+        this.itemdescription = itemdescription;
+    }
+
+    public String getItemobservation() {
+        return itemobservation;
+    }
+
+    public void setItemobservation(String itemobservation) {
+        this.itemobservation = itemobservation;
+    }
+    
    
 }
