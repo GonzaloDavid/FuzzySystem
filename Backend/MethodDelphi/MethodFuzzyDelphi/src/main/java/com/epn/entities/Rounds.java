@@ -41,6 +41,10 @@ public class Rounds implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RoundsPK roundsPK;
+    @Column(name = "sentstatusCat")
+    private String sentstatusCat;
+    @Column(name = "sentstatus")
+    private String sentstatus;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -131,6 +135,22 @@ public class Rounds implements Serializable {
         this.userLastModify = userLastModify;
     }
 
+    public String getSentstatusCat() {
+        return sentstatusCat;
+    }
+
+    public void setSentstatusCat(String sentstatusCat) {
+        this.sentstatusCat = sentstatusCat;
+    }
+
+    public String getSentstatus() {
+        return sentstatus;
+    }
+
+    public void setSentstatus(String sentstatus) {
+        this.sentstatus = sentstatus;
+    }
+
     @XmlTransient
     public List<Quizvalues> getQuizvaluesList() {
         return quizvaluesList;
@@ -164,5 +184,5 @@ public class Rounds implements Serializable {
     public String toString() {
         return "com.epn.entities.Rounds[ roundsPK=" + roundsPK + " ]";
     }
-    
+
 }

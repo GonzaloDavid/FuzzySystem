@@ -16,6 +16,9 @@ public class RoundsContainer {
 
     private RoundsPK roundsPK;
     private String name;
+    private String sentstatus;
+    private String sentstatusCat;
+    private String namesentstatus;
     private Date dateLastModify;
     private Date dateCreate;
 
@@ -57,6 +60,29 @@ public class RoundsContainer {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
+    public String getSentstatus() {
+        return sentstatus;
+    }
+
+    public void setSentstatus(String sentstatus) {
+        this.sentstatus = sentstatus;
+    }
+
+    public String getSentstatusCat() {
+        return sentstatusCat;
+    }
+
+    public void setSentstatusCat(String sentstatusCat) {
+        this.sentstatusCat = sentstatusCat;
+    }
+
+    public String getNamesentstatus() {
+        return namesentstatus;
+    }
+
+    public void setNamesentstatus(String namesentstatus) {
+        this.namesentstatus = namesentstatus;
+    }
+
 }
