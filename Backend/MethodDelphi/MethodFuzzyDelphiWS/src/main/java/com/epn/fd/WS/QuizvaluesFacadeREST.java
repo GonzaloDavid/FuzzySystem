@@ -8,7 +8,10 @@ package com.epn.fd.WS;
 import com.epn.dtos.QuizValueContainer;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
+import com.epn.entities.Rounds;
+import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.QuizValuesDAO;
+import com.epn.fd.dao.RoundsDAO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,7 +37,10 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.quizvalues")
 public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
 
-    @Inject() QuizValuesDAO quizValuesDAO;
+    @Inject()
+    QuizValuesDAO quizValuesDAO;
+    @Inject()
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -80,10 +86,11 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     public void customerquizvalues(QuizValueContainer quizvalues) {
-
-        quizValuesDAO.savequizvalues(quizvalues.getQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber());
+        roundsDAO.setsentstatus(quizvalues);
+        quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
 
     }
+
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

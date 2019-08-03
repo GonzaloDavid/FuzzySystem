@@ -7,22 +7,20 @@ package com.epn.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,14 +33,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rounds.findAll", query = "SELECT r FROM Rounds r"),
     @NamedQuery(name = "Rounds.findByRoundNumber", query = "SELECT r FROM Rounds r WHERE r.roundsPK.roundNumber = :roundNumber"),
     @NamedQuery(name = "Rounds.findByCodeQuiz", query = "SELECT r FROM Rounds r WHERE r.roundsPK.codeQuiz = :codeQuiz"),
-    @NamedQuery(name = "Rounds.findByCodePerson", query = "SELECT r FROM Rounds r WHERE r.roundsPK.codePerson = :codePerson")})
+    @NamedQuery(name = "Rounds.findByCodePerson", query = "SELECT r FROM Rounds r WHERE r.roundsPK.codePerson = :codePerson"),
+    @NamedQuery(name = "Rounds.findByDateCreate", query = "SELECT r FROM Rounds r WHERE r.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Rounds.findByDateLastModify", query = "SELECT r FROM Rounds r WHERE r.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Rounds.findByUserCreate", query = "SELECT r FROM Rounds r WHERE r.userCreate = :userCreate"),
+    @NamedQuery(name = "Rounds.findByUserLastModify", query = "SELECT r FROM Rounds r WHERE r.userLastModify = :userLastModify")})
 public class Rounds implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RoundsPK roundsPK;
     @Column(name = "sentstatusCat")
-    private String sentstatusCat;
+    private String sentstatusCatalogue;
     @Column(name = "sentstatus")
     private String sentstatus;
     @Basic(optional = false)
@@ -65,14 +67,28 @@ public class Rounds implements Serializable {
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rounds")
-    private List<Quizvalues> quizvaluesList;
+    @JoinColumn(name = "sentstatusCat", referencedColumnName = "code",insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Catalogue sentstatusCat;
+    @JoinColumns({
+        @JoinColumn(name = "sentstatusCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false),
+        @JoinColumn(name = "sentstatus", referencedColumnName = "codeItem",insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Catalogueitem catalogueitem;
 
     public Rounds() {
     }
 
     public Rounds(RoundsPK roundsPK) {
         this.roundsPK = roundsPK;
+    }
+
+    public Rounds(RoundsPK roundsPK, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+        this.roundsPK = roundsPK;
+        this.dateCreate = dateCreate;
+        this.dateLastModify = dateLastModify;
+        this.userCreate = userCreate;
+        this.userLastModify = userLastModify;
     }
 
     public Rounds(long roundNumber, long codeQuiz, long codePerson) {
@@ -85,22 +101,6 @@ public class Rounds implements Serializable {
 
     public void setRoundsPK(RoundsPK roundsPK) {
         this.roundsPK = roundsPK;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
     }
 
     public Date getDateCreate() {
@@ -135,12 +135,44 @@ public class Rounds implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public String getSentstatusCat() {
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public Catalogue getSentstatusCat() {
         return sentstatusCat;
     }
 
-    public void setSentstatusCat(String sentstatusCat) {
+    public void setSentstatusCat(Catalogue sentstatusCat) {
         this.sentstatusCat = sentstatusCat;
+    }
+
+    public Catalogueitem getCatalogueitem() {
+        return catalogueitem;
+    }
+
+    public void setCatalogueitem(Catalogueitem catalogueitem) {
+        this.catalogueitem = catalogueitem;
+    }
+
+    public String getSentstatusCatalogue() {
+        return sentstatusCatalogue;
+    }
+
+    public void setSentstatusCatalogue(String sentstatusCatalogue) {
+        this.sentstatusCatalogue = sentstatusCatalogue;
     }
 
     public String getSentstatus() {
@@ -150,16 +182,7 @@ public class Rounds implements Serializable {
     public void setSentstatus(String sentstatus) {
         this.sentstatus = sentstatus;
     }
-
-    @XmlTransient
-    public List<Quizvalues> getQuizvaluesList() {
-        return quizvaluesList;
-    }
-
-    public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
-        this.quizvaluesList = quizvaluesList;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -184,5 +207,5 @@ public class Rounds implements Serializable {
     public String toString() {
         return "com.epn.entities.Rounds[ roundsPK=" + roundsPK + " ]";
     }
-
+    
 }

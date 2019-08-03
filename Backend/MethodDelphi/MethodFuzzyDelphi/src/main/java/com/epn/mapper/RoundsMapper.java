@@ -5,7 +5,6 @@
  */
 package com.epn.mapper;
 
-
 import com.epn.dtos.RoundsContainer;
 import com.epn.entities.Rounds;
 import java.util.List;
@@ -16,10 +15,12 @@ import org.mapstruct.Mapping;
  *
  * @author david
  */
-@Mapper
+@Mapper(uses = {PersonMapper.class})
 public interface RoundsMapper {
-    @Mapping(target = "name", expression = "java(source.getPerson().getName())")
-    RoundsContainer sourceToDestination(Rounds source); 
+
+    @Mapping(target = "namesentstatus", expression = "java(source.getCatalogueitem().getNameItem())")
+    @Mapping(target = "sentstatusCatalogue", expression = "java(source.getSentstatusCatalogue())")
+    RoundsContainer sourceToDestination(Rounds source);
 
     List<RoundsContainer> sourceListToDestination(List<Rounds> source);
 }

@@ -15,9 +15,9 @@ import java.util.Date;
 public class RoundsContainer {
 
     private RoundsPK roundsPK;
-    private String name;
+    private PersonContainer person;
     private String sentstatus;
-    private String sentstatusCat;
+    private String sentstatusCatalogue;
     private String namesentstatus;
     private Date dateLastModify;
     private Date dateCreate;
@@ -53,12 +53,12 @@ public class RoundsContainer {
         this.dateCreate = dateCreate;
     }
 
-    public String getName() {
-        return name;
+    public PersonContainer getPerson() {
+        return person;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPerson(PersonContainer person) {
+        this.person = person;
     }
 
     public String getSentstatus() {
@@ -69,12 +69,12 @@ public class RoundsContainer {
         this.sentstatus = sentstatus;
     }
 
-    public String getSentstatusCat() {
-        return sentstatusCat;
+    public String getSentstatusCatalogue() {
+        return sentstatusCatalogue;
     }
 
-    public void setSentstatusCat(String sentstatusCat) {
-        this.sentstatusCat = sentstatusCat;
+    public void setSentstatusCatalogue(String sentstatusCatalogue) {
+        this.sentstatusCatalogue = sentstatusCatalogue;
     }
 
     public String getNamesentstatus() {

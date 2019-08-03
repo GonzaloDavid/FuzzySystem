@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Catalogueitem.findByUserLastModify", query = "SELECT c FROM Catalogueitem c WHERE c.userLastModify = :userLastModify")})
 public class Catalogueitem implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogueitem")
+    private List<Rounds> roundsList;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected CatalogueitemPK catalogueitemPK;
@@ -221,6 +224,15 @@ public class Catalogueitem implements Serializable {
     @Override
     public String toString() {
         return "com.epn.entities.Catalogueitem[ catalogueitemPK=" + catalogueitemPK + " ]";
+    }
+
+    @XmlTransient
+    public List<Rounds> getRoundsList() {
+        return roundsList;
+    }
+
+    public void setRoundsList(List<Rounds> roundsList) {
+        this.roundsList = roundsList;
     }
     
 }

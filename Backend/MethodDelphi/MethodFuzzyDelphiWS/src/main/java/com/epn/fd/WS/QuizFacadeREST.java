@@ -145,6 +145,8 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             roundPK.setCodePerson(person.getCodePerson());
             Rounds round = new Rounds(roundPK);
             round.setRoundsPK(roundPK);
+            round.setSentstatusCatalogue("SENTSTATUSCAT");
+            round.setSentstatus(emailcontainer.getSentstatus());
             roundsDAO.save(round);
         });
         quizDAO.sendquiz(emailcontainer);

@@ -18,6 +18,7 @@ public class EmailContainer {
     List<Person> persons=new ArrayList();
     Quiz quiz= new Quiz();
     Long roundNumber;
+    String sentstatus;
 
     public EmailContainer() {
     }
@@ -45,5 +46,14 @@ public class EmailContainer {
     public void setRoundNumber(Long roundNumber) {
         this.roundNumber = roundNumber;
     }
+
+    public String getSentstatus() {
+        return sentstatus;
+    }
+
+    public void setSentstatus(String sentstatus) {
+        this.sentstatus = sentstatus;
+    }
+    
     
 }
