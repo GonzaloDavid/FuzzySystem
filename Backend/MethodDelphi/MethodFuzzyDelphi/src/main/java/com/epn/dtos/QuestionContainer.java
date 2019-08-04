@@ -22,6 +22,8 @@ public class QuestionContainer {
     private Long maximumParameterSetting;
     private Long minimumParameterSetting;
     private Long jumpNext;
+    private int scale;
+    private int scaleSpace;
     private String questionObservation;
     private Long userCreate;
     private Long userLastModify;
@@ -47,6 +49,22 @@ public class QuestionContainer {
 
     public QuestionsPK getQuestionsPK() {
         return questionsPK;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getScaleSpace() {
+        return scaleSpace;
+    }
+
+    public void setScaleSpace(int scaleSpace) {
+        this.scaleSpace = scaleSpace;
     }
 
     public void setQuestionsPK(QuestionsPK questionsPK) {

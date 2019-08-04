@@ -34,19 +34,32 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Questions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
-    @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuestions = :codeQuestions"),
-    @NamedQuery(name = "Questions.findByCodeQuiz", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuiz = :codeQuiz"),
-    @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question"),
-    @NamedQuery(name = "Questions.findByDescription", query = "SELECT q FROM Questions q WHERE q.description = :description"),
-    @NamedQuery(name = "Questions.findByStatusCat", query = "SELECT q FROM Questions q WHERE q.statusCat = :statusCat"),
-    @NamedQuery(name = "Questions.findByStatus", query = "SELECT q FROM Questions q WHERE q.status = :status"),
-    @NamedQuery(name = "Questions.findByMinimumParameterSetting", query = "SELECT q FROM Questions q WHERE q.minimumParameterSetting = :minimumParameterSetting"),
-    @NamedQuery(name = "Questions.findByMaximumParameterSetting", query = "SELECT q FROM Questions q WHERE q.maximumParameterSetting = :maximumParameterSetting"),
-    @NamedQuery(name = "Questions.findByJumpNext", query = "SELECT q FROM Questions q WHERE q.jumpNext = :jumpNext"),
-    @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate"),
-    @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify"),
-    @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate"),
+    @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q")
+    ,
+    @NamedQuery(name = "Questions.findByCodeQuestions", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuestions = :codeQuestions")
+    ,
+    @NamedQuery(name = "Questions.findByCodeQuiz", query = "SELECT q FROM Questions q WHERE q.questionsPK.codeQuiz = :codeQuiz")
+    ,
+    @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question")
+    ,
+    @NamedQuery(name = "Questions.findByDescription", query = "SELECT q FROM Questions q WHERE q.description = :description")
+    ,
+    @NamedQuery(name = "Questions.findByStatusCat", query = "SELECT q FROM Questions q WHERE q.statusCat = :statusCat")
+    ,
+    @NamedQuery(name = "Questions.findByStatus", query = "SELECT q FROM Questions q WHERE q.status = :status")
+    ,
+    @NamedQuery(name = "Questions.findByMinimumParameterSetting", query = "SELECT q FROM Questions q WHERE q.minimumParameterSetting = :minimumParameterSetting")
+    ,
+    @NamedQuery(name = "Questions.findByMaximumParameterSetting", query = "SELECT q FROM Questions q WHERE q.maximumParameterSetting = :maximumParameterSetting")
+    ,
+    @NamedQuery(name = "Questions.findByJumpNext", query = "SELECT q FROM Questions q WHERE q.jumpNext = :jumpNext")
+    ,
+    @NamedQuery(name = "Questions.findByDateCreate", query = "SELECT q FROM Questions q WHERE q.dateCreate = :dateCreate")
+    ,
+    @NamedQuery(name = "Questions.findByDateLastModify", query = "SELECT q FROM Questions q WHERE q.dateLastModify = :dateLastModify")
+    ,
+    @NamedQuery(name = "Questions.findByUserCreate", query = "SELECT q FROM Questions q WHERE q.userCreate = :userCreate")
+    ,
     @NamedQuery(name = "Questions.findByUserLastModify", query = "SELECT q FROM Questions q WHERE q.userLastModify = :userLastModify")})
 public class Questions implements Serializable {
 
@@ -84,6 +97,10 @@ public class Questions implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "jumpNext")
     private String jumpNext;
+    @Column(name = "scale")
+    private int scale;
+    @Column(name = "scaleSpace")
+    private int scaleSpace;
     @Column(name = "questionObservation")
     private String questionObservation;
     @Column(name = "diffuseDelphiDiscriminatorbyQuestion")
@@ -136,6 +153,22 @@ public class Questions implements Serializable {
 
     public QuestionsPK getQuestionsPK() {
         return questionsPK;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getScaleSpace() {
+        return scaleSpace;
+    }
+
+    public void setScaleSpace(int scaleSpace) {
+        this.scaleSpace = scaleSpace;
     }
 
     public void setQuestionsPK(QuestionsPK questionsPK) {
