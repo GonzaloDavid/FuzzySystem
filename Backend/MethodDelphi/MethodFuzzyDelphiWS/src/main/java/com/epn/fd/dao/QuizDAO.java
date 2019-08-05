@@ -78,8 +78,7 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
     public String getSurveys(Integer from, Integer to) throws JsonProcessingException {
 
-        SearchObject searchObject = new SearchObject("codeQuiz");
-        // search.addParameter("codeQuiz", FilterTypes.EQUAL, codeQuiz); para filtrar u ordenar con like,order,equal
+        SearchObject searchObject = new SearchObject("quizPK");
 
         long count = search(searchObject).size();
 

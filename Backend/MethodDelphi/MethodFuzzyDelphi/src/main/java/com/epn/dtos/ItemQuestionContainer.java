@@ -20,6 +20,9 @@ public class ItemQuestionContainer {
     private String averageValue;
     private String itemdescription;
     private String itemobservation;
+    private String statusCat;
+    private String status;
+    
     private long userCreate;
     private long userLastModify;
 
@@ -110,6 +113,22 @@ public class ItemQuestionContainer {
 
     public void setItemobservation(String itemobservation) {
         this.itemobservation = itemobservation;
+    }
+
+    public String getStatusCat() {
+        return statusCat;
+    }
+
+    public void setStatusCat(String statusCat) {
+        this.statusCat = statusCat;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
    

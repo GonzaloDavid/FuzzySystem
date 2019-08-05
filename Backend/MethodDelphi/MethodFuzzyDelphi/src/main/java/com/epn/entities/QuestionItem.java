@@ -60,6 +60,10 @@ public class QuestionItem implements Serializable {
     private String itemdescription;
     @Column(name = "itemobservation")
     private String itemobservation;
+    @Column(name = "statusCat")
+    private String statusCat;
+    @Column(name = "status")
+    private String status;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -170,6 +174,22 @@ public class QuestionItem implements Serializable {
 
     public void setItemobservation(String itemobservation) {
         this.itemobservation = itemobservation;
+    }
+
+    public String getStatusCat() {
+        return statusCat;
+    }
+
+    public void setStatusCat(String statusCat) {
+        this.statusCat = statusCat;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
