@@ -9,15 +9,15 @@ package com.epn.dtos;
  *
  * @author david
  */
-public class QuizValueContainer {
+public class QuizValueSaveContainer {
     QuizContainer quiz=new QuizContainer();
     Long codeperson;
     Long roundNumber;
 
-    public QuizValueContainer() {
+    public QuizValueSaveContainer() {
     }
 
-    public QuizValueContainer(Long codeperson, Long roundNumber) {
+    public QuizValueSaveContainer(Long codeperson, Long roundNumber) {
         this.codeperson = codeperson;
         this.roundNumber = roundNumber;
     }

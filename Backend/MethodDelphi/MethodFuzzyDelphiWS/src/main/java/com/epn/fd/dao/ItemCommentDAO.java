@@ -6,10 +6,8 @@
 package com.epn.fd.dao;
 
 import com.epn.dtos.ItemCommentContainer;
-import com.epn.dtos.QuizContainer;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.ItemComment;
-import com.epn.entities.Quiz;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.ItemCommentMapper;
 import java.util.List;

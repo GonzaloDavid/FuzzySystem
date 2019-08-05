@@ -5,7 +5,9 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.dtos.QuizValueContainer;
+import com.epn.dtos.ItemCommentContainer;
+import com.epn.dtos.QuizValueSaveContainer;
+import com.epn.dtos.QuizValuesContainer;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
 import com.epn.entities.Rounds;
@@ -26,6 +28,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -85,10 +88,24 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Path("quizvalues")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void customerquizvalues(QuizValueContainer quizvalues) {
+    public void customerquizvalues(QuizValueSaveContainer quizvalues) {
         roundsDAO.setsentstatus(quizvalues);
         quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
 
+    }
+
+    @GET
+    @Path("getquizvalues")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<QuizValuesContainer> getQuizvalues(
+            @QueryParam("codePerson") Long codePerson,
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @QueryParam("codeQuestions") Long codeQuestions,
+            @QueryParam("roundNumber") Long roundNumber,
+            @QueryParam("codeQuizItem") Long codeQuizItem
+    ) {
+
+        return quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
     }
 
     @POST

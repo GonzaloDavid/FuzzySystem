@@ -5,7 +5,7 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.dtos.QuizValueContainer;
+import com.epn.dtos.QuizValueSaveContainer;
 import com.epn.dtos.RoundsContainer;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.Rounds;
@@ -54,7 +54,7 @@ public class RoundsDAO extends GenericDAO<Rounds> {
         return foundelement;
     }
 
-    public void setsentstatus(QuizValueContainer quizvalues) {
+    public void setsentstatus(QuizValueSaveContainer quizvalues) {
         RoundsPK roundPK = new RoundsPK();
         roundPK.setCodeQuiz(quizvalues.getQuiz().getQuizPK().getCodeQuiz());
         roundPK.setRoundNumber(quizvalues.getRoundNumber());
