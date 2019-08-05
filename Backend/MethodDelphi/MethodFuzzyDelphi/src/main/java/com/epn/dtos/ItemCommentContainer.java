@@ -14,6 +14,7 @@ import com.epn.entities.ItemCommentPK;
 public class ItemCommentContainer {
     private ItemCommentPK itemCommentPK;
     private String commentary;
+    private String nameperson;
 
     public ItemCommentContainer() {
     }
@@ -37,6 +38,14 @@ public class ItemCommentContainer {
 
     public void setCommentary(String commentary) {
         this.commentary = commentary;
+    }
+
+    public String getNameperson() {
+        return nameperson;
+    }
+
+    public void setNameperson(String nameperson) {
+        this.nameperson = nameperson;
     }
     
 }

@@ -29,11 +29,12 @@ public class ItemCommentDAO extends GenericDAO<ItemComment> {
         super(ItemComment.class);
     }
 
-    public List<ItemCommentContainer> getcommentbyquiz(Long codeQuiz, Long codeQuestion, Long codeItem, Long codePerson) {
+    public List<ItemCommentContainer> getcommentbyquiz(Long codeQuiz, Long codeQuestion, Long codeItem,Long roundNumber, Long codePerson) {
         SearchObject search = new SearchObject("itemCommentPK");
         search.addParameter("itemCommentPK.codeQuizItem", FilterTypes.EQUAL, codeItem);
         search.addParameter("itemCommentPK.codeQuestions", FilterTypes.EQUAL, codeQuestion);
         search.addParameter("itemCommentPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("itemCommentPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addParameter("itemCommentPK.codePerson", FilterTypes.EQUAL, codePerson);
 
         List<ItemComment> resultList = search(search);

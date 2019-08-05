@@ -32,16 +32,21 @@ public class ItemCommentPK implements Serializable {
     private long codeQuiz;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "roundNumber")
+    private long roundNumber;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "codePerson")
     private long codePerson;
 
     public ItemCommentPK() {
     }
 
-    public ItemCommentPK(long codeQuizItem, long codeQuestions, long codeQuiz, long codePerson) {
+    public ItemCommentPK(long codeQuizItem, long codeQuestions, long codeQuiz, long roundNumber, long codePerson) {
         this.codeQuizItem = codeQuizItem;
         this.codeQuestions = codeQuestions;
         this.codeQuiz = codeQuiz;
+        this.roundNumber = roundNumber;
         this.codePerson = codePerson;
     }
 
@@ -69,6 +74,14 @@ public class ItemCommentPK implements Serializable {
         this.codeQuiz = codeQuiz;
     }
 
+    public long getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(long roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
     public long getCodePerson() {
         return codePerson;
     }
@@ -83,6 +96,7 @@ public class ItemCommentPK implements Serializable {
         hash += (int) codeQuizItem;
         hash += (int) codeQuestions;
         hash += (int) codeQuiz;
+        hash += (int) roundNumber;
         hash += (int) codePerson;
         return hash;
     }
@@ -103,6 +117,9 @@ public class ItemCommentPK implements Serializable {
         if (this.codeQuiz != other.codeQuiz) {
             return false;
         }
+        if (this.roundNumber != other.roundNumber) {
+            return false;
+        }
         if (this.codePerson != other.codePerson) {
             return false;
         }
@@ -111,7 +128,7 @@ public class ItemCommentPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ItemCommentPK[ codeQuizItem=" + codeQuizItem + ", codeQuestions=" + codeQuestions + ", codeQuiz=" + codeQuiz + ", codePerson=" + codePerson + " ]";
+        return "com.epn.entities.ItemCommentPK[ codeQuizItem=" + codeQuizItem + ", codeQuestions=" + codeQuestions + ", codeQuiz=" + codeQuiz + ", roundNumber=" + roundNumber + ", codePerson=" + codePerson + " ]";
     }
     
 }

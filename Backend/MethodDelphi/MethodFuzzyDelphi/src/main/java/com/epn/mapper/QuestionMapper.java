@@ -16,10 +16,7 @@ import org.mapstruct.Mapper;
  */
 @Mapper(uses = {ItemQuestionMapper.class})
 public interface QuestionMapper {
-
-//    @Mapping(target = "codeQuiz", expression = "java(source.getCodeQuiz().getCodeQuiz())")
     QuestionContainer sourceToDestination(Questions source);
 
     List<QuestionContainer> sourceListToDestination(List<Questions> source);
-    // List<Questions> sourceListQuestionContainertoQuestion(List<QuestionContainer> source);
 }

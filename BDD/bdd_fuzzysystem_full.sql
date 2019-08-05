@@ -406,7 +406,7 @@ CREATE TABLE `Quizvalues` (
 
 LOCK TABLES `Quizvalues` WRITE;
 /*!40000 ALTER TABLE `Quizvalues` DISABLE KEYS */;
-INSERT INTO `Quizvalues` VALUES (1,9,1,1,2,'1','6','10','encuesta chevere de futbol','observacion de pregunta 1','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,1,3,'1','6','10','encuesta chevere de futbol','observacion de pregunta 1','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,1,39,'1','6','10','encuesta chevere de futbol','observacion de pregunta 1','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,1,82,'1','6','10','encuesta chevere de futbol','observacion de pregunta 1','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,3,36,'1','6','10','encuesta chevere de futbol','añadan en esta pregiunta ','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,3,37,'1','6','10','encuesta chevere de futbol','añadan en esta pregiunta ','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,3,38,'1','6','10','encuesta chevere de futbol','añadan en esta pregiunta ','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,4,23,'1','6','10','encuesta chevere de futbol','deberian  añadir a mexico','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,4,24,'1','6','10','encuesta chevere de futbol','deberian  añadir a mexico','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,4,25,'1','6','10','encuesta chevere de futbol','deberian  añadir a mexico','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,5,26,'1','6','10','encuesta chevere de futbol','ecuador no es tan malo','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,9,1,5,27,'1','6','10','encuesta chevere de futbol','ecuador no es tan malo','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0);
+INSERT INTO `Quizvalues` VALUES (1,9,1,1,2,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,1,3,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,1,39,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,1,82,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,3,36,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,3,37,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,3,38,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,4,23,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,4,24,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,4,25,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,5,26,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,9,1,5,27,'1','5.5','10',NULL,NULL,'2019-08-04 21:52:54','2019-08-04 21:52:54',0,0);
 /*!40000 ALTER TABLE `Quizvalues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,7 +444,7 @@ CREATE TABLE `Rounds` (
 
 LOCK TABLES `Rounds` WRITE;
 /*!40000 ALTER TABLE `Rounds` DISABLE KEYS */;
-INSERT INTO `Rounds` VALUES (1,1,9,'SENTSTATUSCAT','sentAndAnswered','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,1,10,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(1,1,11,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(2,1,9,'SENTSTATUSCAT','forwarded','2019-08-04 18:27:18','2019-08-04 18:27:18',0,0),(2,1,11,'SENTSTATUSCAT','sent','2019-08-03 23:46:11','2019-08-03 23:46:11',0,0),(3,1,9,'SENTSTATUSCAT','sent','2019-08-04 18:34:19','2019-08-04 18:34:19',0,0);
+INSERT INTO `Rounds` VALUES (1,1,9,'SENTSTATUSCAT','sentAndAnswered','2019-08-04 21:52:54','2019-08-04 21:52:54',0,0),(1,1,10,'SENTSTATUSCAT','forwarded','2019-08-04 21:25:19','2019-08-04 21:25:19',0,0),(1,1,11,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(2,1,9,'SENTSTATUSCAT','forwarded','2019-08-04 18:27:18','2019-08-04 18:27:18',0,0),(2,1,11,'SENTSTATUSCAT','sent','2019-08-03 23:46:11','2019-08-03 23:46:11',0,0),(3,1,9,'SENTSTATUSCAT','sent','2019-08-04 18:34:19','2019-08-04 18:34:19',0,0);
 /*!40000 ALTER TABLE `Rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -536,6 +536,47 @@ LOCK TABLES `catalogueitem` WRITE;
 INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
 /*!40000 ALTER TABLE `catalogueitem` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `itemComment`
+--
+
+DROP TABLE IF EXISTS `itemComment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itemComment` (
+  `codeQuizItem` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `roundNumber` bigint(20) NOT NULL,
+  `codePerson` bigint(20) NOT NULL,
+  `commentary` varchar(500) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeQuiz`,`codeQuestions`,`codeQuizItem`,`roundNumber`,`codePerson`),
+  KEY `itemComment_Rounds_FK` (`roundNumber`,`codeQuiz`,`codePerson`),
+  KEY `itemComment_Questions_FK` (`codeQuestions`,`codeQuiz`),
+  KEY `itemComment_QuestionItem_FK` (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
+  KEY `itemComment_Person_FK` (`codePerson`),
+  CONSTRAINT `itemComment_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
+  CONSTRAINT `itemComment_QuestionItem_FK` FOREIGN KEY (`codeQuizItem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
+  CONSTRAINT `itemComment_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
+  CONSTRAINT `itemComment_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
+  CONSTRAINT `itemComment_Rounds_FK` FOREIGN KEY (`roundNumber`, `codeQuiz`, `codePerson`) REFERENCES `Rounds` (`roundNumber`, `codeQuiz`, `codePerson`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemComment`
+--
+
+LOCK TABLES `itemComment` WRITE;
+/*!40000 ALTER TABLE `itemComment` DISABLE KEYS */;
+INSERT INTO `itemComment` VALUES (2,1,1,2,9,'kk','2019-08-05 04:43:31','2019-08-05 04:43:31',0,0),(3,1,1,2,9,'sss','2019-08-05 03:50:01','2019-08-05 03:50:01',0,0);
+/*!40000 ALTER TABLE `itemComment` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -546,4 +587,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-07 10:17:03
+-- Dump completed on 2019-08-04 23:58:14

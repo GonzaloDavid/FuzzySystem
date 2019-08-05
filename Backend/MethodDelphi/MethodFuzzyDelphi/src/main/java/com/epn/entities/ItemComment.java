@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ItemComment.findByCodeQuizItem", query = "SELECT i FROM ItemComment i WHERE i.itemCommentPK.codeQuizItem = :codeQuizItem"),
     @NamedQuery(name = "ItemComment.findByCodeQuestions", query = "SELECT i FROM ItemComment i WHERE i.itemCommentPK.codeQuestions = :codeQuestions"),
     @NamedQuery(name = "ItemComment.findByCodeQuiz", query = "SELECT i FROM ItemComment i WHERE i.itemCommentPK.codeQuiz = :codeQuiz"),
+    @NamedQuery(name = "ItemComment.findByRoundNumber", query = "SELECT i FROM ItemComment i WHERE i.itemCommentPK.roundNumber = :roundNumber"),
     @NamedQuery(name = "ItemComment.findByCodePerson", query = "SELECT i FROM ItemComment i WHERE i.itemCommentPK.codePerson = :codePerson"),
     @NamedQuery(name = "ItemComment.findByCommentary", query = "SELECT i FROM ItemComment i WHERE i.commentary = :commentary"),
     @NamedQuery(name = "ItemComment.findByDateCreate", query = "SELECT i FROM ItemComment i WHERE i.dateCreate = :dateCreate"),
@@ -80,6 +81,12 @@ public class ItemComment implements Serializable {
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
+    @JoinColumns({
+        @JoinColumn(name = "roundNumber", referencedColumnName = "roundNumber", insertable = false, updatable = false),
+        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false),
+        @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Rounds rounds;
 
     public ItemComment() {
     }
@@ -97,8 +104,8 @@ public class ItemComment implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public ItemComment(long codeQuizItem, long codeQuestions, long codeQuiz, long codePerson) {
-        this.itemCommentPK = new ItemCommentPK(codeQuizItem, codeQuestions, codeQuiz, codePerson);
+    public ItemComment(long codeQuizItem, long codeQuestions, long codeQuiz, long roundNumber, long codePerson) {
+        this.itemCommentPK = new ItemCommentPK(codeQuizItem, codeQuestions, codeQuiz, roundNumber, codePerson);
     }
 
     public ItemCommentPK getItemCommentPK() {
@@ -179,6 +186,14 @@ public class ItemComment implements Serializable {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public Rounds getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(Rounds rounds) {
+        this.rounds = rounds;
     }
 
     @Override

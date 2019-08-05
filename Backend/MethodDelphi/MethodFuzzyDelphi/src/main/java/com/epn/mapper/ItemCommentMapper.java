@@ -9,6 +9,7 @@ import com.epn.dtos.ItemCommentContainer;
 import com.epn.entities.ItemComment;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  *
@@ -16,7 +17,8 @@ import org.mapstruct.Mapper;
  */
 @Mapper
 public interface ItemCommentMapper {
-
+    
+    @Mapping(target = "nameperson", expression = "java(source.getPerson().getName())")
     ItemCommentContainer sourceToDestination(ItemComment source);
 
     List<ItemCommentContainer> sourceListToDestination(List<ItemComment> source);

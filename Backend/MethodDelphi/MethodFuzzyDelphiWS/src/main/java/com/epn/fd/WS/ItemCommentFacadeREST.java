@@ -9,7 +9,6 @@ import com.epn.dtos.ItemCommentContainer;
 import com.epn.entities.ItemComment;
 import com.epn.entities.ItemCommentPK;
 import com.epn.fd.dao.ItemCommentDAO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -67,6 +66,10 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
         if (codePerson != null && !codePerson.isEmpty()) {
             key.setCodePerson(new java.lang.Long(codePerson.get(0)));
         }
+         java.util.List<String> roundNumber = map.get("roundNumber");
+        if (roundNumber != null && !roundNumber.isEmpty()) {
+            key.setRoundNumber(new java.lang.Long(roundNumber.get(0)));
+        }
         return key;
     }
 
@@ -81,10 +84,11 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
             @QueryParam("codeperson") Long codeperson,
             @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestion") Long codeQuestion,
+            @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeItem") Long codeItem
     ) {
 
-        return itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, codeperson);
+        return itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
     }
 
     @POST
