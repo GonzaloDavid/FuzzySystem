@@ -5,7 +5,7 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.dtos.TriangularFuzzyNumber;
+import com.epn.dtos.Item;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.fd.dao.DelphiCalculationDAO;
@@ -34,10 +34,10 @@ import javax.ws.rs.core.PathSegment;
 @Stateless
 @Path("com.epn.entities.delphicalculations")
 public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculations> {
-    
-    
-    @Inject() DelphiCalculationDAO delphiCalculationDAO;
-    
+
+    @Inject()
+    DelphiCalculationDAO delphiCalculationDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -80,13 +80,13 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 
     @GET
     @Path("calculate")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<TriangularFuzzyNumber> calculate(
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Item> calculate(
             @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeQuiz") Long codeQuiz
     ) {
 
-      return delphiCalculationDAO.getTriangularFuzzyNumbers(codeQuiz, roundNumber );
+        return delphiCalculationDAO.getItemsByQuizAndRound(codeQuiz, roundNumber);
     }
 
     @POST
