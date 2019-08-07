@@ -6,7 +6,10 @@
 /Backend/MethodDelphi/MethodFuzzyDelphi/nb-configuration.xml
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/dist/
 /Backend/MethodDelphi/MethodFuzzyDelphiWS/nb-configuration.xml
+Backend/MethodDelphi/MethodFuzzyDelphi/bin/
+Backend/MethodDelphi/MethodFuzzyDelphiWS/bin/
 
+.vscode/
 *.DS_Store
 .project
 .settings
