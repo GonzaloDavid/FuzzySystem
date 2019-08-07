@@ -245,7 +245,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Area de computacionn,,,,','2019-08-02 05:39:28','2019-08-02 05:39:28',0,0),(10,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Gonzalo','epn','Gonzalo epn','gonzalo.proano@epn.edu.ec','ECuador','2018-09-04','STATUSCAT','1','SEXCAT','1','compuatacion','2019-08-03 21:45:18','2019-08-03 21:45:18',0,0),(11,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','davidgonzalomejia@gmail.com','Ecuador','2019-08-07','STATUSCAT','1','SEXCAT','1','area humana','2019-08-03 21:46:12','2019-08-03 21:46:12',0,0);
+INSERT INTO `Person` VALUES (9,'1723353404','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Area de computacionn,,,,','2019-08-04 18:25:26','2019-08-04 18:25:26',0,0),(10,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Gonzalo','epn','Gonzalo epn','gonzalo.proano@epn.edu.ec','ECuador','2018-09-04','STATUSCAT','1','SEXCAT','1','compuatacion','2019-08-03 21:45:18','2019-08-03 21:45:18',0,0),(11,'1723353403','TYPEPERSONCAT','admin','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','davidgonzalomejia@gmail.com','Ecuador','2019-08-07','STATUSCAT','1','SEXCAT','1','area humana','2019-08-03 21:46:12','2019-08-03 21:46:12',0,0);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,7 +281,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
-INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil','pais de la gartotas',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(3,1,1,'Colombia','pais de cafe',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(23,4,1,'Brasil',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(24,4,1,'Argentina',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(25,4,1,'Uruguay',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(26,5,1,'Venezuela',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(27,5,1,'Ecuador',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(36,3,1,'Estadio chucho benites',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(37,3,1,'Estadio Aucas',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(38,3,1,'Maracaná',NULL,NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(39,1,1,'Alemania','pais de hitler',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(82,1,1,'uuu','oo',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1);
+INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil','pais de la gartotas',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(3,1,1,'Colombia','pais de cafe',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(23,4,1,'Brasil',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(24,4,1,'Argentina',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(25,4,1,'Uruguay',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(26,5,1,'Venezuela',NULL,NULL,'2019-08-04 18:25:14','2019-08-04 18:25:14',1,1),(27,5,1,'Ecuador',NULL,NULL,'2019-08-04 18:25:14','2019-08-04 18:25:14',1,1),(36,3,1,'Estadio chucho benites',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(37,3,1,'Estadio Aucas',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(38,3,1,'Maracaná',NULL,NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(39,1,1,'Alemania','pais de hitler',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(82,1,1,'uuu','oo',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,6 +308,8 @@ CREATE TABLE `Questions` (
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
   `diffuseDelphiDiscriminatorbyQuestion` decimal(30,8) DEFAULT NULL,
+  `scale` int(11) DEFAULT NULL,
+  `scaleSpace` int(11) DEFAULT NULL,
   PRIMARY KEY (`codeQuestions`,`codeQuiz`),
   UNIQUE KEY `codeQuestions_UNIQUE` (`codeQuestions`),
   KEY `Questions_Quiz_FK` (`codeQuiz`),
@@ -321,7 +323,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',0,0,2.00000000),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',0,0,3.00000000),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',0,0,4.00000000),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-02 15:47:31','2019-08-02 15:47:31',0,0,NULL),(22,22,'eee','sds','STATUSCAT','1','1','1','2',NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',0,0,1.00000000);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',0,0,2.00000000,NULL,NULL),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',0,0,3.00000000,NULL,NULL),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',0,0,4.00000000,NULL,NULL),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-04 18:25:13','2019-08-04 18:25:13',0,0,NULL,NULL,NULL),(22,22,'eee','sds','STATUSCAT','1','1','1','2',NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',0,0,1.00000000,NULL,NULL);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +360,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.','STATUSCAT','1',NULL,7.00000000,'2019-08-02 15:47:31','2019-08-02 15:47:31',1,1),(22,'sss','sss','ssss','STATUSCAT','1',NULL,NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.','STATUSCAT','1',NULL,7.00000000,'2019-08-04 18:25:13','2019-08-04 18:25:13',1,1),(22,'sss','sss','ssss','STATUSCAT','1',NULL,NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,7 +444,7 @@ CREATE TABLE `Rounds` (
 
 LOCK TABLES `Rounds` WRITE;
 /*!40000 ALTER TABLE `Rounds` DISABLE KEYS */;
-INSERT INTO `Rounds` VALUES (1,1,9,'SENTSTATUSCAT','sentAndAnswered','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,1,10,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(1,1,11,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(2,1,9,'SENTSTATUSCAT','sent','2019-08-03 23:46:11','2019-08-03 23:46:11',0,0),(2,1,11,'SENTSTATUSCAT','sent','2019-08-03 23:46:11','2019-08-03 23:46:11',0,0);
+INSERT INTO `Rounds` VALUES (1,1,9,'SENTSTATUSCAT','sentAndAnswered','2019-08-03 22:18:05','2019-08-03 22:18:05',0,0),(1,1,10,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(1,1,11,'SENTSTATUSCAT','forwarded','2019-08-03 22:23:44','2019-08-03 22:23:44',0,0),(2,1,9,'SENTSTATUSCAT','forwarded','2019-08-04 18:27:18','2019-08-04 18:27:18',0,0),(2,1,11,'SENTSTATUSCAT','sent','2019-08-03 23:46:11','2019-08-03 23:46:11',0,0),(3,1,9,'SENTSTATUSCAT','sent','2019-08-04 18:34:19','2019-08-04 18:34:19',0,0);
 /*!40000 ALTER TABLE `Rounds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,4 +546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-04 13:10:10
+-- Dump completed on 2019-08-07 10:17:03
