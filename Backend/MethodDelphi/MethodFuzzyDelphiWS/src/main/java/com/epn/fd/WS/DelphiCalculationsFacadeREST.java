@@ -10,11 +10,13 @@ import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.fd.dao.DelphiCalculationDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -78,15 +80,30 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
         super(DelphiCalculations.class);
     }
 
+//    @GET
+//    @Path("calculate")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public List<Item> calculate(
+//            @QueryParam("roundNumber") Long roundNumber,
+//            @QueryParam("codeQuiz") Long codeQuiz
+//    ) {
+//        return delphiCalculationDAO.getItemsByQuizAndRound(codeQuiz, roundNumber);
+//    }
+
     @GET
     @Path("calculate")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item> calculate(
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String calculate(
             @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeQuiz") Long codeQuiz
-    ) {
+    ) throws JsonProcessingException {
+        List<Item> listItems = delphiCalculationDAO.getItemsByQuizAndRound(codeQuiz, roundNumber);
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(listItems);
 
-        return delphiCalculationDAO.getItemsByQuizAndRound(codeQuiz, roundNumber);
+        return response;
     }
 
     @POST

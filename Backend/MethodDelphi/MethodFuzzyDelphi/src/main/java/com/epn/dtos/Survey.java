@@ -13,8 +13,8 @@ import java.util.Collections;
  * @author ka
  */
 public class Survey {
-    
-     private ArrayList<Item> itemList;
+
+    private ArrayList<Item> itemList;
     private ArrayList<Item> triangularFuzzyNumbers;
     private ArrayList<CrispNumberSj> crispNumberSj; // Sj = ( min + ave + max)/3
     private double determinante;
@@ -38,8 +38,8 @@ public class Survey {
             for (Item itemfuzzy : this.triangularFuzzyNumbers) {
 
                 if (itemfuzzy.getIdItem() == idItem) {
-                    item.setValorMenor(itemfuzzy.getMin());
-                    item.setValorMedio(itemfuzzy.getMed());
+                    item.setLowerValue(itemfuzzy.getMin());
+                    item.setMiddleValue(itemfuzzy.getMed());
                 }
             }
         }
@@ -51,8 +51,9 @@ public class Survey {
         ArrayList<Item> itemsAnulados = new ArrayList();
 
         for (Item item : this.itemList) {
-            if (item.getEstadoRangoG() == 0 || item.getConsensoGC() == 0)
+            if (item.getEstadoRangoG() == 0 || item.getConsensoGC() == 0) {
                 itemsAnulados.add(item);
+            }
         }
         return itemsAnulados;
     }
@@ -100,21 +101,25 @@ public class Survey {
     private ArrayList<Double> getValuesPorItem(int idItem, String tipoValue) {
         ArrayList<Double> valuesPorItem = new ArrayList();
 
-        if (tipoValue.equals(MIN))
+        if (tipoValue.equals(MIN)) {
             for (Item item : this.itemList) {
-                if (item.getIdItem() == idItem)
+                if (item.getIdItem() == idItem) {
                     valuesPorItem.add(item.getMin());
+                }
             }
-        else if (tipoValue.equals(MED))
+        } else if (tipoValue.equals(MED)) {
             for (Item item : this.itemList) {
-                if (item.getIdItem() == idItem)
+                if (item.getIdItem() == idItem) {
                     valuesPorItem.add(item.getMed());
+                }
             }
-        else if (tipoValue.equals(MAX))
+        } else if (tipoValue.equals(MAX)) {
             for (Item item : this.itemList) {
-                if (item.getIdItem() == idItem)
+                if (item.getIdItem() == idItem) {
                     valuesPorItem.add(item.getMax());
+                }
             }
+        }
 
         System.out.println(tipoValue + ": " + valuesPorItem);
 

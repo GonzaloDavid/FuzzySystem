@@ -17,8 +17,8 @@ public class Item {
     private Double med; // lij
     private Double max; // uij
     // Validacion de Items o Criterios´
-    private Double valorMenor; // Lj
-    private Double valorMedio; // Mj
+    private Double lowerValue; // Lj
+    private Double middleValue; // Mj
     private Double rangoG; // G(=Uij - Lj)
     private Integer estadoRangoG; // Verdadero o Falso 1 o 0;
     private Double rangoC; // valorAbsoluto(Mj-mij)
@@ -33,8 +33,18 @@ public class Item {
         this.max = max;
     }
 
+    public void calculateConsensus() {
+
+        if (this.middleValue != null && this.lowerValue != null) {
+            this.rangoG = this.max - this.min;
+            this.estadoRangoG = (this.rangoG > 0) ? 1 : 0;
+            this.rangoC = Math.abs((this.med - this.middleValue));
+            this.consensoGC = (this.rangoG > this.rangoC) ? 1 : 0;
+        }
+    }
+
     public Integer getIdExperto() {
-        return this.idExperto;
+        return idExperto;
     }
 
     public void setIdExperto(Integer idExperto) {
@@ -42,7 +52,7 @@ public class Item {
     }
 
     public Integer getIdItem() {
-        return this.idItem;
+        return idItem;
     }
 
     public void setIdItem(Integer idItem) {
@@ -50,7 +60,7 @@ public class Item {
     }
 
     public Double getMin() {
-        return this.min;
+        return min;
     }
 
     public void setMin(Double min) {
@@ -58,7 +68,7 @@ public class Item {
     }
 
     public Double getMed() {
-        return this.med;
+        return med;
     }
 
     public void setMed(Double med) {
@@ -66,45 +76,39 @@ public class Item {
     }
 
     public Double getMax() {
-        return this.max;
+        return max;
     }
 
     public void setMax(Double max) {
         this.max = max;
     }
 
-    public Double getValorMenor() {
-        return this.valorMenor;
+    public Double getLowerValue() {
+        return lowerValue;
     }
 
-    public void setValorMenor(Double valorMenor) {
-        this.valorMenor = valorMenor;
+    public void setLowerValue(Double lowerValue) {
+        this.lowerValue = lowerValue;
     }
 
-    public Double getValorMedio() {
-        return this.valorMedio;
+    public Double getMiddleValue() {
+        return middleValue;
     }
 
-    public void setValorMedio(Double valorMedio) {
-        this.valorMedio = valorMedio;
+    public void setMiddleValue(Double middleValue) {
+        this.middleValue = middleValue;
     }
 
     public Double getRangoG() {
-        this.rangoG = this.getMax() - this.getMin();
-        return this.rangoG;
+        return rangoG;
     }
 
-    public void setRangoG(Double valorRangoG) {
-        this.rangoG = valorRangoG;
+    public void setRangoG(Double rangoG) {
+        this.rangoG = rangoG;
     }
 
     public Integer getEstadoRangoG() {
-        if (this.getRangoG() > 0) {
-            this.estadoRangoG = 1;
-        } else {
-            this.estadoRangoG = 0;
-        }
-        return this.estadoRangoG;
+        return estadoRangoG;
     }
 
     public void setEstadoRangoG(Integer estadoRangoG) {
@@ -112,8 +116,7 @@ public class Item {
     }
 
     public Double getRangoC() {
-        this.rangoC = Math.abs((this.getMed() - this.getValorMedio()));
-        return this.rangoC;
+        return rangoC;
     }
 
     public void setRangoC(Double rangoC) {
@@ -121,15 +124,7 @@ public class Item {
     }
 
     public Integer getConsensoGC() {
-
-        if (this.getRangoG() > this.getRangoC()) {
-            this.consensoGC = 1;
-        } else {
-
-            this.consensoGC = 0;
-        }
-
-        return this.consensoGC;
+        return consensoGC;
     }
 
     public void setConsensoGC(Integer consensoGC) {
@@ -138,11 +133,11 @@ public class Item {
 
     @Override
     public String toString() {
-        return "{" + " idExperto='" + getIdExperto() + "'" + ", idItem='" + getIdItem() + "'" + ", min='" + getMin()
-                + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + ", valorMenor='" + getValorMenor()
-                + "'" + ", valorMedio='" + getValorMedio() + "'" + ", rangoG='" + getRangoG() + "'" + ", estadoRangoG='"
-                + getEstadoRangoG() + "'" + ", rangoC='" + getRangoC() + "'" + ", consensoGC='" + getConsensoGC() + "'"
-                + "}";
+        return "Item{" + "idExperto=" + idExperto + ", idItem=" + idItem
+                + ", min=" + min + ", med=" + med + ", max=" + max
+                + ", lowerValue=" + lowerValue + ", middleValue="
+                + middleValue + ", rangoG=" + rangoG + ", estadoRangoG="
+                + estadoRangoG + ", rangoC=" + rangoC + ", consensoGC=" + consensoGC + '}';
     }
 
 }
