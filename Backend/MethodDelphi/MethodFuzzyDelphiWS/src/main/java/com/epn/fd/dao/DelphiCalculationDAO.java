@@ -7,10 +7,9 @@ package com.epn.fd.dao;
 
 import com.epn.dtos.QuizValuesContainer;
 import com.epn.dtos.Item;
+import com.epn.dtos.Survey;
 import com.epn.entities.DelphiCalculations;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -24,12 +23,14 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
 
     @Inject()
     QuizValuesDAO quizValuesDAO;
+//    @Inject()
+//    QuizValuesDAO quizValuesDAO;
 
     public DelphiCalculationDAO() {
         super(DelphiCalculations.class);
     }
 
-    public List<Item> getItemsByQuizAndRound(Long codeQuiz, Long roundNumber) {
+    private List<Item> getItemsByQuizAndRound(Long codeQuiz, Long roundNumber) {
 
         List<Item> listItems = new ArrayList();
 
@@ -46,6 +47,26 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         });
 
         return listItems;
+    }
+
+    public Survey calculateFuzzyDelphiMethod(Long codeQuiz, Long roundNumber) {
+
+        int determinante = 70;
+
+        ArrayList<Item> listItems = (ArrayList<Item>) getItemsByQuizAndRound(codeQuiz, roundNumber);
+        Survey survey = new Survey(listItems, determinante);
+
+        ArrayList<Integer> idItemsList = new ArrayList();
+        idItemsList.add(11);
+        idItemsList.add(12);
+        idItemsList.add(13);
+        idItemsList.add(14);
+        idItemsList.add(15);
+
+        survey.calculateTriangularFuzzyNumbers(idItemsList);
+        survey.setValoresMenorMedioItems();
+
+        return survey;
     }
 
 }

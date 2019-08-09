@@ -18,15 +18,13 @@ public class Survey {
     private ArrayList<Item> triangularFuzzyNumbers;
     private ArrayList<CrispNumberSj> crispNumberSj; // Sj = ( min + ave + max)/3
     private double determinante;
-    private int numberItems;
 
     protected static String MIN = "minimo";
     protected static String MED = "medio";
     protected static String MAX = "maximo";
 
-    public Survey(ArrayList<Item> itemList, float determinante, int numberItems) {
+    public Survey(ArrayList<Item> itemList, float determinante) {
         this.itemList = itemList;
-        this.numberItems = numberItems;
         this.triangularFuzzyNumbers = new ArrayList();
         this.crispNumberSj = new ArrayList();
         this.determinante = determinante;
@@ -58,11 +56,16 @@ public class Survey {
         return itemsAnulados;
     }
 
-    public ArrayList<Item> getTriangularFuzzyNumbers() {
+    public void calculateTriangularFuzzyNumbers(ArrayList<Integer> listIdItems) {
 
-        for (int idItem = 1; idItem <= numberItems; idItem++) {
+        ArrayList<Integer> listItems = listIdItems;
+
+        listIdItems.forEach(idItem -> {
             this.triangularFuzzyNumbers.add(getTriangularFuzzyNumberPorItem(idItem));
-        }
+        });
+    }
+
+    public ArrayList<Item> getTriangularFuzzyNumbers() {
         return this.triangularFuzzyNumbers;
     }
 
@@ -167,18 +170,10 @@ public class Survey {
         this.determinante = determinante;
     }
 
-    public int getNumberItems() {
-        return this.numberItems;
-    }
-
-    public void setNumberItems(int numberItems) {
-        this.numberItems = numberItems;
-    }
-
     @Override
     public String toString() {
         return "{" + " itemList='" + getItemList() + "'" + ", triangularFuzzyNumbers='" + getTriangularFuzzyNumbers()
                 + "'" + ", crispNumber='" + getCrispNumberSj() + "'" + ", determinante='" + getDeterminante() + "'"
-                + ", numberItems='" + getNumberItems() + "'" + "}";
+                + "}";
     }
 }
