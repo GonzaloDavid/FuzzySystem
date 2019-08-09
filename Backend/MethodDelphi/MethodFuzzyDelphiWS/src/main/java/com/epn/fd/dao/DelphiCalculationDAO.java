@@ -7,8 +7,10 @@ package com.epn.fd.dao;
 
 import com.epn.dtos.QuizValuesContainer;
 import com.epn.dtos.Item;
+import com.epn.dtos.QuizContainer;
 import com.epn.dtos.Survey;
 import com.epn.entities.DelphiCalculations;
+import com.epn.entities.SearchObject;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -23,8 +25,10 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
 
     @Inject()
     QuizValuesDAO quizValuesDAO;
-//    @Inject()
-//    QuizValuesDAO quizValuesDAO;
+    @Inject()
+    QuizDAO quizDAO;
+    @Inject()
+    ItemQuestionDAO itemQuestionDAO;
 
     public DelphiCalculationDAO() {
         super(DelphiCalculations.class);
@@ -49,22 +53,31 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         return listItems;
     }
 
-    public Survey calculateFuzzyDelphiMethod(Long codeQuiz, Long roundNumber) {
+    public Survey getSurveyByFuzzyDelphiMethod(Long codeQuiz, Long roundNumber) {
 
-        int determinante = 70;
+        int determinante = 0;
+
+        List<QuizContainer> quizList = quizDAO.getQuizbycode(codeQuiz);
+
+        for (QuizContainer quiz : quizList) {
+            if (quiz.getQuizPK().getCodeQuiz() == codeQuiz) {
+                determinante = quiz.getDiffuseDelphiDiscriminator().intValue();
+                break;
+            }
+        }
+
+        ArrayList<Integer> idItemsList = new ArrayList();
+
+        itemQuestionDAO.getItemByCodeQuiz(codeQuiz).forEach(item -> {
+            idItemsList.add((int) item.getQuestionItemPK().getCodeQuizItem());
+        });
 
         ArrayList<Item> listItems = (ArrayList<Item>) getItemsByQuizAndRound(codeQuiz, roundNumber);
         Survey survey = new Survey(listItems, determinante);
 
-        ArrayList<Integer> idItemsList = new ArrayList();
-        idItemsList.add(11);
-        idItemsList.add(12);
-        idItemsList.add(13);
-        idItemsList.add(14);
-        idItemsList.add(15);
-
         survey.calculateTriangularFuzzyNumbers(idItemsList);
         survey.setValoresMenorMedioItems();
+        survey.calculateConsensusItems();
 
         return survey;
     }

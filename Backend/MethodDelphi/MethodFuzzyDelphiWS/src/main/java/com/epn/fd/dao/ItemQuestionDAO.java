@@ -39,6 +39,14 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
         List<ItemQuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
         return containers;
     }
+    public List<ItemQuestionContainer> getItemByCodeQuiz(Long codeQuiz) {
+        SearchObject search = new SearchObject("questionItemPK");
+        search.addParameter("questionItemPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+
+        List<QuestionItem> resultList = search(search);
+        List<ItemQuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
+        return containers;
+    }
 
     public List<QuestionItem> saveItem(Questions questions, List<QuestionItem> questionItemList) {
         questionItemList.forEach(item -> {

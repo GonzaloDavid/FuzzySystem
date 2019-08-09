@@ -41,7 +41,12 @@ public class Survey {
                 }
             }
         }
+    }
 
+    public void calculateConsensusItems() {
+        this.itemList.forEach(item -> {
+            item.calculateConsensus();
+        });
     }
 
     public ArrayList<Item> getItemsAnulados() {
@@ -57,8 +62,6 @@ public class Survey {
     }
 
     public void calculateTriangularFuzzyNumbers(ArrayList<Integer> listIdItems) {
-
-        ArrayList<Integer> listItems = listIdItems;
 
         listIdItems.forEach(idItem -> {
             this.triangularFuzzyNumbers.add(getTriangularFuzzyNumberPorItem(idItem));
