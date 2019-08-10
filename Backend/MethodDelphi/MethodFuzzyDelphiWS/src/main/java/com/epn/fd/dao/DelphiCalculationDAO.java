@@ -42,14 +42,16 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         ArrayList<Long> codeQuizItemList = new ArrayList();
         List<Item> itemList = new ArrayList<>();
 
-        itemQuestionDAO.getItembyCodeQuizAndCodeQuestion(codeQuiz, codeQuestions).forEach(itemQuestion -> {
-            codeQuizItemList.add(itemQuestion.getQuestionItemPK().getCodeQuizItem());
-        });
+        questionDAO.getQuestionbycodequiz(codeQuiz).forEach(question -> {
+            float threshold = question.getDiffuseDelphiDiscriminatorbyQuestion().floatValue();
 
-        float threshold = questionDAO.getQuestionbycodequiz(codeQuiz).get(0).getDiffuseDelphiDiscriminatorbyQuestion().floatValue();
+            itemQuestionDAO.getItembyCodeQuizAndCodeQuestion(codeQuiz, codeQuestions).forEach(itemQuestion -> {
+                codeQuizItemList.add(itemQuestion.getQuestionItemPK().getCodeQuizItem());
+            });
 
-        codeQuizItemList.forEach(codeItem -> {
-            itemList.add(this.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, codeItem, threshold));
+            codeQuizItemList.forEach(codeItem -> {
+                itemList.add(this.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, codeItem, threshold));
+            });
         });
 
         // del codeQuestions tomar el discriminador de esa Question...
