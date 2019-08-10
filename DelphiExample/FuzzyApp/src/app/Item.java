@@ -1,144 +1,188 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Item: Lista de criterios
  */
 public class Item {
 
-    private Long codeQuiz:
+    private Long numberRound;
+    private Long codeQuiz;
+    private Long codeQuestion;
+    private Long codeItem;
 
-    private int idExperto; // id del criterio
-    private int idItem; // id del criterio
-    private double min; // mij
-    private double med; // lij
-    private double max; // uij
-    // Validacion de Items o Criterios´
-    private double valorMenor; // Lj
-    private double valorMedio; // Mj
-    private double rangoG; // G(=Uij - Lj)
-    private int estadoRangoG; // Verdadero o Falso 1 o 0;
-    private double rangoC; // valorAbsoluto(Mj-mij)
-    private int consensoGC; // Verdadero o Falso 1 o 0;
+    private float threshold; // Umbral, Indice de convergencia o determinante...
+
+    List<ItemResponse> itemResponseList; // Lista de respuestas!!! ...
+
+    private Double lowerValue;
+    private Double middleValue;
+    private Double upperValue;
+    private Double defuzzificationValue; // crispNumberSj
+
+    private int validate; // Validar 0 o 1, false or true, rechazar o aceptar, eliminar o seleccionar.
+
+    // Constantes ==========================
+    protected static String MIN = "minimo";
+    protected static String MED = "medio";
+    protected static String MAX = "maximo";
 
     // Constructores ===========================================================
-    public Item(int idExperto, int idItem, double min, double med, double max) {
-        this.idExperto = idExperto;
-        this.idItem = idItem;
-        this.min = min;
-        this.med = med;
-        this.max = max;
+    public Item() {
+
     }
 
-    public int getIdExperto() {
-        return this.idExperto;
+    public Item(Long numberRound, Long codeQuiz, Long codeQuestion, Long codeItem, float threshold,
+            List<ItemResponse> itemResponseList) {
+        this.numberRound = numberRound;
+        this.codeQuiz = codeQuiz;
+        this.codeQuestion = codeQuestion;
+        this.codeItem = codeItem;
+        this.threshold = threshold;
+        this.itemResponseList = itemResponseList;
     }
 
-    public void setIdExperto(int idExperto) {
-        this.idExperto = idExperto;
-    }
+    // Methods ================================
+    public void runFuzzyDelphiMethod() {
 
-    public int getIdItem() {
-        return this.idItem;
-    }
+        ArrayList<Double> minValueList = new ArrayList();
+        ArrayList<Double> aveValueList = new ArrayList();
+        ArrayList<Double> maxValueList = new ArrayList();
 
-    public void setIdItem(int idItem) {
-        this.idItem = idItem;
-    }
-
-    public double getMin() {
-        return this.min;
-    }
-
-    public void setMin(double min) {
-        this.min = min;
-    }
-
-    public double getMed() {
-        return this.med;
-    }
-
-    public void setMed(double med) {
-        this.med = med;
-    }
-
-    public double getMax() {
-        return this.max;
-    }
-
-    public void setMax(double max) {
-        this.max = max;
-    }
-
-    public double getValorMenor() {
-        return this.valorMenor;
-    }
-
-    public void setValorMenor(double valorMenor) {
-        this.valorMenor = valorMenor;
-    }
-
-    public double getValorMedio() {
-        return this.valorMedio;
-    }
-
-    public void setValorMedio(double valorMedio) {
-        this.valorMedio = valorMedio;
-    }
-
-    public double getRangoG() {
-        this.rangoG = this.getMax() - this.getMin();
-        return this.rangoG;
-    }
-
-    public void setRangoG(double valorRangoG) {
-        this.rangoG = valorRangoG;
-    }
-
-    public int getEstadoRangoG() {
-        if (this.getRangoG() > 0) {
-            this.estadoRangoG = 1;
-        } else {
-            this.estadoRangoG = 0;
-        }
-        return this.estadoRangoG;
-    }
-
-    public void setEstadoRangoG(int estadoRangoG) {
-        this.estadoRangoG = estadoRangoG;
-    }
-
-    public double getRangoC() {
-        this.rangoC = Math.abs((this.getMed() - this.getValorMedio()));
-        return this.rangoC;
-    }
-
-    public void setRangoC(double rangoC) {
-        this.rangoC = rangoC;
-    }
-
-    public int getConsensoGC() {
-
-        if (this.getRangoG() > this.getRangoC()) {
-            this.consensoGC = 1;
-        } else {
-
-            this.consensoGC = 0;
+        for (ItemResponse itemResponse : this.itemResponseList) {
+            minValueList.add(itemResponse.getMinValue());
+            aveValueList.add(itemResponse.getAveValue());
+            maxValueList.add(itemResponse.getMaxValue());
         }
 
-        return this.consensoGC;
+        // TriangularFuzzyNumber =======
+        this.lowerValue = Collections.min(minValueList);
+        this.middleValue = calculateMiddleValue(aveValueList);
+        this.upperValue = Collections.max(minValueList);
+
+        this.defuzzificationValue = (this.lowerValue + this.middleValue + this.upperValue) / 3;
+
+        this.validate = (this.defuzzificationValue >= this.threshold) ? 1 : 0;
+
     }
 
-    public void setConsensoGC(int consensoGC) {
-        this.consensoGC = consensoGC;
+    public void determinateConsensusByItemResponses() {
+        this.itemResponseList.foreach(itemResponse -> {
+            itemResponse.calculateConsensus(this.lowerValue, this.middleValue);
+        });
+    }
+
+    protected Double calculateMiddleValue(ArrayList<Double> averageValues) {
+        int total = averageValues.size();
+        double producto = 1.0;
+
+        for (Double med : averageValues) {
+            producto = producto * med;
+        }
+
+        return Math.pow(producto, (1.0 / total));
+    }
+
+    // Getters and Setters ===================================
+
+    public Long getNumberRound() {
+        return this.numberRound;
+    }
+
+    public void setNumberRound(Long numberRound) {
+        this.numberRound = numberRound;
+    }
+
+    public Long getCodeQuiz() {
+        return this.codeQuiz;
+    }
+
+    public void setCodeQuiz(Long codeQuiz) {
+        this.codeQuiz = codeQuiz;
+    }
+
+    public Long getCodeQuestion() {
+        return this.codeQuestion;
+    }
+
+    public void setCodeQuestion(Long codeQuestion) {
+        this.codeQuestion = codeQuestion;
+    }
+
+    public Long getCodeItem() {
+        return this.codeItem;
+    }
+
+    public void setCodeItem(Long codeItem) {
+        this.codeItem = codeItem;
+    }
+
+    public float getThreshold() {
+        return this.threshold;
+    }
+
+    public void setThreshold(float threshold) {
+        this.threshold = threshold;
+    }
+
+    public List<ItemResponse> getItemResponseList() {
+        return this.itemResponseList;
+    }
+
+    public void setItemResponseList(List<ItemResponse> itemResponseList) {
+        this.itemResponseList = itemResponseList;
+    }
+
+    public Double getLowerValue() {
+        return this.lowerValue;
+    }
+
+    public void setLowerValue(Double lowerValue) {
+        this.lowerValue = lowerValue;
+    }
+
+    public Double getMiddleValue() {
+        return this.middleValue;
+    }
+
+    public void setMiddleValue(Double middleValue) {
+        this.middleValue = middleValue;
+    }
+
+    public Double getUpperValue() {
+        return this.upperValue;
+    }
+
+    public void setUpperValue(Double upperValue) {
+        this.upperValue = upperValue;
+    }
+
+    public Double getDefuzzificationValue() {
+        return this.defuzzificationValue;
+    }
+
+    public void setDefuzzificationValue(Double defuzzificationValue) {
+        this.defuzzificationValue = defuzzificationValue;
+    }
+
+    public int getValidate() {
+        return this.validate;
+    }
+
+    public void setValidate(int validate) {
+        this.validate = validate;
     }
 
     @Override
     public String toString() {
-        return "{" + " idExperto='" + getIdExperto() + "'" + ", idItem='" + getIdItem() + "'" + ", min='" + getMin()
-                + "'" + ", med='" + getMed() + "'" + ", max='" + getMax() + "'" + ", valorMenor='" + getValorMenor()
-                + "'" + ", valorMedio='" + getValorMedio() + "'" + ", rangoG='" + getRangoG() + "'" + ", estadoRangoG='"
-                + getEstadoRangoG() + "'" + ", rangoC='" + getRangoC() + "'" + ", consensoGC='" + getConsensoGC() + "'"
-                + "}";
+        return "{" + " numberRound='" + getNumberRound() + "'" + ", codeQuiz='" + getCodeQuiz() + "'"
+                + ", codeQuestion='" + getCodeQuestion() + "'" + ", codeItem='" + getCodeItem() + "'" + ", threshold='"
+                + getThreshold() + "'" + ", itemResponseList='" + getItemResponseList() + "'" + ", lowerValue='"
+                + getLowerValue() + "'" + ", middleValue='" + getMiddleValue() + "'" + ", upperValue='"
+                + getUpperValue() + "'" + ", defuzzificationValue='" + getDefuzzificationValue() + "'" + ", validate='"
+                + getValidate() + "'" + "}";
     }
 
 }
