@@ -7,7 +7,6 @@ package com.epn.fd.dao;
 
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.ListAndCountContainer;
-
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizContainerList;
 import com.epn.dtos.QuizSave;
@@ -43,7 +42,6 @@ public class QuizDAO extends GenericDAO<Quiz> {
     public QuizDAO() {
         super(Quiz.class);
     }
-
     public List<QuizContainer> getQuizbycode(Long codeQuiz) {
         SearchObject search = new SearchObject("quizPK");
         search.addParameter("quizPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);

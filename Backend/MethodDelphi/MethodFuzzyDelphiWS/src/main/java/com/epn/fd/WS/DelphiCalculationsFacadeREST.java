@@ -6,7 +6,6 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.Item;
-import com.epn.dtos.Survey;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.fd.dao.DelphiCalculationDAO;
@@ -96,15 +95,16 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String calculate(
+            @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("roundNumber") Long roundNumber,
-            @QueryParam("codeQuiz") Long codeQuiz
+            @QueryParam("codeQuestions") Long codeQuestions
     ) throws JsonProcessingException {
 
-        Survey survey = delphiCalculationDAO.getSurveyByFuzzyDelphiMethod(codeQuiz, roundNumber);
+        Item item = delphiCalculationDAO.runFDM(codeQuiz, roundNumber, codeQuestions);
 
         ObjectMapper mapper = new ObjectMapper();
 
-        String response = mapper.writeValueAsString(survey.getCrispNumberSj());
+        String response = mapper.writeValueAsString(item);
         return response;
     }
 

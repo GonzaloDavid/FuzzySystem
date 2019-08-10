@@ -5,11 +5,9 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.dtos.ItemCommentContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizValuesContainer;
 import com.epn.entities.FilterTypes;
-import com.epn.entities.ItemComment;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
 import com.epn.entities.SearchObject;
@@ -68,6 +66,18 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
         SearchObject search = new SearchObject("quizvaluesPK");
         search.addParameter("quizvaluesPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addParameter("quizvaluesPK.codePerson", FilterTypes.EQUAL, codePerson);
+        search.addParameter("quizvaluesPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("quizvaluesPK.codeQuestions", FilterTypes.EQUAL, codeQuestions);
+        search.addParameter("quizvaluesPK.codeQuizItem", FilterTypes.EQUAL, codeQuizItem);
+
+        List<Quizvalues> resultList = search(search);
+        List<QuizValuesContainer> containers = quizvaluesMapper.sourceListToDestination(resultList);
+        return containers;
+    }
+
+    public List<QuizValuesContainer> getQuizValuesListBy(Long codeQuiz, Long codeQuestions, Long roundNumber, Long codeQuizItem) {
+        SearchObject search = new SearchObject("quizvaluesPK");
+        search.addParameter("quizvaluesPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addParameter("quizvaluesPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
         search.addParameter("quizvaluesPK.codeQuestions", FilterTypes.EQUAL, codeQuestions);
         search.addParameter("quizvaluesPK.codeQuizItem", FilterTypes.EQUAL, codeQuizItem);
