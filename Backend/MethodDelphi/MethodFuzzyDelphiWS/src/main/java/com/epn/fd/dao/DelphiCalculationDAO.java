@@ -10,7 +10,8 @@ import com.epn.dtos.Item;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.Survey;
 import com.epn.entities.DelphiCalculations;
-import com.epn.entities.SearchObject;
+import com.epn.entities.DelphiCalculationsPK;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -41,16 +42,40 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         List<QuizValuesContainer> quizvaluebyquiz = quizValuesDAO.getquizvalues(codeQuiz, null, null, null, roundNumber);
 
         quizvaluebyquiz.forEach(itemValues -> {
+
+            Long codeQuestions = itemValues.getQuizvaluesPK().getCodeQuestions();
             Integer idExpert = (int) itemValues.getQuizvaluesPK().getCodePerson();
             Integer idItem = (int) itemValues.getQuizvaluesPK().getCodeQuizItem();
             Double lowerValue = Double.parseDouble(itemValues.getMinimumValue());
             Double middleValue = Double.parseDouble(itemValues.getAverageValue());
             Double upperValue = Double.parseDouble(itemValues.getMaximunValue());
 
-            listItems.add(new Item(idExpert, idItem, lowerValue, middleValue, upperValue));
+            listItems.add(new Item(roundNumber, codeQuiz, codeQuestions, idExpert, idItem, lowerValue, middleValue, upperValue));
         });
 
         return listItems;
+    }
+
+    public List<DelphiCalculations> getDelphiCalculations(Long codeQuiz, Long roundNumber) {
+
+        Survey survey = this.getSurveyByFuzzyDelphiMethod(codeQuiz, roundNumber);
+        List<DelphiCalculations> delphiCalculationsList = new ArrayList();
+
+        survey.getCrispNumberSj().forEach(crispNumberSj -> {
+
+            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(codeQuiz, 0, crispNumberSj.getIdItem(), 0, roundNumber);
+            BigDecimal lowerValue;
+            BigDecimal middleValue;
+            BigDecimal upperValue;
+            BigDecimal convergenceIndex;
+            BigDecimal discriminator;
+            long userCreate;
+            long userLastModify;
+
+            delphiCalculationsList.add(new DelphiCalculations(null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO, null, null, 0, 0));
+        });
+
+        return delphiCalculationsList;
     }
 
     public Survey getSurveyByFuzzyDelphiMethod(Long codeQuiz, Long roundNumber) {

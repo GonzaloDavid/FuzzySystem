@@ -5,6 +5,8 @@ package app;
  */
 public class Item {
 
+    private Long codeQuiz:
+
     private int idExperto; // id del criterio
     private int idItem; // id del criterio
     private double min; // mij

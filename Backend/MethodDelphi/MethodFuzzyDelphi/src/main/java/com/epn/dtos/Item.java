@@ -11,8 +11,12 @@ package com.epn.dtos;
  */
 public class Item {
 
+    private Long roundNumber; // ronda del item
+    private Long codeQuiz; // codigo de encuesta
+    private Long codeQuestions; // codigo de pregunta
     private Integer idExperto; // id del criterio
     private Integer idItem; // id del criterio
+
     private Double min; // mij
     private Double med; // lij
     private Double max; // uij
@@ -33,6 +37,17 @@ public class Item {
         this.max = max;
     }
 
+    public Item(Long roundNumber, Long codeQuiz, Long codeQuestions, Integer idExperto, Integer idItem, Double min, Double med, Double max) {
+        this.roundNumber = roundNumber;
+        this.codeQuiz = codeQuiz;
+        this.codeQuestions = codeQuestions;
+        this.idExperto = idExperto;
+        this.idItem = idItem;
+        this.min = min;
+        this.med = med;
+        this.max = max;
+    }
+
     public void calculateConsensus() {
 
         if (this.middleValue != null && this.lowerValue != null) {
@@ -41,6 +56,30 @@ public class Item {
             this.rangoC = Math.abs((this.med - this.middleValue));
             this.consensoGC = (this.rangoG > this.rangoC) ? 1 : 0;
         }
+    }
+
+    public Long getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(Long roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
+    public Long getCodeQuiz() {
+        return codeQuiz;
+    }
+
+    public void setCodeQuiz(Long codeQuiz) {
+        this.codeQuiz = codeQuiz;
+    }
+
+    public Long getCodeQuestions() {
+        return codeQuestions;
+    }
+
+    public void setCodeQuestions(Long codeQuestions) {
+        this.codeQuestions = codeQuestions;
     }
 
     public Integer getIdExperto() {
@@ -133,11 +172,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" + "idExperto=" + idExperto + ", idItem=" + idItem
-                + ", min=" + min + ", med=" + med + ", max=" + max
-                + ", lowerValue=" + lowerValue + ", middleValue="
-                + middleValue + ", rangoG=" + rangoG + ", estadoRangoG="
-                + estadoRangoG + ", rangoC=" + rangoC + ", consensoGC=" + consensoGC + '}';
+        return "Item{" + "roundNumber=" + roundNumber + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", idExperto=" + idExperto + ", idItem=" + idItem + ", min=" + min + ", med=" + med + ", max=" + max + ", lowerValue=" + lowerValue + ", middleValue=" + middleValue + ", rangoG=" + rangoG + ", estadoRangoG=" + estadoRangoG + ", rangoC=" + rangoC + ", consensoGC=" + consensoGC + '}';
     }
 
 }

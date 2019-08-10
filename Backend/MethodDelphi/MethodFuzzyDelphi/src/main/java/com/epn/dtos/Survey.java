@@ -77,10 +77,9 @@ public class Survey {
     }
 
     public ArrayList<CrispNumberSj> getCrispNumberSj() {
-        Double promedio = 0.0;
 
         for (Item item : this.triangularFuzzyNumbers) {
-            promedio = ((item.getMin() + item.getMed() + item.getMax()) / 3.0);
+            Double promedio = ((item.getMin() + item.getMed() + item.getMax()) / 3.0);
             this.crispNumberSj.add(new CrispNumberSj(item.getIdItem(), promedio, this.determinante));
         }
 
@@ -96,9 +95,6 @@ public class Survey {
         double getNumeroMedio = getNumeroMedio(medios);
         double getNumeroMaximo = getNumeroMaximo(mayores);
 
-        System.out.println("getNumeroMenor: " + getNumeroMenor);
-        System.out.println("getNumeroMedio: " + getNumeroMedio);
-        System.out.println("getNumeroMaximo: " + getNumeroMaximo);
         Item itemTFN = new Item(0, idItem, getNumeroMenor, getNumeroMedio, getNumeroMaximo);
 
         return itemTFN;

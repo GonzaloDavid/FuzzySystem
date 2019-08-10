@@ -5,6 +5,8 @@
  */
 package com.epn.dtos;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author ka
@@ -12,6 +14,7 @@ package com.epn.dtos;
 public class CrispNumberSj {
 
     private Integer idItem;
+    private BigInteger codeQuestions;
     private Double indiceSj;
     private Double determinante;
     private Integer estado;
@@ -39,6 +42,14 @@ public class CrispNumberSj {
         this.mensaje = mensaje;
     }
     // Getters and Setters ======================
+
+    public BigInteger getCodeQuestions() {
+        return codeQuestions;
+    }
+
+    public void setCodeQuestions(BigInteger codeQuestions) {
+        this.codeQuestions = codeQuestions;
+    }
 
     public Integer getIdItem() {
         return this.idItem;
