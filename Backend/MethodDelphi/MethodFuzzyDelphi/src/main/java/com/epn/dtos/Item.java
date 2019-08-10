@@ -68,7 +68,7 @@ public class Item {
             // TriangularFuzzyNumber =======
             this.lowerValue = Collections.min(minValueList);
             this.middleValue = calculateMiddleValue(aveValueList);
-            this.upperValue = Collections.max(minValueList);
+            this.upperValue = Collections.max(maxValueList);
 
             this.defuzzificationValue = (this.lowerValue + this.middleValue + this.upperValue) / 3;
 

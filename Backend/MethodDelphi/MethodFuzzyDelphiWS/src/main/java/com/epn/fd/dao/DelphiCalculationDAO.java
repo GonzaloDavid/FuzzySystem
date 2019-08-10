@@ -37,10 +37,26 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         super(DelphiCalculations.class);
     }
 
-//    public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions){
-//        
-//    }
-//    
+    public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
+        // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y codeQuiz...
+        ArrayList<Long> codeQuizItemList = new ArrayList();
+        List<Item> itemList = new ArrayList<>();
+
+        itemQuestionDAO.getItembyCodeQuizAndCodeQuestion(codeQuiz, codeQuestions).forEach(itemQuestion -> {
+            codeQuizItemList.add(itemQuestion.getQuestionItemPK().getCodeQuizItem());
+        });
+
+        float threshold = questionDAO.getQuestionbycodequiz(codeQuiz).get(0).getDiffuseDelphiDiscriminatorbyQuestion().floatValue();
+
+        codeQuizItemList.forEach(codeItem -> {
+            itemList.add(this.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, codeItem, threshold));
+        });
+
+        // del codeQuestions tomar el discriminador de esa Question...
+        // de QuizValues, tomar por cada codeQuizItems el registro que pertenezca a roundNumber,Codequiz,codeQuestions
+        return itemList;
+    }
+
     public Item runFuzzyDelphiByItem(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem, float threshold) {
 
         ArrayList<ItemResponse> itemResponsesList = new ArrayList();

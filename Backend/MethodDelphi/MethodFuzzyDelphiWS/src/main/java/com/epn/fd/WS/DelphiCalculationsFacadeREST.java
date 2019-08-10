@@ -100,11 +100,11 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
             @QueryParam("codeQuestions") Long codeQuestions
     ) throws JsonProcessingException {
 
-        Item item = delphiCalculationDAO.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, (long) 11, (float) 70);
+        List<Item> itemList = delphiCalculationDAO.runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
 
         ObjectMapper mapper = new ObjectMapper();
 
-        String response = mapper.writeValueAsString(item);
+        String response = mapper.writeValueAsString(itemList);
         return response;
     }
 
