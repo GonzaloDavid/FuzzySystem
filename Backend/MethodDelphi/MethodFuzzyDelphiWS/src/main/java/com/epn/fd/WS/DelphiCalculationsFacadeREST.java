@@ -95,12 +95,12 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String calculate(
-            @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("roundNumber") Long roundNumber,
+            @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestions") Long codeQuestions
     ) throws JsonProcessingException {
 
-        Item item = delphiCalculationDAO.runFDM(codeQuiz, roundNumber, codeQuestions);
+        Item item = delphiCalculationDAO.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, (long) 11, (float) 70);
 
         ObjectMapper mapper = new ObjectMapper();
 

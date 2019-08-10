@@ -75,7 +75,7 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
         return containers;
     }
 
-    public List<QuizValuesContainer> getQuizValuesListBy(Long codeQuiz, Long codeQuestions, Long roundNumber, Long codeQuizItem) {
+    public List<QuizValuesContainer> getQuizValuesListBy(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem) {
         SearchObject search = new SearchObject("quizvaluesPK");
         search.addParameter("quizvaluesPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addParameter("quizvaluesPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);

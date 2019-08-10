@@ -37,21 +37,24 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         super(DelphiCalculations.class);
     }
 
-    public Item runFDM(Long codeQuiz, Long roundNumber, Long codeQuestions) {
-
-        float threshold = quizDAO.getQuizbycode(codeQuiz).get(0).getDiffuseDelphiDiscriminator().floatValue();
-
-        Long codeQuizItem = (long) 11;
+//    public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions){
+//        
+//    }
+//    
+    public Item runFuzzyDelphiByItem(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem, float threshold) {
 
         ArrayList<ItemResponse> itemResponsesList = new ArrayList();
 
-        quizValuesDAO.getQuizValuesListBy(codeQuiz, codeQuestions, roundNumber, codeQuizItem).forEach(quizValues -> {
-            Long codePerson = quizValues.getQuizvaluesPK().getCodePerson();
-            Long codeQuestion = quizValues.getQuizvaluesPK().getCodeQuestions();
+        quizValuesDAO.getQuizValuesListBy(roundNumber, codeQuiz, codeQuestions, codeQuizItem).forEach(quizValues -> {
+            Long roundNumberFound = quizValues.getQuizvaluesPK().getRoundNumber();
+            Long codeQuizFound = quizValues.getQuizvaluesPK().getCodeQuiz();
+            Long codeQuestionsFound = quizValues.getQuizvaluesPK().getCodeQuestions();
+            Long codePersonFound = quizValues.getQuizvaluesPK().getCodePerson();
+            Long codeQuizItemFound = quizValues.getQuizvaluesPK().getCodeQuizItem();
             Double minValue = Double.parseDouble(quizValues.getMinimumValue());
             Double aveValue = Double.parseDouble(quizValues.getAverageValue());
             Double maxValue = Double.parseDouble(quizValues.getMaximunValue());
-            itemResponsesList.add(new ItemResponse(roundNumber, codeQuiz, codeQuestion, codePerson, codeQuizItem, minValue, aveValue, maxValue));
+            itemResponsesList.add(new ItemResponse(roundNumberFound, codeQuizFound, codeQuestionsFound, codePersonFound, codeQuizItemFound, minValue, aveValue, maxValue));
         });
 
         Item item = new Item(roundNumber, codeQuiz, codeQuestions, codeQuizItem, threshold, itemResponsesList);
@@ -59,7 +62,6 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         item.determinateConsensusByItemResponses();
 
         return item;
-
     }
 
 }

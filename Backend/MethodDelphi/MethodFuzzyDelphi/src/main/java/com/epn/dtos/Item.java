@@ -57,13 +57,13 @@ public class Item {
         ArrayList<Double> aveValueList = new ArrayList();
         ArrayList<Double> maxValueList = new ArrayList();
 
-        if (!minValueList.isEmpty() && !aveValueList.isEmpty() && !maxValueList.isEmpty()) {
+        for (ItemResponse itemResponse : this.itemResponseList) {
+            minValueList.add(itemResponse.getMinValue());
+            aveValueList.add(itemResponse.getAveValue());
+            maxValueList.add(itemResponse.getMaxValue());
+        }
 
-            for (ItemResponse itemResponse : this.itemResponseList) {
-                minValueList.add(itemResponse.getMinValue());
-                aveValueList.add(itemResponse.getAveValue());
-                maxValueList.add(itemResponse.getMaxValue());
-            }
+        if (!minValueList.isEmpty() && !aveValueList.isEmpty() && !maxValueList.isEmpty()) {
 
             // TriangularFuzzyNumber =======
             this.lowerValue = Collections.min(minValueList);
@@ -73,15 +73,15 @@ public class Item {
             this.defuzzificationValue = (this.lowerValue + this.middleValue + this.upperValue) / 3;
 
             this.validate = (this.defuzzificationValue >= this.threshold) ? 1 : 0;
-
         }
-
     }
 
     public void determinateConsensusByItemResponses() {
-        this.itemResponseList.forEach(itemResponse -> {
-            itemResponse.calculateConsensus(this.lowerValue, this.middleValue);
-        });
+        if (this.lowerValue != null && this.middleValue != null) {
+            this.itemResponseList.forEach(itemResponse -> {
+                itemResponse.calculateConsensus(this.lowerValue, this.middleValue);
+            });
+        }
     }
 
     protected Double calculateMiddleValue(ArrayList<Double> averageValues) {
