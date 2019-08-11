@@ -46,6 +46,16 @@ public class QuestionDAO extends GenericDAO<Questions> {
         return containers;
     }
 
+    public List<QuestionContainer> getQuestionByCodeQuizAndCodeQuestions(Long codeQuiz, Long codeQuestions) {
+        SearchObject search = new SearchObject("questionsPK");
+        search.addParameter("questionsPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("questionsPK.codeQuestions", FilterTypes.EQUAL, codeQuestions);
+
+        List<Questions> resultList = search(search);
+        List<QuestionContainer> containers = questionMapper.sourceListToDestination(resultList);
+        return containers;
+    }
+
     public void deleteQuestion(QuizSave quizContainer) {
         quizContainer.getQuestiondeleted().forEach(elementremove -> {
             if (elementremove.getQuestionsPK().getCodeQuestions() != 0) {

@@ -81,9 +81,11 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 //    @Produces(MediaType.APPLICATION_JSON)
 //    public List<Item> calculate(
 //            @QueryParam("roundNumber") Long roundNumber,
-//            @QueryParam("codeQuiz") Long codeQuiz
+//            @QueryParam("codeQuiz") Long codeQuiz,
+//            @QueryParam("codeQuestions") Long codeQuestions
 //    ) {
-//        return delphiCalculationDAO.getItemsByQuizAndRound(codeQuiz, roundNumber);
+//
+//        return delphiCalculationDAO.runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
 //    }
     @GET
     @Path("calculate")

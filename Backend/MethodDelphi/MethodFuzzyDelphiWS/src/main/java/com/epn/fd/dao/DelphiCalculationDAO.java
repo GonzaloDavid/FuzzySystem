@@ -7,6 +7,7 @@ package com.epn.fd.dao;
 
 import com.epn.dtos.Item;
 import com.epn.dtos.ItemResponse;
+import com.epn.dtos.QuestionContainer;
 import com.epn.entities.DelphiCalculations;
 import com.epn.exception.AppException;
 import java.util.ArrayList;
@@ -49,10 +50,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
     public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
         // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y codeQuiz...
 
-        List<Item> itemList = new ArrayList<>();
+        List<Item> itemList = new ArrayList();
 
-        questionDAO.getQuestionbycodequiz(codeQuiz).forEach(question -> {
+        List<QuestionContainer> questionContainer = questionDAO.getQuestionByCodeQuizAndCodeQuestions(codeQuiz, codeQuestions);
 
+        questionContainer.forEach(question -> {
             float threshold = question.getDiffuseDelphiDiscriminatorbyQuestion().floatValue();
 
             question.getQuestionItemList().forEach(itemQuestion -> {
@@ -62,11 +64,12 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
 
                 Item item = this.runFuzzyDelphiByItem(roundNumber, codeQuizItem, codeQuestionsItem, codeItem, threshold);
                 if (!item.getItemResponseList().isEmpty()) {
-                    itemList.add(this.runFuzzyDelphiByItem(roundNumber, codeQuiz, codeQuestions, codeItem, threshold));
+                    itemList.add(item);
                 }
             });
 
         });
+
         return itemList;
     }
 
@@ -83,8 +86,10 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         }
 
         Item item = new Item(roundNumber, codeQuiz, codeQuestions, codeQuizItem, threshold, itemResponsesList);
-        item.runFuzzyDelphiMethod();
-        item.determinateConsensusByItemResponses();
+        if (!itemResponsesList.isEmpty()) {
+            item.runFuzzyDelphiMethod();
+            item.determinateConsensusByItemResponses();
+        }
 
         return item;
     }

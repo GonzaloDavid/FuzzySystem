@@ -21,19 +21,17 @@ public class Item {
 
     private float threshold; // Umbral, Indice de convergencia o determinante...
 
-    ArrayList<ItemResponse> itemResponseList; // Lista de respuestas!!! ...
-
     private Double lowerValue;
     private Double mediaValue;
     private Double upperValue;
     private Double defuzzificationValue; // crispNumberSj
 
-    private int validate; // Validar 0 o 1, false or true, rechazar o aceptar, eliminar o seleccionar.
-
     private Double lowerAverage;
     private Double mediaAverage;
     private Double upperAverage;
 
+    private int validate; // Validar 0 o 1, false or true, rechazar o aceptar, eliminar o seleccionar.
+    ArrayList<ItemResponse> itemResponseList; // Lista de respuestas!!! ...
     // Constantes ==========================
     protected static String MIN = "minimo";
     protected static String MED = "medio";
