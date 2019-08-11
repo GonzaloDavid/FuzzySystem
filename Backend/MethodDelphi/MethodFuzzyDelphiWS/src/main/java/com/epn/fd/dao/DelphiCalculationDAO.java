@@ -12,7 +12,9 @@ import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.exception.AppException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -43,7 +45,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         List<Item> listItemResults = runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
 
         listItemResults.forEach(item -> {
-            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(item.getCodeQuiz(), item.getCodeQuestion(), item.getCodeItem(), item.getRoundNumber());
+            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK();
+            delphiCalculationsPK.setCodeQuiz(item.getCodeQuiz());
+            delphiCalculationsPK.setCodeQuestions(item.getCodeQuestion());
+            delphiCalculationsPK.setCodeQuizItem(item.getCodeItem());
+            delphiCalculationsPK.setRoundNumber(item.getRoundNumber());
             BigDecimal lowerValue = new BigDecimal(item.getLowerValue());
             BigDecimal mediaValue = new BigDecimal(item.getMediaValue());
             BigDecimal upperValue = new BigDecimal(item.getUpperValue());
@@ -53,22 +59,34 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             BigDecimal mediaAverage = new BigDecimal(item.getMediaAverage());
             BigDecimal upperAverage = new BigDecimal(item.getUpperAverage());
             Integer validated = item.getValidate();
-
-            delphiCalculationsesList.add(new DelphiCalculations(delphiCalculationsPK,
-                    lowerValue, mediaValue,
+            DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK);
+              /* lowerValue, mediaValue,
                     upperValue, defuzzificationValue,
                     threshold, lowerAverage,
                     mediaAverage, upperAverage,
-                    validated
-            ));
+                    validated*/
+            calculations.setLowerValue(lowerValue);
+            calculations.setMediaValue(mediaValue);
+            calculations.setUpperAverage(upperAverage);
+            calculations.setDefuzzificationValue(defuzzificationValue);
+            calculations.setThreshold(threshold);
+            calculations.setLowerAverage(lowerAverage);
+            calculations.setMediaAverage(mediaAverage);
+            calculations.setUpperAverage(upperAverage);
+            calculations.setValidated(0);
+            calculations.setStatusResultCat1("STATUSRESULTCAT");
+            calculations.setStatusResult("approved");
+            calculations.setUserCreate(BigInteger.ONE);
+            calculations.setUserLastModify(BigInteger.ONE);
+            calculations.setDateCreate(new Date());
+            calculations.setDateLastModify(new Date());
+            update(calculations);
+
+            //  delphiCalculationsesList.add();
         }
         );
 
-        try {
-            insertList(delphiCalculationsesList);
-        } catch (Exception ex) {
-            throw new AppException(ex.toString(), "NO SE GUARDO Delphi calculations");
-        }
+        //     updateList(delphiCalculationsesList);
         return delphiCalculationsesList;
     }
 

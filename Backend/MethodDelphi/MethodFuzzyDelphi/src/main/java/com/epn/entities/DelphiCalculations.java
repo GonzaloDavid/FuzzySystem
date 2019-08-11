@@ -57,39 +57,30 @@ public class DelphiCalculations implements Serializable {
     protected DelphiCalculationsPK delphiCalculationsPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
     @Column(name = "lowerValue")
     private BigDecimal lowerValue;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mediaValue")
     private BigDecimal mediaValue;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "upperValue")
     private BigDecimal upperValue;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "defuzzificationValue")
     private BigDecimal defuzzificationValue;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "threshold")
     private BigDecimal threshold;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "lowerAverage")
     private BigDecimal lowerAverage;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mediaAverage")
     private BigDecimal mediaAverage;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "upperAverage")
     private BigDecimal upperAverage;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "validated")
     private int validated;
     @Column(name = "dateCreate")
@@ -102,6 +93,10 @@ public class DelphiCalculations implements Serializable {
     private BigInteger userCreate;
     @Column(name = "userLastModify")
     private BigInteger userLastModify;
+    @Column(name = "statusResultCat")
+    private String statusResultCat1;
+    @Column(name = "statusResult")
+    private String statusResult;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
@@ -120,8 +115,8 @@ public class DelphiCalculations implements Serializable {
     @ManyToOne
     private Catalogue statusResultCat;
     @JoinColumns({
-        @JoinColumn(name = "statusResultCat", referencedColumnName = "codeCatalogue")
-        , @JoinColumn(name = "statusResult", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "statusResultCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false)
+        , @JoinColumn(name = "statusResult", referencedColumnName = "codeItem",insertable = false, updatable = false)})
     @ManyToOne
     private Catalogueitem catalogueitem;
 
@@ -301,6 +296,22 @@ public class DelphiCalculations implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
+    public String getStatusResultCat1() {
+        return statusResultCat1;
+    }
+
+    public void setStatusResultCat1(String statusResultCat1) {
+        this.statusResultCat1 = statusResultCat1;
+    }
+
+    public String getStatusResult() {
+        return statusResult;
+    }
+
+    public void setStatusResult(String statusResult) {
+        this.statusResult = statusResult;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -325,5 +336,5 @@ public class DelphiCalculations implements Serializable {
     public String toString() {
         return "com.epn.entities.DelphiCalculations[ delphiCalculationsPK=" + delphiCalculationsPK + " ]";
     }
-    
+
 }
