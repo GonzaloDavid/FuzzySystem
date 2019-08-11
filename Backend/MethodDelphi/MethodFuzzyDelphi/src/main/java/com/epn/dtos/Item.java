@@ -24,11 +24,15 @@ public class Item {
     ArrayList<ItemResponse> itemResponseList; // Lista de respuestas!!! ...
 
     private Double lowerValue;
-    private Double middleValue;
+    private Double mediaValue;
     private Double upperValue;
     private Double defuzzificationValue; // crispNumberSj
 
     private int validate; // Validar 0 o 1, false or true, rechazar o aceptar, eliminar o seleccionar.
+
+    private Double lowerAverage;
+    private Double mediaAverage;
+    private Double upperAverage;
 
     // Constantes ==========================
     protected static String MIN = "minimo";
@@ -67,24 +71,41 @@ public class Item {
 
             // TriangularFuzzyNumber =======
             this.lowerValue = Collections.min(minValueList);
-            this.middleValue = calculateMiddleValue(aveValueList);
+            this.mediaValue = calculateMediaValue(aveValueList);
             this.upperValue = Collections.max(maxValueList);
 
-            this.defuzzificationValue = (this.lowerValue + this.middleValue + this.upperValue) / 3;
+            this.defuzzificationValue = (this.lowerValue + this.mediaValue + this.upperValue) / 3;
 
             this.validate = (this.defuzzificationValue >= this.threshold) ? 1 : 0;
+
+            // Promedios ============
+            this.lowerAverage = averageValue(minValueList);
+            this.mediaAverage = averageValue(aveValueList);
+            this.upperAverage = averageValue(maxValueList);
         }
     }
 
+    protected Double averageValue(ArrayList<Double> listValues) {
+
+        int size = listValues.isEmpty() ? 1 : listValues.size();
+        Double sum = 0.0;
+
+        for (Double value : listValues) {
+            sum += value;
+        }
+
+        return (sum / size);
+    }
+
     public void determinateConsensusByItemResponses() {
-        if (this.lowerValue != null && this.middleValue != null) {
+        if (this.lowerValue != null && this.mediaValue != null) {
             this.itemResponseList.forEach(itemResponse -> {
-                itemResponse.calculateConsensus(this.lowerValue, this.middleValue);
+                itemResponse.calculateConsensus(this.lowerValue, this.mediaValue);
             });
         }
     }
 
-    protected Double calculateMiddleValue(ArrayList<Double> averageValues) {
+    protected Double calculateMediaValue(ArrayList<Double> averageValues) {
         int total = averageValues.isEmpty() ? 1 : averageValues.size();
         double producto = 1.0;
 
@@ -96,6 +117,30 @@ public class Item {
     }
 
     // Getters and Setters ===================================
+    public Double getLowerAverage() {
+        return lowerAverage;
+    }
+
+    public void setLowerAverage(Double lowerAverage) {
+        this.lowerAverage = lowerAverage;
+    }
+
+    public Double getMediaAverage() {
+        return mediaAverage;
+    }
+
+    public void setMediaAverage(Double mediaAverage) {
+        this.mediaAverage = mediaAverage;
+    }
+
+    public Double getUpperAverage() {
+        return upperAverage;
+    }
+
+    public void setUpperAverage(Double upperAverage) {
+        this.upperAverage = upperAverage;
+    }
+
     public Long getRoundNumber() {
         return this.roundNumber;
     }
@@ -152,12 +197,12 @@ public class Item {
         this.lowerValue = lowerValue;
     }
 
-    public Double getMiddleValue() {
-        return this.middleValue;
+    public Double getMediaValue() {
+        return this.mediaValue;
     }
 
-    public void setMiddleValue(Double middleValue) {
-        this.middleValue = middleValue;
+    public void setMediaValue(Double mediaValue) {
+        this.mediaValue = mediaValue;
     }
 
     public Double getUpperValue() {
@@ -186,12 +231,13 @@ public class Item {
 
     @Override
     public String toString() {
-        return "{" + " numberRound='" + getRoundNumber() + "'" + ", codeQuiz='" + getCodeQuiz() + "'"
-                + ", codeQuestion='" + getCodeQuestion() + "'" + ", codeItem='" + getCodeItem() + "'" + ", threshold='"
-                + getThreshold() + "'" + ", itemResponseList='" + getItemResponseList() + "'" + ", lowerValue='"
-                + getLowerValue() + "'" + ", middleValue='" + getMiddleValue() + "'" + ", upperValue='"
-                + getUpperValue() + "'" + ", defuzzificationValue='" + getDefuzzificationValue() + "'" + ", validate='"
-                + getValidate() + "'" + "}";
+        return "Item{" + "roundNumber=" + roundNumber + ", codeQuiz=" + codeQuiz + ", codeQuestion=" + codeQuestion
+                + ", codeItem=" + codeItem + ", threshold=" + threshold + ", itemResponseList=" + itemResponseList
+                + ", lowerValue=" + lowerValue + ", mediaValue=" + mediaValue + ", upperValue=" + upperValue
+                + ", defuzzificationValue=" + defuzzificationValue + ", validate=" + validate
+                + ", lowerAverage=" + lowerAverage
+                + ", mediaAverage=" + mediaAverage
+                + ", upperAverage=" + upperAverage + '}';
     }
 
 }
