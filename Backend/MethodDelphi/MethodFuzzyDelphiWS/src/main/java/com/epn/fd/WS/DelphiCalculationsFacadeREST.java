@@ -107,6 +107,25 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     }
 
     @POST
+    @Path("save")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String save(
+            @QueryParam("roundNumber") Long roundNumber,
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @QueryParam("codeQuestions") Long codeQuestions
+    ) throws JsonProcessingException {
+
+        List<DelphiCalculations> delphiCalculations = delphiCalculationDAO.saveDelphiCalculations(codeQuiz, roundNumber, codeQuestions);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String response = mapper.writeValueAsString(delphiCalculations);
+        return response;
+    }
+
+    @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(DelphiCalculations entity) {

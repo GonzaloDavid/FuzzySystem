@@ -7,6 +7,7 @@ package com.epn.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,6 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DelphiCalculations.findByLowerAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.lowerAverage = :lowerAverage")
     , @NamedQuery(name = "DelphiCalculations.findByMediaAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.mediaAverage = :mediaAverage")
     , @NamedQuery(name = "DelphiCalculations.findByUpperAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.upperAverage = :upperAverage")
+    , @NamedQuery(name = "DelphiCalculations.findByValidated", query = "SELECT d FROM DelphiCalculations d WHERE d.validated = :validated")
     , @NamedQuery(name = "DelphiCalculations.findByDateCreate", query = "SELECT d FROM DelphiCalculations d WHERE d.dateCreate = :dateCreate")
     , @NamedQuery(name = "DelphiCalculations.findByDateLastModify", query = "SELECT d FROM DelphiCalculations d WHERE d.dateLastModify = :dateLastModify")
     , @NamedQuery(name = "DelphiCalculations.findByUserCreate", query = "SELECT d FROM DelphiCalculations d WHERE d.userCreate = :userCreate")
@@ -88,22 +90,18 @@ public class DelphiCalculations implements Serializable {
     private BigDecimal upperAverage;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "validated")
+    private int validated;
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "dateLastModify")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastModify;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "userCreate")
-    private long userCreate;
-    @Basic(optional = false)
-    @NotNull
+    private BigInteger userCreate;
     @Column(name = "userLastModify")
-    private long userLastModify;
+    private BigInteger userLastModify;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
@@ -119,12 +117,12 @@ public class DelphiCalculations implements Serializable {
     @ManyToOne(optional = false)
     private QuestionItem questionItem;
     @JoinColumn(name = "statusResultCat", referencedColumnName = "code")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Catalogue statusResultCat;
     @JoinColumns({
         @JoinColumn(name = "statusResultCat", referencedColumnName = "codeCatalogue")
         , @JoinColumn(name = "statusResult", referencedColumnName = "codeItem")})
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Catalogueitem catalogueitem;
 
     public DelphiCalculations() {
@@ -134,7 +132,7 @@ public class DelphiCalculations implements Serializable {
         this.delphiCalculationsPK = delphiCalculationsPK;
     }
 
-    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, int validated) {
         this.delphiCalculationsPK = delphiCalculationsPK;
         this.lowerValue = lowerValue;
         this.mediaValue = mediaValue;
@@ -144,10 +142,7 @@ public class DelphiCalculations implements Serializable {
         this.lowerAverage = lowerAverage;
         this.mediaAverage = mediaAverage;
         this.upperAverage = upperAverage;
-        this.dateCreate = dateCreate;
-        this.dateLastModify = dateLastModify;
-        this.userCreate = userCreate;
-        this.userLastModify = userLastModify;
+        this.validated = validated;
     }
 
     public DelphiCalculations(long codeQuiz, long codeQuestions, long codeQuizItem, long roundNumber) {
@@ -226,6 +221,14 @@ public class DelphiCalculations implements Serializable {
         this.upperAverage = upperAverage;
     }
 
+    public int getValidated() {
+        return validated;
+    }
+
+    public void setValidated(int validated) {
+        this.validated = validated;
+    }
+
     public Date getDateCreate() {
         return dateCreate;
     }
@@ -242,19 +245,19 @@ public class DelphiCalculations implements Serializable {
         this.dateLastModify = dateLastModify;
     }
 
-    public long getUserCreate() {
+    public BigInteger getUserCreate() {
         return userCreate;
     }
 
-    public void setUserCreate(long userCreate) {
+    public void setUserCreate(BigInteger userCreate) {
         this.userCreate = userCreate;
     }
 
-    public long getUserLastModify() {
+    public BigInteger getUserLastModify() {
         return userLastModify;
     }
 
-    public void setUserLastModify(long userLastModify) {
+    public void setUserLastModify(BigInteger userLastModify) {
         this.userLastModify = userLastModify;
     }
 

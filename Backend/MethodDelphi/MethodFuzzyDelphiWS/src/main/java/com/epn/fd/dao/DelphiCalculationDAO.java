@@ -9,7 +9,9 @@ import com.epn.dtos.Item;
 import com.epn.dtos.ItemResponse;
 import com.epn.dtos.QuestionContainer;
 import com.epn.entities.DelphiCalculations;
+import com.epn.entities.DelphiCalculationsPK;
 import com.epn.exception.AppException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -38,9 +40,32 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
     public List<DelphiCalculations> saveDelphiCalculations(Long codeQuiz, Long roundNumber, Long codeQuestions) {
 
         List<DelphiCalculations> delphiCalculationsesList = new ArrayList();
+        List<Item> listItemResults = runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
+
+        listItemResults.forEach(item -> {
+            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(item.getCodeQuiz(), item.getCodeQuestion(), item.getCodeItem(), item.getRoundNumber());
+            BigDecimal lowerValue = new BigDecimal(item.getLowerValue());
+            BigDecimal mediaValue = new BigDecimal(item.getMediaValue());
+            BigDecimal upperValue = new BigDecimal(item.getUpperValue());
+            BigDecimal defuzzificationValue = new BigDecimal(item.getDefuzzificationValue());
+            BigDecimal threshold = new BigDecimal(item.getThreshold());
+            BigDecimal lowerAverage = new BigDecimal(item.getLowerAverage());
+            BigDecimal mediaAverage = new BigDecimal(item.getMediaAverage());
+            BigDecimal upperAverage = new BigDecimal(item.getUpperAverage());
+            Integer validated = item.getValidate();
+
+            delphiCalculationsesList.add(new DelphiCalculations(delphiCalculationsPK,
+                    lowerValue, mediaValue,
+                    upperValue, defuzzificationValue,
+                    threshold, lowerAverage,
+                    mediaAverage, upperAverage,
+                    validated
+            ));
+        }
+        );
 
         try {
-            updateList(delphiCalculationsesList);
+            insertList(delphiCalculationsesList);
         } catch (Exception ex) {
             throw new AppException(ex.toString(), "NO SE GUARDO Delphi calculations");
         }
