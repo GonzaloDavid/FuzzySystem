@@ -5,14 +5,10 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.dtos.QuizValuesContainer;
 import com.epn.dtos.Item;
-import com.epn.dtos.ItemQuestionContainer;
 import com.epn.dtos.ItemResponse;
-import com.epn.dtos.QuizContainer;
 import com.epn.entities.DelphiCalculations;
-import com.epn.entities.DelphiCalculationsPK;
-import java.math.BigDecimal;
+import com.epn.exception.AppException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -38,6 +34,18 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         super(DelphiCalculations.class);
     }
 
+    public List<DelphiCalculations> saveDelphiCalculations(Long codeQuiz, Long roundNumber, Long codeQuestions) {
+
+        List<DelphiCalculations> delphiCalculationsesList = new ArrayList();
+
+        try {
+            updateList(delphiCalculationsesList);
+        } catch (Exception ex) {
+            throw new AppException(ex.toString(), "NO SE GUARDO Delphi calculations");
+        }
+        return delphiCalculationsesList;
+    }
+
     public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
         // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y codeQuiz...
 
@@ -59,9 +67,6 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             });
 
         });
-
-        // del codeQuestions tomar el discriminador de esa Question...
-        // de QuizValues, tomar por cada codeQuizItems el registro que pertenezca a roundNumber,Codequiz,codeQuestions
         return itemList;
     }
 

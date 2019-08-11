@@ -62,7 +62,6 @@ CREATE TABLE `DelphiCalculations` (
   `codeQuiz` bigint(20) NOT NULL,
   `codeQuestions` bigint(20) NOT NULL,
   `codeQuizItem` bigint(20) NOT NULL,
-  `codePerson` bigint(20) NOT NULL,
   `roundNumber` bigint(20) NOT NULL,
   `lowerValue` decimal(30,8) NOT NULL,
   `middleValue` decimal(30,8) NOT NULL,
@@ -75,20 +74,17 @@ CREATE TABLE `DelphiCalculations` (
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`codeQuiz`,`codeQuestions`,`codeQuizItem`,`codePerson`,`roundNumber`),
+  PRIMARY KEY (`codeQuiz`,`codeQuestions`,`codeQuizItem`,`roundNumber`),
   KEY `DelphiCalculations_Quiz_FK` (`codeQuiz`),
   KEY `DelphiCalculations_Questions_FK` (`codeQuestions`),
   KEY `DelphiCalculations_QuestionItem_FK` (`codeQuizItem`),
   KEY `DelphiCalculations_catalogueitem_FK` (`statusResultCat`,`statusResult`),
   KEY `DelphiCalculations_FK_1` (`codeQuestions`,`codeQuiz`),
   KEY `DelphiCalculations_FK_2` (`codeQuizItem`,`codeQuestions`,`codeQuiz`),
-  KEY `DelphiCalculations_FK_3` (`roundNumber`,`codeQuiz`,`codePerson`),
-  KEY `DelphiCalculations_FK_4` (`codePerson`),
+  KEY `DelphiCalculations_FK_3` (`roundNumber`,`codeQuiz`),
   CONSTRAINT `DelphiCalculations_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
   CONSTRAINT `DelphiCalculations_FK_1` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
   CONSTRAINT `DelphiCalculations_FK_2` FOREIGN KEY (`codeQuizItem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
-  CONSTRAINT `DelphiCalculations_FK_3` FOREIGN KEY (`roundNumber`, `codeQuiz`, `codePerson`) REFERENCES `Rounds` (`roundNumber`, `codeQuiz`, `codePerson`),
-  CONSTRAINT `DelphiCalculations_FK_4` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `DelphiCalculations_FK_5` FOREIGN KEY (`statusResultCat`) REFERENCES `catalogue` (`code`),
   CONSTRAINT `DelphiCalculations_FK_6` FOREIGN KEY (`statusResultCat`, `statusResult`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -601,4 +597,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-11  0:44:58
+-- Dump completed on 2019-08-11  2:08:54

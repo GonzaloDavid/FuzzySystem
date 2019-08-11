@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DelphiCalculations.findByCodeQuiz", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.codeQuiz = :codeQuiz")
     , @NamedQuery(name = "DelphiCalculations.findByCodeQuestions", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.codeQuestions = :codeQuestions")
     , @NamedQuery(name = "DelphiCalculations.findByCodeQuizItem", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.codeQuizItem = :codeQuizItem")
-    , @NamedQuery(name = "DelphiCalculations.findByCodePerson", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.codePerson = :codePerson")
     , @NamedQuery(name = "DelphiCalculations.findByRoundNumber", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.roundNumber = :roundNumber")
     , @NamedQuery(name = "DelphiCalculations.findByLowerValue", query = "SELECT d FROM DelphiCalculations d WHERE d.lowerValue = :lowerValue")
     , @NamedQuery(name = "DelphiCalculations.findByMiddleValue", query = "SELECT d FROM DelphiCalculations d WHERE d.middleValue = :middleValue")
@@ -104,15 +103,6 @@ public class DelphiCalculations implements Serializable {
         , @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private QuestionItem questionItem;
-    @JoinColumns({
-        @JoinColumn(name = "roundNumber", referencedColumnName = "roundNumber", insertable = false, updatable = false)
-        , @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
-        , @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Rounds rounds;
-    @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
     @JoinColumn(name = "statusResultCat", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Catalogue statusResultCat;
@@ -142,8 +132,8 @@ public class DelphiCalculations implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public DelphiCalculations(long codeQuiz, long codeQuestions, long codeQuizItem, long codePerson, long roundNumber) {
-        this.delphiCalculationsPK = new DelphiCalculationsPK(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
+    public DelphiCalculations(long codeQuiz, long codeQuestions, long codeQuizItem, long roundNumber) {
+        this.delphiCalculationsPK = new DelphiCalculationsPK(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
     }
 
     public DelphiCalculationsPK getDelphiCalculationsPK() {
@@ -248,22 +238,6 @@ public class DelphiCalculations implements Serializable {
 
     public void setQuestionItem(QuestionItem questionItem) {
         this.questionItem = questionItem;
-    }
-
-    public Rounds getRounds() {
-        return rounds;
-    }
-
-    public void setRounds(Rounds rounds) {
-        this.rounds = rounds;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public Catalogue getStatusResultCat() {

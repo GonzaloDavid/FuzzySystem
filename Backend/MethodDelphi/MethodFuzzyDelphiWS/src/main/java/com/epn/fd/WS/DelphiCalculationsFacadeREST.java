@@ -65,10 +65,6 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
         if (codeQuizItem != null && !codeQuizItem.isEmpty()) {
             key.setCodeQuizItem(new java.lang.Long(codeQuizItem.get(0)));
         }
-        java.util.List<String> codePerson = map.get("codePerson");
-        if (codePerson != null && !codePerson.isEmpty()) {
-            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
-        }
         java.util.List<String> roundNumber = map.get("roundNumber");
         if (roundNumber != null && !roundNumber.isEmpty()) {
             key.setRoundNumber(new java.lang.Long(roundNumber.get(0)));

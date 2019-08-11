@@ -32,21 +32,16 @@ public class DelphiCalculationsPK implements Serializable {
     private long codeQuizItem;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codePerson")
-    private long codePerson;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "roundNumber")
     private long roundNumber;
 
     public DelphiCalculationsPK() {
     }
 
-    public DelphiCalculationsPK(long codeQuiz, long codeQuestions, long codeQuizItem, long codePerson, long roundNumber) {
+    public DelphiCalculationsPK(long codeQuiz, long codeQuestions, long codeQuizItem, long roundNumber) {
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
-        this.codePerson = codePerson;
         this.roundNumber = roundNumber;
     }
 
@@ -74,14 +69,6 @@ public class DelphiCalculationsPK implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
-    public long getCodePerson() {
-        return codePerson;
-    }
-
-    public void setCodePerson(long codePerson) {
-        this.codePerson = codePerson;
-    }
-
     public long getRoundNumber() {
         return roundNumber;
     }
@@ -96,7 +83,6 @@ public class DelphiCalculationsPK implements Serializable {
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
         hash += (int) codeQuizItem;
-        hash += (int) codePerson;
         hash += (int) roundNumber;
         return hash;
     }
@@ -117,9 +103,6 @@ public class DelphiCalculationsPK implements Serializable {
         if (this.codeQuizItem != other.codeQuizItem) {
             return false;
         }
-        if (this.codePerson != other.codePerson) {
-            return false;
-        }
         if (this.roundNumber != other.roundNumber) {
             return false;
         }
@@ -128,7 +111,7 @@ public class DelphiCalculationsPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.DelphiCalculationsPK[ codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + ", codePerson=" + codePerson + ", roundNumber=" + roundNumber + " ]";
+        return "com.epn.entities.DelphiCalculationsPK[ codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + ", roundNumber=" + roundNumber + " ]";
     }
     
 }
