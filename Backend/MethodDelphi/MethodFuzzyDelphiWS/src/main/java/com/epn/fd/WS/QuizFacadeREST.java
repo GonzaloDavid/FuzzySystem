@@ -8,6 +8,8 @@ package com.epn.fd.WS;
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
+import com.epn.entities.QuestionItem;
+import com.epn.entities.Questions;
 import com.epn.entities.Quiz;
 import com.epn.entities.QuizPK;
 import com.epn.entities.Rounds;
@@ -149,6 +151,14 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             round.setSentstatus(emailcontainer.getSentstatus());
             roundsDAO.save(round);
         });
+        List<Questions> questiondeleted = new ArrayList();
+        List<QuestionItem> questionItemdeleted = new ArrayList();
+
+        QuizSave quizSave = new QuizSave();
+        quizSave.setQuiz(emailcontainer.getQuiz());
+        quizSave.setQuestiondeleted(questiondeleted);
+        quizSave.setQuestionItemdeleted(questionItemdeleted);
+        quizDAO.saveQuiz(quizSave);
         quizDAO.sendquiz(emailcontainer);
 
     }
