@@ -37,10 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DelphiCalculations.findByCodeQuizItem", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.codeQuizItem = :codeQuizItem")
     , @NamedQuery(name = "DelphiCalculations.findByRoundNumber", query = "SELECT d FROM DelphiCalculations d WHERE d.delphiCalculationsPK.roundNumber = :roundNumber")
     , @NamedQuery(name = "DelphiCalculations.findByLowerValue", query = "SELECT d FROM DelphiCalculations d WHERE d.lowerValue = :lowerValue")
-    , @NamedQuery(name = "DelphiCalculations.findByMiddleValue", query = "SELECT d FROM DelphiCalculations d WHERE d.middleValue = :middleValue")
+    , @NamedQuery(name = "DelphiCalculations.findByMediaValue", query = "SELECT d FROM DelphiCalculations d WHERE d.mediaValue = :mediaValue")
     , @NamedQuery(name = "DelphiCalculations.findByUpperValue", query = "SELECT d FROM DelphiCalculations d WHERE d.upperValue = :upperValue")
-    , @NamedQuery(name = "DelphiCalculations.findByConvergenceIndex", query = "SELECT d FROM DelphiCalculations d WHERE d.convergenceIndex = :convergenceIndex")
-    , @NamedQuery(name = "DelphiCalculations.findByDiscriminator", query = "SELECT d FROM DelphiCalculations d WHERE d.discriminator = :discriminator")
+    , @NamedQuery(name = "DelphiCalculations.findByDefuzzificationValue", query = "SELECT d FROM DelphiCalculations d WHERE d.defuzzificationValue = :defuzzificationValue")
+    , @NamedQuery(name = "DelphiCalculations.findByThreshold", query = "SELECT d FROM DelphiCalculations d WHERE d.threshold = :threshold")
+    , @NamedQuery(name = "DelphiCalculations.findByLowerAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.lowerAverage = :lowerAverage")
+    , @NamedQuery(name = "DelphiCalculations.findByMediaAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.mediaAverage = :mediaAverage")
+    , @NamedQuery(name = "DelphiCalculations.findByUpperAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.upperAverage = :upperAverage")
     , @NamedQuery(name = "DelphiCalculations.findByDateCreate", query = "SELECT d FROM DelphiCalculations d WHERE d.dateCreate = :dateCreate")
     , @NamedQuery(name = "DelphiCalculations.findByDateLastModify", query = "SELECT d FROM DelphiCalculations d WHERE d.dateLastModify = :dateLastModify")
     , @NamedQuery(name = "DelphiCalculations.findByUserCreate", query = "SELECT d FROM DelphiCalculations d WHERE d.userCreate = :userCreate")
@@ -57,20 +60,32 @@ public class DelphiCalculations implements Serializable {
     private BigDecimal lowerValue;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "middleValue")
-    private BigDecimal middleValue;
+    @Column(name = "mediaValue")
+    private BigDecimal mediaValue;
     @Basic(optional = false)
     @NotNull
     @Column(name = "upperValue")
     private BigDecimal upperValue;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "convergenceIndex")
-    private BigDecimal convergenceIndex;
+    @Column(name = "defuzzificationValue")
+    private BigDecimal defuzzificationValue;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "discriminator")
-    private BigDecimal discriminator;
+    @Column(name = "threshold")
+    private BigDecimal threshold;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "lowerAverage")
+    private BigDecimal lowerAverage;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "mediaAverage")
+    private BigDecimal mediaAverage;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "upperAverage")
+    private BigDecimal upperAverage;
     @Basic(optional = false)
     @NotNull
     @Column(name = "dateCreate")
@@ -119,13 +134,16 @@ public class DelphiCalculations implements Serializable {
         this.delphiCalculationsPK = delphiCalculationsPK;
     }
 
-    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal middleValue, BigDecimal upperValue, BigDecimal convergenceIndex, BigDecimal discriminator, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.delphiCalculationsPK = delphiCalculationsPK;
         this.lowerValue = lowerValue;
-        this.middleValue = middleValue;
+        this.mediaValue = mediaValue;
         this.upperValue = upperValue;
-        this.convergenceIndex = convergenceIndex;
-        this.discriminator = discriminator;
+        this.defuzzificationValue = defuzzificationValue;
+        this.threshold = threshold;
+        this.lowerAverage = lowerAverage;
+        this.mediaAverage = mediaAverage;
+        this.upperAverage = upperAverage;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
@@ -152,12 +170,12 @@ public class DelphiCalculations implements Serializable {
         this.lowerValue = lowerValue;
     }
 
-    public BigDecimal getMiddleValue() {
-        return middleValue;
+    public BigDecimal getMediaValue() {
+        return mediaValue;
     }
 
-    public void setMiddleValue(BigDecimal middleValue) {
-        this.middleValue = middleValue;
+    public void setMediaValue(BigDecimal mediaValue) {
+        this.mediaValue = mediaValue;
     }
 
     public BigDecimal getUpperValue() {
@@ -168,20 +186,44 @@ public class DelphiCalculations implements Serializable {
         this.upperValue = upperValue;
     }
 
-    public BigDecimal getConvergenceIndex() {
-        return convergenceIndex;
+    public BigDecimal getDefuzzificationValue() {
+        return defuzzificationValue;
     }
 
-    public void setConvergenceIndex(BigDecimal convergenceIndex) {
-        this.convergenceIndex = convergenceIndex;
+    public void setDefuzzificationValue(BigDecimal defuzzificationValue) {
+        this.defuzzificationValue = defuzzificationValue;
     }
 
-    public BigDecimal getDiscriminator() {
-        return discriminator;
+    public BigDecimal getThreshold() {
+        return threshold;
     }
 
-    public void setDiscriminator(BigDecimal discriminator) {
-        this.discriminator = discriminator;
+    public void setThreshold(BigDecimal threshold) {
+        this.threshold = threshold;
+    }
+
+    public BigDecimal getLowerAverage() {
+        return lowerAverage;
+    }
+
+    public void setLowerAverage(BigDecimal lowerAverage) {
+        this.lowerAverage = lowerAverage;
+    }
+
+    public BigDecimal getMediaAverage() {
+        return mediaAverage;
+    }
+
+    public void setMediaAverage(BigDecimal mediaAverage) {
+        this.mediaAverage = mediaAverage;
+    }
+
+    public BigDecimal getUpperAverage() {
+        return upperAverage;
+    }
+
+    public void setUpperAverage(BigDecimal upperAverage) {
+        this.upperAverage = upperAverage;
     }
 
     public Date getDateCreate() {
