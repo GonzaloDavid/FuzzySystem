@@ -83,6 +83,10 @@ public class DelphiCalculations implements Serializable {
     @Basic(optional = false)
     @Column(name = "validated")
     private int validated;
+    @Column(name = "statusResultCat")
+    private String statusResultCat1;
+    @Column(name = "statusResult")
+    private String statusResult;
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
@@ -93,10 +97,6 @@ public class DelphiCalculations implements Serializable {
     private BigInteger userCreate;
     @Column(name = "userLastModify")
     private BigInteger userLastModify;
-    @Column(name = "statusResultCat")
-    private String statusResultCat1;
-    @Column(name = "statusResult")
-    private String statusResult;
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
@@ -111,12 +111,12 @@ public class DelphiCalculations implements Serializable {
         , @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private QuestionItem questionItem;
-    @JoinColumn(name = "statusResultCat", referencedColumnName = "code")
+    @JoinColumn(name = "statusResultCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne
     private Catalogue statusResultCat;
     @JoinColumns({
-        @JoinColumn(name = "statusResultCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false)
-        , @JoinColumn(name = "statusResult", referencedColumnName = "codeItem",insertable = false, updatable = false)})
+        @JoinColumn(name = "statusResultCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false)
+        , @JoinColumn(name = "statusResult", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne
     private Catalogueitem catalogueitem;
 
@@ -311,7 +311,7 @@ public class DelphiCalculations implements Serializable {
     public void setStatusResult(String statusResult) {
         this.statusResult = statusResult;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

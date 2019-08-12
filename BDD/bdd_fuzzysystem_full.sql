@@ -71,6 +71,7 @@ CREATE TABLE `DelphiCalculations` (
   `lowerAverage` decimal(30,8) NOT NULL,
   `mediaAverage` decimal(30,8) NOT NULL,
   `upperAverage` decimal(30,8) NOT NULL,
+  `validated` int(11) NOT NULL,
   `statusResultCat` varchar(100) NOT NULL,
   `statusResult` varchar(100) NOT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -99,6 +100,7 @@ CREATE TABLE `DelphiCalculations` (
 
 LOCK TABLES `DelphiCalculations` WRITE;
 /*!40000 ALTER TABLE `DelphiCalculations` DISABLE KEYS */;
+INSERT INTO `DelphiCalculations` VALUES (10,10,16,2,20.00000000,57.68998281,90.00000000,55.89666094,70.00000000,53.33333333,63.33333333,71.66666667,0,'STATUSRESULTCAT','approved','2019-08-11 23:52:24','2019-08-11 23:52:24',1,1);
 /*!40000 ALTER TABLE `DelphiCalculations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,8 +271,8 @@ CREATE TABLE `QuestionItem` (
   `codeQuestions` bigint(20) NOT NULL,
   `codeQuiz` bigint(20) NOT NULL,
   `itemLabel` varchar(100) NOT NULL,
-  `itemdescription` varchar(100) DEFAULT NULL,
-  `itemobservation` varchar(100) DEFAULT NULL,
+  `itemdescription` varchar(500) DEFAULT NULL,
+  `itemobservation` varchar(500) DEFAULT NULL,
   `statusCat` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -308,14 +310,14 @@ DROP TABLE IF EXISTS `Questions`;
 CREATE TABLE `Questions` (
   `codeQuestions` bigint(20) NOT NULL AUTO_INCREMENT,
   `codeQuiz` bigint(20) NOT NULL,
-  `question` varchar(100) NOT NULL,
-  `description` varchar(100) NOT NULL,
+  `question` varchar(500) NOT NULL,
+  `description` varchar(500) NOT NULL,
   `statusCat` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `minimumParameterSetting` varchar(100) NOT NULL,
   `maximumParameterSetting` varchar(100) NOT NULL,
   `jumpNext` varchar(100) NOT NULL,
-  `questionObservation` varchar(100) DEFAULT NULL,
+  `questionObservation` varchar(500) DEFAULT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
@@ -336,7 +338,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,2.00000000,NULL,NULL),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,3.00000000,NULL,NULL),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,4.00000000,NULL,NULL),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-11 05:01:44',0,0,5.00000000,NULL,NULL),(10,10,'¿Probabilidad que los datasets sean usados? REPARARME TAMANO','Indique el porcentaje más pesimista, moderado y optimista de acuerdo a su criterio de probabilidad.','STATUSCAT','1','5','100','5',NULL,'2019-08-08 02:16:21','2019-08-08 02:16:21',0,0,70.00000000,NULL,NULL),(11,10,'¿Probabilidad que los datasets sean usados? REPARARME TAMANO','Indique el porcentaje más pesimista, moderado y optimista de acuerdo a su criterio de probabilidad.','STATUSCAT','1','5','100','5',NULL,'2019-08-08 02:16:21','2019-08-08 02:16:21',0,0,80.00000000,NULL,NULL),(22,22,'eee','sds','STATUSCAT','1','1','1','2',NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',0,0,1.00000000,NULL,NULL);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,2.00000000,NULL,NULL),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,3.00000000,NULL,NULL),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-05 19:32:14',0,0,4.00000000,NULL,NULL),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-08-05 19:32:14','2019-08-11 05:01:44',0,0,5.00000000,NULL,NULL),(10,10,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','5','100','5',NULL,'2019-08-08 02:16:21','2019-08-12 04:26:36',0,0,70.00000000,NULL,NULL),(11,10,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','5','100','5',NULL,'2019-08-08 02:16:21','2019-08-12 04:26:36',0,0,80.00000000,NULL,NULL),(22,22,'eee','sds','STATUSCAT','1','1','10','1',NULL,'2019-08-02 16:50:41','2019-08-12 04:27:10',0,0,7.00000000,NULL,NULL);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,12 +351,12 @@ DROP TABLE IF EXISTS `Quiz`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Quiz` (
   `codeQuiz` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nameQuiz` varchar(100) NOT NULL,
+  `nameQuiz` varchar(500) NOT NULL,
   `shortNameQuiz` varchar(100) NOT NULL,
-  `description` varchar(100) NOT NULL,
+  `description` varchar(2000) NOT NULL,
   `statusCat` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
-  `quizObservation` varchar(100) DEFAULT NULL,
+  `quizObservation` varchar(1000) DEFAULT NULL,
   `diffuseDelphiDiscriminator` decimal(30,8) DEFAULT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -373,7 +375,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.','STATUSCAT','1',NULL,7.00000000,'2019-08-05 19:32:14','2019-08-05 19:32:14',1,1),(10,'Investigación de Datos Abiertos','DatosAbiertos','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experienci','STATUSCAT','1',NULL,70.00000000,'2019-08-07 21:55:20','2019-08-09 05:56:21',1,1),(22,'sss','sss','ssss','STATUSCAT','1',NULL,NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.','STATUSCAT','1',NULL,7.00000000,'2019-08-05 19:32:14','2019-08-05 19:32:14',1,1),(10,'Considering reusers when selecting datasets to open: a case of study from universities','Investigación de Datos Abiertos','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia\r\nen datos abiertos y la información que nos proporcione será muy útil para la investigación sobre el conjunto de datos que se debería abrir en la universidad ecuatoriana.\r\n\r\nPara la investigación vamos a utilizar una metodología llamada Delphi Difuso que consiste en llegar a consensos con los participantes sobre sus criterios, por tanto podríamos requerir de su colaboración una o dos veces adicionales.\r\n\r\nSus respuestas serán tratadas de forma confidencial y serán utilizadas para la investigación llevada a\r\ncabo entre la Universidad Central del Ecuador y La Universidad de Alicante en España sobre la línea de\r\nDatos Abiertos.\r\n\r\nEsta encuesta dura aproximadamente 20 minutos.\r\n\r\nLa fecha límite para realizar esta encuesta es una semana luego de que le llegue este correo.','STATUSCAT','1',NULL,70.00000000,'2019-08-07 21:55:20','2019-08-12 04:35:15',1,1),(22,'sss','sss','ssss','STATUSCAT','1',NULL,NULL,'2019-08-02 16:50:41','2019-08-02 16:50:41',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,7 +518,7 @@ CREATE TABLE `catalogue` (
 
 LOCK TABLES `catalogue` WRITE;
 /*!40000 ALTER TABLE `catalogue` DISABLE KEYS */;
-INSERT INTO `catalogue` VALUES ('ACADEMICDEGREECAT','ACADEMICDEGREECAT','Grado de educación de una persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('IDENTIFYTYPECAT','IDENTIFYTYPECAT','tipo de tipo identificaciones','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SENTSTATUSCAT','SENTSTATUSCAT','Cátalogo estados de las encuestas','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SEXCAT','SEXCAT','Sexo de cada persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSCAT','STATUSCAT','Cátalogo estados','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('TYPEPERSONCAT','TYPEPERSONCAT','tipo de personas como admin, expertos etc','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1);
+INSERT INTO `catalogue` VALUES ('ACADEMICDEGREECAT','ACADEMICDEGREECAT','Grado de educación de una persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('IDENTIFYTYPECAT','IDENTIFYTYPECAT','tipo de tipo identificaciones','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SENTSTATUSCAT','SENTSTATUSCAT','Cátalogo estados de las encuestas','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SEXCAT','SEXCAT','Sexo de cada persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSCAT','STATUSCAT','Cátalogo estados','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSRESULTCAT','STATUSRESULTCAT','Cátalogo estados de resultados de si converge o no','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('TYPEPERSONCAT','TYPEPERSONCAT','tipo de personas como admin, expertos etc','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1);
 /*!40000 ALTER TABLE `catalogue` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +548,7 @@ CREATE TABLE `catalogueitem` (
 
 LOCK TABLES `catalogueitem` WRITE;
 /*!40000 ALTER TABLE `catalogueitem` DISABLE KEYS */;
-INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
+INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','approved','Aprobado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','rejected','No converge','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
 /*!40000 ALTER TABLE `catalogueitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -600,4 +602,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-11 15:09:10
+-- Dump completed on 2019-08-11 23:36:16

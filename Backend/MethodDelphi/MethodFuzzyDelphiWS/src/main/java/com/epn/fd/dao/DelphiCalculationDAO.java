@@ -41,15 +41,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
 
     public List<DelphiCalculations> saveDelphiCalculations(Long codeQuiz, Long roundNumber, Long codeQuestions) {
 
-        List<DelphiCalculations> delphiCalculationsesList = new ArrayList();
+        List<DelphiCalculations> delphiCalculationsList = new ArrayList();
         List<Item> listItemResults = runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
 
         listItemResults.forEach(item -> {
-            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK();
-            delphiCalculationsPK.setCodeQuiz(item.getCodeQuiz());
-            delphiCalculationsPK.setCodeQuestions(item.getCodeQuestion());
-            delphiCalculationsPK.setCodeQuizItem(item.getCodeItem());
-            delphiCalculationsPK.setRoundNumber(item.getRoundNumber());
+            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(item.getCodeQuiz(), item.getCodeQuestion(), item.getCodeItem(), item.getRoundNumber());
             BigDecimal lowerValue = new BigDecimal(item.getLowerValue());
             BigDecimal mediaValue = new BigDecimal(item.getMediaValue());
             BigDecimal upperValue = new BigDecimal(item.getUpperValue());
@@ -59,35 +55,23 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             BigDecimal mediaAverage = new BigDecimal(item.getMediaAverage());
             BigDecimal upperAverage = new BigDecimal(item.getUpperAverage());
             Integer validated = item.getValidate();
-            DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK);
-              /* lowerValue, mediaValue,
-                    upperValue, defuzzificationValue,
-                    threshold, lowerAverage,
-                    mediaAverage, upperAverage,
-                    validated*/
-            calculations.setLowerValue(lowerValue);
-            calculations.setMediaValue(mediaValue);
-            calculations.setUpperAverage(upperAverage);
-            calculations.setDefuzzificationValue(defuzzificationValue);
-            calculations.setThreshold(threshold);
-            calculations.setLowerAverage(lowerAverage);
-            calculations.setMediaAverage(mediaAverage);
-            calculations.setUpperAverage(upperAverage);
-            calculations.setValidated(0);
+
+            DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK,
+                    lowerValue, mediaValue, upperValue,
+                    defuzzificationValue, threshold,
+                    lowerAverage, mediaAverage, upperAverage,
+                    validated
+            );
+
             calculations.setStatusResultCat1("STATUSRESULTCAT");
             calculations.setStatusResult("approved");
             calculations.setUserCreate(BigInteger.ONE);
             calculations.setUserLastModify(BigInteger.ONE);
-            calculations.setDateCreate(new Date());
-            calculations.setDateLastModify(new Date());
-            update(calculations);
-
-            //  delphiCalculationsesList.add();
+            delphiCalculationsList.add(calculations);
         }
         );
-
-        //     updateList(delphiCalculationsesList);
-        return delphiCalculationsesList;
+        updateList(delphiCalculationsList);
+        return delphiCalculationsList;
     }
 
     public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
