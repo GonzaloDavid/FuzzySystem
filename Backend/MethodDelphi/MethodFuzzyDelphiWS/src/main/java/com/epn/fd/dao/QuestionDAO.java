@@ -88,14 +88,12 @@ public class QuestionDAO extends GenericDAO<Questions> {
             questionstemp.setMinimumParameterSetting(question.getMinimumParameterSetting());
             questionstemp.setMaximumParameterSetting(question.getMaximumParameterSetting());
             questionstemp.setJumpNext(question.getJumpNext());
-            try {
+            
                 update(questionstemp);
                 List<QuestionItem> questionItemListsaved = itemQuestionDAO.saveItem(questionstemp, question.getQuestionItemList());
                 questionstemp.setQuestionItemList(questionItemListsaved);
                 questionsaved.add(questionstemp);
-            } catch (Exception e) {
-                throw new AppException(e.toString(), "NO SE GUARDO PREGUNTAS");
-            }
+            
         });
         return questionsaved;
     }
