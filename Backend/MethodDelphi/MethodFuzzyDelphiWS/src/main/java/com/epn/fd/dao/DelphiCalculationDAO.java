@@ -5,19 +5,25 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.DelphiCalculationsContainer;
 import com.epn.dtos.Item;
 import com.epn.dtos.ItemResponse;
+import com.epn.dtos.ListAndCountContainer;
+import com.epn.dtos.PersonContainer;
 import com.epn.dtos.QuestionContainer;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
-import com.epn.exception.AppException;
+import com.epn.entities.FilterTypes;
+import com.epn.entities.Person;
+import com.epn.entities.SearchObject;
+import com.epn.mapper.DelphiCalculationsMapper;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -34,6 +40,7 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
     ItemQuestionDAO itemQuestionDAO;
     @Inject()
     QuestionDAO questionDAO;
+    private final DelphiCalculationsMapper calculationsMapper = Mappers.getMapper(DelphiCalculationsMapper.class);
 
     public DelphiCalculationDAO() {
         super(DelphiCalculations.class);
@@ -64,7 +71,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             );
 
             calculations.setStatusResultCat1("STATUSRESULTCAT");
-            calculations.setStatusResult("approved");
+            if (lowerAverage.compareTo(threshold) == 0 || lowerAverage.compareTo(threshold) == 1) {
+                calculations.setStatusResult("approved");
+            } else {
+                calculations.setStatusResult("rejected");
+            }
             calculations.setUserCreate(BigInteger.ONE);
             calculations.setUserLastModify(BigInteger.ONE);
             delphiCalculationsList.add(calculations);
@@ -137,6 +148,16 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         });
 
         return itemResponsesList;
+    }
+
+    public List<DelphiCalculationsContainer> getdelphicalculationbycodequiz(Long codequiz, Long roundNumber) {
+        SearchObject search = new SearchObject("delphiCalculationsPK");
+        search.addParameter("delphiCalculationsPK.codeQuiz", FilterTypes.EQUAL, codequiz);
+        search.addParameter("delphiCalculationsPK.roundNumber", FilterTypes.EQUAL, roundNumber);
+        search.asc();
+        List<DelphiCalculations> resultList = search(search);
+        List<DelphiCalculationsContainer> containers = calculationsMapper.sourceListToDestination(resultList);
+        return containers;
     }
 
 }
