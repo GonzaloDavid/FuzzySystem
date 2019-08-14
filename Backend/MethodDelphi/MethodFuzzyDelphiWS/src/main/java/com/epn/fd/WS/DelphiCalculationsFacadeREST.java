@@ -5,6 +5,7 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.DelphiCalculationsContainer;
 import com.epn.dtos.Item;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
@@ -118,6 +119,23 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     ) throws JsonProcessingException {
 
         List<DelphiCalculations> delphiCalculations = delphiCalculationDAO.saveDelphiCalculations(codeQuiz, roundNumber, codeQuestions);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        String response = mapper.writeValueAsString(delphiCalculations);
+        return response;
+    }
+
+    @GET
+    @Path("results")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getQuizvalues(
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @QueryParam("codeQuestions") Long codeQuestions,
+            @QueryParam("roundNumber") Long roundNumber,
+            @QueryParam("codeQuizItem") Long codeQuizItem
+    ) throws JsonProcessingException {
+        List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
 
         ObjectMapper mapper = new ObjectMapper();
 

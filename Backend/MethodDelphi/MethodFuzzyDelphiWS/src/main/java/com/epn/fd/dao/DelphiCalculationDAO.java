@@ -5,19 +5,22 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.DelphiCalculationsContainer;
 import com.epn.dtos.Item;
 import com.epn.dtos.ItemResponse;
 import com.epn.dtos.QuestionContainer;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
-import com.epn.exception.AppException;
+import com.epn.entities.FilterTypes;
+import com.epn.entities.SearchObject;
+import com.epn.mapper.DelphiCalculationsMapper;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -34,6 +37,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
     ItemQuestionDAO itemQuestionDAO;
     @Inject()
     QuestionDAO questionDAO;
+    
+    private final DelphiCalculationsMapper delphiCalculationsMapper = Mappers.getMapper(DelphiCalculationsMapper.class);
 
     public DelphiCalculationDAO() {
         super(DelphiCalculations.class);
@@ -137,6 +142,18 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         });
 
         return itemResponsesList;
+    }
+
+    public List<DelphiCalculationsContainer> getDelphiCalculations(Long codeQuiz, Long codeQuestions, Long codeQuizItem, Long roundNumber) {
+        SearchObject search = new SearchObject("delphiCalculationsPK");
+        search.addParameter("delphiCalculationsPK.roundNumber", FilterTypes.EQUAL, roundNumber);
+        search.addParameter("delphiCalculationsPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("delphiCalculationsPK.codeQuestions", FilterTypes.EQUAL, codeQuestions);
+        search.addParameter("delphiCalculationsPK.codeQuizItem", FilterTypes.EQUAL, codeQuizItem);
+
+        List<DelphiCalculations> resultList = search(search);
+        List<DelphiCalculationsContainer> containers = delphiCalculationsMapper.sourceListToDestination(resultList);
+        return containers;
     }
 
 }
