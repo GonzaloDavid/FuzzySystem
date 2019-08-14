@@ -53,7 +53,6 @@ public class QuestionItem implements Serializable {
     @EmbeddedId
     protected QuestionItemPK questionItemPK;
     @Basic(optional = false)
-    @Size(min = 1, max = 100)
     @Column(name = "itemLabel")
     private String itemLabel;
     @Column(name = "itemdescription")
