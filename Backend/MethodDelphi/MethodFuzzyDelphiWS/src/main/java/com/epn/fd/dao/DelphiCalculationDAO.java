@@ -160,4 +160,16 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         return containers;
     }
 
+    public List<DelphiCalculationsContainer> getDelphiCalculations(Long codeQuiz, Long codeQuestions, Long codeQuizItem, Long roundNumber) {
+        SearchObject search = new SearchObject("delphiCalculationsPK");
+        search.addParameter("delphiCalculationsPK.roundNumber", FilterTypes.EQUAL, roundNumber);
+        search.addParameter("delphiCalculationsPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("delphiCalculationsPK.codeQuestions", FilterTypes.EQUAL, codeQuestions);
+        search.addParameter("delphiCalculationsPK.codeQuizItem", FilterTypes.EQUAL, codeQuizItem);
+
+        List<DelphiCalculations> resultList = search(search);
+        List<DelphiCalculationsContainer> containers = calculationsMapper.sourceListToDestination(resultList);
+        return containers;
+    }
+
 }

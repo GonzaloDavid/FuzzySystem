@@ -129,12 +129,27 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     @GET
     @Path("getdelphicalculation")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<DelphiCalculationsContainer>  getdelphicalculation(
+    public List<DelphiCalculationsContainer> getdelphicalculation(
             @QueryParam("codequiz") Long codequiz,
             @QueryParam("roundNumber") Long roundNumber
     ) throws JsonProcessingException {
 
         return delphiCalculationDAO.getdelphicalculationbycodequiz(codequiz, roundNumber);
+    }
+
+    @Path("results")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getQuizvalues(
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @QueryParam("codeQuestions") Long codeQuestions,
+            @QueryParam("roundNumber") Long roundNumber,
+            @QueryParam("codeQuizItem") Long codeQuizItem
+    ) throws JsonProcessingException {
+        List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(delphiCalculations);
+        return response;
     }
 
     @POST
