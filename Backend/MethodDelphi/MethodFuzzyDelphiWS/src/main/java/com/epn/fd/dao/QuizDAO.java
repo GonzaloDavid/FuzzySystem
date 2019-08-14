@@ -50,6 +50,13 @@ public class QuizDAO extends GenericDAO<Quiz> {
         List<QuizContainer> containers = quizMapper.sourceListToDestination(resultList);
         return containers;
     }
+    public Quiz getQuizbycodes(Long codeQuiz) {
+        SearchObject search = new SearchObject("quizPK");
+        search.addParameter("quizPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+
+        List<Quiz> resultList = search(search);
+        return resultList.get(0);
+    }
 
     public QuizContainer saveQuiz(QuizSave quizcontainer) {
 

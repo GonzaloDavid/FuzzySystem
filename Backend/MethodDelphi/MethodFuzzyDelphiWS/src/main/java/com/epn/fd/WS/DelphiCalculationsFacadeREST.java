@@ -107,7 +107,7 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
         return response;
     }
 
-    @GET
+    @POST
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
@@ -136,7 +136,8 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 
         return delphiCalculationDAO.getdelphicalculationbycodequiz(codequiz, roundNumber);
     }
-
+    
+    @GET
     @Path("results")
     @Produces({MediaType.APPLICATION_JSON})
     public String getQuizvalues(

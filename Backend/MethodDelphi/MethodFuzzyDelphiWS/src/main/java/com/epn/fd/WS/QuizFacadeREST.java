@@ -155,7 +155,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
         List<QuestionItem> questionItemdeleted = new ArrayList();
 
         QuizSave quizSave = new QuizSave();
-        quizSave.setQuiz(emailcontainer.getQuiz());
+        quizSave.setQuiz(quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz()));
         quizSave.setQuestiondeleted(questiondeleted);
         quizSave.setQuestionItemdeleted(questionItemdeleted);
         quizDAO.saveQuiz(quizSave);
