@@ -35,14 +35,16 @@ public class UserDAO extends GenericDAO<User> {
         super(User.class);
     }
 
-    public JsonObject generateJWT() {
-        String key = "mi clave";
+    public JsonObject generateJWT(String key, String sign,String subject,
+            String namejson,long expirationTime,Object claim) {
+
         long time = System.currentTimeMillis();
-        String jwt = Jwts.builder().signWith(SignatureAlgorithm.HS256, key)
-                .setSubject("Fuzzy delphi system")
+        String jwt = Jwts.builder()
+                .signWith(SignatureAlgorithm.HS256, key)
+                .setSubject(subject)
                 .setIssuedAt(new Date(time))
-                .setExpiration(new Date(time + 900000))
-                .claim("correo", "davidgonzalomejia@hotmail.com")
+                .setExpiration(new Date(time+expirationTime))
+                .claim(namejson, claim)
                 .compact();
 
         JsonObject json = Json.createObjectBuilder().
