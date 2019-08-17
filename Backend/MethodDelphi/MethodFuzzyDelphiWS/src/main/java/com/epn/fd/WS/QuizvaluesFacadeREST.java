@@ -11,6 +11,7 @@ import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
 import com.epn.fd.dao.QuizValuesDAO;
 import com.epn.fd.dao.RoundsDAO;
+import com.epn.fd.dao.UserDAO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -41,6 +43,8 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     QuizValuesDAO quizValuesDAO;
     @Inject()
     RoundsDAO roundsDAO;
+    @Inject
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -85,10 +89,11 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Path("quizvalues")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void customerquizvalues(QuizValueSaveContainer quizvalues) {
-        roundsDAO.setsentstatus(quizvalues);
-        quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
-
+    public void customerquizvalues(QuizValueSaveContainer quizvalues, @HeaderParam("authorization") String authString) {
+        if (userDAO.existToken(authString) == true) {
+            roundsDAO.setsentstatus(quizvalues);
+            quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
+        }
     }
 
     @GET
@@ -99,10 +104,14 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
             @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestions") Long codeQuestions,
             @QueryParam("roundNumber") Long roundNumber,
-            @QueryParam("codeQuizItem") Long codeQuizItem
+            @QueryParam("codeQuizItem") Long codeQuizItem,
+            @HeaderParam("authorization") String authString
     ) {
-
-        return quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
+        List<QuizValuesContainer> containers = null;
+        if (userDAO.existToken(authString) == true) {
+            containers = quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
+        }
+        return containers;
     }
 
     @POST

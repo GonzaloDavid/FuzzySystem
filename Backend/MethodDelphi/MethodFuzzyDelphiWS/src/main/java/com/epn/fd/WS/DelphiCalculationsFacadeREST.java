@@ -10,6 +10,7 @@ import com.epn.dtos.Item;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.fd.dao.DelphiCalculationDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -40,6 +42,9 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 
     @Inject()
     DelphiCalculationDAO delphiCalculationDAO;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -96,14 +101,16 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     public String calculate(
             @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeQuiz") Long codeQuiz,
-            @QueryParam("codeQuestions") Long codeQuestions
+            @QueryParam("codeQuestions") Long codeQuestions,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
+        String response = null;
+        if (userDAO.existToken(authString) == true) {
+            List<Item> itemList = delphiCalculationDAO.runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
+            ObjectMapper mapper = new ObjectMapper();
+            response = mapper.writeValueAsString(itemList);
 
-        List<Item> itemList = delphiCalculationDAO.runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        String response = mapper.writeValueAsString(itemList);
+        }
         return response;
     }
 
@@ -115,14 +122,16 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     public String save(
             @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeQuiz") Long codeQuiz,
-            @QueryParam("codeQuestions") Long codeQuestions
+            @QueryParam("codeQuestions") Long codeQuestions,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
+        String response = null;
+        if (userDAO.existToken(authString) == true) {
 
-        List<DelphiCalculations> delphiCalculations = delphiCalculationDAO.saveDelphiCalculations(codeQuiz, roundNumber, codeQuestions);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        String response = mapper.writeValueAsString(delphiCalculations);
+            List<DelphiCalculations> delphiCalculations = delphiCalculationDAO.saveDelphiCalculations(codeQuiz, roundNumber, codeQuestions);
+            ObjectMapper mapper = new ObjectMapper();
+            response = mapper.writeValueAsString(delphiCalculations);
+        }
         return response;
     }
 
@@ -131,12 +140,16 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
     @Produces({MediaType.APPLICATION_JSON})
     public List<DelphiCalculationsContainer> getdelphicalculation(
             @QueryParam("codequiz") Long codequiz,
-            @QueryParam("roundNumber") Long roundNumber
+            @QueryParam("roundNumber") Long roundNumber,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-
-        return delphiCalculationDAO.getdelphicalculationbycodequiz(codequiz, roundNumber);
+        List<DelphiCalculationsContainer> containers = null;
+        if (userDAO.existToken(authString) == true) {
+            containers = delphiCalculationDAO.getdelphicalculationbycodequiz(codequiz, roundNumber);
+        }
+        return containers;
     }
-    
+
     @GET
     @Path("results")
     @Produces({MediaType.APPLICATION_JSON})
@@ -144,12 +157,16 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
             @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestions") Long codeQuestions,
             @QueryParam("roundNumber") Long roundNumber,
-            @QueryParam("codeQuizItem") Long codeQuizItem
+            @QueryParam("codeQuizItem") Long codeQuizItem,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
+        String response = null;
+        if (userDAO.existToken(authString) == true) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        String response = mapper.writeValueAsString(delphiCalculations);
+            List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
+            ObjectMapper mapper = new ObjectMapper();
+            response = mapper.writeValueAsString(delphiCalculations);
+        }
         return response;
     }
 

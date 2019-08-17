@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.RoundsDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -37,6 +39,9 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
 
     @Inject()
     RoundsDAO roundsDAO;
+
+    @Inject()
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -75,10 +80,14 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
     @Produces({MediaType.APPLICATION_JSON})
     public String getLastRound(
             @QueryParam("codequiz") Long codequiz,
-            @QueryParam("roundNumber") Long roundNumber
+            @QueryParam("roundNumber") Long roundNumber,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-
-        return roundsDAO.getLastRoundbycodeQuiz(codequiz,roundNumber);
+        String response = "";
+        if (userDAO.existToken(authString) == true) {
+            response = roundsDAO.getLastRoundbycodeQuiz(codequiz, roundNumber);
+        }
+        return response;
     }
 
     @POST
@@ -86,10 +95,10 @@ public class RoundsFacadeREST extends AbstractFacade<Rounds> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void saveRound(Rounds round) {
-
-        roundsDAO.save(round);
-
+    public void saveRound(Rounds round, @HeaderParam("authorization") String authString) {
+        if (userDAO.existToken(authString) == true) {
+            roundsDAO.save(round);
+        }
     }
 
     @POST

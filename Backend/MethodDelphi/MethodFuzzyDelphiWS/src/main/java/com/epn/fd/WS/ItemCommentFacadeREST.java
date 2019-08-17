@@ -9,6 +9,7 @@ import com.epn.dtos.ItemCommentContainer;
 import com.epn.entities.ItemComment;
 import com.epn.entities.ItemCommentPK;
 import com.epn.fd.dao.ItemCommentDAO;
+import com.epn.fd.dao.UserDAO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -37,6 +39,9 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
 
     @Inject()
     ItemCommentDAO itemCommentDAO;
+
+    @Inject()
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -66,7 +71,7 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
         if (codePerson != null && !codePerson.isEmpty()) {
             key.setCodePerson(new java.lang.Long(codePerson.get(0)));
         }
-         java.util.List<String> roundNumber = map.get("roundNumber");
+        java.util.List<String> roundNumber = map.get("roundNumber");
         if (roundNumber != null && !roundNumber.isEmpty()) {
             key.setRoundNumber(new java.lang.Long(roundNumber.get(0)));
         }
@@ -85,19 +90,25 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
             @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestion") Long codeQuestion,
             @QueryParam("roundNumber") Long roundNumber,
-            @QueryParam("codeItem") Long codeItem
+            @QueryParam("codeItem") Long codeItem,
+            @HeaderParam("authorization") String authString
     ) {
-
-        return itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
+        List<ItemCommentContainer> commentContainers = null;
+        if (userDAO.existToken(authString) == true) {
+            commentContainers = itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
+        }
+        return commentContainers;
     }
 
     @POST
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void saveperson(ItemComment comment) {
+    public void saveperson(ItemComment comment, @HeaderParam("authorization") String authString) {
 
-        itemCommentDAO.saveItemComment(comment);
+        if (userDAO.existToken(authString) == true) {
+            itemCommentDAO.saveItemComment(comment);
+        }
     }
 
     @POST

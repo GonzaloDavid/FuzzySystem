@@ -5,7 +5,12 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.entities.FilterTypes;
+import com.epn.entities.SearchObject;
 import com.epn.entities.User;
+import com.epn.entities.UserPK;
+import com.epn.exception.AppException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.UnsupportedEncodingException;
@@ -19,7 +24,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import javax.crypto.Cipher;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -35,15 +42,49 @@ public class UserDAO extends GenericDAO<User> {
         super(User.class);
     }
 
-    public JsonObject generateJWT(String key, String sign,String subject,
-            String namejson,long expirationTime,Object claim) {
+    public void saveUser(User userwhithtoken, JsonObject token) {
+        userwhithtoken.setToken(token.getString("JWT"));
+
+    }
+
+    public List<User> getuserbyemail(String email) {
+        SearchObject search = new SearchObject("userPK");
+        search.addParameter("person.email", FilterTypes.EQUAL, email);
+        List<User> resultList = search(search);
+        return resultList;
+    }
+
+    public JsonObject comparePassword(String email, String password) {
+        List<User> userselected = getuserbyemail(email);
+        if (userselected.size() > 0) {
+            String passwordEncrypted = encryptAES(password, "FuzziDelphiKey");
+            if (userselected.get(0).getPassword().equals(passwordEncrypted)) {
+                String key = "FuzziDelphiKey";
+                String subject = "FuzziDelphiSystem";
+                String namejson = "email";
+                //esta una semana en milisegundos la duracion del token
+                long expirationTime = System.currentTimeMillis() + 604800000;
+                String emailsigned = userselected.get(0).getPerson().getEmail();
+                JsonObject token = generateJWT(key, subject, namejson, expirationTime, emailsigned);
+                saveUser(userselected.get(0), token);
+                return token;
+            } else {
+                throw new AppException("CONTRASEÑA ERRONEA", "CONTRASEÑAS NO COINCIDEN");
+            }
+        } else {
+            throw new AppException("USUARIO NO EXISTE", "USUARIO NO EXISTE,CORREO NO REGISTRADO");
+        }
+    }
+
+    public JsonObject generateJWT(String key, String subject,
+            String namejson, long expirationTime, String claim) {
 
         long time = System.currentTimeMillis();
         String jwt = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, key)
                 .setSubject(subject)
                 .setIssuedAt(new Date(time))
-                .setExpiration(new Date(time+expirationTime))
+                .setExpiration(new Date(time + expirationTime))
                 .claim(namejson, claim)
                 .compact();
 
@@ -71,7 +112,7 @@ public class UserDAO extends GenericDAO<User> {
         }
     }
 
-    public static String encryptAES(String strToEncrypt, String secret) {
+    public String encryptAES(String strToEncrypt, String secret) {
         try {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -83,7 +124,7 @@ public class UserDAO extends GenericDAO<User> {
         return null;
     }
 
-    public static String decryptAES(String strToDecrypt, String secret) {
+    public String decryptAES(String strToDecrypt, String secret) {
         try {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
@@ -93,6 +134,47 @@ public class UserDAO extends GenericDAO<User> {
             System.out.println("Error while decrypting: " + e.toString());
         }
         return null;
+    }
+
+    public String getpayloadJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary("FuzziDelphiKey"))
+                .parseClaimsJws(token).getBody();
+        String id = claims.get("email").toString();
+        return id;
+    }
+
+    public boolean validateJWT(String token) {
+        boolean valid;
+        String payloadEmail = getpayloadJWT(token);
+        List<User> user = getuserbyemail(payloadEmail);
+        if (user.size() > 0) {
+            if (user.get(0).getToken().equals(token)) {
+                valid = true;
+            } else {
+                valid = false;
+                throw new AppException("TOKEN NO VALIDO", "Los tokens no son iguales");
+            }
+        } else {
+            valid = false;
+            throw new AppException("TOKEN NO VALIDO", "Email no registrado");
+        }
+        return valid;
+    }
+
+    public boolean existToken(String token) {
+        boolean valid = false;
+        if (!token.equals("") && token != null) {
+            if (validateJWT(token) == true) {
+                valid = true;
+            } else {
+                valid = false;
+                throw new AppException(460, 1,"Token no valido","Usuario no logeado","www.google.com","PERSONUNAUTHORIZED");
+            }
+        } else {
+            throw new AppException(460, 1,"No contiene token","Usuario no logeado","www.google.com","USERNOTSIGNIN");
+        }
+        return valid;
     }
 
 }

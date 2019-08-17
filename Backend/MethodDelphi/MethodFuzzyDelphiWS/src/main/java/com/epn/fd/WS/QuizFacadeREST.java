@@ -16,6 +16,7 @@ import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
 import com.epn.fd.dao.QuizDAO;
 import com.epn.fd.dao.RoundsDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -49,6 +51,8 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     QuizDAO quizDAO;
     @Inject
     RoundsDAO roundsDAO;
+    @Inject
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -77,11 +81,18 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Path("getquiz")
     @Transactional
     @Produces({MediaType.APPLICATION_JSON})
-    public String getQuizbycode(@QueryParam("codeQuiz") Long codeQuiz) throws JsonProcessingException {
-        List<QuizContainer> containers = new ArrayList<>();
-        containers = quizDAO.getQuizbycode(codeQuiz);
-        ObjectMapper mapper = new ObjectMapper();
-        String response = mapper.writeValueAsString(containers);
+    public String getQuizbycode(
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @HeaderParam("authorization") String authString
+    )
+            throws JsonProcessingException {
+        String response = null;
+        if (userDAO.existToken(authString) == true) {
+            List<QuizContainer> containers = new ArrayList<>();
+            containers = quizDAO.getQuizbycode(codeQuiz);
+            ObjectMapper mapper = new ObjectMapper();
+            response = mapper.writeValueAsString(containers);
+        }
         return response;
 
     }
@@ -92,9 +103,13 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Produces({MediaType.APPLICATION_JSON})
     public String getSurveys(
             @QueryParam("from") Integer from,
-            @QueryParam("to") Integer to
+            @QueryParam("to") Integer to,
+            @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        String listSurveys = quizDAO.getSurveys(from, to);
+        String listSurveys = null;
+        if (userDAO.existToken(authString) == true) {
+            listSurveys = quizDAO.getSurveys(from, to);
+        }
         return listSurveys;
     }
 
@@ -103,10 +118,12 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public QuizContainer saveQuiz(QuizSave quizcontainer) {
-
-        return quizDAO.saveQuiz(quizcontainer);
-
+    public QuizContainer saveQuiz(QuizSave quizcontainer, @HeaderParam("authorization") String authString) {
+        QuizContainer container = null;
+        if (userDAO.existToken(authString) == true) {
+            container = quizDAO.saveQuiz(quizcontainer);
+        }
+        return container;
     }
 
     @POST
@@ -114,10 +131,10 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void deleteQuiz(Quiz quiz) {
-
-        quizDAO.deletequiz(quiz);
-
+    public void deleteQuiz(Quiz quiz, @HeaderParam("authorization") String authString) {
+        if (userDAO.existToken(authString) == true) {
+            quizDAO.deletequiz(quiz);
+        }
     }
 
     @POST
@@ -138,29 +155,30 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Path("sendmail")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void sendMail(EmailContainer emailcontainer) {
+    public void sendMail(EmailContainer emailcontainer, @HeaderParam("authorization") String authString) {
 
-        emailcontainer.getPersons().forEach(person -> {
-            RoundsPK roundPK = new RoundsPK();
-            roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
-            roundPK.setRoundNumber(emailcontainer.getRoundNumber());
-            roundPK.setCodePerson(person.getCodePerson());
-            Rounds round = new Rounds(roundPK);
-            round.setRoundsPK(roundPK);
-            round.setSentstatusCatalogue("SENTSTATUSCAT");
-            round.setSentstatus(emailcontainer.getSentstatus());
-            roundsDAO.save(round);
-        });
-        List<Questions> questiondeleted = new ArrayList();
-        List<QuestionItem> questionItemdeleted = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            emailcontainer.getPersons().forEach(person -> {
+                RoundsPK roundPK = new RoundsPK();
+                roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
+                roundPK.setRoundNumber(emailcontainer.getRoundNumber());
+                roundPK.setCodePerson(person.getCodePerson());
+                Rounds round = new Rounds(roundPK);
+                round.setRoundsPK(roundPK);
+                round.setSentstatusCatalogue("SENTSTATUSCAT");
+                round.setSentstatus(emailcontainer.getSentstatus());
+                roundsDAO.save(round);
+            });
+            List<Questions> questiondeleted = new ArrayList();
+            List<QuestionItem> questionItemdeleted = new ArrayList();
 
-        QuizSave quizSave = new QuizSave();
-        quizSave.setQuiz(quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz()));
-        quizSave.setQuestiondeleted(questiondeleted);
-        quizSave.setQuestionItemdeleted(questionItemdeleted);
-        quizDAO.saveQuiz(quizSave);
-        quizDAO.sendquiz(emailcontainer);
-
+            QuizSave quizSave = new QuizSave();
+            quizSave.setQuiz(quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz()));
+            quizSave.setQuestiondeleted(questiondeleted);
+            quizSave.setQuestionItemdeleted(questionItemdeleted);
+            quizDAO.saveQuiz(quizSave);
+            quizDAO.sendquiz(emailcontainer);
+        }
     }
 
     @DELETE

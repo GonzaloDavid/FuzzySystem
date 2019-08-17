@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.entities.Catalogueitem;
 import com.epn.entities.CatalogueitemPK;
 import com.epn.fd.dao.CatalogueItemDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -34,7 +36,11 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.catalogueitem")
 public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
 
-    @Inject CatalogueItemDAO catalogueItemDAO;
+    @Inject()
+    CatalogueItemDAO catalogueItemDAO;
+
+    @Inject()
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -66,10 +72,15 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
     @GET
     @Path("catalogue")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPerson(
-            @QueryParam("codeCat") String codeCat
-    )throws JsonProcessingException
-    {        return catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
+    public String getCatalogue(
+            @QueryParam("codeCat") String codeCat,
+            @HeaderParam("authorization") String authString
+    ) throws JsonProcessingException {
+        String catalogue = null;
+        if (userDAO.existToken(authString) == true) {
+            catalogue = catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
+        }
+        return catalogue;
     }
 
     @POST

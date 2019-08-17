@@ -5,12 +5,17 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.Login;
 import com.epn.entities.User;
 import com.epn.entities.UserPK;
+import com.epn.fd.dao.UserDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,6 +35,7 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.user")
 public class UserFacadeREST extends AbstractFacade<User> {
 
+    @Inject() UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -58,6 +64,16 @@ public class UserFacadeREST extends AbstractFacade<User> {
         super(User.class);
     }
 
+    @POST
+    @Path("login")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public JsonObject login(Login login) {
+
+        return userDAO.comparePassword(login.getEmail(), login.getPassword());
+
+    }
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
