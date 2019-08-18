@@ -19,11 +19,13 @@ import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -35,7 +37,8 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.user")
 public class UserFacadeREST extends AbstractFacade<User> {
 
-    @Inject() UserDAO userDAO;
+    @Inject()
+    UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -70,10 +73,21 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public JsonObject login(Login login) {
-
         return userDAO.comparePassword(login.getEmail(), login.getPassword());
-
     }
+
+    @GET
+    @Path("logout")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void LogOut(
+            @QueryParam("email") String email,
+            @HeaderParam("authorization") String authString
+    ) {
+        if (userDAO.existToken(authString) == true) {
+        userDAO.logout(email);
+        }
+    }
+
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -128,5 +142,5 @@ public class UserFacadeREST extends AbstractFacade<User> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

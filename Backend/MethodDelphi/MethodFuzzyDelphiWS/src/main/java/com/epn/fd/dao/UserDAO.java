@@ -176,5 +176,16 @@ public class UserDAO extends GenericDAO<User> {
         }
         return valid;
     }
+    public void logout(String email)
+    {
+        List<User> user=getuserbyemail(email);
+        if(user.size()>0)
+        {
+            User u=new User();
+            u=user.get(0);
+            u.setToken(null);
+            update(u);
+        }
+    }
 
 }
