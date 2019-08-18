@@ -45,7 +45,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     private UserPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;codeuser=codeuserValue;email=emailValue'.
+         * URI path part is supposed to be in form of 'somePath;codeuser=codeuserValue;email=emailValue;username=usernameValue'.
          * Here 'somePath' is a result of getPath() method invocation and
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
@@ -60,13 +60,17 @@ public class UserFacadeREST extends AbstractFacade<User> {
         if (email != null && !email.isEmpty()) {
             key.setEmail(email.get(0));
         }
+        java.util.List<String> username = map.get("username");
+        if (username != null && !username.isEmpty()) {
+            key.setUsername(username.get(0));
+        }
         return key;
     }
 
     public UserFacadeREST() {
         super(User.class);
     }
-    
+
     @POST
     @Path("signup")
     @Transactional

@@ -20,24 +20,27 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class UserPK implements Serializable {
-    
-    
+
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codeuser")
     private long codeuser;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
     @Column(name = "email")
     private String email;
+    
+    @Basic(optional = false)
+    @Column(name = "username")
+    private String username;
 
     public UserPK() {
     }
 
-    public UserPK(long codeuser, String email) {
+    public UserPK(long codeuser, String email, String username) {
         this.codeuser = codeuser;
         this.email = email;
+        this.username = username;
     }
 
     public long getCodeuser() {
@@ -56,11 +59,20 @@ public class UserPK implements Serializable {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) codeuser;
         hash += (email != null ? email.hashCode() : 0);
+        hash += (username != null ? username.hashCode() : 0);
         return hash;
     }
 
@@ -77,12 +89,15 @@ public class UserPK implements Serializable {
         if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.epn.entities.UserPK[ codeuser=" + codeuser + ", email=" + email + " ]";
+        return "com.epn.entities.UserPK[ codeuser=" + codeuser + ", email=" + email + ", username=" + username + " ]";
     }
     
 }

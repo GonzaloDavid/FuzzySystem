@@ -16,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,8 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByCodeuser", query = "SELECT u FROM User u WHERE u.userPK.codeuser = :codeuser"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.userPK.email = :email"),
+    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.userPK.username = :username"),
     @NamedQuery(name = "User.findByRecoveryMail", query = "SELECT u FROM User u WHERE u.recoveryMail = :recoveryMail"),
-    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByToken", query = "SELECT u FROM User u WHERE u.token = :token"),
     @NamedQuery(name = "User.findByDateCreate", query = "SELECT u FROM User u WHERE u.dateCreate = :dateCreate"),
@@ -45,9 +47,6 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "recoveryMail")
     private String recoveryMail;
-    @Basic(optional = false)
-    @Column(name = "username")
-    private String username;
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
@@ -65,7 +64,7 @@ public class User implements Serializable {
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @Column(name = "userLastModify")
+    @Column(name    = "userLastModify")
     private long userLastModify;
 
     public User() {
@@ -75,10 +74,9 @@ public class User implements Serializable {
         this.userPK = userPK;
     }
 
-    public User(UserPK userPK, String recoveryMail, String username, String password, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public User(UserPK userPK, String recoveryMail, String password, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.userPK = userPK;
         this.recoveryMail = recoveryMail;
-        this.username = username;
         this.password = password;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
@@ -86,8 +84,8 @@ public class User implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public User(long codeuser, String email) {
-        this.userPK = new UserPK(codeuser, email);
+    public User(long codeuser, String email, String username) {
+        this.userPK = new UserPK(codeuser, email, username);
     }
 
     public UserPK getUserPK() {
@@ -104,14 +102,6 @@ public class User implements Serializable {
 
     public void setRecoveryMail(String recoveryMail) {
         this.recoveryMail = recoveryMail;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
