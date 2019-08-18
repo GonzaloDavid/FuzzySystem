@@ -11,15 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByCodeuser", query = "SELECT u FROM User u WHERE u.userPK.codeuser = :codeuser"),
-    @NamedQuery(name = "User.findByCodeperson", query = "SELECT u FROM User u WHERE u.userPK.codeperson = :codeperson"),
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.userPK.email = :email"),
+    @NamedQuery(name = "User.findByRecoveryMail", query = "SELECT u FROM User u WHERE u.recoveryMail = :recoveryMail"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByToken", query = "SELECT u FROM User u WHERE u.token = :token"),
@@ -45,6 +42,9 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UserPK userPK;
+    @Basic(optional = false)
+    @Column(name = "recoveryMail")
+    private String recoveryMail;
     @Basic(optional = false)
     @Column(name = "username")
     private String username;
@@ -67,9 +67,6 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "codeperson", referencedColumnName = "codePerson", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
 
     public User() {
     }
@@ -78,8 +75,9 @@ public class User implements Serializable {
         this.userPK = userPK;
     }
 
-    public User(UserPK userPK, String username, String password, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public User(UserPK userPK, String recoveryMail, String username, String password, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.userPK = userPK;
+        this.recoveryMail = recoveryMail;
         this.username = username;
         this.password = password;
         this.dateCreate = dateCreate;
@@ -88,8 +86,8 @@ public class User implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public User(long codeuser, long codeperson) {
-        this.userPK = new UserPK(codeuser, codeperson);
+    public User(long codeuser, String email) {
+        this.userPK = new UserPK(codeuser, email);
     }
 
     public UserPK getUserPK() {
@@ -98,6 +96,14 @@ public class User implements Serializable {
 
     public void setUserPK(UserPK userPK) {
         this.userPK = userPK;
+    }
+
+    public String getRecoveryMail() {
+        return recoveryMail;
+    }
+
+    public void setRecoveryMail(String recoveryMail) {
+        this.recoveryMail = recoveryMail;
     }
 
     public String getUsername() {
@@ -154,14 +160,6 @@ public class User implements Serializable {
 
     public void setUserLastModify(long userLastModify) {
         this.userLastModify = userLastModify;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     @Override

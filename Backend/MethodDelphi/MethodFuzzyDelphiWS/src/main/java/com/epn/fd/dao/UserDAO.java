@@ -49,7 +49,7 @@ public class UserDAO extends GenericDAO<User> {
 
     public List<User> getuserbyemail(String email) {
         SearchObject search = new SearchObject("userPK");
-        search.addParameter("person.email", FilterTypes.EQUAL, email);
+        search.addParameter("userPK.email", FilterTypes.EQUAL, email);
         List<User> resultList = search(search);
         return resultList;
     }
@@ -64,7 +64,7 @@ public class UserDAO extends GenericDAO<User> {
                 String namejson = "email";
                 //esta una semana en milisegundos la duracion del token
                 long expirationTime = System.currentTimeMillis() + 604800000;
-                String emailsigned = userselected.get(0).getPerson().getEmail();
+                String emailsigned = userselected.get(0).getUserPK().getEmail();
                 JsonObject token = generateJWT(key, subject, namejson, expirationTime, emailsigned);
                 saveUser(userselected.get(0), token);
                 return token;
@@ -186,6 +186,11 @@ public class UserDAO extends GenericDAO<User> {
             u.setToken(null);
             update(u);
         }
+    }
+    public void SignUp(User user)
+    {
+       user.setPassword(encryptAES(user.getPassword(),"FuzziDelphiKey"));
+        update(user);
     }
 
 }

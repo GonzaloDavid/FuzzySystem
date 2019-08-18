@@ -45,7 +45,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     private UserPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;codeuser=codeuserValue;codeperson=codepersonValue'.
+         * URI path part is supposed to be in form of 'somePath;codeuser=codeuserValue;email=emailValue'.
          * Here 'somePath' is a result of getPath() method invocation and
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
@@ -56,9 +56,9 @@ public class UserFacadeREST extends AbstractFacade<User> {
         if (codeuser != null && !codeuser.isEmpty()) {
             key.setCodeuser(new java.lang.Long(codeuser.get(0)));
         }
-        java.util.List<String> codeperson = map.get("codeperson");
-        if (codeperson != null && !codeperson.isEmpty()) {
-            key.setCodeperson(new java.lang.Long(codeperson.get(0)));
+        java.util.List<String> email = map.get("email");
+        if (email != null && !email.isEmpty()) {
+            key.setEmail(email.get(0));
         }
         return key;
     }
@@ -66,7 +66,17 @@ public class UserFacadeREST extends AbstractFacade<User> {
     public UserFacadeREST() {
         super(User.class);
     }
-
+    
+    @POST
+    @Path("signup")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void login(User user) {
+         userDAO.SignUp(user);
+    }
+    
+    
     @POST
     @Path("login")
     @Transactional
@@ -142,5 +152,5 @@ public class UserFacadeREST extends AbstractFacade<User> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
 }

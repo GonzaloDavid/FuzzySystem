@@ -9,7 +9,10 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -17,21 +20,24 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class UserPK implements Serializable {
-
+    
+    
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codeuser")
     private long codeuser;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codeperson")
-    private long codeperson;
+    @Column(name = "email")
+    private String email;
 
     public UserPK() {
     }
 
-    public UserPK(long codeuser, long codeperson) {
+    public UserPK(long codeuser, String email) {
         this.codeuser = codeuser;
-        this.codeperson = codeperson;
+        this.email = email;
     }
 
     public long getCodeuser() {
@@ -42,19 +48,19 @@ public class UserPK implements Serializable {
         this.codeuser = codeuser;
     }
 
-    public long getCodeperson() {
-        return codeperson;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCodeperson(long codeperson) {
-        this.codeperson = codeperson;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) codeuser;
-        hash += (int) codeperson;
+        hash += (email != null ? email.hashCode() : 0);
         return hash;
     }
 
@@ -68,7 +74,7 @@ public class UserPK implements Serializable {
         if (this.codeuser != other.codeuser) {
             return false;
         }
-        if (this.codeperson != other.codeperson) {
+        if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
         return true;
@@ -76,7 +82,7 @@ public class UserPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.UserPK[ codeuser=" + codeuser + ", codeperson=" + codeperson + " ]";
+        return "com.epn.entities.UserPK[ codeuser=" + codeuser + ", email=" + email + " ]";
     }
     
 }
