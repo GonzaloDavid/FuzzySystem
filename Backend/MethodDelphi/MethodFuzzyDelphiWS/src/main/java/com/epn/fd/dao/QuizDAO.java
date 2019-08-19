@@ -34,8 +34,10 @@ public class QuizDAO extends GenericDAO<Quiz> {
     QuestionDAO questionDAO;
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
-    @Inject
+    @Inject()
     Mail mail;
+    @Inject()
+    EnvironmentDAO environmentDAO;
 
     private final QuizMapper quizMapper = Mappers.getMapper(QuizMapper.class);
 
@@ -116,12 +118,12 @@ public class QuizDAO extends GenericDAO<Quiz> {
     }
 
     public void sendquiz(EmailContainer emailcontainer) {
+        String uribase=environmentDAO.getenvironmentbyuseplace("quizclient", "frontend").get(0).getEnvironmentPK().getUri();
         List<QuizContainer> quiz = getQuizbycode(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
         emailcontainer.getPersons().forEach(person -> {
             try {
-                String link = "http://localhost:4200/admin/surveys/quizclient/" + emailcontainer.getRoundNumber() + "/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
+                String link = uribase+"/" + emailcontainer.getRoundNumber() + "/" + person.getCodePerson() + "/" + quiz.get(0).getQuizPK().getCodeQuiz();
                 String nameQuiz = quiz.get(0).getShortNameQuiz();
-                String linkfake = "https://www.youtube.com/watch?v=x6e4kDh6vao";
                 String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
                 String message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.get(0).getDescription() + "</span>";
                 String footer = "<span>La información transmitida a través del sistema debe ser tratada con confidencialidad , al entrar usted al sistema acepta el compromiso de no divulgar la información que se presente a continuación.</span><br>";

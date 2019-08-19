@@ -8,7 +8,6 @@ package com.epn.fd.dao;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
 import com.epn.entities.User;
-import com.epn.entities.UserPK;
 import com.epn.exception.AppException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -65,7 +64,7 @@ public class UserDAO extends GenericDAO<User> {
                 //esta una semana en milisegundos la duracion del token
                 long expirationTime = System.currentTimeMillis() + 604800000;
                 String emailsigned = userselected.get(0).getUserPK().getEmail();
-                JsonObject token = generateJWT(key, subject, namejson, expirationTime, emailsigned);
+                JsonObject token = generateJWT(key, subject, namejson, emailsigned,expirationTime);
                 saveUser(userselected.get(0), token);
                 return token;
             } else {
@@ -77,7 +76,7 @@ public class UserDAO extends GenericDAO<User> {
     }
 
     public JsonObject generateJWT(String key, String subject,
-            String namejson, long expirationTime, String claim) {
+            String namejson, String claim,long expirationTime) {
 
         long time = System.currentTimeMillis();
         String jwt = Jwts.builder()
@@ -169,27 +168,26 @@ public class UserDAO extends GenericDAO<User> {
                 valid = true;
             } else {
                 valid = false;
-                throw new AppException(460, 1,"Token no valido","Usuario no logeado","www.google.com","PERSONUNAUTHORIZED");
+                throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
             }
         } else {
-            throw new AppException(460, 1,"No contiene token","Usuario no logeado","www.google.com","USERNOTSIGNIN");
+            throw new AppException(460, 1, "No contiene token", "Usuario no logeado", "www.google.com", "USERNOTSIGNIN");
         }
         return valid;
     }
-    public void logout(String email)
-    {
-        List<User> user=getuserbyemail(email);
-        if(user.size()>0)
-        {
-            User u=new User();
-            u=user.get(0);
+
+    public void logout(String email) {
+        List<User> user = getuserbyemail(email);
+        if (user.size() > 0) {
+            User u = new User();
+            u = user.get(0);
             u.setToken(null);
             update(u);
         }
     }
-    public void SignUp(User user)
-    {
-       user.setPassword(encryptAES(user.getPassword(),"FuzziDelphiKey"));
+
+    public void SignUp(User user) {
+        user.setPassword(encryptAES(user.getPassword(), "FuzziDelphiKey"));
         update(user);
     }
 

@@ -14,6 +14,7 @@
         <class>com.epn.entities.DelphiCalculations  </class>
         <class>com.epn.entities.ItemComment</class>
         <class>com.epn.entities.User</class>
+        <class>com.epn.entities.Environment</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.logging.level" value="FINE"/>
