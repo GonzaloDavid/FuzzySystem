@@ -35,6 +35,12 @@ public class CatalogueFacadeREST extends AbstractFacade<Catalogue> {
         super(Catalogue.class);
     }
 
+    @POST
+    @Override
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void create(Catalogue entity) {
+        super.create(entity);
+    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

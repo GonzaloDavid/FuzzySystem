@@ -43,6 +43,8 @@ public class Rounds implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RoundsPK roundsPK;
+    @Column(name = "token")
+    private String token;
     @Column(name = "sentstatusCat")
     private String sentstatusCatalogue;
     @Column(name = "sentstatus")
@@ -67,12 +69,12 @@ public class Rounds implements Serializable {
     @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Quiz quiz;
-    @JoinColumn(name = "sentstatusCat", referencedColumnName = "code",insertable = false, updatable = false)
+    @JoinColumn(name = "sentstatusCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Catalogue sentstatusCat;
     @JoinColumns({
-        @JoinColumn(name = "sentstatusCat", referencedColumnName = "codeCatalogue",insertable = false, updatable = false),
-        @JoinColumn(name = "sentstatus", referencedColumnName = "codeItem",insertable = false, updatable = false)})
+        @JoinColumn(name = "sentstatusCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "sentstatus", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
 
@@ -182,7 +184,15 @@ public class Rounds implements Serializable {
     public void setSentstatus(String sentstatus) {
         this.sentstatus = sentstatus;
     }
-    
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -207,5 +217,5 @@ public class Rounds implements Serializable {
     public String toString() {
         return "com.epn.entities.Rounds[ roundsPK=" + roundsPK + " ]";
     }
-    
+
 }

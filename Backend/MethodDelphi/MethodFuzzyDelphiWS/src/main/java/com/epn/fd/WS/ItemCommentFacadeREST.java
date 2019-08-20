@@ -90,13 +90,12 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
             @QueryParam("codeQuiz") Long codeQuiz,
             @QueryParam("codeQuestion") Long codeQuestion,
             @QueryParam("roundNumber") Long roundNumber,
-            @QueryParam("codeItem") Long codeItem,
-            @HeaderParam("authorization") String authString
+            @QueryParam("codeItem") Long codeItem
     ) {
         List<ItemCommentContainer> commentContainers = null;
-        if (userDAO.existToken(authString) == true) {
-            commentContainers = itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
-        }
+
+        commentContainers = itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
+
         return commentContainers;
     }
 
@@ -104,11 +103,10 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void saveperson(ItemComment comment, @HeaderParam("authorization") String authString) {
+    public void saveperson(ItemComment comment) {
 
-        if (userDAO.existToken(authString) == true) {
-            itemCommentDAO.saveItemComment(comment);
-        }
+        itemCommentDAO.saveItemComment(comment);
+
     }
 
     @Override

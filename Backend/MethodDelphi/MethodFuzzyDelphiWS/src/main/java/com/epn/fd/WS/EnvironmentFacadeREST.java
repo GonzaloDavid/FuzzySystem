@@ -61,7 +61,12 @@ public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
     public EnvironmentFacadeREST() {
         super(Environment.class);
     }
-    
+    @POST
+    @Override
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void create(Environment entity) {
+        super.create(entity);
+    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

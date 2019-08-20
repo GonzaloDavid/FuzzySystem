@@ -6,7 +6,9 @@
 package com.epn.fd.WS;
 
 import com.epn.entities.Person;
+import com.epn.exception.AppException;
 import com.epn.fd.dao.PersonDAO;
+import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -38,6 +40,9 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
     @Inject()
     UserDAO userDAO;
 
+    @Inject()
+    RoundsDAO roundsDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -69,8 +74,10 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         String personbycode = null;
-        if (userDAO.existToken(authString) == true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
             personbycode = personDAO.getpersonbycode(codeperson);
+        }else{
+        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return personbycode;
     }

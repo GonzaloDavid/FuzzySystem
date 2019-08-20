@@ -10,7 +10,10 @@ import com.epn.entities.QuestionsPK;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
 /**
@@ -49,10 +52,16 @@ public class QuestionsFacadeREST extends AbstractFacade<Questions> {
         super(Questions.class);
     }
 
+    @POST
+    @Override
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void create(Questions entity) {
+        super.create(entity);
+    }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

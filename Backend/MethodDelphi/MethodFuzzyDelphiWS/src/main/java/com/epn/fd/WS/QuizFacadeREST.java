@@ -14,6 +14,8 @@ import com.epn.entities.Quiz;
 import com.epn.entities.QuizPK;
 import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
+import com.epn.exception.AppException;
+import com.epn.fd.dao.EnvironmentDAO;
 import com.epn.fd.dao.QuizDAO;
 import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -50,6 +53,8 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     RoundsDAO roundsDAO;
     @Inject
     UserDAO userDAO;
+    @Inject()
+    EnvironmentDAO environmentDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -84,11 +89,13 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     )
             throws JsonProcessingException {
         String response = null;
-        if (userDAO.existToken(authString) == true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
             List<QuizContainer> containers = new ArrayList<>();
             containers = quizDAO.getQuizbycode(codeQuiz);
             ObjectMapper mapper = new ObjectMapper();
             response = mapper.writeValueAsString(containers);
+        }else{
+        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return response;
 
@@ -139,34 +146,46 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     public void sendMail(
-            EmailContainer emailcontainer, 
+            EmailContainer emailcontainer,
             @HeaderParam("authorization") String authString) {
 
         if (userDAO.existToken(authString) == true) {
+
+            String uribase = environmentDAO.getenvironmentbyuseplace("quizclient", "frontend").get(0).getEnvironmentPK().getUri();
+            Quiz quiz = quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
+
+            List<Questions> questiondeleted = new ArrayList();
+            List<QuestionItem> questionItemdeleted = new ArrayList();
+
+            QuizSave quizSave = new QuizSave();
+            quizSave.setQuiz(quiz);
+            quizSave.setQuestiondeleted(questiondeleted);
+            quizSave.setQuestionItemdeleted(questionItemdeleted);
+            quizDAO.saveQuiz(quizSave);
+
             emailcontainer.getPersons().forEach(person -> {
+                String key = "FuzziDelphiKey";
+                String subject = "FuzziDelphiSystemClient";
+              //  String namejson = "roundPK";
+                long expirationTime = System.currentTimeMillis() + 604800000;
+
                 RoundsPK roundPK = new RoundsPK();
                 roundPK.setCodeQuiz(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
                 roundPK.setRoundNumber(emailcontainer.getRoundNumber());
                 roundPK.setCodePerson(person.getCodePerson());
                 Rounds round = new Rounds(roundPK);
                 round.setRoundsPK(roundPK);
+
+                JsonObject jwt = roundsDAO.generateJWT(key, subject, roundPK, expirationTime);
+                round.setToken(jwt.getString("JWT"));
                 round.setSentstatusCatalogue("SENTSTATUSCAT");
                 round.setSentstatus(emailcontainer.getSentstatus());
                 roundsDAO.save(round);
+                quizDAO.sendquiz(quiz, person, uribase, emailcontainer.getRoundNumber(), jwt.getString("JWT"));
             });
-            List<Questions> questiondeleted = new ArrayList();
-            List<QuestionItem> questionItemdeleted = new ArrayList();
-
-            QuizSave quizSave = new QuizSave();
-            quizSave.setQuiz(quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz()));
-            quizSave.setQuestiondeleted(questiondeleted);
-            quizSave.setQuestionItemdeleted(questionItemdeleted);
-            quizDAO.saveQuiz(quizSave);
-            quizDAO.sendquiz(emailcontainer);
         }
     }
 
-   
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -9,9 +9,11 @@ import com.epn.dtos.QuizValueSaveContainer;
 import com.epn.dtos.QuizValuesContainer;
 import com.epn.entities.Quizvalues;
 import com.epn.entities.QuizvaluesPK;
+import com.epn.exception.AppException;
 import com.epn.fd.dao.QuizValuesDAO;
 import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -86,13 +88,17 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Path("quizvalues")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void customerquizvalues(QuizValueSaveContainer quizvalues, @HeaderParam("authorization") String authString) {
-        if (userDAO.existToken(authString) == true) {
+    public void customerquizvalues(QuizValueSaveContainer quizvalues,
+            @HeaderParam("authorization") String authString) 
+            throws JsonProcessingException {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
             roundsDAO.setsentstatus(quizvalues);
             quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
+        }else{
+        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
     }
-
+    
     @GET
     @Path("getquizvalues")
     @Produces({MediaType.APPLICATION_JSON})
@@ -103,10 +109,12 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
             @QueryParam("roundNumber") Long roundNumber,
             @QueryParam("codeQuizItem") Long codeQuizItem,
             @HeaderParam("authorization") String authString
-    ) {
+    ) throws JsonProcessingException {
         List<QuizValuesContainer> containers = null;
-        if (userDAO.existToken(authString) == true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
             containers = quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
+        }else{
+        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return containers;
     }

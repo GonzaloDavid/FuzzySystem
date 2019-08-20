@@ -9,7 +9,9 @@ import com.epn.dtos.DelphiCalculationsContainer;
 import com.epn.dtos.Item;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
+import com.epn.exception.AppException;
 import com.epn.fd.dao.DelphiCalculationDAO;
+import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +47,9 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 
     @Inject()
     UserDAO userDAO;
-
+    
+    @Inject()
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -161,11 +165,13 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         String response = null;
-        if (userDAO.existToken(authString) == true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
 
             List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
             ObjectMapper mapper = new ObjectMapper();
             response = mapper.writeValueAsString(delphiCalculations);
+        }else{
+        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return response;
     }

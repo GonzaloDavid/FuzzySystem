@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.entities.Catalogueitem;
 import com.epn.entities.CatalogueitemPK;
 import com.epn.fd.dao.CatalogueItemDAO;
+import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -41,6 +42,9 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
 
     @Inject()
     UserDAO userDAO;
+
+    @Inject()
+    RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -73,13 +77,10 @@ public class CatalogueitemFacadeREST extends AbstractFacade<Catalogueitem> {
     @Path("catalogue")
     @Produces({MediaType.APPLICATION_JSON})
     public String getCatalogue(
-            @QueryParam("codeCat") String codeCat,
-            @HeaderParam("authorization") String authString
+            @QueryParam("codeCat") String codeCat
     ) throws JsonProcessingException {
         String catalogue = null;
-        if (userDAO.existToken(authString) == true) {
-            catalogue = catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
-        }
+        catalogue = catalogueItemDAO.getCatalogueItembyCodeCat(codeCat);
         return catalogue;
     }
 
