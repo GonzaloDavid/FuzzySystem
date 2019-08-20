@@ -172,16 +172,20 @@ public class UserDAO extends GenericDAO<User> {
 
     public boolean existToken(String token) {
         boolean valid = false;
-        if (!token.equals("") && token != null) {
-            if (validateJWT(token) == true) {
-                valid = true;
+        if (token != null) {
+            if (!token.equals("")) {
+                if (validateJWT(token) == true) {
+                    valid = true;
+                } else {
+                    valid = false;
+                    //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
+                }
             } else {
                 valid = false;
-                //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
             }
         } else {
-             valid = false;
-           // throw new AppException(460, 1, "No contiene token", "Usuario no logeado", "www.google.com", "USERNOTSIGNIN");
+            valid = false;
+            // throw new AppException(460, 1, "No contiene token", "Usuario no logeado", "www.google.com", "USERNOTSIGNIN");
         }
         return valid;
     }

@@ -101,14 +101,18 @@ public class RoundsDAO extends GenericDAO<Rounds> {
         save(existround);
     }
 
-    public boolean validateRoundbytoken(String token) throws JsonProcessingException {
+    public boolean validateRoundbytoken(String token, Long codeQuiz, Long codeperson, Long roundNumber) {
         boolean valid = false;
-        if (!token.equals("") && token != null) {
-            if (validateJWT(token) == true) {
-                valid = true;
+        if (token != null) {
+            if (!token.equals("")) {
+                if (validateJWT(token, codeQuiz, codeperson, roundNumber) == true) {
+                    valid = true;
+                } else {
+                    valid = false;
+                    //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
+                }
             } else {
                 valid = false;
-                //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
             }
         } else {
             valid = false;
@@ -117,43 +121,36 @@ public class RoundsDAO extends GenericDAO<Rounds> {
         return valid;
     }
 
-    public boolean validateJWT(String token) throws JsonProcessingException {
-        boolean valid;
+    public boolean validateJWT(String token, Long codeQuiz, Long codeperson, Long roundNumber) {
+        boolean valid = false;
         RoundsPK payloadRoundPK = getpayloadJWT(token);
         if (payloadRoundPK != null) {
             List<Rounds> round = getRoundbyroundPK(payloadRoundPK.getCodeQuiz(), payloadRoundPK.getRoundNumber(), payloadRoundPK.getCodePerson());
             if (round.size() > 0) {
                 if (round.get(0).getToken().equals(token)) {
-                    valid = true;
-                } else {
-                    valid = false;
-                    // throw new AppException("TOKEN NO VALIDO", "Los tokens no son iguales");
+                    Long codepersontoken=round.get(0).getRoundsPK().getCodePerson();
+                    Long roundNumbertoken=round.get(0).getRoundsPK().getRoundNumber();
+                    Long codequiztoken=round.get(0).getRoundsPK().getCodeQuiz();
+                    if (codepersontoken.compareTo(codeperson) == 0  && codequiztoken.compareTo(codeQuiz)== 0 ) {
+                        valid = true;
+                        // throw new AppException("TOKEN NO VALIDO", "Los tokens no son iguales");
+                    }
                 }
-            } else {
-                valid = false;
-                // throw new AppException("TOKEN NO VALIDO", "Email no registrado");
             }
-        } else {
-            valid = false;
         }
-
         return valid;
     }
 
-    public RoundsPK getpayloadJWT(String token) throws JsonProcessingException {
+    public RoundsPK getpayloadJWT(String token) {
         RoundsPK pk = null;
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary("FuzziDelphiKey"))
                 .parseClaimsJws(token).getBody();
-        if (claims.get("roundPK") != null) {
-            Object obj = claims.get("roundPK");
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonstring=mapper.writeValueAsString(obj);
-            JSONObject json = new JSONObject(jsonstring);
-            
-            Long codequiz = Long.parseLong(json.get("codeQuiz").toString());
-            Long roundNumber = Long.parseLong(json.get("roundNumber").toString());
-            Long codePerson = Long.parseLong(json.get("codePerson").toString());
+        if (claims.get("codeQuiz") != null && claims.get("roundNumber") != null && claims.get("codePerson") != null) {
+
+            Long codequiz = Long.parseLong(claims.get("codeQuiz").toString());
+            Long roundNumber = Long.parseLong(claims.get("roundNumber").toString());
+            Long codePerson = Long.parseLong(claims.get("codePerson").toString());
             pk = new RoundsPK();
             pk.setCodePerson(codePerson);
             pk.setRoundNumber(roundNumber);

@@ -42,7 +42,7 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     QuizValuesDAO quizValuesDAO;
     @Inject()
     RoundsDAO roundsDAO;
-    @Inject
+    @Inject()
     UserDAO userDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -89,16 +89,16 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     public void customerquizvalues(QuizValueSaveContainer quizvalues,
-            @HeaderParam("authorization") String authString) 
+            @HeaderParam("authorization") String authString)
             throws JsonProcessingException {
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
-            roundsDAO.setsentstatus(quizvalues);
-            quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
-        }else{
+         if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString,quizvalues.getQuiz().getQuizPK().getCodeQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber())==true) {
+        roundsDAO.setsentstatus(quizvalues);
+        quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
+         }else{
         throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
     }
-    
+
     @GET
     @Path("getquizvalues")
     @Produces({MediaType.APPLICATION_JSON})
@@ -111,10 +111,10 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         List<QuizValuesContainer> containers = null;
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString, codeQuiz, codePerson, roundNumber) == true) {
             containers = quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
-        }else{
-        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
+        } else {
+            throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return containers;
     }

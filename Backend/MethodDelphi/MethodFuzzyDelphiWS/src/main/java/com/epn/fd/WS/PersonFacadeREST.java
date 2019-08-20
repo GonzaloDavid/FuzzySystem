@@ -42,7 +42,7 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
 
     @Inject()
     RoundsDAO roundsDAO;
-    
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -73,12 +73,7 @@ public class PersonFacadeREST extends AbstractFacade<Person> {
             @QueryParam("codeperson") Long codeperson,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        String personbycode = null;
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
-            personbycode = personDAO.getpersonbycode(codeperson);
-        }else{
-        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
-        }
+        String personbycode = personDAO.getpersonbycode(codeperson);
         return personbycode;
     }
 

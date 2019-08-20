@@ -47,7 +47,7 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
 
     @Inject()
     UserDAO userDAO;
-    
+
     @Inject()
     RoundsDAO roundsDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
@@ -164,15 +164,9 @@ public class DelphiCalculationsFacadeREST extends AbstractFacade<DelphiCalculati
             @QueryParam("codeQuizItem") Long codeQuizItem,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        String response = null;
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
-
-            List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
-            ObjectMapper mapper = new ObjectMapper();
-            response = mapper.writeValueAsString(delphiCalculations);
-        }else{
-        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
-        }
+        List<DelphiCalculationsContainer> delphiCalculations = delphiCalculationDAO.getDelphiCalculations(codeQuiz, codeQuestions, codeQuizItem, roundNumber);
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(delphiCalculations);
         return response;
     }
 

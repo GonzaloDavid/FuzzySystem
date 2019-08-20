@@ -47,12 +47,15 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.quiz")
 public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
-    @Inject
+    @Inject()
     QuizDAO quizDAO;
-    @Inject
+    
+    @Inject()
     RoundsDAO roundsDAO;
-    @Inject
+    
+    @Inject()
     UserDAO userDAO;
+    
     @Inject()
     EnvironmentDAO environmentDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
@@ -89,14 +92,10 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     )
             throws JsonProcessingException {
         String response = null;
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString)==true) {
-            List<QuizContainer> containers = new ArrayList<>();
-            containers = quizDAO.getQuizbycode(codeQuiz);
-            ObjectMapper mapper = new ObjectMapper();
-            response = mapper.writeValueAsString(containers);
-        }else{
-        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
-        }
+        List<QuizContainer> containers = new ArrayList<>();
+        containers = quizDAO.getQuizbycode(codeQuiz);
+        ObjectMapper mapper = new ObjectMapper();
+        response = mapper.writeValueAsString(containers);
         return response;
 
     }
@@ -166,7 +165,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             emailcontainer.getPersons().forEach(person -> {
                 String key = "FuzziDelphiKey";
                 String subject = "FuzziDelphiSystemClient";
-              //  String namejson = "roundPK";
+                //  String namejson = "roundPK";
                 long expirationTime = System.currentTimeMillis() + 604800000;
 
                 RoundsPK roundPK = new RoundsPK();
