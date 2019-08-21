@@ -71,10 +71,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             );
 
             calculations.setStatusResultCat1("STATUSRESULTCAT");
-            if (lowerAverage.compareTo(threshold) == 0 || lowerAverage.compareTo(threshold) == 1) {
-                calculations.setStatusResult("approved");
-            } else {
-                calculations.setStatusResult("rejected");
+            if(validated==1)
+            {
+                 calculations.setStatusResult("approved");
+            }else{
+            calculations.setStatusResult("rejected");
             }
             calculations.setUserCreate(BigInteger.ONE);
             calculations.setUserLastModify(BigInteger.ONE);
