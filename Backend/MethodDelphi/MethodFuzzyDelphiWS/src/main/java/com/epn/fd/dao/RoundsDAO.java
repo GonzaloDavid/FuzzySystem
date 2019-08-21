@@ -120,7 +120,7 @@ public class RoundsDAO extends GenericDAO<Rounds> {
         }
         return valid;
     }
-
+    
     public boolean validateJWT(String token, Long codeQuiz, Long codeperson, Long roundNumber) {
         boolean valid = false;
         RoundsPK payloadRoundPK = getpayloadJWT(token);
