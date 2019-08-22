@@ -5,6 +5,8 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.Item;
+import com.epn.dtos.ItemResponse;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizValuesContainer;
 import com.epn.entities.FilterTypes;
@@ -13,6 +15,7 @@ import com.epn.entities.QuizvaluesPK;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
 import com.epn.mapper.QuizvaluesMapper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import org.mapstruct.factory.Mappers;
@@ -58,7 +61,35 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
                 }
             });
         });
+    }
 
+    public void saveQuizValuesResultConsensus(Item itemResult) {
+
+        List<ItemResponse> itemListResponses = itemResult.getItemResponseList();
+        List<Quizvalues> quizValuesList = new ArrayList<>();
+
+        itemListResponses.forEach(item -> {
+            QuizvaluesPK quizvaluesPK = new QuizvaluesPK(
+                    item.getRoundNumber(), item.getCodePerson(),
+                    item.getCodeQuiz(), item.getCodeQuestion(), item.getCodeItem()
+            );
+
+            Quizvalues quizvalues = new Quizvalues(
+                    quizvaluesPK,
+                    item.getMinValue().toString(),
+                    item.getAveValue().toString(),
+                    item.getMaxValue().toString(),
+                    item.getRangeG(),
+                    item.getStatusRangeG(),
+                    item.getRangeC(),
+                    item.getDistanceGtoC(),
+                    item.getValidate(),
+                    0,
+                    0
+            );
+            quizValuesList.add(quizvalues);
+        });
+        updateList(quizValuesList);
     }
 
     public List<QuizValuesContainer> getquizvalues(Long codeQuiz, Long codeQuestions, Long codeQuizItem, Long codePerson,

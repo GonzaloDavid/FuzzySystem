@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author david
+ * @author ka
  */
 @Embeddable
 public class QuizvaluesPK implements Serializable {

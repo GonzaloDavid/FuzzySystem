@@ -15,6 +15,8 @@ import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.Person;
+import com.epn.entities.Quizvalues;
+import com.epn.entities.QuizvaluesPK;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.DelphiCalculationsMapper;
 import java.math.BigDecimal;
@@ -71,7 +73,7 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             );
 
             calculations.setStatusResultCat1("STATUSRESULTCAT");
-            if (lowerAverage.compareTo(threshold) == 0 || lowerAverage.compareTo(threshold) == 1) {
+            if (validated.compareTo(1) == 0) {
                 calculations.setStatusResult("approved");
             } else {
                 calculations.setStatusResult("rejected");
@@ -79,6 +81,9 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             calculations.setUserCreate(BigInteger.ONE);
             calculations.setUserLastModify(BigInteger.ONE);
             delphiCalculationsList.add(calculations);
+
+            // Save concensus each item
+            quizValuesDAO.saveQuizValuesResultConsensus(item);
         }
         );
         updateList(delphiCalculationsList);
