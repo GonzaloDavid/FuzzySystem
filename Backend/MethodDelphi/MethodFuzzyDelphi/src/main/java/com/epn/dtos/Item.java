@@ -31,6 +31,7 @@ public class Item {
     private Double upperAverage;
 
     private int validate; // Validar 0 o 1, false or true, rechazar o aceptar, eliminar o seleccionar.
+    private int consensus; // Validar consenso del grupo...
     ArrayList<ItemResponse> itemResponseList; // Lista de respuestas!!! ...
     // Constantes ==========================
     protected static String MIN = "minimo";
@@ -97,8 +98,14 @@ public class Item {
 
     public void determinateConsensusByItemResponses() {
         if (this.lowerValue != null && this.mediaValue != null) {
+
+            this.consensus = 1; // preview of consensus is true.
+
             this.itemResponseList.forEach(itemResponse -> {
-                itemResponse.calculateConsensus(this.lowerValue, this.mediaValue);
+
+                if (!itemResponse.calculateConsensus(this.lowerValue, this.mediaValue)) {
+                    this.consensus = 0;
+                }
             });
         }
     }
@@ -145,6 +152,10 @@ public class Item {
 
     public void setRoundNumber(Long roundNumber) {
         this.roundNumber = roundNumber;
+    }
+
+    public int getConsensus() {
+        return consensus;
     }
 
     public Long getCodeQuiz() {

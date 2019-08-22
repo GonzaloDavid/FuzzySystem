@@ -9,7 +9,6 @@ package com.epn.dtos;
  *
  * @author ka
  */
-
 public class ItemResponse {
 
     private Long roundNumber;
@@ -44,13 +43,15 @@ public class ItemResponse {
         this.maxValue = maxValue;
     }
 
-    public void calculateConsensus(Double lowerValue, Double middleValue) {
+    public boolean calculateConsensus(Double lowerValue, Double middleValue) {
 
         this.rangeG = this.maxValue - lowerValue;
         this.statusRangeG = (this.rangeG > 0) ? 1 : 0;
         this.rangeC = Math.abs((this.aveValue - middleValue));
         this.distanceGtoC = this.rangeG - this.rangeC;
         this.validate = (this.distanceGtoC > 0) ? 1 : 0;
+
+        return (statusRangeG == 1 && validate == 1);
 
     }
 

@@ -60,12 +60,15 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             BigDecimal mediaAverage = new BigDecimal(item.getMediaAverage());
             BigDecimal upperAverage = new BigDecimal(item.getUpperAverage());
             Integer validated = item.getValidate();
+            Integer consensusGroup = item.getConsensus();
+            
 
             DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK, lowerValue, mediaValue,
-                    upperValue, defuzzificationValue, threshold, lowerAverage, mediaAverage, upperAverage, validated);
+                    upperValue, defuzzificationValue, threshold, lowerAverage, 
+                    mediaAverage, upperAverage, validated, consensusGroup);
 
             calculations.setStatusResultCat1("STATUSRESULTCAT");
-            if (validated == 1) {
+            if (validated == 1 && consensusGroup == 1) {
                 calculations.setStatusResult("approved");
             } else {
                 calculations.setStatusResult("rejected");

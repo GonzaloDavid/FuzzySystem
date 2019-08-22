@@ -76,6 +76,9 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
 
             Quizvalues quizvalues = new Quizvalues(
                     quizvaluesPK,
+                    String.valueOf(item.getMinValue().intValue()),
+                    String.valueOf(item.getAveValue().intValue()),
+                    String.valueOf(item.getMaxValue().intValue()),
                     item.getRangeG(),
                     item.getStatusRangeG(),
                     item.getRangeC(),

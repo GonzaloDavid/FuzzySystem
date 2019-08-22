@@ -23,6 +23,7 @@ public class DelphiCalculationsContainer {
     private BigDecimal mediaAverage;
     private BigDecimal upperAverage;
     private int validated;
+    private int consensus;
     private String statusResultCat1;
     private String statusResult;
     private String namestatusresultcat;
@@ -34,7 +35,7 @@ public class DelphiCalculationsContainer {
     }
 
     
-    public DelphiCalculationsContainer(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, int validated, String statusResultCat1, String statusResult) {
+    public DelphiCalculationsContainer(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, int validated,int consensus, String statusResultCat1, String statusResult) {
         this.delphiCalculationsPK = delphiCalculationsPK;
         this.lowerValue = lowerValue;
         this.mediaValue = mediaValue;
@@ -45,6 +46,7 @@ public class DelphiCalculationsContainer {
         this.mediaAverage = mediaAverage;
         this.upperAverage = upperAverage;
         this.validated = validated;
+        this.consensus = consensus;
         this.statusResultCat1 = statusResultCat1;
         this.statusResult = statusResult;
     }
@@ -71,6 +73,14 @@ public class DelphiCalculationsContainer {
 
     public void setMediaValue(BigDecimal mediaValue) {
         this.mediaValue = mediaValue;
+    }
+
+    public int getConsensus() {
+        return consensus;
+    }
+
+    public void setConsensus(int consensus) {
+        this.consensus = consensus;
     }
 
     public BigDecimal getUpperValue() {

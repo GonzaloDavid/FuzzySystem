@@ -21,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "DelphiCalculations.findByLowerAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.lowerAverage = :lowerAverage")
     , @NamedQuery(name = "DelphiCalculations.findByMediaAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.mediaAverage = :mediaAverage")
     , @NamedQuery(name = "DelphiCalculations.findByUpperAverage", query = "SELECT d FROM DelphiCalculations d WHERE d.upperAverage = :upperAverage")
+    , @NamedQuery(name = "DelphiCalculations.findByConsensus", query = "SELECT d FROM DelphiCalculations d WHERE d.consensus = :consensus")
     , @NamedQuery(name = "DelphiCalculations.findByValidated", query = "SELECT d FROM DelphiCalculations d WHERE d.validated = :validated")
     , @NamedQuery(name = "DelphiCalculations.findByDateCreate", query = "SELECT d FROM DelphiCalculations d WHERE d.dateCreate = :dateCreate")
     , @NamedQuery(name = "DelphiCalculations.findByDateLastModify", query = "SELECT d FROM DelphiCalculations d WHERE d.dateLastModify = :dateLastModify")
@@ -83,6 +83,9 @@ public class DelphiCalculations implements Serializable {
     @Basic(optional = false)
     @Column(name = "validated")
     private int validated;
+    @Basic(optional = false)
+    @Column(name = "consensus")
+    private int consensus;
     @Column(name = "statusResultCat")
     private String statusResultCat1;
     @Column(name = "statusResult")
@@ -127,7 +130,7 @@ public class DelphiCalculations implements Serializable {
         this.delphiCalculationsPK = delphiCalculationsPK;
     }
 
-    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, int validated) {
+    public DelphiCalculations(DelphiCalculationsPK delphiCalculationsPK, BigDecimal lowerValue, BigDecimal mediaValue, BigDecimal upperValue, BigDecimal defuzzificationValue, BigDecimal threshold, BigDecimal lowerAverage, BigDecimal mediaAverage, BigDecimal upperAverage, int validated, int consensus) {
         this.delphiCalculationsPK = delphiCalculationsPK;
         this.lowerValue = lowerValue;
         this.mediaValue = mediaValue;
@@ -138,6 +141,7 @@ public class DelphiCalculations implements Serializable {
         this.mediaAverage = mediaAverage;
         this.upperAverage = upperAverage;
         this.validated = validated;
+        this.consensus = consensus;
     }
 
     public DelphiCalculations(long codeQuiz, long codeQuestions, long codeQuizItem, long roundNumber) {
@@ -154,6 +158,14 @@ public class DelphiCalculations implements Serializable {
 
     public BigDecimal getLowerValue() {
         return lowerValue;
+    }
+
+    public int getConsensus() {
+        return consensus;
+    }
+
+    public void setConsensus(int consensus) {
+        this.consensus = consensus;
     }
 
     public void setLowerValue(BigDecimal lowerValue) {
