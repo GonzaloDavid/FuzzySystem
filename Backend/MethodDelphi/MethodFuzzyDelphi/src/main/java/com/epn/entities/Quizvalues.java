@@ -139,11 +139,8 @@ public class Quizvalues implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public Quizvalues(QuizvaluesPK quizvaluesPK, String minimumValue, String averageValue, String maximunValue, Double rangeG, Integer statusRangeG,Double rangeC,Double distanceGtoC,Integer validated, long userCreate, long userLastModify) {
+    public Quizvalues(QuizvaluesPK quizvaluesPK, Double rangeG, Integer statusRangeG, Double rangeC, Double distanceGtoC, Integer validated, long userCreate, long userLastModify) {
         this.quizvaluesPK = quizvaluesPK;
-        this.minimumValue = minimumValue;
-        this.averageValue = averageValue;
-        this.maximunValue = maximunValue;
         this.rangeG = rangeG;
         this.statusRangeG = statusRangeG;
         this.rangeC = rangeC;

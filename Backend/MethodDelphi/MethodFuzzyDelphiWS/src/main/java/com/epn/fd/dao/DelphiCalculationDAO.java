@@ -8,15 +8,10 @@ package com.epn.fd.dao;
 import com.epn.dtos.DelphiCalculationsContainer;
 import com.epn.dtos.Item;
 import com.epn.dtos.ItemResponse;
-import com.epn.dtos.ListAndCountContainer;
-import com.epn.dtos.PersonContainer;
 import com.epn.dtos.QuestionContainer;
 import com.epn.entities.DelphiCalculations;
 import com.epn.entities.DelphiCalculationsPK;
 import com.epn.entities.FilterTypes;
-import com.epn.entities.Person;
-import com.epn.entities.Quizvalues;
-import com.epn.entities.QuizvaluesPK;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.DelphiCalculationsMapper;
 import java.math.BigDecimal;
@@ -87,9 +82,7 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
     }
 
     public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
-        // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y
-        // codeQuiz...
-
+        
         List<Item> itemList = new ArrayList();
 
         List<QuestionContainer> questionContainer = questionDAO.getQuestionByCodeQuizAndCodeQuestions(codeQuiz,
