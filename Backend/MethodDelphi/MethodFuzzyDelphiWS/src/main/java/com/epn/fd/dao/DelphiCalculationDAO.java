@@ -54,7 +54,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         List<Item> listItemResults = runFuzzyDelphiByQuestion(codeQuiz, roundNumber, codeQuestions);
 
         listItemResults.forEach(item -> {
-            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(item.getCodeQuiz(), item.getCodeQuestion(), item.getCodeItem(), item.getRoundNumber());
+            DelphiCalculationsPK delphiCalculationsPK = new DelphiCalculationsPK(item.getCodeQuiz(),
+                    item.getCodeQuestion(), item.getCodeItem(), item.getRoundNumber());
             BigDecimal lowerValue = new BigDecimal(item.getLowerValue());
             BigDecimal mediaValue = new BigDecimal(item.getMediaValue());
             BigDecimal upperValue = new BigDecimal(item.getUpperValue());
@@ -65,15 +66,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             BigDecimal upperAverage = new BigDecimal(item.getUpperAverage());
             Integer validated = item.getValidate();
 
-            DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK,
-                    lowerValue, mediaValue, upperValue,
-                    defuzzificationValue, threshold,
-                    lowerAverage, mediaAverage, upperAverage,
-                    validated
-            );
+            DelphiCalculations calculations = new DelphiCalculations(delphiCalculationsPK, lowerValue, mediaValue,
+                    upperValue, defuzzificationValue, threshold, lowerAverage, mediaAverage, upperAverage, validated);
 
             calculations.setStatusResultCat1("STATUSRESULTCAT");
-            if (validated.compareTo(1) == 0) {
+            if (validated == 1) {
                 calculations.setStatusResult("approved");
             } else {
                 calculations.setStatusResult("rejected");
@@ -84,18 +81,19 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
 
             // Save concensus each item
             quizValuesDAO.saveQuizValuesResultConsensus(item);
-        }
-        );
+        });
         updateList(delphiCalculationsList);
         return delphiCalculationsList;
     }
 
     public List<Item> runFuzzyDelphiByQuestion(Long codeQuiz, Long roundNumber, Long codeQuestions) {
-        // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y codeQuiz...
+        // QuestionItem sacar la lista de codigosQuizItems por codeQuestions y
+        // codeQuiz...
 
         List<Item> itemList = new ArrayList();
 
-        List<QuestionContainer> questionContainer = questionDAO.getQuestionByCodeQuizAndCodeQuestions(codeQuiz, codeQuestions);
+        List<QuestionContainer> questionContainer = questionDAO.getQuestionByCodeQuizAndCodeQuestions(codeQuiz,
+                codeQuestions);
 
         questionContainer.forEach(question -> {
             float threshold = question.getDiffuseDelphiDiscriminatorbyQuestion().floatValue();
@@ -105,7 +103,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
                 Long codeQuestionsItem = itemQuestion.getQuestionItemPK().getCodeQuestions();
                 Long codeItem = itemQuestion.getQuestionItemPK().getCodeQuizItem();
 
-                Item item = this.runFuzzyDelphiByItem(roundNumber, codeQuizItem, codeQuestionsItem, codeItem, threshold);
+                Item item = this.runFuzzyDelphiByItem(roundNumber, codeQuizItem, codeQuestionsItem, codeItem,
+                        threshold);
                 if (!item.getItemResponseList().isEmpty()) {
                     itemList.add(item);
                 }
@@ -116,9 +115,11 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         return itemList;
     }
 
-    public Item runFuzzyDelphiByItem(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem, float threshold) {
+    public Item runFuzzyDelphiByItem(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem,
+            float threshold) {
 
-        ArrayList<ItemResponse> itemResponsesList = getItemResponseListBy(roundNumber, codeQuiz, codeQuestions, codeQuizItem);
+        ArrayList<ItemResponse> itemResponsesList = getItemResponseListBy(roundNumber, codeQuiz, codeQuestions,
+                codeQuizItem);
 
         for (ItemResponse itemResponse : itemResponsesList) {
             roundNumber = itemResponse.getRoundNumber();
@@ -137,7 +138,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         return item;
     }
 
-    public ArrayList<ItemResponse> getItemResponseListBy(Long roundNumber, Long codeQuiz, Long codeQuestions, Long codeQuizItem) {
+    public ArrayList<ItemResponse> getItemResponseListBy(Long roundNumber, Long codeQuiz, Long codeQuestions,
+            Long codeQuizItem) {
         ArrayList<ItemResponse> itemResponsesList = new ArrayList();
 
         quizValuesDAO.getQuizValuesListBy(roundNumber, codeQuiz, codeQuestions, codeQuizItem).forEach(quizValues -> {
@@ -149,7 +151,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
             Double minValue = Double.parseDouble(quizValues.getMinimumValue());
             Double aveValue = Double.parseDouble(quizValues.getAverageValue());
             Double maxValue = Double.parseDouble(quizValues.getMaximunValue());
-            itemResponsesList.add(new ItemResponse(roundNumberFound, codeQuizFound, codeQuestionsFound, codePersonFound, codeQuizItemFound, minValue, aveValue, maxValue));
+            itemResponsesList.add(new ItemResponse(roundNumberFound, codeQuizFound, codeQuestionsFound, codePersonFound,
+                    codeQuizItemFound, minValue, aveValue, maxValue));
         });
 
         return itemResponsesList;
@@ -165,7 +168,8 @@ public class DelphiCalculationDAO extends GenericDAO<DelphiCalculations> {
         return containers;
     }
 
-    public List<DelphiCalculationsContainer> getDelphiCalculations(Long codeQuiz, Long codeQuestions, Long codeQuizItem, Long roundNumber) {
+    public List<DelphiCalculationsContainer> getDelphiCalculations(Long codeQuiz, Long codeQuestions, Long codeQuizItem,
+            Long roundNumber) {
         SearchObject search = new SearchObject("delphiCalculationsPK");
         search.addParameter("delphiCalculationsPK.roundNumber", FilterTypes.EQUAL, roundNumber);
         search.addParameter("delphiCalculationsPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);

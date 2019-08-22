@@ -88,14 +88,16 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Path("quizvalues")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void customerquizvalues(QuizValueSaveContainer quizvalues,
+    public void customerquizvalues(
+            QuizValueSaveContainer quizvalues,
             @HeaderParam("authorization") String authString)
             throws JsonProcessingException {
-         if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString,quizvalues.getQuiz().getQuizPK().getCodeQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber())==true) {
-        roundsDAO.setsentstatus(quizvalues);
-        quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
-         }else{
-        throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
+        //  if (roundsDAO.validateRoundbytoken(authString,quizvalues.getQuiz().getQuizPK().getCodeQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber())==true) {
+        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString, quizvalues.getQuiz().getQuizPK().getCodeQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber()) == true) {
+            roundsDAO.setsentstatus(quizvalues);
+            quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
+        } else {
+            throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
     }
 
