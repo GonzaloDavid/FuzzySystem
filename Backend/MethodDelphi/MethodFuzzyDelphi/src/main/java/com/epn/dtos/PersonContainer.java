@@ -37,6 +37,7 @@ public class PersonContainer {
     private String country;
     private String statusCat;
     private String status;
+    private String bibliography;
 
     public PersonContainer() {
     }
@@ -248,6 +249,14 @@ public class PersonContainer {
 
     public void setWorkArea(String workArea) {
         this.workArea = workArea;
+    }
+
+    public String getBibliography() {
+        return bibliography;
+    }
+
+    public void setBibliography(String bibliography) {
+        this.bibliography = bibliography;
     }
     
 }
