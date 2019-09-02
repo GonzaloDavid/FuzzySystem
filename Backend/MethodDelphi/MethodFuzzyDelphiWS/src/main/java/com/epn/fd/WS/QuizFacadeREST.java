@@ -165,7 +165,6 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             emailcontainer.getPersons().forEach(person -> {
                 String key = "FuzziDelphiKey";
                 String subject = "FuzziDelphiSystemClient";
-                //  String namejson = "roundPK";
                 long expirationTime = System.currentTimeMillis() + 604800000;
 
                 RoundsPK roundPK = new RoundsPK();
@@ -180,7 +179,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
                 round.setSentstatusCatalogue("SENTSTATUSCAT");
                 round.setSentstatus(emailcontainer.getSentstatus());
                 roundsDAO.save(round);
-                quizDAO.sendquiz(quiz, person, uribase, emailcontainer.getRoundNumber(), jwt.getString("JWT"));
+                quizDAO.sendquiz(quiz, person, uribase, emailcontainer.getRoundNumber(), jwt.getString("JWT"),emailcontainer.getDescriptionemail());
             });
         }
     }

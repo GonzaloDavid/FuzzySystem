@@ -19,6 +19,7 @@ public class EmailContainer {
     Quiz quiz= new Quiz();
     Long roundNumber;
     String sentstatus;
+    String descriptionemail;
 
     public EmailContainer() {
     }
@@ -54,6 +55,14 @@ public class EmailContainer {
     public void setSentstatus(String sentstatus) {
         this.sentstatus = sentstatus;
     }
-    
+
+    public String getDescriptionemail() {
+        return descriptionemail;
+    }
+
+    public void setDescriptionemail(String descriptionemail) {
+        this.descriptionemail = descriptionemail;
+    }
+     
     
 }

@@ -120,12 +120,18 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
     }
 
-    public void sendquiz(Quiz quiz,Person person,String uribase,Long roundNumber,String token) {
+    public void sendquiz(Quiz quiz, Person person, String uribase, Long roundNumber,
+            String token, String descriptionMail) {
         try {
-            String link = uribase + "/" + roundNumber + "/" + person.getCodePerson() + "/" + quiz.getQuizPK().getCodeQuiz() + "/"+token;
+            String message = "";
+            if (descriptionMail != null) {
+                message = descriptionMail;
+            } else {
+                message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.getDescription() + "</span>";
+            }
+            String link = uribase + "/" + roundNumber + "/" + person.getCodePerson() + "/" + quiz.getQuizPK().getCodeQuiz() + "/" + token;
             String nameQuiz = quiz.getShortNameQuiz();
             String nameperson = "<span>Saludos Estimad@ " + person.getName() + "</span><br>";
-            String message = "<span> Usted ha sido seleccionado para participar en una encuesta acerca de " + quiz.getDescription() + "</span>";
             String footer = "<span>La información transmitida a través del sistema debe ser tratada con confidencialidad , al entrar usted al sistema acepta el compromiso de no divulgar la información que se presente a continuación.</span><br>";
             String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
                     + "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
