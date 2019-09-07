@@ -99,6 +99,8 @@ public class Person implements Serializable {
     private String academicDegree;
     @Column(name = "country")
     private String country;
+    @Column(name = "contactNumber")
+    private String contactNumber;
     @Column(name = "statusCat")
     private String statusCat;
     @Column(name = "status")
@@ -178,6 +180,14 @@ public class Person implements Serializable {
         this.catalogueitem1 = catalogueitem1;
         this.catalogueitem2 = catalogueitem2;
         this.catalogueitem4 = catalogueitem4;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getNames() {

@@ -30,6 +30,9 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
+        resources.add(com.epn.exception.AppExceptionMapper.class);
+        resources.add(com.epn.exception.GenericExceptionMapper.class);
+        resources.add(com.epn.exception.NotFoundExceptionMapper.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
         resources.add(com.epn.fd.WS.DelphiCalculationsFacadeREST.class);

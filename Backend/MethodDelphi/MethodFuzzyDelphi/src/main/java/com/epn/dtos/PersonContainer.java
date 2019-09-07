@@ -18,6 +18,7 @@ public class PersonContainer {
     private String names;
     private String lastNames;
     private String name;
+    private String contactNumber;
     private String email;
     private Date birthday;
     private String sexCat;
@@ -67,6 +68,15 @@ public class PersonContainer {
         this.status = status;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    
     public String getNames() {
         return names;
     }
