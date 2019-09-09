@@ -22,8 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "QuestionItem.findByCodeQuestions", query = "SELECT q FROM QuestionItem q WHERE q.questionItemPK.codeQuestions = :codeQuestions"),
     @NamedQuery(name = "QuestionItem.findByCodeQuiz", query = "SELECT q FROM QuestionItem q WHERE q.questionItemPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "QuestionItem.findByItemLabel", query = "SELECT q FROM QuestionItem q WHERE q.itemLabel = :itemLabel"),
+    @NamedQuery(name = "QuestionItem.findByClassification", query = "SELECT q FROM QuestionItem q WHERE q.classification = :classification"),
     @NamedQuery(name = "QuestionItem.findByDateCreate", query = "SELECT q FROM QuestionItem q WHERE q.dateCreate = :dateCreate"),
     @NamedQuery(name = "QuestionItem.findByDateLastModify", query = "SELECT q FROM QuestionItem q WHERE q.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "QuestionItem.findByUserCreate", query = "SELECT q FROM QuestionItem q WHERE q.userCreate = :userCreate"),
@@ -55,6 +54,8 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "itemLabel")
     private String itemLabel;
+    @Column(name = "classification")
+    private String classification;
     @Column(name = "itemdescription")
     private String itemdescription;
     @Column(name = "itemobservation")
@@ -99,6 +100,14 @@ public class QuestionItem implements Serializable {
         this.userLastModify = userLastModify;
     }
 
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+    
     public QuestionItem(long codeQuizItem, long codeQuestions, long codeQuiz) {
         this.questionItemPK = new QuestionItemPK(codeQuizItem, codeQuestions, codeQuiz);
     }

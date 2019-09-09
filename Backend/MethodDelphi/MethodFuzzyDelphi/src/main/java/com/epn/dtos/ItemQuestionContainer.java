@@ -15,6 +15,7 @@ public class ItemQuestionContainer {
 
     private QuestionItemPK questionItemPK;
     private String itemLabel;
+    private String classification;
     private String maximunValue;
     private String minimumValue;
     private String averageValue;
@@ -22,7 +23,7 @@ public class ItemQuestionContainer {
     private String itemobservation;
     private String statusCat;
     private String status;
-    
+
     private long userCreate;
     private long userLastModify;
 
@@ -33,14 +34,23 @@ public class ItemQuestionContainer {
         this.questionItemPK = questionItemPK;
     }
 
-    public ItemQuestionContainer(QuestionItemPK questionItemPK, String itemLabel, String maximunValue, String minimumValue, String averageValue, long userCreate, long userLastModify) {
+    public ItemQuestionContainer(QuestionItemPK questionItemPK, String itemLabel, String classification, String maximunValue, String minimumValue, String averageValue, long userCreate, long userLastModify) {
         this.questionItemPK = questionItemPK;
         this.itemLabel = itemLabel;
+        this.classification = classification;
         this.maximunValue = maximunValue;
         this.minimumValue = minimumValue;
         this.averageValue = averageValue;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
     }
 
     public String getItemLabel() {
@@ -130,6 +140,5 @@ public class ItemQuestionContainer {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-   
+
 }
