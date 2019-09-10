@@ -30,21 +30,21 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
-        resources.add(com.epn.exception.AppExceptionMapper.class);
-        resources.add(com.epn.exception.GenericExceptionMapper.class);
-        resources.add(com.epn.exception.NotFoundExceptionMapper.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
+        resources.add(com.epn.fd.WS.CriteriaFAHPFacadeREST.class);
         resources.add(com.epn.fd.WS.DelphiCalculationsFacadeREST.class);
         resources.add(com.epn.fd.WS.EnvironmentFacadeREST.class);
         resources.add(com.epn.fd.WS.ItemCommentFacadeREST.class);
         resources.add(com.epn.fd.WS.MenuFacadeREST.class);
         resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
+        resources.add(com.epn.fd.WS.ProcessFAHPFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionItemFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionsFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizvaluesFacadeREST.class);
+        resources.add(com.epn.fd.WS.ResultFAHPFacadeREST.class);
         resources.add(com.epn.fd.WS.RoundsFacadeREST.class);
         resources.add(com.epn.fd.WS.UserFacadeREST.class);
     }

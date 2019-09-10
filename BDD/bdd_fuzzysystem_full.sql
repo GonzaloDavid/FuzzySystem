@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.26, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
 --
--- Host: localhost    Database: dephifuzzymethod
+-- Host: localhost    Database: DephiFuzzyMethod
 -- ------------------------------------------------------
--- Server version	5.7.26-log
+-- Server version	5.7.26-0ubuntu0.18.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -249,7 +249,7 @@ CREATE TABLE `Person` (
   CONSTRAINT `Person_catalogueitem_FK_1` FOREIGN KEY (`typeIdentifyCat`, `typeIdentify`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_2` FOREIGN KEY (`academicDegreeCat`, `academicDegree`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_4` FOREIGN KEY (`statusCat`, `status`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -509,6 +509,47 @@ INSERT INTO `User` VALUES (1,'davidgonzalomejia@hotmail.com','elpapidelasnenas#s
 UNLOCK TABLES;
 
 --
+-- Table structure for table `attributesMatrixValue`
+--
+
+DROP TABLE IF EXISTS `attributesMatrixValue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attributesMatrixValue` (
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `codeitem` bigint(20) NOT NULL,
+  `codeitemCouple` bigint(20) NOT NULL,
+  `codePerson` bigint(20) NOT NULL,
+  `valuecriteriaFAHP` varchar(100) NOT NULL,
+  `valuecriteriaFAHPCat` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codePerson`,`codeitem`,`codeitemCouple`,`codeQuiz`,`codeQuestions`),
+  KEY `attributesMatrixValue_Quiz_FK` (`codeQuiz`),
+  KEY `attributesMatrixValue_Questions_FK` (`codeQuestions`,`codeQuiz`),
+  KEY `attributesMatrixValue_QuestionItem_FK` (`codeitem`,`codeQuestions`,`codeQuiz`),
+  KEY `attributesMatrixValue_catalogueitem_FK` (`valuecriteriaFAHPCat`,`valuecriteriaFAHP`),
+  CONSTRAINT `attributesMatrixValue_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
+  CONSTRAINT `attributesMatrixValue_QuestionItem_FK` FOREIGN KEY (`codeitem`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
+  CONSTRAINT `attributesMatrixValue_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
+  CONSTRAINT `attributesMatrixValue_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
+  CONSTRAINT `attributesMatrixValue_catalogueitem_FK` FOREIGN KEY (`valuecriteriaFAHPCat`, `valuecriteriaFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attributesMatrixValue`
+--
+
+LOCK TABLES `attributesMatrixValue` WRITE;
+/*!40000 ALTER TABLE `attributesMatrixValue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attributesMatrixValue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `catalogue`
 --
 
@@ -565,6 +606,77 @@ LOCK TABLES `catalogueitem` WRITE;
 /*!40000 ALTER TABLE `catalogueitem` DISABLE KEYS */;
 INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','approved','Aprobado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','rejected','No converge','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
 /*!40000 ALTER TABLE `catalogueitem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `criteriaFAHP`
+--
+
+DROP TABLE IF EXISTS `criteriaFAHP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `criteriaFAHP` (
+  `codeCriteria` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nameCriteria` varchar(100) NOT NULL,
+  `descriptionCriteria` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeCriteria`),
+  UNIQUE KEY `codeQuiz_UNIQUE` (`codeCriteria`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `criteriaFAHP`
+--
+
+LOCK TABLES `criteriaFAHP` WRITE;
+/*!40000 ALTER TABLE `criteriaFAHP` DISABLE KEYS */;
+INSERT INTO `criteriaFAHP` VALUES (1,'rr','tt','2019-09-10 14:57:01','2019-09-10 14:57:01',0,0),(3,'ttt','ttt','2019-09-10 14:57:01','2019-09-10 14:57:01',0,0);
+/*!40000 ALTER TABLE `criteriaFAHP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `criteriaMatrixValue`
+--
+
+DROP TABLE IF EXISTS `criteriaMatrixValue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `criteriaMatrixValue` (
+  `codeCriteria` bigint(20) NOT NULL,
+  `codeCriteriaCouple` bigint(20) NOT NULL,
+  `codePerson` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `valuecriteriaFAHP` varchar(100) NOT NULL,
+  `valuecriteriaFAHPCat` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeCriteria`,`codeCriteriaCouple`,`codePerson`,`codeQuiz`,`codeQuestions`),
+  KEY `criteriaMatrixValue_Person_FK` (`codePerson`),
+  KEY `criteriaMatrixValue_catalogueitem_FK` (`valuecriteriaFAHPCat`,`valuecriteriaFAHP`),
+  KEY `criteriaMatrixValue_Quiz_FK` (`codeQuiz`),
+  KEY `criteriaMatrixValue_Questions_FK` (`codeQuestions`,`codeQuiz`),
+  CONSTRAINT `criteriaMatrixValue_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
+  CONSTRAINT `criteriaMatrixValue_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
+  CONSTRAINT `criteriaMatrixValue_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
+  CONSTRAINT `criteriaMatrixValue_catalogueitem_FK` FOREIGN KEY (`valuecriteriaFAHPCat`, `valuecriteriaFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
+  CONSTRAINT `criteriaMatrixValue_criteriaFAHP_FK` FOREIGN KEY (`codeCriteria`) REFERENCES `criteriaFAHP` (`codeCriteria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `criteriaMatrixValue`
+--
+
+LOCK TABLES `criteriaMatrixValue` WRITE;
+/*!40000 ALTER TABLE `criteriaMatrixValue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `criteriaMatrixValue` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -631,6 +743,71 @@ LOCK TABLES `itemComment` WRITE;
 /*!40000 ALTER TABLE `itemComment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `itemComment` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `processFAHP`
+--
+
+DROP TABLE IF EXISTS `processFAHP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processFAHP` (
+  `codeCriteria` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `indexConsistency` decimal(30,8) NOT NULL,
+  `ratioConsistency` decimal(30,8) NOT NULL,
+  `consistency` decimal(30,8) NOT NULL,
+  `statusresultFAHP` varchar(100) NOT NULL,
+  `statusresultFAHPcat` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeCriteria`,`codeQuiz`,`codeQuestions`),
+  KEY `processFAHP_catalogueitem_FK` (`statusresultFAHPcat`,`statusresultFAHP`),
+  CONSTRAINT `processFAHP_catalogueitem_FK` FOREIGN KEY (`statusresultFAHPcat`, `statusresultFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
+  CONSTRAINT `processFAHP_criteriaFAHP_FK` FOREIGN KEY (`codeCriteria`) REFERENCES `criteriaFAHP` (`codeCriteria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `processFAHP`
+--
+
+LOCK TABLES `processFAHP` WRITE;
+/*!40000 ALTER TABLE `processFAHP` DISABLE KEYS */;
+/*!40000 ALTER TABLE `processFAHP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resultFAHP`
+--
+
+DROP TABLE IF EXISTS `resultFAHP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resultFAHP` (
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `codeQuizItem` bigint(20) NOT NULL,
+  `valuepriority` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeQuiz`,`codeQuestions`,`codeQuizItem`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resultFAHP`
+--
+
+LOCK TABLES `resultFAHP` WRITE;
+/*!40000 ALTER TABLE `resultFAHP` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resultFAHP` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -641,4 +818,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-09 11:02:36
+-- Dump completed on 2019-09-10 10:01:46

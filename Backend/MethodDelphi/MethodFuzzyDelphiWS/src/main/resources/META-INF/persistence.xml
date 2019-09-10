@@ -15,6 +15,9 @@
         <class>com.epn.entities.ItemComment</class>
         <class>com.epn.entities.User</class>
         <class>com.epn.entities.Environment</class>
+        <class>com.epn.entities.CriteriaFAHP</class>
+        <class>com.epn.entities.ResultFAHP</class>
+        <class>com.epn.entities.ProcessFAHP</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="eclipselink.logging.level" value="FINE"/>

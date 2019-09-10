@@ -18,6 +18,9 @@
     <class>com.epn.entities.ItemComment</class>
     <class>com.epn.entities.User</class>
     <class>com.epn.entities.Environment</class>
+    <class>com.epn.entities.ResultFAHP</class>
+    <class>com.epn.entities.CriteriaFAHP</class>
+    <class>com.epn.entities.ProcessFAHP</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DephiFuzzyMethod?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
