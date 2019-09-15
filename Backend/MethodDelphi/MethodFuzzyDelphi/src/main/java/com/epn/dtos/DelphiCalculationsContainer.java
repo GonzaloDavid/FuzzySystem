@@ -29,6 +29,7 @@ public class DelphiCalculationsContainer {
     private String namestatusresultcat;
     private String quizlabel;
     private String questionlabel;
+    private String classification;
     private String itemquestionlabel;
 
     public DelphiCalculationsContainer() {
@@ -51,6 +52,14 @@ public class DelphiCalculationsContainer {
         this.statusResult = statusResult;
     }
 
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+    
     public DelphiCalculationsPK getDelphiCalculationsPK() {
         return delphiCalculationsPK;
     }

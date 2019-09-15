@@ -22,6 +22,7 @@ public interface DelphiCalculationsMapper {
     @Mapping(target = "quizlabel", expression = "java(source.getQuiz().getNameQuiz())")
     @Mapping(target = "questionlabel", expression = "java(source.getQuestions().getQuestion())")
     @Mapping(target = "itemquestionlabel", expression = "java(source.getQuestionItem().getItemLabel())")
+    @Mapping(target = "classification", expression = "java(source.getQuestionItem().getClassification())")
     DelphiCalculationsContainer sourceToDestination(DelphiCalculations source);
 
     List<DelphiCalculationsContainer> sourceListToDestination(List<DelphiCalculations> source);
