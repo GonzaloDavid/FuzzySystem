@@ -16,12 +16,16 @@ import javax.validation.constraints.NotNull;
  * @author david
  */
 @Embeddable
-public class ResultFAHPPK implements Serializable {
+public class AttributesMatrixValuePK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "codefahp")
     private long codefahp;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "codePerson")
+    private long codePerson;
     @Basic(optional = false)
     @NotNull
     @Column(name = "codeQuiz")
@@ -32,17 +36,23 @@ public class ResultFAHPPK implements Serializable {
     private long codeQuestions;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codeQuizItem")
-    private long codeQuizItem;
+    @Column(name = "itemLabel")
+    private long itemLabel;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "itemLabelCouple")
+    private long itemLabelCouple;
 
-    public ResultFAHPPK() {
+    public AttributesMatrixValuePK() {
     }
 
-    public ResultFAHPPK(long codefahp, long codeQuiz, long codeQuestions, long codeQuizItem) {
+    public AttributesMatrixValuePK(long codefahp, long codePerson, long codeQuiz, long codeQuestions, long itemLabel, long itemLabelCouple) {
         this.codefahp = codefahp;
+        this.codePerson = codePerson;
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
-        this.codeQuizItem = codeQuizItem;
+        this.itemLabel = itemLabel;
+        this.itemLabelCouple = itemLabelCouple;
     }
 
     public long getCodefahp() {
@@ -51,6 +61,14 @@ public class ResultFAHPPK implements Serializable {
 
     public void setCodefahp(long codefahp) {
         this.codefahp = codefahp;
+    }
+
+    public long getCodePerson() {
+        return codePerson;
+    }
+
+    public void setCodePerson(long codePerson) {
+        this.codePerson = codePerson;
     }
 
     public long getCodeQuiz() {
@@ -69,32 +87,45 @@ public class ResultFAHPPK implements Serializable {
         this.codeQuestions = codeQuestions;
     }
 
-    public long getCodeQuizItem() {
-        return codeQuizItem;
+    public long getItemLabel() {
+        return itemLabel;
     }
 
-    public void setCodeQuizItem(long codeQuizItem) {
-        this.codeQuizItem = codeQuizItem;
+    public void setItemLabel(long itemLabel) {
+        this.itemLabel = itemLabel;
+    }
+
+    public long getItemLabelCouple() {
+        return itemLabelCouple;
+    }
+
+    public void setItemLabelCouple(long itemLabelCouple) {
+        this.itemLabelCouple = itemLabelCouple;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) codefahp;
+        hash += (int) codePerson;
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
-        hash += (int) codeQuizItem;
+        hash += (int) itemLabel;
+        hash += (int) itemLabelCouple;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ResultFAHPPK)) {
+        if (!(object instanceof AttributesMatrixValuePK)) {
             return false;
         }
-        ResultFAHPPK other = (ResultFAHPPK) object;
+        AttributesMatrixValuePK other = (AttributesMatrixValuePK) object;
         if (this.codefahp != other.codefahp) {
+            return false;
+        }
+        if (this.codePerson != other.codePerson) {
             return false;
         }
         if (this.codeQuiz != other.codeQuiz) {
@@ -103,7 +134,10 @@ public class ResultFAHPPK implements Serializable {
         if (this.codeQuestions != other.codeQuestions) {
             return false;
         }
-        if (this.codeQuizItem != other.codeQuizItem) {
+        if (this.itemLabel != other.itemLabel) {
+            return false;
+        }
+        if (this.itemLabelCouple != other.itemLabelCouple) {
             return false;
         }
         return true;
@@ -111,7 +145,7 @@ public class ResultFAHPPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ResultFAHPPK[ codefahp=" + codefahp + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + " ]";
+        return "com.epn.entities.AttributesMatrixValuePK[ codefahp=" + codefahp + ", codePerson=" + codePerson + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", itemLabel=" + itemLabel + ", itemLabelCouple=" + itemLabelCouple + " ]";
     }
     
 }

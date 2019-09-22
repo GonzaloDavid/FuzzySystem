@@ -6,10 +6,7 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.CriteriaSaveContainer;
-import com.epn.entities.CriteriaFAHP;
-import com.epn.entities.CriterialFAHPPK;
-import com.epn.entities.Person;
-import com.epn.entities.QuizPK;
+import com.epn.entities.Criteria;
 import com.epn.fd.dao.CriteriaFAHPDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -19,47 +16,33 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.PathSegment;
 
 /**
  *
  * @author david
  */
 @Stateless
-@Path("com.epn.entities.criteriafahp")
-public class CriteriaFAHPFacadeREST extends AbstractFacade<CriteriaFAHP> {
+@Path("com.epn.entities.criteria")
+public class CriteriaFacadeREST extends AbstractFacade<Criteria> {
 
     @Inject()
     CriteriaFAHPDAO fAHPDAO;
-
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
-     private CriterialFAHPPK getPrimaryKey(PathSegment pathSegment) {
-        /*
-         * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;codeQuestions=codeQuestionsValue;codeQuiz=codeQuizValue'.
-         * Here 'somePath' is a result of getPath() method invocation and
-         * it is ignored in the following code.
-         * Matrix parameters are used as field names to build a primary key instance.
-         */
-        com.epn.entities.CriterialFAHPPK key = new com.epn.entities.CriterialFAHPPK();
-        javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
-        java.util.List<String> codeQuestions = map.get("codeCriteria");
-        if (codeQuestions != null && !codeQuestions.isEmpty()) {
-            key.setCodeCriteria(new java.lang.Long(codeQuestions.get(0)));
-        }
-        return key;
-    }
-    public CriteriaFAHPFacadeREST() {
-        super(CriteriaFAHP.class);
+    public CriteriaFacadeREST() {
+        super(Criteria.class);
     }
 
     @GET
@@ -79,14 +62,14 @@ public class CriteriaFAHPFacadeREST extends AbstractFacade<CriteriaFAHP> {
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public List<CriteriaFAHP> savecriteria(
+    public List<Criteria> savecriteria(
             CriteriaSaveContainer criteriacontainer,
             @HeaderParam("authorization") String authString) {
-       
-        List<CriteriaFAHP> cfahps =fAHPDAO.save(criteriacontainer.getCriterialist());
+
+        List<Criteria> cfahps = fAHPDAO.save(criteriacontainer.getCriterialist());
         fAHPDAO.deleteCriteria(criteriacontainer.getCriteriadeletedlist());
         return cfahps;
-        
+
     }
 
     @Override

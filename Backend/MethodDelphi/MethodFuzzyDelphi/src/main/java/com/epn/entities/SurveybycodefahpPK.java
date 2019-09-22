@@ -16,12 +16,12 @@ import javax.validation.constraints.NotNull;
  * @author david
  */
 @Embeddable
-public class ProcessFAHPPK implements Serializable {
+public class SurveybycodefahpPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codeCriteria")
-    private long codeCriteria;
+    @Column(name = "codefahp")
+    private long codefahp;
     @Basic(optional = false)
     @NotNull
     @Column(name = "codeQuiz")
@@ -31,21 +31,21 @@ public class ProcessFAHPPK implements Serializable {
     @Column(name = "codeQuestions")
     private long codeQuestions;
 
-    public ProcessFAHPPK() {
+    public SurveybycodefahpPK() {
     }
 
-    public ProcessFAHPPK(long codeCriteria, long codeQuiz, long codeQuestions) {
-        this.codeCriteria = codeCriteria;
+    public SurveybycodefahpPK(long codefahp, long codeQuiz, long codeQuestions) {
+        this.codefahp = codefahp;
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
     }
 
-    public long getCodeCriteria() {
-        return codeCriteria;
+    public long getCodefahp() {
+        return codefahp;
     }
 
-    public void setCodeCriteria(long codeCriteria) {
-        this.codeCriteria = codeCriteria;
+    public void setCodefahp(long codefahp) {
+        this.codefahp = codefahp;
     }
 
     public long getCodeQuiz() {
@@ -67,7 +67,7 @@ public class ProcessFAHPPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) codeCriteria;
+        hash += (int) codefahp;
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
         return hash;
@@ -76,11 +76,11 @@ public class ProcessFAHPPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProcessFAHPPK)) {
+        if (!(object instanceof SurveybycodefahpPK)) {
             return false;
         }
-        ProcessFAHPPK other = (ProcessFAHPPK) object;
-        if (this.codeCriteria != other.codeCriteria) {
+        SurveybycodefahpPK other = (SurveybycodefahpPK) object;
+        if (this.codefahp != other.codefahp) {
             return false;
         }
         if (this.codeQuiz != other.codeQuiz) {
@@ -94,7 +94,7 @@ public class ProcessFAHPPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ProcessFAHPPK[ codeCriteria=" + codeCriteria + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + " ]";
+        return "com.epn.entities.SurveybycodefahpPK[ codefahp=" + codefahp + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + " ]";
     }
     
 }

@@ -6,9 +6,8 @@
 package com.epn.fd.dao;
 
 import com.epn.dtos.ListAndCountContainer;
-import com.epn.entities.CriteriaFAHP;
+import com.epn.entities.Criteria;
 import com.epn.entities.FilterTypes;
-import com.epn.entities.Person;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,10 +21,10 @@ import javax.ejb.Stateless;
  * @author david
  */
 @Stateless
-public class CriteriaFAHPDAO extends GenericDAO<CriteriaFAHP> {
+public class CriteriaFAHPDAO extends GenericDAO<Criteria> {
 
     public CriteriaFAHPDAO() {
-        super(CriteriaFAHP.class);
+        super(Criteria.class);
     }
 
     public String getcriteriabycode(Long codeCriteria, Integer from, Integer to) throws JsonProcessingException {
@@ -33,7 +32,7 @@ public class CriteriaFAHPDAO extends GenericDAO<CriteriaFAHP> {
         search.addParameter("criterialFAHPPK.codeCriteria", FilterTypes.EQUAL, codeCriteria);
         search.setOrderPropertyName("criterialFAHPPK.codeCriteria");
         search.asc();
-        List<CriteriaFAHP> resultList = search(search);
+        List<Criteria> resultList = search(search);
         long count = search(search).size();
         search.setFrom(from);
         search.setTo(to);
@@ -44,17 +43,17 @@ public class CriteriaFAHPDAO extends GenericDAO<CriteriaFAHP> {
         return response;
     }
 
-    public List<CriteriaFAHP> save(List<CriteriaFAHP> fAHP) {
-        List<CriteriaFAHP> cfahps = new ArrayList();
+    public List<Criteria> save(List<Criteria> fAHP) {
+        List<Criteria> cfahps = new ArrayList();
         updateList(fAHP);
         cfahps = fAHP;
         return cfahps;
     }
 
-    public void deleteCriteria(List<CriteriaFAHP> idlist) {
+    public void deleteCriteria(List<Criteria> idlist) {
         idlist.forEach(elementremove -> {
-            CriteriaFAHP foundelement = new CriteriaFAHP();
-            foundelement = find(elementremove.getCriterialFAHPPK());
+            Criteria foundelement = new Criteria();
+            foundelement = find(elementremove.getCriteriaPK());
             if (foundelement != null) {
                 try {
                     remove(foundelement);

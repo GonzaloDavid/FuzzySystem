@@ -5,8 +5,8 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.entities.ProcessFAHP;
-import com.epn.entities.ProcessFAHPPK;
+import com.epn.entities.AttributesMatrixValue;
+import com.epn.entities.AttributesMatrixValuePK;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,25 +27,29 @@ import javax.ws.rs.core.PathSegment;
  * @author david
  */
 @Stateless
-@Path("com.epn.entities.processfahp")
-public class ProcessFAHPFacadeREST extends AbstractFacade<ProcessFAHP> {
+@Path("com.epn.entities.attributesmatrixvalue")
+    public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMatrixValue> {
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
-    private ProcessFAHPPK getPrimaryKey(PathSegment pathSegment) {
+    private AttributesMatrixValuePK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;codeCriteria=codeCriteriaValue;codeQuiz=codeQuizValue;codeQuestions=codeQuestionsValue'.
+         * URI path part is supposed to be in form of 'somePath;codefahp=codefahpValue;codePerson=codePersonValue;codeQuiz=codeQuizValue;codeQuestions=codeQuestionsValue;itemLabel=itemLabelValue;itemLabelCouple=itemLabelCoupleValue'.
          * Here 'somePath' is a result of getPath() method invocation and
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
          */
-        com.epn.entities.ProcessFAHPPK key = new com.epn.entities.ProcessFAHPPK();
+        com.epn.entities.AttributesMatrixValuePK key = new com.epn.entities.AttributesMatrixValuePK();
         javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
-        java.util.List<String> codeCriteria = map.get("codeCriteria");
-        if (codeCriteria != null && !codeCriteria.isEmpty()) {
-            key.setCodeCriteria(new java.lang.Long(codeCriteria.get(0)));
+        java.util.List<String> codefahp = map.get("codefahp");
+        if (codefahp != null && !codefahp.isEmpty()) {
+            key.setCodefahp(new java.lang.Long(codefahp.get(0)));
+        }
+        java.util.List<String> codePerson = map.get("codePerson");
+        if (codePerson != null && !codePerson.isEmpty()) {
+            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
         }
         java.util.List<String> codeQuiz = map.get("codeQuiz");
         if (codeQuiz != null && !codeQuiz.isEmpty()) {
@@ -55,53 +59,61 @@ public class ProcessFAHPFacadeREST extends AbstractFacade<ProcessFAHP> {
         if (codeQuestions != null && !codeQuestions.isEmpty()) {
             key.setCodeQuestions(new java.lang.Long(codeQuestions.get(0)));
         }
+        java.util.List<String> itemLabel = map.get("itemLabel");
+        if (itemLabel != null && !itemLabel.isEmpty()) {
+            key.setItemLabel(new java.lang.Long(itemLabel.get(0)));
+        }
+        java.util.List<String> itemLabelCouple = map.get("itemLabelCouple");
+        if (itemLabelCouple != null && !itemLabelCouple.isEmpty()) {
+            key.setItemLabelCouple(new java.lang.Long(itemLabelCouple.get(0)));
+        }
         return key;
     }
 
-    public ProcessFAHPFacadeREST() {
-        super(ProcessFAHP.class);
+    public AttributesMatrixValueFacadeREST() {
+        super(AttributesMatrixValue.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(ProcessFAHP entity) {
+    public void create(AttributesMatrixValue entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, ProcessFAHP entity) {
+    public void edit(@PathParam("id") PathSegment id, AttributesMatrixValue entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFAHPPK key = getPrimaryKey(id);
+        com.epn.entities.AttributesMatrixValuePK key = getPrimaryKey(id);
         super.remove(super.find(key));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProcessFAHP find(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFAHPPK key = getPrimaryKey(id);
+    public AttributesMatrixValue find(@PathParam("id") PathSegment id) {
+        com.epn.entities.AttributesMatrixValuePK key = getPrimaryKey(id);
         return super.find(key);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFAHP> findAll() {
+    public List<AttributesMatrixValue> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFAHP> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<AttributesMatrixValue> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

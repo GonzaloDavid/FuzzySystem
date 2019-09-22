@@ -16,12 +16,16 @@ import javax.validation.constraints.NotNull;
  * @author david
  */
 @Embeddable
-public class ResultFAHPPK implements Serializable {
+public class ProcessFahpatributebycriteriaPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "codefahp")
     private long codefahp;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "codePerson")
+    private long codePerson;
     @Basic(optional = false)
     @NotNull
     @Column(name = "codeQuiz")
@@ -34,15 +38,21 @@ public class ResultFAHPPK implements Serializable {
     @NotNull
     @Column(name = "codeQuizItem")
     private long codeQuizItem;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "codeCriteria")
+    private long codeCriteria;
 
-    public ResultFAHPPK() {
+    public ProcessFahpatributebycriteriaPK() {
     }
 
-    public ResultFAHPPK(long codefahp, long codeQuiz, long codeQuestions, long codeQuizItem) {
+    public ProcessFahpatributebycriteriaPK(long codefahp, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem, long codeCriteria) {
         this.codefahp = codefahp;
+        this.codePerson = codePerson;
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
+        this.codeCriteria = codeCriteria;
     }
 
     public long getCodefahp() {
@@ -51,6 +61,14 @@ public class ResultFAHPPK implements Serializable {
 
     public void setCodefahp(long codefahp) {
         this.codefahp = codefahp;
+    }
+
+    public long getCodePerson() {
+        return codePerson;
+    }
+
+    public void setCodePerson(long codePerson) {
+        this.codePerson = codePerson;
     }
 
     public long getCodeQuiz() {
@@ -77,24 +95,37 @@ public class ResultFAHPPK implements Serializable {
         this.codeQuizItem = codeQuizItem;
     }
 
+    public long getCodeCriteria() {
+        return codeCriteria;
+    }
+
+    public void setCodeCriteria(long codeCriteria) {
+        this.codeCriteria = codeCriteria;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) codefahp;
+        hash += (int) codePerson;
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
         hash += (int) codeQuizItem;
+        hash += (int) codeCriteria;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ResultFAHPPK)) {
+        if (!(object instanceof ProcessFahpatributebycriteriaPK)) {
             return false;
         }
-        ResultFAHPPK other = (ResultFAHPPK) object;
+        ProcessFahpatributebycriteriaPK other = (ProcessFahpatributebycriteriaPK) object;
         if (this.codefahp != other.codefahp) {
+            return false;
+        }
+        if (this.codePerson != other.codePerson) {
             return false;
         }
         if (this.codeQuiz != other.codeQuiz) {
@@ -106,12 +137,15 @@ public class ResultFAHPPK implements Serializable {
         if (this.codeQuizItem != other.codeQuizItem) {
             return false;
         }
+        if (this.codeCriteria != other.codeCriteria) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "com.epn.entities.ResultFAHPPK[ codefahp=" + codefahp + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + " ]";
+        return "com.epn.entities.ProcessFahpatributebycriteriaPK[ codefahp=" + codefahp + ", codePerson=" + codePerson + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + ", codeCriteria=" + codeCriteria + " ]";
     }
     
 }

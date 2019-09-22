@@ -6,7 +6,6 @@
 package com.epn.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,32 +17,32 @@ import javax.persistence.GenerationType;
  * @author david
  */
 @Embeddable
-public class CriterialFAHPPK implements Serializable {
+public class FahpPK implements Serializable {
     
     @Basic(optional = false)
-    @Column(name = "codeCriteria")
+    @Column(name = "codefahp")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codeCriteria;
+    private long codefahp;
 
-    public CriterialFAHPPK() {
+    public FahpPK() {
     }
 
-    public CriterialFAHPPK(Long codeCriteria) {
-        this.codeCriteria = codeCriteria;
+    public FahpPK(long codefahp) {
+        this.codefahp = codefahp;
     }
 
-    public Long getCodeCriteria() {
-        return codeCriteria;
+    public long getCodefahp() {
+        return codefahp;
     }
 
-    public void setCodeCriteria(Long codeCriteria) {
-        this.codeCriteria = codeCriteria;
+    public void setCodefahp(long codefahp) {
+        this.codefahp = codefahp;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.codeCriteria);
+        int hash = 3;
+        hash = 97 * hash + (int) (this.codefahp ^ (this.codefahp >>> 32));
         return hash;
     }
 
@@ -58,8 +57,8 @@ public class CriterialFAHPPK implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CriterialFAHPPK other = (CriterialFAHPPK) obj;
-        if (!Objects.equals(this.codeCriteria, other.codeCriteria)) {
+        final FahpPK other = (FahpPK) obj;
+        if (this.codefahp != other.codefahp) {
             return false;
         }
         return true;
@@ -67,7 +66,7 @@ public class CriterialFAHPPK implements Serializable {
 
     @Override
     public String toString() {
-        return "CriterialFAHPPK{" + "codeCriteria=" + codeCriteria + '}';
+        return "FahpPK{" + "codefahp=" + codefahp + '}';
     }
     
 }

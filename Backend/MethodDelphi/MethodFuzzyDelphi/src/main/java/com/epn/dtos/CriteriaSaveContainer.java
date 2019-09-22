@@ -5,7 +5,8 @@
  */
 package com.epn.dtos;
 
-import com.epn.entities.CriteriaFAHP;
+
+import com.epn.entities.Criteria;
 import java.util.List;
 
 /**
@@ -13,31 +14,33 @@ import java.util.List;
  * @author david
  */
 public class CriteriaSaveContainer {
-    private List<CriteriaFAHP> criterialist;
-    private List<CriteriaFAHP> criteriadeletedlist;
+    private List<Criteria> criterialist;
+    private List<Criteria> criteriadeletedlist;
 
     public CriteriaSaveContainer() {
     }
 
-    public CriteriaSaveContainer(List<CriteriaFAHP> criterialist, List<CriteriaFAHP> criteriadeletedlist) {
+    public CriteriaSaveContainer(List<Criteria> criterialist, List<Criteria> criteriadeletedlist) {
         this.criterialist = criterialist;
         this.criteriadeletedlist = criteriadeletedlist;
     }
 
-    public List<CriteriaFAHP> getCriterialist() {
+    public List<Criteria> getCriterialist() {
         return criterialist;
     }
 
-    public void setCriterialist(List<CriteriaFAHP> criterialist) {
+    public void setCriterialist(List<Criteria> criterialist) {
         this.criterialist = criterialist;
     }
 
-    public List<CriteriaFAHP> getCriteriadeletedlist() {
+    public List<Criteria> getCriteriadeletedlist() {
         return criteriadeletedlist;
     }
 
-    public void setCriteriadeletedlist(List<CriteriaFAHP> criteriadeletedlist) {
+    public void setCriteriadeletedlist(List<Criteria> criteriadeletedlist) {
         this.criteriadeletedlist = criteriadeletedlist;
     }
+
+ 
     
 }

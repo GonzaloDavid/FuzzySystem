@@ -5,8 +5,8 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.entities.ResultFAHP;
-import com.epn.entities.ResultFAHPPK;
+import com.epn.entities.Sentemailbycodefahp;
+import com.epn.entities.SentemailbycodefahpPK;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,85 +27,77 @@ import javax.ws.rs.core.PathSegment;
  * @author david
  */
 @Stateless
-@Path("com.epn.entities.resultfahp")
-public class ResultFAHPFacadeREST extends AbstractFacade<ResultFAHP> {
+@Path("com.epn.entities.sentemailbycodefahp")
+public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycodefahp> {
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
-    private ResultFAHPPK getPrimaryKey(PathSegment pathSegment) {
+    private SentemailbycodefahpPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;codefahp=codefahpValue;codeQuiz=codeQuizValue;codeQuestions=codeQuestionsValue;codeQuizItem=codeQuizItemValue'.
+         * URI path part is supposed to be in form of 'somePath;codefahp=codefahpValue;codePerson=codePersonValue'.
          * Here 'somePath' is a result of getPath() method invocation and
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
          */
-        com.epn.entities.ResultFAHPPK key = new com.epn.entities.ResultFAHPPK();
+        com.epn.entities.SentemailbycodefahpPK key = new com.epn.entities.SentemailbycodefahpPK();
         javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
         java.util.List<String> codefahp = map.get("codefahp");
         if (codefahp != null && !codefahp.isEmpty()) {
             key.setCodefahp(new java.lang.Long(codefahp.get(0)));
         }
-        java.util.List<String> codeQuiz = map.get("codeQuiz");
-        if (codeQuiz != null && !codeQuiz.isEmpty()) {
-            key.setCodeQuiz(new java.lang.Long(codeQuiz.get(0)));
-        }
-        java.util.List<String> codeQuestions = map.get("codeQuestions");
-        if (codeQuestions != null && !codeQuestions.isEmpty()) {
-            key.setCodeQuestions(new java.lang.Long(codeQuestions.get(0)));
-        }
-        java.util.List<String> codeQuizItem = map.get("codeQuizItem");
-        if (codeQuizItem != null && !codeQuizItem.isEmpty()) {
-            key.setCodeQuizItem(new java.lang.Long(codeQuizItem.get(0)));
+        java.util.List<String> codePerson = map.get("codePerson");
+        if (codePerson != null && !codePerson.isEmpty()) {
+            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
         }
         return key;
     }
 
-    public ResultFAHPFacadeREST() {
-        super(ResultFAHP.class);
+    public SentemailbycodefahpFacadeREST() {
+        super(Sentemailbycodefahp.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(ResultFAHP entity) {
+    public void create(Sentemailbycodefahp entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, ResultFAHP entity) {
+    public void edit(@PathParam("id") PathSegment id, Sentemailbycodefahp entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        com.epn.entities.ResultFAHPPK key = getPrimaryKey(id);
+        com.epn.entities.SentemailbycodefahpPK key = getPrimaryKey(id);
         super.remove(super.find(key));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ResultFAHP find(@PathParam("id") PathSegment id) {
-        com.epn.entities.ResultFAHPPK key = getPrimaryKey(id);
+    public Sentemailbycodefahp find(@PathParam("id") PathSegment id) {
+        com.epn.entities.SentemailbycodefahpPK key = getPrimaryKey(id);
         return super.find(key);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ResultFAHP> findAll() {
+    public List<Sentemailbycodefahp> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ResultFAHP> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Sentemailbycodefahp> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

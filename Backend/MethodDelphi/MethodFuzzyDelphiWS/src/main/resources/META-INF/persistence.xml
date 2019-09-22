@@ -15,15 +15,24 @@
         <class>com.epn.entities.ItemComment</class>
         <class>com.epn.entities.User</class>
         <class>com.epn.entities.Environment</class>
-        <class>com.epn.entities.CriteriaFAHP</class>
+        <class>com.epn.entities.AttributesMatrixValueFacadeREST</class>
+        <class>com.epn.entities.CriteriaMatrixValue</class>
+        <class>com.epn.entities.Criteriabycodefahp</class>
+        <class>com.epn.entities.Fahp</class>
+        <class>com.epn.entities.ProcessFahpatributebycriteria</class>
+        <class>com.epn.entities.ProcessFahpconsistencybycriteria</class>
+        <class>com.epn.entities.ProcessFahpweightbycriteria</class>
+        <class>com.epn.entities.Criteria</class>
         <class>com.epn.entities.ResultFAHP</class>
-        <class>com.epn.entities.ProcessFAHP</class>
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties>
-            <property name="eclipselink.logging.level" value="FINE"/>
-            <property name="eclipselink.logging.level.sql" value="FINE"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
-            <property name="eclipselink.cache.shared.default" value="false"/>
-        </properties>
+        <class>com.epn.entities.Sentemailbycodefahp</class>
+        <class>com.epn.entities.Surveybycodefahp</class>
     </persistence-unit>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+        <property name="eclipselink.logging.level" value="FINE"/>
+        <property name="eclipselink.logging.level.sql" value="FINE"/>
+        <property name="eclipselink.logging.parameters" value="true"/>
+        <property name="eclipselink.cache.shared.default" value="false"/>
+    </properties>
+</persistence-unit>
 </persistence>

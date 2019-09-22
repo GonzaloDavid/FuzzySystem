@@ -30,25 +30,30 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
-        resources.add(com.epn.exception.AppExceptionMapper.class);
-        resources.add(com.epn.exception.GenericExceptionMapper.class);
-        resources.add(com.epn.exception.NotFoundExceptionMapper.class);
+        resources.add(com.epn.fd.WS.AttributesMatrixValueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
-        resources.add(com.epn.fd.WS.CriteriaFAHPFacadeREST.class);
+        resources.add(com.epn.fd.WS.CriteriaFacadeREST.class);
+        resources.add(com.epn.fd.WS.CriteriaMatrixValueFacadeREST.class);
+        resources.add(com.epn.fd.WS.CriteriabycodefahpFacadeREST.class);
         resources.add(com.epn.fd.WS.DelphiCalculationsFacadeREST.class);
         resources.add(com.epn.fd.WS.EnvironmentFacadeREST.class);
+        resources.add(com.epn.fd.WS.FahpFacadeREST.class);
         resources.add(com.epn.fd.WS.ItemCommentFacadeREST.class);
         resources.add(com.epn.fd.WS.MenuFacadeREST.class);
         resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
-        resources.add(com.epn.fd.WS.ProcessFAHPFacadeREST.class);
+        resources.add(com.epn.fd.WS.ProcessFahpatributebycriteriaFacadeREST.class);
+        resources.add(com.epn.fd.WS.ProcessFahpconsistencybycriteriaFacadeREST.class);
+        resources.add(com.epn.fd.WS.ProcessFahpweightbycriteriaFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionItemFacadeREST.class);
         resources.add(com.epn.fd.WS.QuestionsFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizFacadeREST.class);
         resources.add(com.epn.fd.WS.QuizvaluesFacadeREST.class);
         resources.add(com.epn.fd.WS.ResultFAHPFacadeREST.class);
         resources.add(com.epn.fd.WS.RoundsFacadeREST.class);
+        resources.add(com.epn.fd.WS.SentemailbycodefahpFacadeREST.class);
+        resources.add(com.epn.fd.WS.SurveybycodefahpFacadeREST.class);
         resources.add(com.epn.fd.WS.UserFacadeREST.class);
     }
     

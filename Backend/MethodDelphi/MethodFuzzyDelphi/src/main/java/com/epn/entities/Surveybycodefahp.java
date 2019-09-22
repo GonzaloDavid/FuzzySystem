@@ -6,7 +6,6 @@
 package com.epn.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -28,28 +27,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author david
  */
 @Entity
-@Table(name = "resultFAHP")
+@Table(name = "surveybycodefahp")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ResultFAHP.findAll", query = "SELECT r FROM ResultFAHP r"),
-    @NamedQuery(name = "ResultFAHP.findByCodefahp", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codefahp = :codefahp"),
-    @NamedQuery(name = "ResultFAHP.findByCodeQuiz", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuiz = :codeQuiz"),
-    @NamedQuery(name = "ResultFAHP.findByCodeQuestions", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuestions = :codeQuestions"),
-    @NamedQuery(name = "ResultFAHP.findByCodeQuizItem", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuizItem = :codeQuizItem"),
-    @NamedQuery(name = "ResultFAHP.findByValuepriority", query = "SELECT r FROM ResultFAHP r WHERE r.valuepriority = :valuepriority"),
-    @NamedQuery(name = "ResultFAHP.findByDateCreate", query = "SELECT r FROM ResultFAHP r WHERE r.dateCreate = :dateCreate"),
-    @NamedQuery(name = "ResultFAHP.findByDateLastModify", query = "SELECT r FROM ResultFAHP r WHERE r.dateLastModify = :dateLastModify"),
-    @NamedQuery(name = "ResultFAHP.findByUserCreate", query = "SELECT r FROM ResultFAHP r WHERE r.userCreate = :userCreate"),
-    @NamedQuery(name = "ResultFAHP.findByUserLastModify", query = "SELECT r FROM ResultFAHP r WHERE r.userLastModify = :userLastModify")})
-public class ResultFAHP implements Serializable {
+    @NamedQuery(name = "Surveybycodefahp.findAll", query = "SELECT s FROM Surveybycodefahp s"),
+    @NamedQuery(name = "Surveybycodefahp.findByCodefahp", query = "SELECT s FROM Surveybycodefahp s WHERE s.surveybycodefahpPK.codefahp = :codefahp"),
+    @NamedQuery(name = "Surveybycodefahp.findByCodeQuiz", query = "SELECT s FROM Surveybycodefahp s WHERE s.surveybycodefahpPK.codeQuiz = :codeQuiz"),
+    @NamedQuery(name = "Surveybycodefahp.findByCodeQuestions", query = "SELECT s FROM Surveybycodefahp s WHERE s.surveybycodefahpPK.codeQuestions = :codeQuestions"),
+    @NamedQuery(name = "Surveybycodefahp.findByDateCreate", query = "SELECT s FROM Surveybycodefahp s WHERE s.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Surveybycodefahp.findByDateLastModify", query = "SELECT s FROM Surveybycodefahp s WHERE s.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Surveybycodefahp.findByUserCreate", query = "SELECT s FROM Surveybycodefahp s WHERE s.userCreate = :userCreate"),
+    @NamedQuery(name = "Surveybycodefahp.findByUserLastModify", query = "SELECT s FROM Surveybycodefahp s WHERE s.userLastModify = :userLastModify")})
+public class Surveybycodefahp implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ResultFAHPPK resultFAHPPK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @Column(name = "valuepriority")
-    private BigDecimal valuepriority;
+    protected SurveybycodefahpPK surveybycodefahpPK;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,12 +61,6 @@ public class ResultFAHP implements Serializable {
     @ManyToOne(optional = false)
     private Fahp fahp;
     @JoinColumns({
-        @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false),
-        @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
-        @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private QuestionItem questionItem;
-    @JoinColumns({
         @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
         @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
@@ -82,40 +69,31 @@ public class ResultFAHP implements Serializable {
     @ManyToOne(optional = false)
     private Quiz quiz;
 
-    public ResultFAHP() {
+    public Surveybycodefahp() {
     }
 
-    public ResultFAHP(ResultFAHPPK resultFAHPPK) {
-        this.resultFAHPPK = resultFAHPPK;
+    public Surveybycodefahp(SurveybycodefahpPK surveybycodefahpPK) {
+        this.surveybycodefahpPK = surveybycodefahpPK;
     }
 
-    public ResultFAHP(ResultFAHPPK resultFAHPPK, BigDecimal valuepriority, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
-        this.resultFAHPPK = resultFAHPPK;
-        this.valuepriority = valuepriority;
+    public Surveybycodefahp(SurveybycodefahpPK surveybycodefahpPK, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+        this.surveybycodefahpPK = surveybycodefahpPK;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
     }
 
-    public ResultFAHP(long codefahp, long codeQuiz, long codeQuestions, long codeQuizItem) {
-        this.resultFAHPPK = new ResultFAHPPK(codefahp, codeQuiz, codeQuestions, codeQuizItem);
+    public Surveybycodefahp(long codefahp, long codeQuiz, long codeQuestions) {
+        this.surveybycodefahpPK = new SurveybycodefahpPK(codefahp, codeQuiz, codeQuestions);
     }
 
-    public ResultFAHPPK getResultFAHPPK() {
-        return resultFAHPPK;
+    public SurveybycodefahpPK getSurveybycodefahpPK() {
+        return surveybycodefahpPK;
     }
 
-    public void setResultFAHPPK(ResultFAHPPK resultFAHPPK) {
-        this.resultFAHPPK = resultFAHPPK;
-    }
-
-    public BigDecimal getValuepriority() {
-        return valuepriority;
-    }
-
-    public void setValuepriority(BigDecimal valuepriority) {
-        this.valuepriority = valuepriority;
+    public void setSurveybycodefahpPK(SurveybycodefahpPK surveybycodefahpPK) {
+        this.surveybycodefahpPK = surveybycodefahpPK;
     }
 
     public Date getDateCreate() {
@@ -158,14 +136,6 @@ public class ResultFAHP implements Serializable {
         this.fahp = fahp;
     }
 
-    public QuestionItem getQuestionItem() {
-        return questionItem;
-    }
-
-    public void setQuestionItem(QuestionItem questionItem) {
-        this.questionItem = questionItem;
-    }
-
     public Questions getQuestions() {
         return questions;
     }
@@ -185,18 +155,18 @@ public class ResultFAHP implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (resultFAHPPK != null ? resultFAHPPK.hashCode() : 0);
+        hash += (surveybycodefahpPK != null ? surveybycodefahpPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ResultFAHP)) {
+        if (!(object instanceof Surveybycodefahp)) {
             return false;
         }
-        ResultFAHP other = (ResultFAHP) object;
-        if ((this.resultFAHPPK == null && other.resultFAHPPK != null) || (this.resultFAHPPK != null && !this.resultFAHPPK.equals(other.resultFAHPPK))) {
+        Surveybycodefahp other = (Surveybycodefahp) object;
+        if ((this.surveybycodefahpPK == null && other.surveybycodefahpPK != null) || (this.surveybycodefahpPK != null && !this.surveybycodefahpPK.equals(other.surveybycodefahpPK))) {
             return false;
         }
         return true;
@@ -204,7 +174,7 @@ public class ResultFAHP implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ResultFAHP[ resultFAHPPK=" + resultFAHPPK + " ]";
+        return "com.epn.entities.Surveybycodefahp[ surveybycodefahpPK=" + surveybycodefahpPK + " ]";
     }
     
 }
