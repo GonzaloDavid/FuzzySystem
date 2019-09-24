@@ -69,14 +69,7 @@ public class Criteria implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteria")
-    private List<Criteriabycodefahp> criteriabycodefahpList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteria")
-    private List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteria")
-    private List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteria")
-    private List<CriteriaMatrixValue> criteriaMatrixValueList;
+    
 
     public Criteria() {
     }
@@ -93,10 +86,6 @@ public class Criteria implements Serializable {
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.criteriabycodefahpList = criteriabycodefahpList;
-        this.processFahpatributebycriteriaList = processFahpatributebycriteriaList;
-        this.processFahpweightbycriteriaList = processFahpweightbycriteriaList;
-        this.criteriaMatrixValueList = criteriaMatrixValueList;
     }
 
     public CriteriaPK getCriteriaPK() {
@@ -155,41 +144,6 @@ public class Criteria implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    @XmlTransient
-    public List<Criteriabycodefahp> getCriteriabycodefahpList() {
-        return criteriabycodefahpList;
-    }
-
-    public void setCriteriabycodefahpList(List<Criteriabycodefahp> criteriabycodefahpList) {
-        this.criteriabycodefahpList = criteriabycodefahpList;
-    }
-
-    @XmlTransient
-    public List<ProcessFahpatributebycriteria> getProcessFahpatributebycriteriaList() {
-        return processFahpatributebycriteriaList;
-    }
-
-    public void setProcessFahpatributebycriteriaList(List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList) {
-        this.processFahpatributebycriteriaList = processFahpatributebycriteriaList;
-    }
-
-    @XmlTransient
-    public List<ProcessFahpweightbycriteria> getProcessFahpweightbycriteriaList() {
-        return processFahpweightbycriteriaList;
-    }
-
-    public void setProcessFahpweightbycriteriaList(List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList) {
-        this.processFahpweightbycriteriaList = processFahpweightbycriteriaList;
-    }
-
-    @XmlTransient
-    public List<CriteriaMatrixValue> getCriteriaMatrixValueList() {
-        return criteriaMatrixValueList;
-    }
-
-    public void setCriteriaMatrixValueList(List<CriteriaMatrixValue> criteriaMatrixValueList) {
-        this.criteriaMatrixValueList = criteriaMatrixValueList;
-    }
 
     @Override
     public int hashCode() {

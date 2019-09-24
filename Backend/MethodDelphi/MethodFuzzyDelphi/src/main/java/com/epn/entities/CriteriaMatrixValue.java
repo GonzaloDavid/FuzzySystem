@@ -19,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,6 +43,10 @@ public class CriteriaMatrixValue implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected CriteriaMatrixValuePK criteriaMatrixValuePK;
+    @Column(name = "valuecriteriaFAHPCat")
+    private String valuecriteriaFAHPCatt;
+    @Column(name = "valuecriteriaFAHP")
+    private String valuecriteriaFAHP;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -64,12 +67,12 @@ public class CriteriaMatrixValue implements Serializable {
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
-    @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "code")
+    @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Catalogue valuecriteriaFAHPCat;
     @JoinColumns({
-        @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "codeCatalogue"),
-        @JoinColumn(name = "valuecriteriaFAHP", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "valuecriteriaFAHP", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
     @JoinColumn(name = "codeCriteria", referencedColumnName = "codeCriteria", insertable = false, updatable = false)
@@ -175,6 +178,22 @@ public class CriteriaMatrixValue implements Serializable {
         this.criteria = criteria;
     }
 
+    public String getValuecriteriaFAHPCatt() {
+        return valuecriteriaFAHPCatt;
+    }
+
+    public void setValuecriteriaFAHPCatt(String valuecriteriaFAHPCatt) {
+        this.valuecriteriaFAHPCatt = valuecriteriaFAHPCatt;
+    }
+
+    public String getValuecriteriaFAHP() {
+        return valuecriteriaFAHP;
+    }
+
+    public void setValuecriteriaFAHP(String valuecriteriaFAHP) {
+        this.valuecriteriaFAHP = valuecriteriaFAHP;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -199,5 +218,5 @@ public class CriteriaMatrixValue implements Serializable {
     public String toString() {
         return "com.epn.entities.CriteriaMatrixValue[ criteriaMatrixValuePK=" + criteriaMatrixValuePK + " ]";
     }
-    
+
 }

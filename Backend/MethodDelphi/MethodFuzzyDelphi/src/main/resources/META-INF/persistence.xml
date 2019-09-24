@@ -18,9 +18,6 @@
     <class>com.epn.entities.ItemComment</class>
     <class>com.epn.entities.User</class>
     <class>com.epn.entities.Environment</class>
-    <class>com.epn.entities.ResultFAHP</class>
-    <class>com.epn.entities.CriteriaFAHP</class>
-    <class>com.epn.entities.ProcessFAHP</class>
     <class>com.epn.entities.Criteriabycodefahp</class>
     <class>com.epn.entities.ProcessFahpweightbycriteria</class>
     <class>com.epn.entities.ProcessFahpatributebycriteria</class>
@@ -31,6 +28,7 @@
     <class>com.epn.entities.ProcessFahpconsistencybycriteria</class>
     <class>com.epn.entities.CriteriaMatrixValue</class>
     <class>com.epn.entities.Surveybycodefahp</class>
+    <class>com.epn.entities.ResultFAHP</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/DephiFuzzyMethod?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

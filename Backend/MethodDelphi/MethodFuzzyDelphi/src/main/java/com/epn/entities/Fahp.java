@@ -22,13 +22,10 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -49,6 +46,11 @@ public class Fahp implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected FahpPK fahpPK;
+    
+    @Column(name = "statusfahpCat")
+    private String statusfahpCatt;
+    @Column(name = "statusfahp")
+    private String statusfahp;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -63,32 +65,14 @@ public class Fahp implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @JoinColumn(name = "statusfahpCat", referencedColumnName = "code")
+    @JoinColumn(name = "statusfahpCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Catalogue statusfahpCat;
     @JoinColumns({
-        @JoinColumn(name = "statusfahpCat", referencedColumnName = "codeCatalogue"),
-        @JoinColumn(name = "statusfahp", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "statusfahpCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "statusfahp", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<ResultFAHP> resultFAHPList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<ProcessFahpconsistencybycriteria> processFahpconsistencybycriteriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<Sentemailbycodefahp> sentemailbycodefahpList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<Surveybycodefahp> surveybycodefahpList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<Criteriabycodefahp> criteriabycodefahpList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<CriteriaMatrixValue> criteriaMatrixValueList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
-    private List<AttributesMatrixValue> attributesMatrixValueList;
 
     public Fahp() {
     }
@@ -103,7 +87,6 @@ public class Fahp implements Serializable {
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
         this.userLastModify = userLastModify;
-        this.statusfahpCat = statusfahpCat;
     }
 
     public FahpPK getFahpPK() {
@@ -162,87 +145,23 @@ public class Fahp implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
-    @XmlTransient
-    public List<ResultFAHP> getResultFAHPList() {
-        return resultFAHPList;
+    public String getStatusfahpCatt() {
+        return statusfahpCatt;
     }
 
-    public void setResultFAHPList(List<ResultFAHP> resultFAHPList) {
-        this.resultFAHPList = resultFAHPList;
+    public void setStatusfahpCatt(String statusfahpCatt) {
+        this.statusfahpCatt = statusfahpCatt;
     }
 
-    @XmlTransient
-    public List<ProcessFahpconsistencybycriteria> getProcessFahpconsistencybycriteriaList() {
-        return processFahpconsistencybycriteriaList;
+    public String getStatusfahp() {
+        return statusfahp;
     }
 
-    public void setProcessFahpconsistencybycriteriaList(List<ProcessFahpconsistencybycriteria> processFahpconsistencybycriteriaList) {
-        this.processFahpconsistencybycriteriaList = processFahpconsistencybycriteriaList;
+    public void setStatusfahp(String statusfahp) {
+        this.statusfahp = statusfahp;
     }
 
-    @XmlTransient
-    public List<Sentemailbycodefahp> getSentemailbycodefahpList() {
-        return sentemailbycodefahpList;
-    }
-
-    public void setSentemailbycodefahpList(List<Sentemailbycodefahp> sentemailbycodefahpList) {
-        this.sentemailbycodefahpList = sentemailbycodefahpList;
-    }
-
-    @XmlTransient
-    public List<Surveybycodefahp> getSurveybycodefahpList() {
-        return surveybycodefahpList;
-    }
-
-    public void setSurveybycodefahpList(List<Surveybycodefahp> surveybycodefahpList) {
-        this.surveybycodefahpList = surveybycodefahpList;
-    }
-
-    @XmlTransient
-    public List<Criteriabycodefahp> getCriteriabycodefahpList() {
-        return criteriabycodefahpList;
-    }
-
-    public void setCriteriabycodefahpList(List<Criteriabycodefahp> criteriabycodefahpList) {
-        this.criteriabycodefahpList = criteriabycodefahpList;
-    }
-
-    @XmlTransient
-    public List<ProcessFahpatributebycriteria> getProcessFahpatributebycriteriaList() {
-        return processFahpatributebycriteriaList;
-    }
-
-    public void setProcessFahpatributebycriteriaList(List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList) {
-        this.processFahpatributebycriteriaList = processFahpatributebycriteriaList;
-    }
-
-    @XmlTransient
-    public List<ProcessFahpweightbycriteria> getProcessFahpweightbycriteriaList() {
-        return processFahpweightbycriteriaList;
-    }
-
-    public void setProcessFahpweightbycriteriaList(List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList) {
-        this.processFahpweightbycriteriaList = processFahpweightbycriteriaList;
-    }
-
-    @XmlTransient
-    public List<CriteriaMatrixValue> getCriteriaMatrixValueList() {
-        return criteriaMatrixValueList;
-    }
-
-    public void setCriteriaMatrixValueList(List<CriteriaMatrixValue> criteriaMatrixValueList) {
-        this.criteriaMatrixValueList = criteriaMatrixValueList;
-    }
-
-    @XmlTransient
-    public List<AttributesMatrixValue> getAttributesMatrixValueList() {
-        return attributesMatrixValueList;
-    }
-
-    public void setAttributesMatrixValueList(List<AttributesMatrixValue> attributesMatrixValueList) {
-        this.attributesMatrixValueList = attributesMatrixValueList;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -272,5 +191,5 @@ public class Fahp implements Serializable {
     public String toString() {
         return "Fahp{" + "fahpPK=" + fahpPK + '}';
     }
-    
+
 }

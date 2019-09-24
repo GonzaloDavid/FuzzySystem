@@ -28,14 +28,14 @@ public class CriteriaFAHPDAO extends GenericDAO<Criteria> {
     }
 
     public String getcriteriabycode(Long codeCriteria, Integer from, Integer to) throws JsonProcessingException {
-        SearchObject search = new SearchObject("criterialFAHPPK");
-        search.addParameter("criterialFAHPPK.codeCriteria", FilterTypes.EQUAL, codeCriteria);
-        search.setOrderPropertyName("criterialFAHPPK.codeCriteria");
+        SearchObject search = new SearchObject("criteriaPK");
+        search.addParameter("criteriaPK.codeCriteria", FilterTypes.EQUAL, codeCriteria);
+        search.setOrderPropertyName("criteriaPK.codeCriteria");
         search.asc();
-        List<Criteria> resultList = search(search);
         long count = search(search).size();
         search.setFrom(from);
         search.setTo(to);
+        List<Criteria> resultList = search(search);
         ListAndCountContainer countContainer = new ListAndCountContainer(count, resultList);
 
         ObjectMapper mapper = new ObjectMapper();

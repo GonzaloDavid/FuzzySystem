@@ -19,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,6 +41,11 @@ public class Sentemailbycodefahp implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SentemailbycodefahpPK sentemailbycodefahpPK;
+
+    @Column(name = "statussentfahpCat")
+    private String statussentfahpCatt;
+    @Column(name = "statussentfahp")
+    private String statussentfahp;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,12 +66,12 @@ public class Sentemailbycodefahp implements Serializable {
     @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
-    @JoinColumn(name = "statussentfahpCat", referencedColumnName = "code")
+    @JoinColumn(name = "statussentfahpCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Catalogue statussentfahpCat;
     @JoinColumns({
-        @JoinColumn(name = "statussentfahpCat", referencedColumnName = "codeCatalogue"),
-        @JoinColumn(name = "statussentfahp", referencedColumnName = "codeItem")})
+        @JoinColumn(name = "statussentfahpCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
+        @JoinColumn(name = "statussentfahp", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
 
@@ -162,6 +166,22 @@ public class Sentemailbycodefahp implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
+    public String getStatussentfahpCatt() {
+        return statussentfahpCatt;
+    }
+
+    public void setStatussentfahpCatt(String statussentfahpCatt) {
+        this.statussentfahpCatt = statussentfahpCatt;
+    }
+
+    public String getStatussentfahp() {
+        return statussentfahp;
+    }
+
+    public void setStatussentfahp(String statussentfahp) {
+        this.statussentfahp = statussentfahp;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -186,5 +206,5 @@ public class Sentemailbycodefahp implements Serializable {
     public String toString() {
         return "com.epn.entities.Sentemailbycodefahp[ sentemailbycodefahpPK=" + sentemailbycodefahpPK + " ]";
     }
-    
+
 }
