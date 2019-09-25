@@ -22,10 +22,12 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -73,6 +75,10 @@ public class Fahp implements Serializable {
         @JoinColumn(name = "statusfahp", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
+ @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<Surveybycodefahp> surveybycodefahpList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<Criteriabycodefahp> criteriabycodefahpList;
 
     public Fahp() {
     }
@@ -190,6 +196,27 @@ public class Fahp implements Serializable {
     @Override
     public String toString() {
         return "Fahp{" + "fahpPK=" + fahpPK + '}';
+    }
+
+
+
+
+    @XmlTransient
+    public List<Surveybycodefahp> getSurveybycodefahpList() {
+        return surveybycodefahpList;
+    }
+
+    public void setSurveybycodefahpList(List<Surveybycodefahp> surveybycodefahpList) {
+        this.surveybycodefahpList = surveybycodefahpList;
+    }
+
+    @XmlTransient
+    public List<Criteriabycodefahp> getCriteriabycodefahpList() {
+        return criteriabycodefahpList;
+    }
+
+    public void setCriteriabycodefahpList(List<Criteriabycodefahp> criteriabycodefahpList) {
+        this.criteriabycodefahpList = criteriabycodefahpList;
     }
 
 }

@@ -5,16 +5,19 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.CriteriaContainer;
 import com.epn.dtos.ListAndCountContainer;
 import com.epn.entities.Criteria;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
+import com.epn.mapper.CriteriaMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -23,6 +26,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class CriteriaFAHPDAO extends GenericDAO<Criteria> {
 
+    private final CriteriaMapper mapper = Mappers.getMapper(CriteriaMapper.class);
     public CriteriaFAHPDAO() {
         super(Criteria.class);
     }
@@ -36,7 +40,8 @@ public class CriteriaFAHPDAO extends GenericDAO<Criteria> {
         search.setFrom(from);
         search.setTo(to);
         List<Criteria> resultList = search(search);
-        ListAndCountContainer countContainer = new ListAndCountContainer(count, resultList);
+        List<CriteriaContainer> criteriaContainer = mapper.sourceListToDestination(resultList);
+        ListAndCountContainer countContainer = new ListAndCountContainer(count, criteriaContainer);
 
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(countContainer);

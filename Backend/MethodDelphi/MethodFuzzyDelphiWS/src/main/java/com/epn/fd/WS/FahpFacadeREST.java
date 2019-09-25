@@ -7,6 +7,7 @@ package com.epn.fd.WS;
 
 import com.epn.dtos.FahpSaveContainer;
 import com.epn.entities.Fahp;
+import com.epn.entities.FahpPK;
 import com.epn.fd.dao.FahpDAO;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,6 +41,15 @@ public class FahpFacadeREST extends AbstractFacade<Fahp> {
 
     public FahpFacadeREST() {
         super(Fahp.class);
+    }
+
+    @POST
+    @Path("delete")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void delete(FahpPK fahpPK, @HeaderParam("authorization") String authString) {
+       // if (userDAO.existToken(authString) == true) {
+            fahpDAO.deletedfahp(fahpPK);
+       // }
     }
 
     @POST

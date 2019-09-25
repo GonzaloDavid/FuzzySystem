@@ -69,7 +69,9 @@ public class Criteria implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteria")
+    private List<Criteriabycodefahp> criteriabycodefahpList;
+
 
     public Criteria() {
     }
@@ -174,4 +176,17 @@ public class Criteria implements Serializable {
     public String toString() {
         return "Criteria{" + "criteriaPK=" + criteriaPK + '}';
     }
+    
+
+
+    @XmlTransient
+    public List<Criteriabycodefahp> getCriteriabycodefahpList() {
+        return criteriabycodefahpList;
+    }
+
+    public void setCriteriabycodefahpList(List<Criteriabycodefahp> criteriabycodefahpList) {
+        this.criteriabycodefahpList = criteriabycodefahpList;
+    }
+
+  
 }

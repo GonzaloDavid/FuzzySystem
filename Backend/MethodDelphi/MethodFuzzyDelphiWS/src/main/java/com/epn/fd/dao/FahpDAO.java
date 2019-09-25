@@ -8,9 +8,11 @@ package com.epn.fd.dao;
 import com.epn.dtos.FahpSaveContainer;
 import com.epn.entities.Criteriabycodefahp;
 import com.epn.entities.Fahp;
+import com.epn.entities.FahpPK;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
 import com.epn.entities.Surveybycodefahp;
+import com.epn.exception.AppException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -53,6 +55,17 @@ public class FahpDAO extends GenericDAO<Fahp> {
         criteriabyfahp.getCriteriabycodefahpPK().setCodefahp(codefahp);
         });
         criteriabycodefahpDAO.savecriteriafahp(criteriabycodefahp);
+    }
+    public void deletedfahp(FahpPK fahpPK)
+    {
+            Fahp foundelement =find(fahpPK);
+            try {
+                if (foundelement != null) {
+                remove(foundelement);
+            }
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
+            }
     }
 
 }
