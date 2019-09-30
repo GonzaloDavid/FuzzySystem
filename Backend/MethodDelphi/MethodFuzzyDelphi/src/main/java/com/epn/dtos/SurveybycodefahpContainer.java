@@ -6,6 +6,7 @@
 package com.epn.dtos;
 
 import com.epn.entities.SurveybycodefahpPK;
+import java.util.List;
 
 /**
  *
@@ -14,9 +15,11 @@ import com.epn.entities.SurveybycodefahpPK;
 public class SurveybycodefahpContainer {
     private SurveybycodefahpPK surveybycodefahpPK;
     private String namequiz;
+    private String namequestion;
     private String statusfahp;
     private String statusfahpCat;
     private String namestatusfahp;
+    private List<ItemQuestionContainer> itemquestioncontainer;
 
     public SurveybycodefahpContainer() {
     }
@@ -64,6 +67,22 @@ public class SurveybycodefahpContainer {
 
     public void setNamestatusfahp(String namestatusfahp) {
         this.namestatusfahp = namestatusfahp;
+    }
+
+    public String getNamequestion() {
+        return namequestion;
+    }
+
+    public void setNamequestion(String namequestion) {
+        this.namequestion = namequestion;
+    }
+
+    public List<ItemQuestionContainer> getItemquestioncontainer() {
+        return itemquestioncontainer;
+    }
+
+    public void setItemquestioncontainer(List<ItemQuestionContainer> itemquestioncontainer) {
+        this.itemquestioncontainer = itemquestioncontainer;
     }
     
 }

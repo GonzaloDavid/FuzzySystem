@@ -79,6 +79,8 @@ public class Fahp implements Serializable {
     private List<Surveybycodefahp> surveybycodefahpList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<Criteriabycodefahp> criteriabycodefahpList;
+ @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<AttributesMatrixValue> attributesMatrixValueList;
 
     public Fahp() {
     }
@@ -218,5 +220,20 @@ public class Fahp implements Serializable {
     public void setCriteriabycodefahpList(List<Criteriabycodefahp> criteriabycodefahpList) {
         this.criteriabycodefahpList = criteriabycodefahpList;
     }
+
+
+
+    @XmlTransient
+    public List<AttributesMatrixValue> getAttributesMatrixValueList() {
+        return attributesMatrixValueList;
+    }
+
+    public void setAttributesMatrixValueList(List<AttributesMatrixValue> attributesMatrixValueList) {
+        this.attributesMatrixValueList = attributesMatrixValueList;
+    }
+
+  
+
+   
 
 }

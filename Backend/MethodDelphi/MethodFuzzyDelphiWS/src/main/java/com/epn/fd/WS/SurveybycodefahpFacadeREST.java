@@ -5,6 +5,7 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.SurveybycodefahpContainer;
 import com.epn.entities.Surveybycodefahp;
 import com.epn.entities.SurveybycodefahpPK;
 import com.epn.fd.dao.SurveybycodefahpDAO;
@@ -35,7 +36,8 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.surveybycodefahp")
 public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp> {
 
-    @Inject() SurveybycodefahpDAO surveybycodefahpDAO;
+    @Inject()
+    SurveybycodefahpDAO surveybycodefahpDAO;
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -73,7 +75,7 @@ public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp>
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public String getfahplist(
-            @QueryParam("codefahp") Long  codefahp,
+            @QueryParam("codefahp") Long codefahp,
             @QueryParam("codequiz") Long codequiz,
             @QueryParam("namequiz") String namequiz,
             @QueryParam("from") Integer from,
@@ -82,9 +84,23 @@ public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp>
     ) throws JsonProcessingException {
         String fahplist = null;
         //if (userDAO.existToken(authString) == true) {
-            fahplist = surveybycodefahpDAO.getfahplist(codefahp, codequiz, namequiz, from, to);
-       // }
+        fahplist = surveybycodefahpDAO.getfahplist(codefahp, codequiz, namequiz, from, to);
+        // }
         return fahplist;
+    }
+
+    @GET
+    @Path("suveybycodefahp")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<SurveybycodefahpContainer> getsurveybycodefahp(
+            @QueryParam("codefahp") Long codefahp,
+            @HeaderParam("authorization") String authString
+    ) throws JsonProcessingException {
+        //if (userDAO.existToken(authString) == true) {
+        List<SurveybycodefahpContainer> containers= surveybycodefahpDAO.getquizbycodefahp(codefahp);
+        // }
+        return containers;
     }
 
     @Override

@@ -28,6 +28,8 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
 
     @Inject()
     FahpDAO fahpDAO;
+    @Inject()
+    ItemQuestionDAO itemQuestionDAO;
     private final SurveybycodefahpMapper mapper = Mappers.getMapper(SurveybycodefahpMapper.class);
 
     public SurveybycodefahpDAO() {
@@ -57,8 +59,21 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
         String response = mapper.writeValueAsString(countContainer);
         return response;
     }
-    public void savesurveybycodefahp(List<Surveybycodefahp> surveybycodefahp)
-    {
+
+    public void savesurveybycodefahp(List<Surveybycodefahp> surveybycodefahp) {
         updateList(surveybycodefahp);
+    }
+
+    public List<SurveybycodefahpContainer> getquizbycodefahp(Long codefahp) {
+        SearchObject search = new SearchObject("surveybycodefahpPK");
+        search.addParameter("surveybycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
+        List<Surveybycodefahp> resultList = search(search);
+        List<SurveybycodefahpContainer> surveybycodefahpContainers = mapper.sourceListToDestination(resultList);
+        surveybycodefahpContainers.forEach(item -> {
+            item.setItemquestioncontainer(itemQuestionDAO.getItembyCodeQuizAndCodeQuestion(
+                    item.getSurveybycodefahpPK().getCodeQuiz(),
+                    item.getSurveybycodefahpPK().getCodeQuestions()));
+        });
+        return surveybycodefahpContainers;
     }
 }
