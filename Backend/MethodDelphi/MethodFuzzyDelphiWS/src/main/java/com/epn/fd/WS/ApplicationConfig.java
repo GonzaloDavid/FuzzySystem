@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
+        resources.add(com.epn.fd.WS.AttributesMatrixValueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueFacadeREST.class);
         resources.add(com.epn.fd.WS.CatalogueitemFacadeREST.class);
         resources.add(com.epn.fd.WS.CriteriaFacadeREST.class);
