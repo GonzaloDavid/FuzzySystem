@@ -26,8 +26,7 @@
         <class>com.epn.entities.Sentemailbycodefahp</class>
         <class>com.epn.entities.Surveybycodefahp</class>
         <class>com.epn.entities.ResultFAHP</class>
-        
-        
+        <class>com.epn.entities.AttributesMatrixValue</class>
         
     
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

@@ -6,25 +6,18 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.SentemailbycodefahpSaveContainer;
-import com.epn.entities.Person;
 import com.epn.entities.Sentemailbycodefahp;
 import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
