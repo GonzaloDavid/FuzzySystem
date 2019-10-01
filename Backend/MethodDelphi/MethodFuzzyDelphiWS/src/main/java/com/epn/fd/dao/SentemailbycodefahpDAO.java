@@ -11,6 +11,7 @@ import com.epn.entities.Person;
 import com.epn.entities.Quiz;
 import com.epn.entities.RoundsPK;
 import com.epn.entities.Sentemailbycodefahp;
+import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.exception.AppException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,14 +37,24 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
 
     @Inject()
     EnvironmentDAO environmentDAO;
-    
+
     @Inject()
     SurveybycodefahpDAO surveybycodefahpDAO;
 
     @Inject()
     PersonDAO personDAO;
+
     public SentemailbycodefahpDAO() {
         super(Sentemailbycodefahp.class);
+    }
+
+    public void updatestatus(SentemailbycodefahpPK sentemailbycodefahppk) {
+      Sentemailbycodefahp exist= find(sentemailbycodefahppk);
+      if(exist!=null)
+      {
+          exist.setStatussentfahp("answered");
+          update(exist);
+      }
     }
 
     public void savelist(List<Sentemailbycodefahp> personsselectedlist) {
@@ -56,10 +67,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
         });
     }
 
-    public void sendprocess(List<Sentemailbycodefahp> personsselectedlist,String descriptionMail) {
+    public void sendprocess(List<Sentemailbycodefahp> personsselectedlist, String descriptionMail) {
 
         if (personsselectedlist.size() > 0) {
-            
+
             FahpPK fahpPK = new FahpPK();
             fahpPK.setCodefahp(personsselectedlist.get(0).getSentemailbycodefahpPK().getCodefahp());
             Fahp fahp = new Fahp(fahpPK);
@@ -80,10 +91,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
                         sentemailbycodeobject.getSentemailbycodefahpPK().getCodePerson(),
                         sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp(),
                         expirationTime);
-                
-                String namesurvey=surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp());
-                Person persons=personDAO.getpersonbycodeperson(sentemailbycodeobject.getSentemailbycodefahpPK().getCodePerson());
-                
+
+                String namesurvey = surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp());
+                Person persons = personDAO.getpersonbycodeperson(sentemailbycodeobject.getSentemailbycodefahpPK().getCodePerson());
+
                 sendquizbyfahp(namesurvey, persons,
                         sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp(),
                         uribase, jwt.getString("JWT"), descriptionMail);
@@ -114,7 +125,7 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
         try {
             String message = "";
             if (descriptionMail != null) {
-                message = "<div style='text-align: justify;'><span> "+ descriptionMail+"</span></div>";
+                message = "<div style='text-align: justify;'><span> " + descriptionMail + "</span></div>";
             } else {
                 message = "<div style='text-align: justify;'><span> Por favor, dedica un momento completando la informacion solicitada, dicha información que proporcione será utilizada con fines academicos e investigación </span></div>";
             }

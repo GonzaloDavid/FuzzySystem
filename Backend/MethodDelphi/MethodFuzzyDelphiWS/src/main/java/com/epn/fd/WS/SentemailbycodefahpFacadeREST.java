@@ -31,6 +31,7 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
 
     @Inject()
     SentemailbycodefahpDAO sentemailbycodefahpDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 

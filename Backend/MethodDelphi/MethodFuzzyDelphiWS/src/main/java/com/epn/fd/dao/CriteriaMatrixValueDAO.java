@@ -6,6 +6,7 @@
 package com.epn.fd.dao;
 
 import com.epn.entities.CriteriaMatrixValue;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -18,4 +19,8 @@ public class CriteriaMatrixValueDAO extends GenericDAO<CriteriaMatrixValue> {
      public CriteriaMatrixValueDAO() {
         super(CriteriaMatrixValue.class);
     }
+     public void save(List<CriteriaMatrixValue> criteriaMatrixlist)
+     {
+         updateList(criteriaMatrixlist);
+     }
 }

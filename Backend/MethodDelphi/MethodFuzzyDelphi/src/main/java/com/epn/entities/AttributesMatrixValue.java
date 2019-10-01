@@ -46,9 +46,9 @@ public class AttributesMatrixValue implements Serializable {
     @EmbeddedId
     protected AttributesMatrixValuePK attributesMatrixValuePK;
     @Column(name = "valuecriteriaFAHPCat")
-    private Date valuecriteriaFAHPCatt;
+    private String valuecriteriaFAHPCatt;
     @Column(name = "valuecriteriaFAHP")
-    private Date valuecriteriaFAHP;
+    private String valuecriteriaFAHP;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -207,21 +207,23 @@ public class AttributesMatrixValue implements Serializable {
         this.catalogueitem = catalogueitem;
     }
 
-    public Date getValuecriteriaFAHPCatt() {
+    public String getValuecriteriaFAHPCatt() {
         return valuecriteriaFAHPCatt;
     }
 
-    public void setValuecriteriaFAHPCatt(Date valuecriteriaFAHPCatt) {
+    public void setValuecriteriaFAHPCatt(String valuecriteriaFAHPCatt) {
         this.valuecriteriaFAHPCatt = valuecriteriaFAHPCatt;
     }
 
-    public Date getValuecriteriaFAHP() {
+    public String getValuecriteriaFAHP() {
         return valuecriteriaFAHP;
     }
 
-    public void setValuecriteriaFAHP(Date valuecriteriaFAHP) {
+    public void setValuecriteriaFAHP(String valuecriteriaFAHP) {
         this.valuecriteriaFAHP = valuecriteriaFAHP;
     }
+
+   
     
     @Override
     public int hashCode() {
