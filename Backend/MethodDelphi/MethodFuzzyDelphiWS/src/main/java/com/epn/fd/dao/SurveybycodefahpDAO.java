@@ -76,4 +76,16 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
         });
         return surveybycodefahpContainers;
     }
+
+    public String getnamequizbycodefahp(Long codefahp) {
+        String namequiz="";
+        SearchObject search = new SearchObject("surveybycodefahpPK");
+        search.addParameter("surveybycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
+        List<Surveybycodefahp> resultList = search(search);
+        if(resultList.size()>0)
+        {
+        namequiz = resultList.get(0).getQuiz().getNameQuiz();
+        }
+        return namequiz;
+    }
 }

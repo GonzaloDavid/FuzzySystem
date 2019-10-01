@@ -24,10 +24,12 @@ import javax.inject.Inject;
 @Stateless
 public class FahpDAO extends GenericDAO<Fahp> {
 
-    @Inject() SurveybycodefahpDAO surveybycodefahpDAO;
-    
-    @Inject() CriteriabycodefahpDAO criteriabycodefahpDAO;
-    
+    @Inject()
+    SurveybycodefahpDAO surveybycodefahpDAO;
+
+    @Inject()
+    CriteriabycodefahpDAO criteriabycodefahpDAO;
+
     public FahpDAO() {
         super(Fahp.class);
     }
@@ -38,34 +40,39 @@ public class FahpDAO extends GenericDAO<Fahp> {
         List<Fahp> resultList = search(search);
         return resultList.get(0);
     }
-    public void savefahp(FahpSaveContainer container)
-    {
-        Fahp fahp= new Fahp();
-        fahp=container.getFahp();
+
+    public long savefahp(Fahp fahp) {
         update(fahp);
-        long codefahp=fahp.getFahpPK().getCodefahp();
-        List<Surveybycodefahp> surveybycodefahplist=container.getSurveybycodefahp();
-        surveybycodefahplist.forEach(surveybyfahp->{
-        surveybyfahp.getSurveybycodefahpPK().setCodefahp(codefahp);
+        long codefahp = fahp.getFahpPK().getCodefahp();
+        return codefahp;
+    }
+
+    public void saveSurveyandCriteriabycode(FahpSaveContainer container) {
+        Fahp fahp = new Fahp();
+        fahp = container.getFahp();
+        long codefahp=savefahp(fahp);
+        List<Surveybycodefahp> surveybycodefahplist = container.getSurveybycodefahp();
+        surveybycodefahplist.forEach(surveybyfahp -> {
+            surveybyfahp.getSurveybycodefahpPK().setCodefahp(codefahp);
         });
         surveybycodefahpDAO.savesurveybycodefahp(surveybycodefahplist);
-        
-        List<Criteriabycodefahp> criteriabycodefahp=container.getCriteriabycodefahp();
-        criteriabycodefahp.forEach(criteriabyfahp->{
-        criteriabyfahp.getCriteriabycodefahpPK().setCodefahp(codefahp);
+
+        List<Criteriabycodefahp> criteriabycodefahp = container.getCriteriabycodefahp();
+        criteriabycodefahp.forEach(criteriabyfahp -> {
+            criteriabyfahp.getCriteriabycodefahpPK().setCodefahp(codefahp);
         });
         criteriabycodefahpDAO.savecriteriafahp(criteriabycodefahp);
     }
-    public void deletedfahp(FahpPK fahpPK)
-    {
-            Fahp foundelement =find(fahpPK);
-            try {
-                if (foundelement != null) {
+
+    public void deletedfahp(FahpPK fahpPK) {
+        Fahp foundelement = find(fahpPK);
+        try {
+            if (foundelement != null) {
                 remove(foundelement);
             }
-            } catch (Exception e) {
-                throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
-            }
+        } catch (Exception e) {
+            throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
+        }
     }
 
 }

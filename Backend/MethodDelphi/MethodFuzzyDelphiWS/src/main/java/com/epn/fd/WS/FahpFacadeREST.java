@@ -59,7 +59,7 @@ public class FahpFacadeREST extends AbstractFacade<Fahp> {
     public void savefahp(FahpSaveContainer fahpSaveContainer,
             @HeaderParam("authorization") String authString) {
         // if (userDAO.existToken(authString) == true) {
-        fahpDAO.savefahp(fahpSaveContainer);
+        fahpDAO.saveSurveyandCriteriabycode(fahpSaveContainer);
         //}
     }
 

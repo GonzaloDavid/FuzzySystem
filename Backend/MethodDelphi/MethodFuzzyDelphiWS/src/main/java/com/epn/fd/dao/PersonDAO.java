@@ -48,6 +48,7 @@ public class PersonDAO extends GenericDAO<Person> {
         String response = mapper.writeValueAsString(patientlistandcount);
         return response;
     }
+
     public String getpersonbycode(Long codeperson) throws JsonProcessingException {
         SearchObject search = new SearchObject("codePerson");
         search.addParameter("codePerson", FilterTypes.EQUAL, codeperson);
@@ -58,6 +59,18 @@ public class PersonDAO extends GenericDAO<Person> {
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(personContainer);
         return response;
+    }
+
+    public Person getpersonbycodeperson(Long codeperson) {
+        Person person=new Person();
+        SearchObject search = new SearchObject("codePerson");
+        search.addParameter("codePerson", FilterTypes.EQUAL, codeperson);
+        List<Person> resultList = search(search);
+        if(resultList.size()>0)
+        {
+        person=resultList.get(0);
+        }
+        return person;
     }
 
     public Person savePerson(Person person) {
@@ -77,12 +90,12 @@ public class PersonDAO extends GenericDAO<Person> {
             foundelement = find(elementremove.getCodePerson());
             try {
                 if (foundelement != null) {
-                remove(foundelement);
-            }
+                    remove(foundelement);
+                }
             } catch (Exception e) {
                 throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
             }
-            
+
         });
 
     }
