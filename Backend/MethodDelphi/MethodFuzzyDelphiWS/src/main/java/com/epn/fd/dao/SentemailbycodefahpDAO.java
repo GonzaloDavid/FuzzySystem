@@ -5,14 +5,16 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.SentemailbycodefahpContainer;
 import com.epn.entities.Fahp;
 import com.epn.entities.FahpPK;
+import com.epn.entities.FilterTypes;
 import com.epn.entities.Person;
-import com.epn.entities.Quiz;
-import com.epn.entities.RoundsPK;
+import com.epn.entities.SearchObject;
 import com.epn.entities.Sentemailbycodefahp;
 import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.exception.AppException;
+import com.epn.mapper.SentemailbycodefahpMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
@@ -21,6 +23,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -44,17 +47,26 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
     @Inject()
     PersonDAO personDAO;
 
+    private final SentemailbycodefahpMapper mapper = Mappers.getMapper(SentemailbycodefahpMapper.class);
     public SentemailbycodefahpDAO() {
         super(Sentemailbycodefahp.class);
     }
 
+    public List<SentemailbycodefahpContainer> searchbycodefahp(Long codefahp) {
+        SearchObject search = new SearchObject("sentemailbycodefahpPK");
+        search.addParameter("sentemailbycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
+
+        List<Sentemailbycodefahp> resultList = search(search);
+        List<SentemailbycodefahpContainer> containers = mapper.sourceListToDestination(resultList);
+        return containers;
+    }
+
     public void updatestatus(SentemailbycodefahpPK sentemailbycodefahppk) {
-      Sentemailbycodefahp exist= find(sentemailbycodefahppk);
-      if(exist!=null)
-      {
-          exist.setStatussentfahp("answered");
-          update(exist);
-      }
+        Sentemailbycodefahp exist = find(sentemailbycodefahppk);
+        if (exist != null) {
+            exist.setStatussentfahp("answered");
+            update(exist);
+        }
     }
 
     public void savelist(List<Sentemailbycodefahp> personsselectedlist) {

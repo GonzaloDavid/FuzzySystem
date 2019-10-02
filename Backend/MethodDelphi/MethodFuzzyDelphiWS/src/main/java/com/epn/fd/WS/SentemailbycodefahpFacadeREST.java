@@ -5,19 +5,26 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.CriteriabycodefahpContainer;
+import com.epn.dtos.SentemailbycodefahpContainer;
 import com.epn.dtos.SentemailbycodefahpSaveContainer;
 import com.epn.entities.Sentemailbycodefahp;
 import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -31,7 +38,7 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
 
     @Inject()
     SentemailbycodefahpDAO sentemailbycodefahpDAO;
-    
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -58,6 +65,20 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
 
     public SentemailbycodefahpFacadeREST() {
         super(Sentemailbycodefahp.class);
+    }
+
+    @GET
+    @Path("person")
+    @Transactional
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<SentemailbycodefahpContainer> getpersonsbycodefahp(
+            @QueryParam("codefahp") Long codefahp,
+            @HeaderParam("authorization") String authString
+    ) throws JsonProcessingException {
+        //if (userDAO.existToken(authString) == true) {
+        List<SentemailbycodefahpContainer> personlist = sentemailbycodefahpDAO.searchbycodefahp(codefahp);
+        // }
+        return personlist;
     }
 
     @POST
