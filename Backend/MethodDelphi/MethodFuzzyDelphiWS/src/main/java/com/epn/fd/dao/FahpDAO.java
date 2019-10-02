@@ -41,6 +41,14 @@ public class FahpDAO extends GenericDAO<Fahp> {
         return resultList.get(0);
     }
 
+    public void updatestatus(FahpPK fahpPK) {
+        Fahp exist = find(fahpPK);
+        if (exist != null) {
+            exist.setStatusfahp("answered");
+            update(exist);
+        }
+    }
+
     public long savefahp(Fahp fahp) {
         update(fahp);
         long codefahp = fahp.getFahpPK().getCodefahp();
@@ -50,7 +58,7 @@ public class FahpDAO extends GenericDAO<Fahp> {
     public void saveSurveyandCriteriabycode(FahpSaveContainer container) {
         Fahp fahp = new Fahp();
         fahp = container.getFahp();
-        long codefahp=savefahp(fahp);
+        long codefahp = savefahp(fahp);
         List<Surveybycodefahp> surveybycodefahplist = container.getSurveybycodefahp();
         surveybycodefahplist.forEach(surveybyfahp -> {
             surveybyfahp.getSurveybycodefahpPK().setCodefahp(codefahp);
@@ -71,7 +79,7 @@ public class FahpDAO extends GenericDAO<Fahp> {
                 remove(foundelement);
             }
         } catch (Exception e) {
-            throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
+            throw new AppException(e.toString(), "PROBLEMA DE DEPENDENCIAS");
         }
     }
 

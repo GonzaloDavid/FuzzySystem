@@ -8,8 +8,10 @@ package com.epn.fd.WS;
 import com.epn.dtos.AttributeMatrixvalueSaveContainer;
 import com.epn.entities.AttributesMatrixValue;
 import com.epn.entities.AttributesMatrixValuePK;
+import com.epn.entities.FahpPK;
 import com.epn.fd.dao.AttributesMatrixValueDAO;
 import com.epn.fd.dao.CriteriaMatrixValueDAO;
+import com.epn.fd.dao.FahpDAO;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -39,7 +41,10 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
     
     @Inject()
     SentemailbycodefahpDAO sentemailbycodefahpDAO;
-
+    
+    @Inject()
+    FahpDAO fahpDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -91,6 +96,10 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
     public void save(AttributeMatrixvalueSaveContainer saveContainer,
             @HeaderParam("authorization") String authString) {
         // if (userDAO.existToken(authString) == true) {
+        FahpPK fahpPK= new FahpPK();
+        fahpPK.setCodefahp(saveContainer.getSentemailbycodefahp().getCodefahp());
+        
+        fahpDAO.updatestatus(fahpPK);
         sentemailbycodefahpDAO.updatestatus(saveContainer.getSentemailbycodefahp());
         attributesMatrixValueDAO.save(saveContainer.getAttributesMatrixlist());
         criteriaMatrixValueDAO.save(saveContainer.getCriteriaMatrixlist());

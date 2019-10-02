@@ -48,7 +48,7 @@ public class Fahp implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected FahpPK fahpPK;
-    
+
     @Column(name = "statusfahpCat")
     private String statusfahpCatt;
     @Column(name = "statusfahp")
@@ -75,12 +75,16 @@ public class Fahp implements Serializable {
         @JoinColumn(name = "statusfahp", referencedColumnName = "codeItem", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Catalogueitem catalogueitem;
- @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<Surveybycodefahp> surveybycodefahpList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<Criteriabycodefahp> criteriabycodefahpList;
- @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<AttributesMatrixValue> attributesMatrixValueList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<CriteriaMatrixValue> criteriaMatrixValueList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<Sentemailbycodefahp> sentemailbycodefahp;
 
     public Fahp() {
     }
@@ -169,7 +173,6 @@ public class Fahp implements Serializable {
         this.statusfahp = statusfahp;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -200,9 +203,6 @@ public class Fahp implements Serializable {
         return "Fahp{" + "fahpPK=" + fahpPK + '}';
     }
 
-
-
-
     @XmlTransient
     public List<Surveybycodefahp> getSurveybycodefahpList() {
         return surveybycodefahpList;
@@ -221,8 +221,6 @@ public class Fahp implements Serializable {
         this.criteriabycodefahpList = criteriabycodefahpList;
     }
 
-
-
     @XmlTransient
     public List<AttributesMatrixValue> getAttributesMatrixValueList() {
         return attributesMatrixValueList;
@@ -232,8 +230,22 @@ public class Fahp implements Serializable {
         this.attributesMatrixValueList = attributesMatrixValueList;
     }
 
-  
+    @XmlTransient
+    public List<CriteriaMatrixValue> getCriteriaMatrixValueList() {
+        return criteriaMatrixValueList;
+    }
 
-   
+    public void setCriteriaMatrixValueList(List<CriteriaMatrixValue> criteriaMatrixValueList) {
+        this.criteriaMatrixValueList = criteriaMatrixValueList;
+    }
+
+    @XmlTransient
+    public List<Sentemailbycodefahp> getSentemailbycodefahp() {
+        return sentemailbycodefahp;
+    }
+
+    public void setSentemailbycodefahp(List<Sentemailbycodefahp> sentemailbycodefahp) {
+        this.sentemailbycodefahp = sentemailbycodefahp;
+    }
 
 }
