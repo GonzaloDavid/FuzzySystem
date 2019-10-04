@@ -107,8 +107,8 @@ public class AttributesMatrixValue implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public AttributesMatrixValue(long codefahp, long codePerson, long codeQuiz, long codeQuestions, long itemLabel, long itemLabelCouple) {
-        this.attributesMatrixValuePK = new AttributesMatrixValuePK(codefahp, codePerson, codeQuiz, codeQuestions, itemLabel, itemLabelCouple);
+    public AttributesMatrixValue(long codefahp, long codePerson, long codeCriteria,long codeQuiz, long codeQuestions, long itemLabel, long itemLabelCouple) {
+        this.attributesMatrixValuePK = new AttributesMatrixValuePK(codefahp, codePerson,codeCriteria, codeQuiz, codeQuestions, itemLabel, itemLabelCouple);
     }
 
     public AttributesMatrixValuePK getAttributesMatrixValuePK() {

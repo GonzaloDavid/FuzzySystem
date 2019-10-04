@@ -125,7 +125,7 @@ CREATE TABLE `FAHP` (
   KEY `FAHP_catalogueitem_FK` (`statusfahpCat`,`statusfahp`),
   CONSTRAINT `FAHP_catalogue_FK` FOREIGN KEY (`statusfahpCat`) REFERENCES `catalogue` (`code`),
   CONSTRAINT `FAHP_catalogueitem_FK` FOREIGN KEY (`statusfahpCat`, `statusfahp`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `FAHP` (
 
 LOCK TABLES `FAHP` WRITE;
 /*!40000 ALTER TABLE `FAHP` DISABLE KEYS */;
-INSERT INTO `FAHP` VALUES (1,'STATUSFAHPCAT','created','2019-09-24 21:26:04','2019-09-24 21:26:04',0,0),(4,'STATUSFAHPCAT','created','2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(5,'STATUSFAHPCAT','created','2019-09-24 22:32:09','2019-09-24 22:32:09',0,0),(6,'STATUSFAHPCAT','created','2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(7,'STATUSFAHPCAT','created','2019-09-26 21:31:00','2019-09-26 21:31:00',0,0);
+INSERT INTO `FAHP` VALUES (9,'STATUSFAHPCAT','answered','2019-10-04 21:14:38','2019-10-04 21:15:38',0,0);
 /*!40000 ALTER TABLE `FAHP` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -551,6 +551,7 @@ DROP TABLE IF EXISTS `attributesMatrixValue`;
 CREATE TABLE `attributesMatrixValue` (
   `codefahp` bigint(20) NOT NULL,
   `codePerson` bigint(20) NOT NULL,
+  `codeCriteria` bigint(20) NOT NULL,
   `codeQuiz` bigint(20) NOT NULL,
   `codeQuestions` bigint(20) NOT NULL,
   `itemLabel` bigint(20) NOT NULL,
@@ -561,19 +562,22 @@ CREATE TABLE `attributesMatrixValue` (
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`codefahp`,`codePerson`,`codeQuiz`,`codeQuestions`,`itemLabel`,`itemLabelCouple`),
+  PRIMARY KEY (`codefahp`,`codePerson`,`codeCriteria`,`codeQuiz`,`codeQuestions`,`itemLabel`,`itemLabelCouple`),
+  KEY `attributesMatrixValue_catalogueitem_FK` (`valuecriteriaFAHPCat`,`valuecriteriaFAHP`),
+  KEY `attributesMatrixValue_criteria_FK` (`codeCriteria`),
   KEY `attributesMatrixValue_Person_FK` (`codePerson`),
   KEY `attributesMatrixValue_Quiz_FK` (`codeQuiz`),
   KEY `attributesMatrixValue_Questions_FK` (`codeQuestions`,`codeQuiz`),
   KEY `attributesMatrixValue_QuestionItem_FK` (`itemLabel`,`codeQuestions`,`codeQuiz`),
-  KEY `attributesMatrixValue_catalogueitem_FK` (`valuecriteriaFAHPCat`,`valuecriteriaFAHP`),
+  KEY `attributesMatrixValue_QuestionItem_FK_1` (`itemLabelCouple`,`codeQuestions`,`codeQuiz`),
   CONSTRAINT `attributesMatrixValue_FAHP_FK` FOREIGN KEY (`codefahp`) REFERENCES `FAHP` (`codefahp`),
   CONSTRAINT `attributesMatrixValue_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `attributesMatrixValue_QuestionItem_FK` FOREIGN KEY (`itemLabel`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
+  CONSTRAINT `attributesMatrixValue_QuestionItem_FK_1` FOREIGN KEY (`itemLabelCouple`, `codeQuestions`, `codeQuiz`) REFERENCES `QuestionItem` (`codeQuizItem`, `codeQuestions`, `codeQuiz`),
   CONSTRAINT `attributesMatrixValue_Questions_FK` FOREIGN KEY (`codeQuestions`, `codeQuiz`) REFERENCES `Questions` (`codeQuestions`, `codeQuiz`),
   CONSTRAINT `attributesMatrixValue_Quiz_FK` FOREIGN KEY (`codeQuiz`) REFERENCES `Quiz` (`codeQuiz`),
   CONSTRAINT `attributesMatrixValue_catalogue_FK` FOREIGN KEY (`valuecriteriaFAHPCat`) REFERENCES `catalogue` (`code`),
-  CONSTRAINT `attributesMatrixValue_catalogueitem_FK` FOREIGN KEY (`valuecriteriaFAHPCat`, `valuecriteriaFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
+  CONSTRAINT `attributesMatrixValue_criteria_FK` FOREIGN KEY (`codeCriteria`) REFERENCES `criteria` (`codeCriteria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -583,6 +587,7 @@ CREATE TABLE `attributesMatrixValue` (
 
 LOCK TABLES `attributesMatrixValue` WRITE;
 /*!40000 ALTER TABLE `attributesMatrixValue` DISABLE KEYS */;
+INSERT INTO `attributesMatrixValue` VALUES (9,1,3,1,1,2,2,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,2,3,'3,5,7','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,2,39,'1,3,5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,3,2,'1/7, 1/5, 1/3','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,3,3,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,3,39,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,39,2,'1/5, 1/3, 1/1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,39,3,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,1,39,39,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,36,36,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,36,37,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,36,38,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,37,36,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,37,37,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,37,38,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,38,36,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,38,37,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,1,3,38,38,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,2,2,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,2,3,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,2,39,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,3,2,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,3,3,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,3,39,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,39,2,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,39,3,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,1,39,39,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,36,36,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,36,37,'1,3,5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,36,38,'5,7,9','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,37,36,'1/5, 1/3, 1/1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,37,37,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,37,38,'3,5,7','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,38,36,'1/9, 1/7, 1/5','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,38,37,'1/7, 1/5, 1/3','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,1,3,38,38,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0);
 /*!40000 ALTER TABLE `attributesMatrixValue` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -611,7 +616,7 @@ CREATE TABLE `catalogue` (
 
 LOCK TABLES `catalogue` WRITE;
 /*!40000 ALTER TABLE `catalogue` DISABLE KEYS */;
-INSERT INTO `catalogue` VALUES ('ACADEMICDEGREECAT','ACADEMICDEGREECAT','Grado de educación de una persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('IDENTIFYTYPECAT','IDENTIFYTYPECAT','tipo de tipo identificaciones','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SENTSTATUSCAT','SENTSTATUSCAT','Cátalogo estados de las encuestas','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SEXCAT','SEXCAT','Sexo de cada persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSCAT','STATUSCAT','Cátalogo estados','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSFAHPCAT','STATUSFAHPCAT','Cátalogo con los estados del proceso sobre el algoritmo fuzzy AHP','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSRESULTCAT','STATUSRESULTCAT','Cátalogo estados de resultados de si converge o no','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('TYPEPERSONCAT','TYPEPERSONCAT','tipo de personas como admin, expertos etc','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('VALUEFAHPCAT','VALUEFAHPCAT','Lista de valores para fuzzy AHP','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1);
+INSERT INTO `catalogue` VALUES ('ACADEMICDEGREECAT','ACADEMICDEGREECAT','Grado de educación de una persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('IDENTIFYTYPECAT','IDENTIFYTYPECAT','tipo de tipo identificaciones','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SENTSTATUSCAT','SENTSTATUSCAT','Cátalogo estados de las encuestas','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('SEXCAT','SEXCAT','Sexo de cada persona','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSCAT','STATUSCAT','Cátalogo estados','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSFAHPCAT','STATUSFAHPCAT','Cátalogo con los estados del proceso sobre el algoritmo fuzzy AHP','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSRESULTCAT','STATUSRESULTCAT','Cátalogo estados de resultados de si converge o no','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('STATUSSENTFAHPCAT','STATUSSENTFAHPCAT','Cátalogo de estados de envio de mail para proceso de FAHP','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('TYPEPERSONCAT','TYPEPERSONCAT','tipo de personas como admin, expertos etc','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1),('VALUEFAHPCAT','VALUEFAHPCAT','Lista de valores para fuzzy AHP','2019-05-15 00:18:02','2019-05-14 21:59:19',1,1);
 /*!40000 ALTER TABLE `catalogue` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -641,7 +646,7 @@ CREATE TABLE `catalogueitem` (
 
 LOCK TABLES `catalogueitem` WRITE;
 /*!40000 ALTER TABLE `catalogueitem` DISABLE KEYS */;
-INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','created','Creado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','executed','Ejecutado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','sent','Enviado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','approved','Aprobado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','rejected','No converge','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','1,3,5','1,3,5','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','3,5,7','3,5,7','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','5,7,9','5,7,9','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
+INSERT INTO `catalogueitem` VALUES ('ACADEMICDEGREECAT','Postgrados','Postgrados','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Primaria','Primaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Secundaria','Secundaria','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('ACADEMICDEGREECAT','Universidad','Universidad','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','ID','Cédula','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('IDENTIFYTYPECAT','RUC','RUC','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwarded','Reenviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','forwardedAndAnswered','Reenviado / Contestado','2019-08-03 17:17:36','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sent','Enviado / No contestado','2019-08-03 17:17:16','2019-05-14 22:00:07',1,1),('SENTSTATUSCAT','sentAndAnswered','Enviado /Contestado','2019-08-03 17:17:27','2019-05-14 22:00:07',1,1),('SEXCAT','0','Mujer','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('SEXCAT','1','Hombre','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','0','Inactivo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSCAT','1','Activo','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','answered','Respondido','2019-10-02 02:40:25','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','created','Creado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','executed','Ejecutado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSFAHPCAT','sent','Enviado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','approved','Aprobado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSRESULTCAT','rejected','No converge','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSSENTFAHPCAT','answered','Respondido','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSSENTFAHPCAT','forwarded','Reenviado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('STATUSSENTFAHPCAT','sent','Enviado','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','admin','ADMINISTRADOR','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('TYPEPERSONCAT','expert','EXPERTOS','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','1,3,5','1,3,5','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','3,5,7','3,5,7','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1),('VALUEFAHPCAT','5,7,9','5,7,9','2019-05-14 22:00:07','2019-05-14 22:00:07',1,1);
 /*!40000 ALTER TABLE `catalogueitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -700,7 +705,6 @@ CREATE TABLE `criteriaMatrixValue` (
   CONSTRAINT `criteriaMatrixValue_FAHP_FK` FOREIGN KEY (`codefahp`) REFERENCES `FAHP` (`codefahp`),
   CONSTRAINT `criteriaMatrixValue_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
   CONSTRAINT `criteriaMatrixValue_catalogue_FK` FOREIGN KEY (`valuecriteriaFAHPCat`) REFERENCES `catalogue` (`code`),
-  CONSTRAINT `criteriaMatrixValue_catalogueitem_FK` FOREIGN KEY (`valuecriteriaFAHPCat`, `valuecriteriaFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `criteriaMatrixValue_criteria_FK` FOREIGN KEY (`codeCriteria`) REFERENCES `criteria` (`codeCriteria`),
   CONSTRAINT `criteriaMatrixValue_criteria_FK_1` FOREIGN KEY (`codeCriteria`) REFERENCES `criteria` (`codeCriteria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -712,6 +716,7 @@ CREATE TABLE `criteriaMatrixValue` (
 
 LOCK TABLES `criteriaMatrixValue` WRITE;
 /*!40000 ALTER TABLE `criteriaMatrixValue` DISABLE KEYS */;
+INSERT INTO `criteriaMatrixValue` VALUES (9,1,3,3,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,3,4,'3,5,7','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,3,'1/7, 1/5, 1/3','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0),(9,1,4,4,'1','VALUEFAHPCAT','2019-10-04 21:17:29','2019-10-04 21:17:29',0,0);
 /*!40000 ALTER TABLE `criteriaMatrixValue` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -742,7 +747,7 @@ CREATE TABLE `criteriabycodefahp` (
 
 LOCK TABLES `criteriabycodefahp` WRITE;
 /*!40000 ALTER TABLE `criteriabycodefahp` DISABLE KEYS */;
-INSERT INTO `criteriabycodefahp` VALUES (1,3,'2019-09-24 21:26:04','2019-09-24 21:26:04',0,0),(1,4,'2019-09-24 21:26:04','2019-09-24 21:26:04',0,0),(4,3,'2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(4,4,'2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(4,5,'2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(5,3,'2019-09-24 22:32:09','2019-09-24 22:32:09',0,0),(5,6,'2019-09-24 22:32:09','2019-09-24 22:32:09',0,0),(6,3,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(6,4,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(6,5,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(6,6,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(6,7,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(7,3,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0),(7,4,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0),(7,5,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0),(7,6,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0),(7,7,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0);
+INSERT INTO `criteriabycodefahp` VALUES (9,3,'2019-10-02 04:35:17','2019-10-02 04:35:17',0,0),(9,4,'2019-10-02 04:35:17','2019-10-02 04:35:17',0,0);
 /*!40000 ALTER TABLE `criteriabycodefahp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -767,7 +772,7 @@ CREATE TABLE `environment` (
 
 LOCK TABLES `environment` WRITE;
 /*!40000 ALTER TABLE `environment` DISABLE KEYS */;
-INSERT INTO `environment` VALUES ('http://localhost:4200/client/quizclient','frontend','quizclient');
+INSERT INTO `environment` VALUES ('http://localhost:4200/client/fahp','frontend','fahpclient'),('http://localhost:4200/client/quizclient','frontend','quizclient');
 /*!40000 ALTER TABLE `environment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -990,6 +995,7 @@ CREATE TABLE `sentemailbycodefahp` (
 
 LOCK TABLES `sentemailbycodefahp` WRITE;
 /*!40000 ALTER TABLE `sentemailbycodefahp` DISABLE KEYS */;
+INSERT INTO `sentemailbycodefahp` VALUES (9,1,'STATUSSENTFAHPCAT','answered','2019-10-04 21:14:38','2019-10-04 21:15:38',0,0),(9,2,'STATUSSENTFAHPCAT','sent','2019-10-03 23:01:14','2019-10-03 23:01:14',0,0),(9,3,'STATUSSENTFAHPCAT','sent','2019-10-03 23:01:14','2019-10-03 23:01:14',0,0);
 /*!40000 ALTER TABLE `sentemailbycodefahp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1023,7 +1029,7 @@ CREATE TABLE `surveybycodefahp` (
 
 LOCK TABLES `surveybycodefahp` WRITE;
 /*!40000 ALTER TABLE `surveybycodefahp` DISABLE KEYS */;
-INSERT INTO `surveybycodefahp` VALUES (1,10,10,'2019-09-24 21:26:04','2019-09-24 21:26:04',0,0),(4,1,1,'2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(4,1,5,'2019-09-24 22:24:27','2019-09-24 22:24:27',0,0),(5,10,10,'2019-09-24 22:32:09','2019-09-24 22:32:09',0,0),(6,10,10,'2019-09-25 21:22:40','2019-09-25 21:22:40',0,0),(7,15,14,'2019-09-26 21:31:00','2019-09-26 21:31:00',0,0);
+INSERT INTO `surveybycodefahp` VALUES (9,1,1,'2019-10-02 04:35:17','2019-10-02 04:35:17',0,0),(9,1,3,'2019-10-02 04:35:17','2019-10-02 04:35:17',0,0);
 /*!40000 ALTER TABLE `surveybycodefahp` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1036,4 +1042,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-30 10:08:41
+-- Dump completed on 2019-10-04 16:35:31
