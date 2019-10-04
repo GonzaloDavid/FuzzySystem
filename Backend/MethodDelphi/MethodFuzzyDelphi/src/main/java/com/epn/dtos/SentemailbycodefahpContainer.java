@@ -16,6 +16,7 @@ public class SentemailbycodefahpContainer {
     private String statussentfahpCatt;
     private String statussentfahp;
     private String nameperson;
+    private String namesentfahpstatus;
     public SentemailbycodefahpContainer() {
     }
 
@@ -50,5 +51,14 @@ public class SentemailbycodefahpContainer {
     public void setNameperson(String nameperson) {
         this.nameperson = nameperson;
     }
+
+    public String getNamesentfahpstatus() {
+        return namesentfahpstatus;
+    }
+
+    public void setNamesentfahpstatus(String namesentfahpstatus) {
+        this.namesentfahpstatus = namesentfahpstatus;
+    }
+    
     
 }

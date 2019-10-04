@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.dtos.CriteriabycodefahpContainer;
 import com.epn.dtos.SentemailbycodefahpContainer;
 import com.epn.dtos.SentemailbycodefahpSaveContainer;
+import com.epn.dtos.SentemailbycodefahpSavefowardContainer;
 import com.epn.entities.Sentemailbycodefahp;
 import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
@@ -92,6 +93,21 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
         sentemailbycodefahpDAO.sendprocess(
                 saveContainer.getPersonsselectedlist(),
                 saveContainer.getDescriptionMail());
+        // }
+    }
+
+    @POST
+    @Path("forwardemail")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void sentemailFAHP(
+            SentemailbycodefahpSavefowardContainer saveContainer,
+            @HeaderParam("authorization") String authString) {
+        // if (userDAO.existToken(authString) == true) {
+        sentemailbycodefahpDAO.save(saveContainer.getSentemailbycodefahp());
+        sentemailbycodefahpDAO.forwardemail(
+                saveContainer.getSentemailbycodefahp(),
+                saveContainer.getMessageMail());
         // }
     }
 

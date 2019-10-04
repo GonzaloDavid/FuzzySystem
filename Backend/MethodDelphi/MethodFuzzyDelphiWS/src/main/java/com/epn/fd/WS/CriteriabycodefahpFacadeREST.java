@@ -34,6 +34,7 @@ public class CriteriabycodefahpFacadeREST extends AbstractFacade<Criteriabycodef
 
     @Inject()
     CriteriabycodefahpDAO criteriabycodefahpDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 

@@ -6,6 +6,7 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.AttributeMatrixvalueSaveContainer;
+import com.epn.dtos.AttributesMatrixValueContainer;
 import com.epn.entities.AttributesMatrixValue;
 import com.epn.entities.AttributesMatrixValuePK;
 import com.epn.entities.FahpPK;
@@ -13,15 +14,20 @@ import com.epn.fd.dao.AttributesMatrixValueDAO;
 import com.epn.fd.dao.CriteriaMatrixValueDAO;
 import com.epn.fd.dao.FahpDAO;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -35,16 +41,16 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
 
     @Inject()
     AttributesMatrixValueDAO attributesMatrixValueDAO;
-    
+
     @Inject()
     CriteriaMatrixValueDAO criteriaMatrixValueDAO;
-    
+
     @Inject()
     SentemailbycodefahpDAO sentemailbycodefahpDAO;
-    
+
     @Inject()
     FahpDAO fahpDAO;
-    
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -89,6 +95,21 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
         super(AttributesMatrixValue.class);
     }
 
+    @GET
+    @Path("attributematrixdata")
+    @Transactional
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<AttributesMatrixValueContainer> getcriteriamatrixdata(
+            @QueryParam("codefahp") Long codefahp,
+            @QueryParam("codeperson") Long codeperson,
+            @HeaderParam("authorization") String authString
+    ) throws JsonProcessingException {
+        //if (userDAO.existToken(authString) == true) {
+        List<AttributesMatrixValueContainer> criteriadatamatrix = attributesMatrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
+        // }
+        return criteriadatamatrix;
+    }
+
     @POST
     @Path("save")
     @Transactional
@@ -96,9 +117,9 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
     public void save(AttributeMatrixvalueSaveContainer saveContainer,
             @HeaderParam("authorization") String authString) {
         // if (userDAO.existToken(authString) == true) {
-        FahpPK fahpPK= new FahpPK();
+        FahpPK fahpPK = new FahpPK();
         fahpPK.setCodefahp(saveContainer.getSentemailbycodefahp().getCodefahp());
-        
+
         fahpDAO.updatestatus(fahpPK);
         sentemailbycodefahpDAO.updatestatus(saveContainer.getSentemailbycodefahp());
         attributesMatrixValueDAO.save(saveContainer.getAttributesMatrixlist());

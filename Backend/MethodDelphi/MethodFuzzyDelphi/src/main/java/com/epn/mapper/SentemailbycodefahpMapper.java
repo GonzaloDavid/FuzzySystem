@@ -17,7 +17,10 @@ import org.mapstruct.Mapping;
  */
 @Mapper
 public interface SentemailbycodefahpMapper {
+
     @Mapping(target = "nameperson", expression = "java(source.getPerson().getName())")
-     SentemailbycodefahpContainer sourceToDestination(Sentemailbycodefahp source);
+    @Mapping(target = "namesentfahpstatus", expression = "java(source.getCatalogueitem().getNameItem())")
+    SentemailbycodefahpContainer sourceToDestination(Sentemailbycodefahp source);
+
     List<SentemailbycodefahpContainer> sourceListToDestination(List<Sentemailbycodefahp> source);
 }

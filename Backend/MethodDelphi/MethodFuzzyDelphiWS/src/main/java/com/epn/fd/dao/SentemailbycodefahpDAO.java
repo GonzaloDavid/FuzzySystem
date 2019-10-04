@@ -48,6 +48,7 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
     PersonDAO personDAO;
 
     private final SentemailbycodefahpMapper mapper = Mappers.getMapper(SentemailbycodefahpMapper.class);
+
     public SentemailbycodefahpDAO() {
         super(Sentemailbycodefahp.class);
     }
@@ -77,6 +78,32 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
             }
             update(person);
         });
+    }
+
+    public void save(Sentemailbycodefahp sentemailbycodefahp) {
+        update(sentemailbycodefahp);
+    }
+
+    public void forwardemail(Sentemailbycodefahp sentemailbycodefahp, String descriptionMail) {
+        String uribase = environmentDAO.getenvironmentbyuseplace(
+                "fahpclient", "frontend").get(0).getEnvironmentPK().getUri();
+
+        String key = "FAHP";
+        String subject = "FuzzyAnalyticHierarchyProcess";
+        long expirationTime = System.currentTimeMillis() + 604800000;
+
+        JsonObject jwt = generateJWT(key, subject,
+                sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson(),
+                sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp(),
+                expirationTime);
+
+        String namesurvey = surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp());
+        Person persons = personDAO.getpersonbycodeperson(sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson());
+
+        sendquizbyfahp(namesurvey, persons,
+                sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp(),
+                uribase, jwt.getString("JWT"), descriptionMail);
+
     }
 
     public void sendprocess(List<Sentemailbycodefahp> personsselectedlist, String descriptionMail) {
