@@ -74,10 +74,13 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
     @Produces({MediaType.APPLICATION_JSON})
     public List<SentemailbycodefahpContainer> getpersonsbycodefahp(
             @QueryParam("codefahp") Long codefahp,
+            @QueryParam("statussentfahpCat") String statussentfahpCatt,
+            @QueryParam("statussentfahp") String statussentfahp,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         //if (userDAO.existToken(authString) == true) {
-        List<SentemailbycodefahpContainer> personlist = sentemailbycodefahpDAO.searchbycodefahp(codefahp);
+        List<SentemailbycodefahpContainer> personlist = sentemailbycodefahpDAO.searchbycodefahp(
+                codefahp,statussentfahpCatt,statussentfahp);
         // }
         return personlist;
     }

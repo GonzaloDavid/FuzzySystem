@@ -53,9 +53,11 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
         super(Sentemailbycodefahp.class);
     }
 
-    public List<SentemailbycodefahpContainer> searchbycodefahp(Long codefahp) {
+    public List<SentemailbycodefahpContainer> searchbycodefahp(Long codefahp,String statussentfahpCatt,String statussentfahp) {
         SearchObject search = new SearchObject("sentemailbycodefahpPK");
         search.addParameter("sentemailbycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
+        search.addParameter("statussentfahpCatt", FilterTypes.EQUAL, statussentfahpCatt);
+        search.addParameter("statussentfahp", FilterTypes.EQUAL, statussentfahp);
 
         List<Sentemailbycodefahp> resultList = search(search);
         List<SentemailbycodefahpContainer> containers = mapper.sourceListToDestination(resultList);
