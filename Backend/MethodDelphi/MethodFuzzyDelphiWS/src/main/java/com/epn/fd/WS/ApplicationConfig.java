@@ -40,7 +40,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.epn.fd.WS.EnvironmentFacadeREST.class);
         resources.add(com.epn.fd.WS.FahpFacadeREST.class);
         resources.add(com.epn.fd.WS.ItemCommentFacadeREST.class);
-        resources.add(com.epn.fd.WS.MenuFacadeREST.class);
         resources.add(com.epn.fd.WS.NewCrossOriginResourceSharingFilter.class);
         resources.add(com.epn.fd.WS.PersonFacadeREST.class);
         resources.add(com.epn.fd.WS.ProcessFahpatributebycriteriaFacadeREST.class);

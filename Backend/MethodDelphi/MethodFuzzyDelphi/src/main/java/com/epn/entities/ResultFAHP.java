@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ResultFAHP.findByCodeQuiz", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "ResultFAHP.findByCodeQuestions", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuestions = :codeQuestions"),
     @NamedQuery(name = "ResultFAHP.findByCodeQuizItem", query = "SELECT r FROM ResultFAHP r WHERE r.resultFAHPPK.codeQuizItem = :codeQuizItem"),
-    @NamedQuery(name = "ResultFAHP.findByValuepriority", query = "SELECT r FROM ResultFAHP r WHERE r.valuepriority = :valuepriority"),
+    @NamedQuery(name = "ResultFAHP.findByValuepriority", query = "SELECT r FROM ResultFAHP r WHERE r.weight = :weight"),
     @NamedQuery(name = "ResultFAHP.findByDateCreate", query = "SELECT r FROM ResultFAHP r WHERE r.dateCreate = :dateCreate"),
     @NamedQuery(name = "ResultFAHP.findByDateLastModify", query = "SELECT r FROM ResultFAHP r WHERE r.dateLastModify = :dateLastModify"),
     @NamedQuery(name = "ResultFAHP.findByUserCreate", query = "SELECT r FROM ResultFAHP r WHERE r.userCreate = :userCreate"),
@@ -48,8 +47,8 @@ public class ResultFAHP implements Serializable {
     protected ResultFAHPPK resultFAHPPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "valuepriority")
-    private BigDecimal valuepriority;
+    @Column(name = "weight")
+    private BigDecimal weight;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -89,9 +88,9 @@ public class ResultFAHP implements Serializable {
         this.resultFAHPPK = resultFAHPPK;
     }
 
-    public ResultFAHP(ResultFAHPPK resultFAHPPK, BigDecimal valuepriority, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
+    public ResultFAHP(ResultFAHPPK resultFAHPPK, BigDecimal weight, Date dateCreate, Date dateLastModify, long userCreate, long userLastModify) {
         this.resultFAHPPK = resultFAHPPK;
-        this.valuepriority = valuepriority;
+        this.weight = weight;
         this.dateCreate = dateCreate;
         this.dateLastModify = dateLastModify;
         this.userCreate = userCreate;
@@ -110,12 +109,12 @@ public class ResultFAHP implements Serializable {
         this.resultFAHPPK = resultFAHPPK;
     }
 
-    public BigDecimal getValuepriority() {
-        return valuepriority;
+    public BigDecimal getWeight() {
+        return weight;
     }
 
-    public void setValuepriority(BigDecimal valuepriority) {
-        this.valuepriority = valuepriority;
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
     }
 
     public Date getDateCreate() {

@@ -5,20 +5,21 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
+import com.epn.dtos.ResultFAHPContainer;
 import com.epn.entities.ProcessFahpatributebycriteria;
 import com.epn.entities.ProcessFahpatributebycriteriaPK;
+import com.epn.fd.dao.ProcessFahpatributebycriteriaDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -29,6 +30,9 @@ import javax.ws.rs.core.PathSegment;
 @Stateless
 @Path("com.epn.entities.processfahpatributebycriteria")
 public class ProcessFahpatributebycriteriaFacadeREST extends AbstractFacade<ProcessFahpatributebycriteria> {
+
+    @Inject()
+    ProcessFahpatributebycriteriaDAO fahpatributebycriteriaDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -74,59 +78,20 @@ public class ProcessFahpatributebycriteriaFacadeREST extends AbstractFacade<Proc
         super(ProcessFahpatributebycriteria.class);
     }
 
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(ProcessFahpatributebycriteria entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, ProcessFahpatributebycriteria entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFahpatributebycriteriaPK key = getPrimaryKey(id);
-        super.remove(super.find(key));
-    }
-
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProcessFahpatributebycriteria find(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFahpatributebycriteriaPK key = getPrimaryKey(id);
-        return super.find(key);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFahpatributebycriteria> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFahpatributebycriteria> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    @Path("getattributeprocess")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ProcessFahpatributebycriteriaContainer> getattributeprocessbycodefahp(
+            @QueryParam("codefahp") Long codefahp,
+            @HeaderParam("authorization") String authString
+    ) {
+        List<ProcessFahpatributebycriteriaContainer> processcontainer = fahpatributebycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        return processcontainer;
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

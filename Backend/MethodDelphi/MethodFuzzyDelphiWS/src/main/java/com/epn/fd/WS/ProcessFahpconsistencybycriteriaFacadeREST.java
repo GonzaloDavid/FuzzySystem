@@ -5,6 +5,7 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
 import com.epn.entities.ProcessFahpconsistencybycriteria;
 import com.epn.entities.ProcessFahpconsistencybycriteriaPK;
 import java.util.List;
@@ -14,11 +15,13 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -58,55 +61,7 @@ public class ProcessFahpconsistencybycriteriaFacadeREST extends AbstractFacade<P
         super(ProcessFahpconsistencybycriteria.class);
     }
 
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(ProcessFahpconsistencybycriteria entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, ProcessFahpconsistencybycriteria entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFahpconsistencybycriteriaPK key = getPrimaryKey(id);
-        super.remove(super.find(key));
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProcessFahpconsistencybycriteria find(@PathParam("id") PathSegment id) {
-        com.epn.entities.ProcessFahpconsistencybycriteriaPK key = getPrimaryKey(id);
-        return super.find(key);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFahpconsistencybycriteria> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProcessFahpconsistencybycriteria> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
+   
 
     @Override
     protected EntityManager getEntityManager() {

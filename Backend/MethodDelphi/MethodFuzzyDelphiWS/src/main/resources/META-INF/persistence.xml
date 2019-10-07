@@ -5,7 +5,6 @@
         <class>com.epn.entities.Person</class>
         <class>com.epn.entities.Catalogue</class>
         <class>com.epn.entities.Catalogueitem</class>
-        <class>com.epn.entities.Menu</class>
         <class>com.epn.entities.QuestionItem</class>
         <class>com.epn.entities.Questions</class>
         <class>com.epn.entities.Quiz</class>
