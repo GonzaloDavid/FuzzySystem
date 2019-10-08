@@ -16,42 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `AdminisEmail`
---
-
-DROP TABLE IF EXISTS `AdminisEmail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AdminisEmail` (
-  `seqadminisemail` bigint(20) NOT NULL AUTO_INCREMENT,
-  `codeQuiz` bigint(20) NOT NULL,
-  `codePerson` bigint(20) NOT NULL,
-  `statusEmailCat` varchar(100) NOT NULL,
-  `statusEmail` varchar(100) NOT NULL,
-  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `userCreate` bigint(20) NOT NULL,
-  `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`seqadminisemail`,`codeQuiz`,`codePerson`),
-  UNIQUE KEY `seqAdminisEmail_UNIQUE` (`seqadminisemail`),
-  KEY `AdminisEmail_Person_FK` (`codePerson`),
-  KEY `AdminisEmail_Quiz_FK` (`codeQuiz`),
-  KEY `AdminisEmail_catalogueitem_FK` (`statusEmailCat`,`statusEmail`),
-  CONSTRAINT `AdminisEmail_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
-  CONSTRAINT `AdminisEmail_catalogueitem_FK` FOREIGN KEY (`statusEmailCat`, `statusEmail`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `AdminisEmail`
---
-
-LOCK TABLES `AdminisEmail` WRITE;
-/*!40000 ALTER TABLE `AdminisEmail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `AdminisEmail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `DelphiCalculations`
 --
 
@@ -139,106 +103,6 @@ INSERT INTO `FAHP` VALUES (9,'STATUSFAHPCAT','answered','2019-10-04 21:14:38','2
 UNLOCK TABLES;
 
 --
--- Table structure for table `GraphicsData`
---
-
-DROP TABLE IF EXISTS `GraphicsData`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `GraphicsData` (
-  `seqgraphicsdata` bigint(20) NOT NULL AUTO_INCREMENT,
-  `codeGraphicsParam` varchar(50) NOT NULL,
-  `codeQuiz` bigint(20) NOT NULL,
-  `codeQuestions` bigint(20) NOT NULL,
-  `codeQuizItem` bigint(20) NOT NULL,
-  `xAxisvalues` varchar(100) NOT NULL,
-  `yAxisvalues` varchar(100) NOT NULL,
-  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `userCreate` bigint(20) NOT NULL,
-  `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`seqgraphicsdata`),
-  UNIQUE KEY `seqgraphicsdata_UNIQUE` (`seqgraphicsdata`),
-  KEY `GraphicsData_GraphicsParam_FK` (`codeGraphicsParam`),
-  KEY `GraphicsData_Quiz_FK` (`codeQuiz`),
-  KEY `GraphicsData_Questions_FK` (`codeQuestions`),
-  KEY `GraphicsData_QuestionItem_FK` (`codeQuizItem`),
-  CONSTRAINT `GraphicsData_GraphicsParam_FK` FOREIGN KEY (`codeGraphicsParam`) REFERENCES `GraphicsParam` (`codeGraphicsParam`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `GraphicsData`
---
-
-LOCK TABLES `GraphicsData` WRITE;
-/*!40000 ALTER TABLE `GraphicsData` DISABLE KEYS */;
-/*!40000 ALTER TABLE `GraphicsData` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `GraphicsParam`
---
-
-DROP TABLE IF EXISTS `GraphicsParam`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `GraphicsParam` (
-  `codeGraphicsParam` varchar(50) NOT NULL,
-  `codeQuiz` bigint(20) NOT NULL,
-  `xAxis` varchar(100) NOT NULL,
-  `yAxis` varchar(100) NOT NULL,
-  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `userCreate` bigint(20) NOT NULL,
-  `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`codeGraphicsParam`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `GraphicsParam`
---
-
-LOCK TABLES `GraphicsParam` WRITE;
-/*!40000 ALTER TABLE `GraphicsParam` DISABLE KEYS */;
-/*!40000 ALTER TABLE `GraphicsParam` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Menu`
---
-
-DROP TABLE IF EXISTS `Menu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Menu` (
-  `seqMenu` bigint(20) NOT NULL AUTO_INCREMENT,
-  `parent` bigint(20) NOT NULL,
-  `nameMenu` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `group` tinyint(1) NOT NULL DEFAULT '0',
-  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `userCreate` bigint(20) NOT NULL,
-  `userLastModify` bigint(20) NOT NULL,
-  PRIMARY KEY (`seqMenu`),
-  UNIQUE KEY `seqMenu_UNIQUE` (`seqMenu`),
-  KEY `Menu_Menu_FK` (`parent`),
-  CONSTRAINT `Menu_Menu_FK` FOREIGN KEY (`parent`) REFERENCES `Menu` (`seqMenu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Menu`
---
-
-LOCK TABLES `Menu` WRITE;
-/*!40000 ALTER TABLE `Menu` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Menu` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Person`
 --
 
@@ -282,7 +146,7 @@ CREATE TABLE `Person` (
   CONSTRAINT `Person_catalogueitem_FK_1` FOREIGN KEY (`typeIdentifyCat`, `typeIdentify`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_2` FOREIGN KEY (`academicDegreeCat`, `academicDegree`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
   CONSTRAINT `Person_catalogueitem_FK_4` FOREIGN KEY (`statusCat`, `status`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +155,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES (1,NULL,'TYPEPERSONCAT','expert','IDENTIFYTYPECAT',NULL,'ACADEMICDEGREECAT','Postgrados','Juan Miguel','Pérez','Juan Miguel Pérez','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Eléctrica','0987654321','bibliografia es ...','2019-09-12 07:52:17','2019-09-12 07:52:17',1,1),(2,'987654314','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Beatriz Lisbeth','Mosquera','Beatriz Lisbeth Mosquera','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Física',NULL,'test test ','2019-09-12 08:03:24','2019-09-12 08:03:24',0,0),(3,'9517538647','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Sebastian Mateo','Putin','Sebastian Mateo Putin','davidgonzalomejia@hotmail.com','Russia','1969-12-31','STATUSCAT','1','SEXCAT','1','Jurisprudencia',NULL,'test test test','2019-09-12 08:04:08','2019-09-12 08:04:08',0,0),(4,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Área de computación',NULL,'leyenda','2019-09-12 02:42:37','2019-09-12 02:42:37',0,0),(5,'1234567987','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','José Miguel','Pérez','José Miguel Pérez','davidgonzalomejia@hotmail.com','Ecuador','1969-12-31','STATUSCAT','1','SEXCAT','1','electrónica',NULL,'bibliografia es ...','2019-09-12 02:42:46','2019-09-12 02:42:46',0,0),(6,'987654314','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Alejandra Lisbeth','Mosquera','Alejandra Lisbeth Mosquera','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Física',NULL,'test test ','2019-09-12 02:42:53','2019-09-12 02:42:53',0,0),(7,'9517538647','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Vladímir Vladímirovich','Putin','Vladímir Vladímirovich Putin','davidgonzalomejia@hotmail.com','Russia','1969-12-31','STATUSCAT','1','SEXCAT','1','Jurisprudencia',NULL,'test test test','2019-09-12 02:42:59','2019-09-12 02:42:59',0,0),(8,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Rosa','proaño chicaiza','Rosa proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Area de computacionn',NULL,'leyenda','2019-09-12 02:43:08','2019-09-12 02:43:08',0,0),(9,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Jenny ','Pavón','Jenny  Pavón','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','0','Area de computacionn',NULL,'leyenda','2019-09-12 02:43:14','2019-09-12 02:43:14',0,0),(10,'1723353403','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Gonzalo','epn','Gonzalo epn','davidgonzalomejia@hotmail.com','ECuador','2018-09-04','STATUSCAT','1','SEXCAT','1','compuatacion',NULL,'brou','2019-09-12 02:43:21','2019-09-12 02:43:21',0,0),(11,'1723353403','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','davidgonzalomejia@hotmail.com','Ecuador','2019-08-07','STATUSCAT','1','SEXCAT','1','area humana',NULL,NULL,'2019-09-12 02:43:28','2019-09-12 02:43:28',0,0);
+INSERT INTO `Person` VALUES (1,NULL,'TYPEPERSONCAT','expert','IDENTIFYTYPECAT',NULL,'ACADEMICDEGREECAT','Postgrados','Juan Miguel','Pérez','Juan Miguel Pérez','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Eléctrica','0987654321','bibliografia es ...','2019-09-12 07:52:17','2019-09-12 07:52:17',1,1),(2,'987654314','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Beatriz Lisbeth','Mosquera','Beatriz Lisbeth Mosquera','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Física',NULL,'test test ','2019-09-12 08:03:24','2019-09-12 08:03:24',0,0),(3,'9517538647','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Sebastian Mateo','Putin','Sebastian Mateo Putin','davidgonzalomejia@hotmail.com','Russia','1969-12-31','STATUSCAT','1','SEXCAT','1','Jurisprudencia',NULL,'test test test','2019-09-12 08:04:08','2019-09-12 08:04:08',0,0),(4,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Gonzalo david','proaño chicaiza','Gonzalo david proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Área de computación',NULL,'leyenda','2019-09-12 02:42:37','2019-09-12 02:42:37',0,0),(5,'1234567987','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','José Miguel','Pérez','José Miguel Pérez','davidgonzalomejia@hotmail.com','Ecuador','1969-12-31','STATUSCAT','1','SEXCAT','1','electrónica',NULL,'bibliografia es ...','2019-09-12 02:42:46','2019-09-12 02:42:46',0,0),(6,'987654314','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Alejandra Lisbeth','Mosquera','Alejandra Lisbeth Mosquera','davidgonzalomejia@hotmail.com','Peru','1969-12-31','STATUSCAT','1','SEXCAT','1','Física',NULL,'test test ','2019-09-12 02:42:53','2019-09-12 02:42:53',0,0),(7,'9517538647','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Vladímir Vladímirovich','Putin','Vladímir Vladímirovich Putin','davidgonzalomejia@hotmail.com','Russia','1969-12-31','STATUSCAT','1','SEXCAT','1','Jurisprudencia',NULL,'test test test','2019-09-12 02:42:59','2019-09-12 02:42:59',0,0),(8,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Rosa','proaño chicaiza','Rosa proaño chicaiza','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','1','Area de computacionn',NULL,'leyenda','2019-09-12 02:43:08','2019-09-12 02:43:08',0,0),(9,'1723353404','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Primaria','Jenny ','Pavón','Jenny  Pavón','davidgonzalomejia@hotmail.com','NONO','1995-08-29','STATUSCAT','1','SEXCAT','0','Area de computacionn',NULL,'leyenda','2019-09-12 02:43:14','2019-09-12 02:43:14',0,0),(10,'1723353403','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Gonzalo','epn','Gonzalo epn','davidgonzalomejia@hotmail.com','ECuador','2018-09-04','STATUSCAT','1','SEXCAT','1','compuatacion',NULL,'brou','2019-09-12 02:43:21','2019-09-12 02:43:21',0,0),(11,'1723353403','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Postgrados','Byron','Lopez','Byron Lopez','davidgonzalomejia@hotmail.com','Ecuador','2019-08-07','STATUSCAT','1','SEXCAT','1','area humana',NULL,NULL,'2019-09-12 02:43:28','2019-09-12 02:43:28',0,0),(12,'121243342','TYPEPERSONCAT','expert','IDENTIFYTYPECAT','ID','ACADEMICDEGREECAT','Universidad','test','test','test test','davidgonzalomejia@hotmail.com','ecuador','2019-10-15','STATUSCAT','1','SEXCAT','1','test',NULL,'test','2019-10-08 03:35:24','2019-10-08 03:35:24',0,0);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +197,7 @@ CREATE TABLE `QuestionItem` (
 
 LOCK TABLES `QuestionItem` WRITE;
 /*!40000 ALTER TABLE `QuestionItem` DISABLE KEYS */;
-INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasióáíúóí?óíú',NULL,'pais de la gartotas',NULL,'STATUSCAT','0','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(3,1,1,'Colombia',NULL,'pais de cafe',NULL,'STATUSCAT','0','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(11,10,10,'UNIDAD ORGANIZATIVAS','Académico','Datos sobre Facultades, Institutos, CAMBIAME TAMANO COLUMN',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(12,10,10,'TITULACIONES','Académico','Se refiere a las carre',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(13,10,10,'ESTUDIANTES','Académico','Alumnos matriculados.',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(14,10,10,'SEGUIMIENTO DE EGRESADOS','Académico','Alumnos egresados.',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(15,10,10,'DOCENTES','Académico','Docentes que se encuentran con contrato.',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(16,10,10,'NUEVO ITEM','Académico','ITEM DESCRIPTION',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(17,11,10,'SEGUIMIENTO DE EGRESADOS',NULL,'Alumnos egresados.',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(18,11,10,'DOCENTES',NULL,'Docentes que se encuentran con contrato.',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(19,11,10,'NUEVO ITEM',NULL,'ITEM DESCRIPTION',NULL,'STATUSCAT','1','2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(23,4,1,'Brasil',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(24,4,1,'Argentina',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(25,4,1,'Uruguay',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(26,5,1,'Venezuela',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(27,5,1,'Ecuador',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(36,3,1,'Estadio chucho benites',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(37,3,1,'Estadio Aucas',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(38,3,1,'Maracaná',NULL,NULL,NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(39,1,1,'Alemania',NULL,'pais de hitler',NULL,'STATUSCAT','1','2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(40,12,13,'Azul',NULL,'Color del mar',NULL,'STATUSCAT','1','2019-08-19 23:50:51','2019-08-19 23:50:51',1,1),(41,12,13,'Rojo',NULL,'Color de la sangre',NULL,'STATUSCAT','1','2019-08-19 23:50:51','2019-08-19 23:50:51',1,1),(42,12,13,'Amarillo ',NULL,'color del sol',NULL,'STATUSCAT','1','2019-08-19 23:50:51','2019-08-19 23:50:51',1,1),(43,13,14,'DATOS DE SENSORES',NULL,'Datos de sensores ubicados en las dependencias, controles, equipos, registros, Wifi, cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡maras, accesos.',NULL,'STATUSCAT','1','2019-09-26 21:29:23','2019-09-26 21:29:23',1,1),(44,13,14,'UNIDAD ORGANIZATIVAS',NULL,'Datos sobre Facultades, Institutos, Centros y Departamentos AcadÃƒÂ©micos, Administrativos y de InvestigaciÃƒÂ³n.',NULL,'STATUSCAT','1','2019-09-26 21:29:23','2019-09-26 21:29:23',1,1),(45,13,14,'TITULACIONES',NULL,'Se refiere a las carreras que proporciona, sus asignaturas, plan de estudios.',NULL,'STATUSCAT','1','2019-09-26 21:29:23','2019-09-26 21:29:23',1,1),(46,14,15,'Colectores de Basura.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de recolección interna de basura, tachos de basura, horarios de recolección.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(47,14,15,'Proyectos de Investigación. ','INVESTIGACIÓN','Proyectos que se están ejecutando, investigadores.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(48,14,15,'Titulaciones.','ACADÉMICO','Carreras, asignaturas, plan de estudios.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(49,14,15,'Seguimiento a Egresados.','ACADÉMICO','Alumnos egresados.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(50,14,15,'Datos Metereológicos.','DATOS TIEMPO REAL SENSORES','Temperatura, Humedad, Rayos Ultravioleta, Lluvia, Presión atmosférica, Polución.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(51,14,15,'Oportunidades de trabajo.','BIENESTAR ESTUDIANTIL','Oportunidades de trabajo, pasantías y prácticas. ',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(52,14,15,'Estudiantes.','ACADÉMICO','Alumnos matriculados.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(53,14,15,'Convenios.','INVESTIGACIÓN','Convenios suscritos con entidades universitarias, empresas, gobiernos.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(54,14,15,'Eventos Culturales y Deportivos.','BIENESTAR ESTUDIANTIL','Descripción de Eventos culturales y deportivos.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(55,14,15,'Proyectos de Infraestructura.','ORGANIZACIÓN E INFRAESTRUCTURA','Detalle de proyectos de infraestructura en mantenimiento a implementarse.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(56,14,15,'Telefonía.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo telefónico tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(57,14,15,'Jardinería.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de arreglo de jardinería, por zona, personal, herramientas, horarios de arreglo.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(58,14,15,'Administrativos.','ACADÉMICO','Trabajadores administrativos.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(59,14,15,'Docentes.','ACADÉMICO','Docentes que se encuentran con contrato.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(60,14,15,'Becas y Ayudas.','BIENESTAR ESTUDIANTIL','Becas y ayudas existentes.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(61,14,15,'Presupuesto.','ORGANIZACIÓN E INFRAESTRUCTURA','Presupuestos de la Universidad.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(62,14,15,'Transporte.','BIENESTAR ESTUDIANTIL','Sistemas de transporte desde y hacia la Universidad.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(63,14,15,'Unidades Organizativas.','ACADÉMICO','Datos sobre Facultades, Institutos, Centros y Departamentos Académicos, Administrativos y de Investigación. ',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(64,14,15,'Datos Geoposicionados.','ORGANIZACIÓN E INFRAESTRUCTURA','Datos geoposicionados de los edificios, dependencias, equipos de comunicaciones, máquinas expendedoras, zonas de jardinería y otros.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(65,14,15,'Servicios para el Estudiante.','BIENESTAR ESTUDIANTIL','Servicios médicos, legales, administrativos.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(66,14,15,'Agua.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo de agua tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(67,14,15,'Bibliotecas.','BIENESTAR ESTUDIANTIL','Sistema de bibliotecas dentro de la Universidad.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(68,14,15,'Restaurantes y Puestos de Comida.','ORGANIZACIÓN E INFRAESTRUCTURA','Descripción de restaurantes, puestos de comida y bares.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(69,14,15,'Publicaciones Científicas. ','INVESTIGACIÓN','Publicaciones científicas del personal docente investigador publicados e indexados.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(70,14,15,'Datos de Sensores.','DATOS TIEMPO REAL SENSORES','Datos de sensores ubicados en las dependencias, controles, equipos, registros, Cámaras, WiFi, accesos.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(71,14,15,'Guardianía.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de guardianía, por zona, personal, herramientas, rutas, cámaras.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(72,14,15,'Energía.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo de energía tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1),(73,14,15,'Organigrama de Dirección.','ORGANIZACIÓN E INFRAESTRUCTURA','Datos de personal que dirige las unidades administrativas, académicas e investigación.',NULL,'STATUSCAT','1','2019-09-26 21:29:11','2019-09-26 21:29:11',1,1);
+INSERT INTO `QuestionItem` VALUES (2,1,1,'Brasil',NULL,'pais de la gartotas',NULL,'STATUSCAT','0','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(3,1,1,'Colombia',NULL,'pais de cafe',NULL,'STATUSCAT','0','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(23,4,1,'Brasil',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(24,4,1,'Argentina',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(25,4,1,'Uruguay',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(26,5,1,'Venezuela',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(27,5,1,'Ecuador',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(36,3,1,'Estadio chucho benites',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(37,3,1,'Estadio Aucas',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(38,3,1,'Maracaná',NULL,NULL,NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(39,1,1,'Alemania',NULL,'pais de hitler',NULL,'STATUSCAT','1','2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(43,13,14,'DATOS DE SENSORES',NULL,'Datos de sensores ubicados en las dependencias, controles, equipos, registros, Wifi, cÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡maras, accesos.',NULL,'STATUSCAT','1','2019-10-08 07:17:09','2019-10-08 07:17:09',1,1),(44,13,14,'UNIDAD ORGANIZATIVAS',NULL,'Datos sobre Facultades, Institutos, Centros y Departamentos AcadÃƒÂ©micos, Administrativos y de InvestigaciÃƒÂ³n.',NULL,'STATUSCAT','1','2019-10-08 07:17:09','2019-10-08 07:17:09',1,1),(45,13,14,'TITULACIONES',NULL,'Se refiere a las carreras que proporciona, sus asignaturas, plan de estudios.',NULL,'STATUSCAT','1','2019-10-08 07:17:09','2019-10-08 07:17:09',1,1),(46,14,15,'Colectores de Basura.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de recolección interna de basura, tachos de basura, horarios de recolección.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(47,14,15,'Proyectos de Investigación. ','INVESTIGACIÓN','Proyectos que se están ejecutando, investigadores.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(48,14,15,'Titulaciones.','ACADÉMICO','Carreras, asignaturas, plan de estudios.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(49,14,15,'Seguimiento a Egresados.','ACADÉMICO','Alumnos egresados.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(50,14,15,'Datos Metereológicos.','DATOS TIEMPO REAL SENSORES','Temperatura, Humedad, Rayos Ultravioleta, Lluvia, Presión atmosférica, Polución.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(51,14,15,'Oportunidades de trabajo.','BIENESTAR ESTUDIANTIL','Oportunidades de trabajo, pasantías y prácticas. ',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(52,14,15,'Estudiantes.','ACADÉMICO','Alumnos matriculados.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(53,14,15,'Convenios.','INVESTIGACIÓN','Convenios suscritos con entidades universitarias, empresas, gobiernos.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(54,14,15,'Eventos Culturales y Deportivos.','BIENESTAR ESTUDIANTIL','Descripción de Eventos culturales y deportivos.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(55,14,15,'Proyectos de Infraestructura.','ORGANIZACIÓN E INFRAESTRUCTURA','Detalle de proyectos de infraestructura en mantenimiento a implementarse.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(56,14,15,'Telefonía.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo telefónico tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(57,14,15,'Jardinería.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de arreglo de jardinería, por zona, personal, herramientas, horarios de arreglo.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(58,14,15,'Administrativos.','ACADÉMICO','Trabajadores administrativos.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(59,14,15,'Docentes.','ACADÉMICO','Docentes que se encuentran con contrato.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(60,14,15,'Becas y Ayudas.','BIENESTAR ESTUDIANTIL','Becas y ayudas existentes.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(61,14,15,'Presupuesto.','ORGANIZACIÓN E INFRAESTRUCTURA','Presupuestos de la Universidad.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(62,14,15,'Transporte.','BIENESTAR ESTUDIANTIL','Sistemas de transporte desde y hacia la Universidad.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(63,14,15,'Unidades Organizativas.','ACADÉMICO','Datos sobre Facultades, Institutos, Centros y Departamentos Académicos, Administrativos y de Investigación. ',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(64,14,15,'Datos Geoposicionados.','ORGANIZACIÓN E INFRAESTRUCTURA','Datos geoposicionados de los edificios, dependencias, equipos de comunicaciones, máquinas expendedoras, zonas de jardinería y otros.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(65,14,15,'Servicios para el Estudiante.','BIENESTAR ESTUDIANTIL','Servicios médicos, legales, administrativos.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(66,14,15,'Agua.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo de agua tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(67,14,15,'Bibliotecas.','BIENESTAR ESTUDIANTIL','Sistema de bibliotecas dentro de la Universidad.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(68,14,15,'Restaurantes y Puestos de Comida.','ORGANIZACIÓN E INFRAESTRUCTURA','Descripción de restaurantes, puestos de comida y bares.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(69,14,15,'Publicaciones Científicas. ','INVESTIGACIÓN','Publicaciones científicas del personal docente investigador publicados e indexados.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(70,14,15,'Datos de Sensores.','DATOS TIEMPO REAL SENSORES','Datos de sensores ubicados en las dependencias, controles, equipos, registros, Cámaras, WiFi, accesos.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(71,14,15,'Guardianía.','ORGANIZACIÓN E INFRAESTRUCTURA','Sistema de guardianía, por zona, personal, herramientas, rutas, cámaras.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(72,14,15,'Energía.','ORGANIZACIÓN E INFRAESTRUCTURA','Consumo de energía tomado en forma física y digital.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1),(73,14,15,'Organigrama de Dirección.','ORGANIZACIÓN E INFRAESTRUCTURA','Datos de personal que dirige las unidades administrativas, académicas e investigación.',NULL,'STATUSCAT','1','2019-10-08 07:16:14','2019-10-08 07:16:14',1,1);
 /*!40000 ALTER TABLE `QuestionItem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,7 +239,7 @@ CREATE TABLE `Questions` (
 
 LOCK TABLES `Questions` WRITE;
 /*!40000 ALTER TABLE `Questions` DISABLE KEYS */;
-INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-09-02 19:52:12','2019-09-02 19:52:12',0,0,2.00000000,NULL,NULL),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-09-02 19:52:12','2019-09-02 19:52:12',0,0,3.00000000,NULL,NULL),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-09-02 19:52:12','2019-09-02 19:52:12',0,0,4.00000000,NULL,NULL),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-09-02 19:52:12','2019-09-02 19:52:12',0,0,5.00000000,NULL,NULL),(10,10,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','5','100','5',NULL,'2019-09-26 21:29:57','2019-09-26 21:29:57',0,0,70.00000000,NULL,NULL),(11,10,'¿yyyyyyyyyyyyyyyyyyyyyyCuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','5','100','5',NULL,'2019-09-26 21:29:57','2019-09-26 21:29:57',0,0,80.00000000,NULL,NULL),(12,13,'cual es el color mas bonito poner unas cosas para que se llenen entonces colocamos el valor de los delphi ddddddd  ddddddd  ddddddd   dddddddddd ddddddd  dddddddddddd dddddddd ddddddd ddddddd','colores de elegancia','STATUSCAT','1','1','100','5',NULL,'2019-08-19 23:50:51','2019-08-19 23:50:51',0,0,70.00000000,0,0),(13,14,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','0','100','5',NULL,'2019-09-26 21:29:23','2019-09-26 21:29:23',0,0,70.00000000,0,0),(14,15,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista\nde acuerdo a su criterio de probabilidad de reutilización','STATUSCAT','1','0','100','5',NULL,'2019-09-26 21:29:11','2019-09-26 21:29:11',0,0,70.00000000,0,0);
+INSERT INTO `Questions` VALUES (1,1,'cual es el ganadador de la copa america en el 2024','Acerca de la copa américa que se realizara en ecuador en 2024','STATUSCAT','1','1','10','1',NULL,'2019-10-07 22:10:46','2019-10-07 22:10:46',0,0,2.00000000,NULL,NULL),(3,1,'Cuántas sedes tiene esta Copa América','sedes de la copa america','STATUSCAT','1','1','10','1',NULL,'2019-10-07 22:10:46','2019-10-07 22:10:46',0,0,3.00000000,NULL,NULL),(4,1,'Quiénes son los máximos ganadores del título','maximos ganadores del titulo','STATUSCAT','1','1','10','1',NULL,'2019-10-07 22:10:46','2019-10-07 22:10:46',0,0,4.00000000,NULL,NULL),(5,1,'Cuáles son las dos selecciones que nunca salieron campeonas','Nunca han ganado la copa america','STATUSCAT','1','1','10','1',NULL,'2019-10-07 22:10:46','2019-10-07 22:10:46',0,0,5.00000000,NULL,NULL),(13,14,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista.','STATUSCAT','1','0','100','5',NULL,'2019-10-08 07:17:09','2019-10-08 07:17:09',0,0,70.00000000,0,0),(14,15,'¿Cuál es la probabilidad que los siguientes conjuntos de datos se reutilicen para generar aplicaciones o servicios de valor agregado para la comunidad universitaria?','Indique el porcentaje más pesimista, moderado y optimista\nde acuerdo a su criterio de probabilidad de reutilización','STATUSCAT','1','0','100','5',NULL,'2019-10-08 07:16:14','2019-10-08 07:16:14',0,0,70.00000000,0,0);
 /*!40000 ALTER TABLE `Questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +276,7 @@ CREATE TABLE `Quiz` (
 
 LOCK TABLES `Quiz` WRITE;
 /*!40000 ALTER TABLE `Quiz` DISABLE KEYS */;
-INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.\n','STATUSCAT','1',NULL,7.00000000,'2019-09-02 19:52:12','2019-09-02 19:52:12',1,1),(10,'Considering reusers111 when selecting datasets to open: a case of study from universities','Investigación de Datos Abiertos','<div>Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia en datos abiertos y la informaci&#243;n que nos proporcione ser&#225; muy &#250;til para la investigaci&#243;n sobre el conjunto de datos que se deber&#237;a abrir en la universidad ecuatoriana.<div><br></div><div>Para la investigaci&#243;n vamos a utilizar una metodolog&#237;a llamada <b>Delphi Difuso</b> que consiste en llegar a consensos con los participantes sobre sus criterios, por tanto podr&#237;amos requerir de su colaboraci&#243;n una o dos veces adicionales. Sus respuestas ser&#225;n tratadas de forma confidencial y ser&#225;n utilizadas para la investigaci&#243;n llevada a cabo entre la Universidad Central del Ecuador y La Universidad de Alicante en Espa&#241;a sobre la l&#237;nea de Datos Abiertos.&#160;</div><div><br></div><div>Esta encuesta dura aproximadamente <font color=\"#8000ff\">20 minutos</font>.&#160;</div><div><span>La fecha l&#237;mite para realizar esta encuesta es una semana luego de que le llegue este correo.</span></div></div>','STATUSCAT','1',NULL,70.00000000,'2019-09-26 21:29:57','2019-09-26 21:29:57',1,1),(13,'Encuesta de colores','Encuesta de colores ','los colores son chevres','STATUSCAT','1',NULL,7.00000000,'2019-09-02 20:47:28','2019-09-02 20:47:28',1,1),(14,'Considering reusers 222 when selecting datasets to open: a case of study from universities','Investigación de Datos Abiertos','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia','STATUSCAT','1',NULL,70.00000000,'2019-09-26 21:29:23','2019-09-26 21:29:23',1,1),(15,'Considering 3333reusers when selecting datasets to open: a case of study from universities','Investigación Universitaria','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia en datos abiertos y la informaci&#243;n que nos proporcione ser&#225; muy &#250;til para la investigaci&#243;n sobre el conjunto de datos que se deber&#237;a abrir en la universidad ecuatoriana.<div><br></div><div>Para la investigaci&#243;n vamos a utilizar una metodolog&#237;a llamada&#160;<span>Delphi Difuso</span>&#160;que consiste en llegar a consensos con los participantes sobre sus criterios, por tanto podr&#237;amos requerir de su colaboraci&#243;n una o dos veces adicionales. Sus respuestas ser&#225;n tratadas de forma confidencial y ser&#225;n utilizadas para la investigaci&#243;n llevada a cabo entre la Universidad Central del Ecuador y La Universidad de Alicante en Espa&#241;a sobre la l&#237;nea de Datos Abiertos.&#160;</div><div><br></div><div>Esta encuesta dura aproximadamente&#160;<font color=\"#8000ff\">20 minutos</font>.&#160;</div><div>La fecha l&#237;mite para realizar esta encuesta es una semana luego de que le llegue este correo.</div>','STATUSCAT','1',NULL,70.00000000,'2019-09-26 21:29:11','2019-09-26 21:29:11',1,1);
+INSERT INTO `Quiz` VALUES (1,'Pronostico del equipo ganador en la copa america','MEJOR EQUIPO PARA GANAR LA COPA AMERICA','Equipo posible ganador de la copa américa.\n','STATUSCAT','1',NULL,7.00000000,'2019-10-07 22:10:46','2019-10-07 22:10:46',1,1),(14,'Seleccion de casos de estudio universitario','Investigación de Datos Abiertos','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia','STATUSCAT','1',NULL,70.00000000,'2019-10-08 07:17:09','2019-10-08 07:17:09',1,1),(15,'Considering reusers when selecting datasets to open: a case of study from universities','Investigación Universitaria','Gracias por dedicar unos minutos a completar esta encuesta, usted ha sido escogido por su experiencia en datos abiertos y la informaci&#243;n que nos proporcione ser&#225; muy &#250;til para la investigaci&#243;n sobre el conjunto de datos que se deber&#237;a abrir en la universidad ecuatoriana.<div><br></div><div>Para la investigaci&#243;n vamos a utilizar una metodolog&#237;a llamada&#160;<span>Delphi Difuso</span>&#160;que consiste en llegar a consensos con los participantes sobre sus criterios, por tanto podr&#237;amos requerir de su colaboraci&#243;n una o dos veces adicionales. Sus respuestas ser&#225;n tratadas de forma confidencial y ser&#225;n utilizadas para la investigaci&#243;n llevada a cabo entre la Universidad Central del Ecuador y La Universidad de Alicante en Espa&#241;a sobre la l&#237;nea de Datos Abiertos.&#160;</div><div><br></div><div>Esta encuesta dura aproximadamente&#160;<font color=\"#8000ff\">20 minutos</font>.&#160;</div><div>La fecha l&#237;mite para realizar esta encuesta es una semana luego de que le llegue este correo.</div>','STATUSCAT','1',NULL,70.00000000,'2019-10-08 07:16:14','2019-10-08 07:16:14',1,1);
 /*!40000 ALTER TABLE `Quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +392,7 @@ CREATE TABLE `User` (
   UNIQUE KEY `codeuser_UNIQUE` (`codeuser`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,7 +401,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'davidgonzalomejia@hotmail.com','elpapidelasnenas#summer','davidgonzalomejia@gmail.com','chS1I5CEjEekYCWFqBJr5g==',NULL,'2019-08-19 03:17:06','2019-08-20 20:35:02',1,1),(2,'davidgonzalomejia@gmail.com','Juanito','davidgonzalomejia@gmail.com','/UbhuM/HpBIJzFjn+NXXBg==',NULL,'2019-08-19 17:54:08','2019-08-19 18:11:52',1,1),(4,'byron@epn.edu.ec','Byron','byron@epn.edu.ec','yJzDaB0vwaCn1ypAC4ymNw==',NULL,'2019-08-21 16:47:12','2019-09-06 02:56:58',1,1),(7,'gonzalo.proano@epn.edu.ec','david','gonzalo.proano@epn.edu.ec','duL5bvMpezqMSw30EqclZQ==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU2NzQ1MzgzOSwiZXhwIjozMTM1NTEyNDc5LCJlbWFpbCI6ImdvbnphbG8ucHJvYW5vQGVwbi5lZHUuZWMifQ.wZ89RcazFj3se-zw-6h5i12UtPOxup8Xd9n4U6xf5As','2019-09-02 19:50:19','2019-09-02 19:50:39',1,1),(8,'byron@gmail.com','Byron López Chávez','byron@gmail.com','yJzDaB0vwaCn1ypAC4ymNw==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU2Nzk3NDAyNSwiZXhwIjozMTM2NTUyODUxLCJlbWFpbCI6ImJ5cm9uQGdtYWlsLmNvbSJ9.WBRpCNfSPtR-8VUPBxO0pufc3gWKQ3Te5jQa2LZUbzA','2019-09-06 02:57:26','2019-09-08 20:20:25',1,1);
+INSERT INTO `User` VALUES (4,'byron@epn.edu.ec','Byron','byron@epn.edu.ec','yJzDaB0vwaCn1ypAC4ymNw==',NULL,'2019-08-21 16:47:12','2019-09-06 02:56:58',1,1),(9,'davidgonzalomejia@hotmail.com','Davidthebest','davidgonzalomejia@hotmail.com','F5X2KjKG5hfOlceRxG589w==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU3MDUxOTM3OCwiZXhwIjozMTQxNjQzNTU2LCJlbWFpbCI6ImRhdmlkZ29uemFsb21lamlhQGhvdG1haWwuY29tIn0.vqq5ZsvrGAyYJCXUV0DPTcp6G9s0payFdhcJpA0HjYs','2019-10-08 07:22:43','2019-10-08 07:22:58',1,1),(10,'renriquez@uce.edu.ec','renriquez','renriquez@uce.edu.ec','CBFiBN385nOiSTMBQEm5yQ==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU2OTg4Mjk4OSwiZXhwIjozMTQwMzcwNzc5LCJlbWFpbCI6InJlbnJpcXVlekB1Y2UuZWR1LmVjIn0.-BP0Boy0U1ulJ-d6l2WwSmJf28BTaH-rsZ5XRg5uzeI','2019-10-08 07:22:43','2019-10-08 07:22:58',1,1);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -676,7 +540,7 @@ CREATE TABLE `criteria` (
 
 LOCK TABLES `criteria` WRITE;
 /*!40000 ALTER TABLE `criteria` DISABLE KEYS */;
-INSERT INTO `criteria` VALUES (3,'Disponibilidad','concepto de disponiblidad','2019-09-25 21:21:40','2019-09-25 21:21:40',0,0),(4,'Precio','Ahorro de recursos como dinero','2019-09-25 21:21:40','2019-09-25 21:21:40',0,0),(5,'Durabilidad ','Tiene una duracion mayor en el tiempo','2019-09-25 21:21:40','2019-09-25 21:21:40',0,0),(6,'Aspecto','tiene mejor rasgos ','2019-09-25 21:21:40','2019-09-25 21:21:40',0,0),(7,'Fisico','valor del dinero','2019-09-25 21:21:26','2019-09-25 21:21:26',0,0);
+INSERT INTO `criteria` VALUES (3,'Disponibilidad','concepto de disponiblidad','2019-10-08 03:14:53','2019-10-08 03:14:53',0,0),(4,'Precio','Ahorro de recursos como dinero','2019-10-08 03:14:53','2019-10-08 03:14:53',0,0),(5,'Durabilidad ','Tiene una duracion mayor en el tiempo','2019-10-08 03:14:53','2019-10-08 03:14:53',0,0),(6,'Aspecto','tiene mejor rasgos ','2019-10-08 03:14:53','2019-10-08 03:14:53',0,0),(7,'Fisico','valor del dinero','2019-10-08 03:14:53','2019-10-08 03:14:53',0,0);
 /*!40000 ALTER TABLE `criteria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -889,6 +753,7 @@ CREATE TABLE `processFahpconsistencybycriteria` (
 
 LOCK TABLES `processFahpconsistencybycriteria` WRITE;
 /*!40000 ALTER TABLE `processFahpconsistencybycriteria` DISABLE KEYS */;
+INSERT INTO `processFahpconsistencybycriteria` VALUES (9,1,5.00000000,6.00000000,7.00000000,'2019-10-08 02:46:07','2019-10-08 02:46:07',1,1),(9,3,5.00000000,6.00000000,7.00000000,'2019-10-08 02:46:07','2019-10-08 02:46:07',1,1);
 /*!40000 ALTER TABLE `processFahpconsistencybycriteria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -938,7 +803,7 @@ CREATE TABLE `resultFAHP` (
   `codeQuiz` bigint(20) NOT NULL,
   `codeQuestions` bigint(20) NOT NULL,
   `codeQuizItem` bigint(20) NOT NULL,
-  `valuepriority` decimal(30,8) NOT NULL,
+  `weight` decimal(30,8) NOT NULL,
   `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
@@ -960,6 +825,7 @@ CREATE TABLE `resultFAHP` (
 
 LOCK TABLES `resultFAHP` WRITE;
 /*!40000 ALTER TABLE `resultFAHP` DISABLE KEYS */;
+INSERT INTO `resultFAHP` VALUES (9,1,1,2,40.00000000,'2019-10-06 18:30:33','2019-10-06 18:30:33',1,1),(9,1,1,3,30.00000000,'2019-10-06 18:30:33','2019-10-06 18:30:33',1,1),(9,1,3,36,20.00000000,'2019-10-06 18:30:33','2019-10-06 18:53:16',1,1),(9,1,3,37,10.00000000,'2019-10-06 18:30:33','2019-10-06 18:53:16',1,1),(9,1,3,38,5.00000000,'2019-10-06 18:30:33','2019-10-06 18:53:16',1,1);
 /*!40000 ALTER TABLE `resultFAHP` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1042,4 +908,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-04 16:35:31
+-- Dump completed on 2019-10-08  2:28:03
