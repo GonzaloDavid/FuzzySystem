@@ -5,10 +5,8 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
 import com.epn.dtos.ProcessFahpweightbycriteriaContainer;
 import com.epn.entities.FilterTypes;
-import com.epn.entities.ProcessFahpatributebycriteria;
 import com.epn.entities.ProcessFahpweightbycriteria;
 import com.epn.entities.SearchObject;
 import com.epn.mapper.ProcessFahpweightbycriteriaMapper;

@@ -6,7 +6,6 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
-import com.epn.dtos.ResultFAHPContainer;
 import com.epn.entities.ProcessFahpatributebycriteria;
 import com.epn.entities.ProcessFahpatributebycriteriaPK;
 import com.epn.fd.dao.ProcessFahpatributebycriteriaDAO;

@@ -5,21 +5,18 @@
  */
 package com.epn.fd.WS;
 
-import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
+import com.epn.dtos.ProcessFahpconsistencybycriteriaContainer;
 import com.epn.entities.ProcessFahpconsistencybycriteria;
 import com.epn.entities.ProcessFahpconsistencybycriteriaPK;
+import com.epn.fd.dao.ProcessFahpconsistencybycriteriaDAO;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -33,6 +30,9 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.processfahpconsistencybycriteria")
 public class ProcessFahpconsistencybycriteriaFacadeREST extends AbstractFacade<ProcessFahpconsistencybycriteria> {
 
+    @Inject()
+    ProcessFahpconsistencybycriteriaDAO fahpconsistencybycriteriaDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -61,11 +61,20 @@ public class ProcessFahpconsistencybycriteriaFacadeREST extends AbstractFacade<P
         super(ProcessFahpconsistencybycriteria.class);
     }
 
-   
+    @GET
+    @Path("getconsistency")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ProcessFahpconsistencybycriteriaContainer> getconsistencybycodefahp(
+            @QueryParam("codefahp") Long codefahp,
+            @HeaderParam("authorization") String authString
+    ) {
+        List<ProcessFahpconsistencybycriteriaContainer> processcontainer = fahpconsistencybycriteriaDAO.getconsistencybycodefahp(codefahp);
+        return processcontainer;
+    }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
