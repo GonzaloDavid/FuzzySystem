@@ -7,6 +7,8 @@ package com.epn.fd.WS;
 
 import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
 import com.epn.dtos.ProcessFahpweightbycriteriaContainer;
+import com.epn.dtos.QuizContainer;
+import com.epn.dtos.QuizSave;
 import com.epn.entities.ProcessFahpweightbycriteria;
 import com.epn.entities.ProcessFahpweightbycriteriaPK;
 import com.epn.fd.dao.ProcessFahpweightbycriteriaDAO;
@@ -15,14 +17,12 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -38,7 +38,7 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
 
     @Inject()
     ProcessFahpweightbycriteriaDAO processFahpweightbycriteriaDAO;
-    
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -74,12 +74,24 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
     @GET
     @Path("getattributeprocess")
     @Produces({MediaType.APPLICATION_JSON})
-    public  List<ProcessFahpweightbycriteriaContainer>  getattributeprocessbycodefahp(
+    public List<ProcessFahpweightbycriteriaContainer> getattributeprocessbycodefahp(
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) {
-        List<ProcessFahpweightbycriteriaContainer>  processcontainer = processFahpweightbycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        List<ProcessFahpweightbycriteriaContainer> processcontainer = processFahpweightbycriteriaDAO.getprocesslistbycodefahp(codefahp);
         return processcontainer;
+    }
+
+    @GET
+    @Path("executefahp")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public void executeFAHP(
+            @QueryParam("codefahp") Long codefahp,
+            @HeaderParam("authorization") String authString) {
+      //  if (userDAO.existToken(authString) == true) {
+            processFahpweightbycriteriaDAO.executeFAHP(codefahp);
+       // }
     }
 
     @Override
