@@ -14,9 +14,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -85,6 +82,10 @@ public class Fahp implements Serializable {
     private List<CriteriaMatrixValue> criteriaMatrixValueList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<Sentemailbycodefahp> sentemailbycodefahp;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<AttributesMatrixAverageValue> attributesMatrixAverageValueList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<CriteriaMatrixAverageValue> criteriaMatrixAverageValueList;
 
     public Fahp() {
     }
@@ -246,6 +247,24 @@ public class Fahp implements Serializable {
 
     public void setSentemailbycodefahp(List<Sentemailbycodefahp> sentemailbycodefahp) {
         this.sentemailbycodefahp = sentemailbycodefahp;
+    }
+
+    @XmlTransient
+    public List<AttributesMatrixAverageValue> getAttributesMatrixAverageValueList() {
+        return attributesMatrixAverageValueList;
+    }
+
+    public void setAttributesMatrixAverageValueList(List<AttributesMatrixAverageValue> attributesMatrixAverageValueList) {
+        this.attributesMatrixAverageValueList = attributesMatrixAverageValueList;
+    }
+
+    @XmlTransient
+    public List<CriteriaMatrixAverageValue> getCriteriaMatrixAverageValueList() {
+        return criteriaMatrixAverageValueList;
+    }
+
+    public void setCriteriaMatrixAverageValueList(List<CriteriaMatrixAverageValue> criteriaMatrixAverageValueList) {
+        this.criteriaMatrixAverageValueList = criteriaMatrixAverageValueList;
     }
 
 }
