@@ -60,21 +60,6 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         update(fahpweightbycriteria);
     }
 
-    public void buildProcessFahpweightbycriteria(List<CriteriaprocessContainer> criteriaWeigth) {
-
-        criteriaWeigth.forEach(criteriacalculated -> {
-            ProcessFahpweightbycriteriaPK fahpweightbycriteriaPK = new ProcessFahpweightbycriteriaPK();
-            fahpweightbycriteriaPK.setCodeCriteria(criteriacalculated.getCodecriteria());
-            fahpweightbycriteriaPK.setCodePerson(criteriacalculated.getCodeperson());
-            fahpweightbycriteriaPK.setCodefahp(criteriacalculated.getCodefahp());
-
-            ProcessFahpweightbycriteria fahpweightbycriteria = new ProcessFahpweightbycriteria(fahpweightbycriteriaPK);
-            BigDecimal weigth = new BigDecimal(criteriacalculated.getWeigth());
-            fahpweightbycriteria.setWeight(weigth);
-            save(fahpweightbycriteria);
-        });
-    }
-
     public void executeFAHP(Long codefahp) {
         List<SentemailbycodefahpContainer> personListanswered = sentemailbycodefahpDAO.searchbycodefahp(codefahp, "STATUSSENTFAHPCAT", "answered");
         personListanswered.forEach(personanswered -> {
@@ -87,7 +72,9 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
 
     public List<CriteriaprocessContainer> calculate_criteriadatabyperson(Long codefahp, long codeperson) {
         List<CriteriaprocessContainer> container = new ArrayList();
+        //obtenemos la data de los criterios por codefahp y persona
         List<CriteriaMatrixValueContainer> criteriadatalist = matrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
+        //obtenemos los criterios utilizados en este proceso
         List<CriteriabycodefahpContainer> criteriaList = criteriabycodefahpDAO.getcriteriabycodefahp(codefahp);
         criteriaList.forEach(criteria -> {
             CriteriaprocessContainer criteriaprocessContainer = new CriteriaprocessContainer();
@@ -144,12 +131,28 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
 
         //sumar los pesos defusificados
         double totaldefusificationvalue = defusificationtotalArray.stream().reduce(0.0, (a, b) -> a + b);
+
         //Normalizar los Pesos
         container.forEach(item -> {
             double weigth = item.getDefusification() / totaldefusificationvalue;
             item.setWeigth(weigth);
         });
         return container;
+    }
+
+    public void buildProcessFahpweightbycriteria(List<CriteriaprocessContainer> criteriaWeigth) {
+
+        criteriaWeigth.forEach(criteriacalculated -> {
+            ProcessFahpweightbycriteriaPK fahpweightbycriteriaPK = new ProcessFahpweightbycriteriaPK();
+            fahpweightbycriteriaPK.setCodeCriteria(criteriacalculated.getCodecriteria());
+            fahpweightbycriteriaPK.setCodePerson(criteriacalculated.getCodeperson());
+            fahpweightbycriteriaPK.setCodefahp(criteriacalculated.getCodefahp());
+
+            ProcessFahpweightbycriteria fahpweightbycriteria = new ProcessFahpweightbycriteria(fahpweightbycriteriaPK);
+            BigDecimal weigth = new BigDecimal(criteriacalculated.getWeigth());
+            fahpweightbycriteria.setWeight(weigth);
+            save(fahpweightbycriteria);
+        });
     }
 
     public List<Double> calculate_diffuseTriangularNumber(List<CriteriaMatrixValueContainer> datacriteriafiltered) {
