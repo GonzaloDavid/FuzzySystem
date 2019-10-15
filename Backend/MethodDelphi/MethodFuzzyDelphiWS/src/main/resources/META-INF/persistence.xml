@@ -26,6 +26,8 @@
         <class>com.epn.entities.Surveybycodefahp</class>
         <class>com.epn.entities.ResultFAHP</class>
         <class>com.epn.entities.AttributesMatrixValue</class>
+        <class>com.epn.entities.AttributesMatrixAverageValue</class>
+        <class>com.epn.entities.CriteriaMatrixAverageValue</class>
         
     
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
