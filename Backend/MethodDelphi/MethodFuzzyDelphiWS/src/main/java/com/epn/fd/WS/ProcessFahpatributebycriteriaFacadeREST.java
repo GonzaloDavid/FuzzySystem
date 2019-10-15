@@ -50,10 +50,6 @@ public class ProcessFahpatributebycriteriaFacadeREST extends AbstractFacade<Proc
         if (codefahp != null && !codefahp.isEmpty()) {
             key.setCodefahp(new java.lang.Long(codefahp.get(0)));
         }
-        java.util.List<String> codePerson = map.get("codePerson");
-        if (codePerson != null && !codePerson.isEmpty()) {
-            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
-        }
         java.util.List<String> codeQuiz = map.get("codeQuiz");
         if (codeQuiz != null && !codeQuiz.isEmpty()) {
             key.setCodeQuiz(new java.lang.Long(codeQuiz.get(0)));

@@ -24,10 +24,6 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
     private long codefahp;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codePerson")
-    private long codePerson;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "codeQuiz")
     private long codeQuiz;
     @Basic(optional = false)
@@ -46,9 +42,8 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
     public ProcessFahpatributebycriteriaPK() {
     }
 
-    public ProcessFahpatributebycriteriaPK(long codefahp, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem, long codeCriteria) {
+    public ProcessFahpatributebycriteriaPK(long codefahp, long codeQuiz, long codeQuestions, long codeQuizItem, long codeCriteria) {
         this.codefahp = codefahp;
-        this.codePerson = codePerson;
         this.codeQuiz = codeQuiz;
         this.codeQuestions = codeQuestions;
         this.codeQuizItem = codeQuizItem;
@@ -61,14 +56,6 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
 
     public void setCodefahp(long codefahp) {
         this.codefahp = codefahp;
-    }
-
-    public long getCodePerson() {
-        return codePerson;
-    }
-
-    public void setCodePerson(long codePerson) {
-        this.codePerson = codePerson;
     }
 
     public long getCodeQuiz() {
@@ -107,7 +94,6 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) codefahp;
-        hash += (int) codePerson;
         hash += (int) codeQuiz;
         hash += (int) codeQuestions;
         hash += (int) codeQuizItem;
@@ -123,9 +109,6 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
         }
         ProcessFahpatributebycriteriaPK other = (ProcessFahpatributebycriteriaPK) object;
         if (this.codefahp != other.codefahp) {
-            return false;
-        }
-        if (this.codePerson != other.codePerson) {
             return false;
         }
         if (this.codeQuiz != other.codeQuiz) {
@@ -145,7 +128,7 @@ public class ProcessFahpatributebycriteriaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ProcessFahpatributebycriteriaPK[ codefahp=" + codefahp + ", codePerson=" + codePerson + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + ", codeCriteria=" + codeCriteria + " ]";
+        return "com.epn.entities.ProcessFahpatributebycriteriaPK[ codefahp=" + codefahp + ", codeQuiz=" + codeQuiz + ", codeQuestions=" + codeQuestions + ", codeQuizItem=" + codeQuizItem + ", codeCriteria=" + codeCriteria + " ]";
     }
     
 }

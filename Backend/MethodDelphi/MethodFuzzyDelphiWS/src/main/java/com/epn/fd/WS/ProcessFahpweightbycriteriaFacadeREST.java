@@ -56,10 +56,6 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
         if (codefahp != null && !codefahp.isEmpty()) {
             key.setCodefahp(new java.lang.Long(codefahp.get(0)));
         }
-        java.util.List<String> codePerson = map.get("codePerson");
-        if (codePerson != null && !codePerson.isEmpty()) {
-            key.setCodePerson(new java.lang.Long(codePerson.get(0)));
-        }
         java.util.List<String> codeCriteria = map.get("codeCriteria");
         if (codeCriteria != null && !codeCriteria.isEmpty()) {
             key.setCodeCriteria(new java.lang.Long(codeCriteria.get(0)));

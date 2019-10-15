@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ProcessFahpweightbycriteria.findAll", query = "SELECT p FROM ProcessFahpweightbycriteria p"),
     @NamedQuery(name = "ProcessFahpweightbycriteria.findByCodefahp", query = "SELECT p FROM ProcessFahpweightbycriteria p WHERE p.processFahpweightbycriteriaPK.codefahp = :codefahp"),
-    @NamedQuery(name = "ProcessFahpweightbycriteria.findByCodePerson", query = "SELECT p FROM ProcessFahpweightbycriteria p WHERE p.processFahpweightbycriteriaPK.codePerson = :codePerson"),
     @NamedQuery(name = "ProcessFahpweightbycriteria.findByCodeCriteria", query = "SELECT p FROM ProcessFahpweightbycriteria p WHERE p.processFahpweightbycriteriaPK.codeCriteria = :codeCriteria"),
     @NamedQuery(name = "ProcessFahpweightbycriteria.findByWeight", query = "SELECT p FROM ProcessFahpweightbycriteria p WHERE p.weight = :weight"),
     @NamedQuery(name = "ProcessFahpweightbycriteria.findByDateCreate", query = "SELECT p FROM ProcessFahpweightbycriteria p WHERE p.dateCreate = :dateCreate"),
@@ -64,9 +63,6 @@ public class ProcessFahpweightbycriteria implements Serializable {
     @JoinColumn(name = "codefahp", referencedColumnName = "codefahp", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Fahp fahp;
-    @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
     @JoinColumn(name = "codeCriteria", referencedColumnName = "codeCriteria", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Criteria criteria;
@@ -87,8 +83,8 @@ public class ProcessFahpweightbycriteria implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public ProcessFahpweightbycriteria(long codefahp, long codePerson, long codeCriteria) {
-        this.processFahpweightbycriteriaPK = new ProcessFahpweightbycriteriaPK(codefahp, codePerson, codeCriteria);
+    public ProcessFahpweightbycriteria(long codefahp, long codeCriteria) {
+        this.processFahpweightbycriteriaPK = new ProcessFahpweightbycriteriaPK(codefahp, codeCriteria);
     }
 
     public ProcessFahpweightbycriteriaPK getProcessFahpweightbycriteriaPK() {
@@ -145,14 +141,6 @@ public class ProcessFahpweightbycriteria implements Serializable {
 
     public void setFahp(Fahp fahp) {
         this.fahp = fahp;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public Criteria getCriteria() {

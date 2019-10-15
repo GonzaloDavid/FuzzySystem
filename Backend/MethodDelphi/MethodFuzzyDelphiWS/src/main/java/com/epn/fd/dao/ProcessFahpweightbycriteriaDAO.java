@@ -81,7 +81,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
 
             List<CriteriaMatrixValueContainer> datacriteriafiltered = criteriadatalist.stream().filter(datacriteria -> datacriteria.getCriteriaMatrixValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria()).collect(Collectors.toList());
             criteriaprocessContainer.setCodecriteria(criteria.getCriteriabycodefahpPK().getCodeCriteria());
-            criteriaprocessContainer.setCodeperson(codeperson);
+//            criteriaprocessContainer.setCodeperson(codeperson);
             criteriaprocessContainer.setCodefahp(criteria.getCriteriabycodefahpPK().getCodefahp());
 
             List<Double> triangularNumber = calculate_diffuseTriangularNumber(datacriteriafiltered);
@@ -145,7 +145,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         criteriaWeigth.forEach(criteriacalculated -> {
             ProcessFahpweightbycriteriaPK fahpweightbycriteriaPK = new ProcessFahpweightbycriteriaPK();
             fahpweightbycriteriaPK.setCodeCriteria(criteriacalculated.getCodecriteria());
-            fahpweightbycriteriaPK.setCodePerson(criteriacalculated.getCodeperson());
+            //fahpweightbycriteriaPK.setCodePerson(criteriacalculated.getCodeperson());
             fahpweightbycriteriaPK.setCodefahp(criteriacalculated.getCodefahp());
 
             ProcessFahpweightbycriteria fahpweightbycriteria = new ProcessFahpweightbycriteria(fahpweightbycriteriaPK);

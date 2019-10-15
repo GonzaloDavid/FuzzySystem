@@ -24,19 +24,14 @@ public class ProcessFahpweightbycriteriaPK implements Serializable {
     private long codefahp;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codePerson")
-    private long codePerson;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "codeCriteria")
     private long codeCriteria;
 
     public ProcessFahpweightbycriteriaPK() {
     }
 
-    public ProcessFahpweightbycriteriaPK(long codefahp, long codePerson, long codeCriteria) {
+    public ProcessFahpweightbycriteriaPK(long codefahp, long codeCriteria) {
         this.codefahp = codefahp;
-        this.codePerson = codePerson;
         this.codeCriteria = codeCriteria;
     }
 
@@ -46,14 +41,6 @@ public class ProcessFahpweightbycriteriaPK implements Serializable {
 
     public void setCodefahp(long codefahp) {
         this.codefahp = codefahp;
-    }
-
-    public long getCodePerson() {
-        return codePerson;
-    }
-
-    public void setCodePerson(long codePerson) {
-        this.codePerson = codePerson;
     }
 
     public long getCodeCriteria() {
@@ -68,7 +55,6 @@ public class ProcessFahpweightbycriteriaPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) codefahp;
-        hash += (int) codePerson;
         hash += (int) codeCriteria;
         return hash;
     }
@@ -83,9 +69,6 @@ public class ProcessFahpweightbycriteriaPK implements Serializable {
         if (this.codefahp != other.codefahp) {
             return false;
         }
-        if (this.codePerson != other.codePerson) {
-            return false;
-        }
         if (this.codeCriteria != other.codeCriteria) {
             return false;
         }
@@ -94,7 +77,7 @@ public class ProcessFahpweightbycriteriaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epn.entities.ProcessFahpweightbycriteriaPK[ codefahp=" + codefahp + ", codePerson=" + codePerson + ", codeCriteria=" + codeCriteria + " ]";
+        return "com.epn.entities.ProcessFahpweightbycriteriaPK[ codefahp=" + codefahp + ", codeCriteria=" + codeCriteria + " ]";
     }
     
 }

@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ProcessFahpatributebycriteria.findAll", query = "SELECT p FROM ProcessFahpatributebycriteria p"),
     @NamedQuery(name = "ProcessFahpatributebycriteria.findByCodefahp", query = "SELECT p FROM ProcessFahpatributebycriteria p WHERE p.processFahpatributebycriteriaPK.codefahp = :codefahp"),
-    @NamedQuery(name = "ProcessFahpatributebycriteria.findByCodePerson", query = "SELECT p FROM ProcessFahpatributebycriteria p WHERE p.processFahpatributebycriteriaPK.codePerson = :codePerson"),
     @NamedQuery(name = "ProcessFahpatributebycriteria.findByCodeQuiz", query = "SELECT p FROM ProcessFahpatributebycriteria p WHERE p.processFahpatributebycriteriaPK.codeQuiz = :codeQuiz"),
     @NamedQuery(name = "ProcessFahpatributebycriteria.findByCodeQuestions", query = "SELECT p FROM ProcessFahpatributebycriteria p WHERE p.processFahpatributebycriteriaPK.codeQuestions = :codeQuestions"),
     @NamedQuery(name = "ProcessFahpatributebycriteria.findByCodeQuizItem", query = "SELECT p FROM ProcessFahpatributebycriteria p WHERE p.processFahpatributebycriteriaPK.codeQuizItem = :codeQuizItem"),
@@ -68,9 +67,6 @@ public class ProcessFahpatributebycriteria implements Serializable {
     @JoinColumn(name = "codefahp", referencedColumnName = "codefahp", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Fahp fahp;
-    @JoinColumn(name = "codePerson", referencedColumnName = "codePerson", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
     @JoinColumns({
         @JoinColumn(name = "codeQuizItem", referencedColumnName = "codeQuizItem", insertable = false, updatable = false),
         @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
@@ -105,8 +101,8 @@ public class ProcessFahpatributebycriteria implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    public ProcessFahpatributebycriteria(long codefahp, long codePerson, long codeQuiz, long codeQuestions, long codeQuizItem, long codeCriteria) {
-        this.processFahpatributebycriteriaPK = new ProcessFahpatributebycriteriaPK(codefahp, codePerson, codeQuiz, codeQuestions, codeQuizItem, codeCriteria);
+    public ProcessFahpatributebycriteria(long codefahp, long codeQuiz, long codeQuestions, long codeQuizItem, long codeCriteria) {
+        this.processFahpatributebycriteriaPK = new ProcessFahpatributebycriteriaPK(codefahp, codeQuiz, codeQuestions, codeQuizItem, codeCriteria);
     }
 
     public ProcessFahpatributebycriteriaPK getProcessFahpatributebycriteriaPK() {
@@ -163,14 +159,6 @@ public class ProcessFahpatributebycriteria implements Serializable {
 
     public void setFahp(Fahp fahp) {
         this.fahp = fahp;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public QuestionItem getQuestionItem() {

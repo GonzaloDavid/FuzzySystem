@@ -18,7 +18,7 @@ public class CriteriaprocessContainer {
     List<Double> triangularNumberNormalized=new ArrayList();
     Long codefahp;
     Long codecriteria;
-    Long codeperson;
+    //Long codeperson;
     double defusification;
     double weigth;
 
@@ -39,14 +39,6 @@ public class CriteriaprocessContainer {
 
     public void setCodecriteria(Long codecriteria) {
         this.codecriteria = codecriteria;
-    }
-
-    public Long getCodeperson() {
-        return codeperson;
-    }
-
-    public void setCodeperson(Long codeperson) {
-        this.codeperson = codeperson;
     }
 
     public List<Double> getTriangularNumberNormalized() {
