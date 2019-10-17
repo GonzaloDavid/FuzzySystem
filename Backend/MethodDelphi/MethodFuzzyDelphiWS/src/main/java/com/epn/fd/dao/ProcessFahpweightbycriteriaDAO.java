@@ -10,6 +10,8 @@ import com.epn.dtos.CriteriabycodefahpContainer;
 import com.epn.dtos.CriteriaprocessContainer;
 import com.epn.dtos.ProcessFahpweightbycriteriaContainer;
 import com.epn.dtos.SentemailbycodefahpContainer;
+import com.epn.entities.CriteriaMatrixAverageValue;
+import com.epn.entities.CriteriaMatrixAverageValuePK;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.ProcessFahpweightbycriteria;
 import com.epn.entities.ProcessFahpweightbycriteriaPK;
@@ -39,6 +41,11 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
     @Inject()
     CriteriabycodefahpDAO criteriabycodefahpDAO;
 
+    @Inject()
+    CriteriaMatrixAverageValueDAO criteriaMatrixAverageValueDAO;
+
+    @Inject()
+    ProcessFahpconsistencybycriteriaDAO fahpconsistencybycriteriaDAO;
     private final ProcessFahpweightbycriteriaMapper mapper = Mappers.getMapper(ProcessFahpweightbycriteriaMapper.class);
 
     public ProcessFahpweightbycriteriaDAO() {
@@ -61,27 +68,57 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
     }
 
     public void executeFAHP(Long codefahp) {
-        List<SentemailbycodefahpContainer> personListanswered = sentemailbycodefahpDAO.searchbycodefahp(codefahp, "STATUSSENTFAHPCAT", "answered");
-        personListanswered.forEach(personanswered -> {
-            long codeperson = personanswered.getSentemailbycodefahpPK().getCodePerson();
-            List<CriteriaprocessContainer> criteriaWeigth = calculate_criteriadatabyperson(codefahp, codeperson);
-            //Insertar los pesos calculados
-            buildProcessFahpweightbycriteria(criteriaWeigth);
-        });
-    }
-
-    public List<CriteriaprocessContainer> calculate_criteriadatabyperson(Long codefahp, long codeperson) {
-        List<CriteriaprocessContainer> container = new ArrayList();
-        //obtenemos la data de los criterios por codefahp y persona
-        List<CriteriaMatrixValueContainer> criteriadatalist = matrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
         //obtenemos los criterios utilizados en este proceso
         List<CriteriabycodefahpContainer> criteriaList = criteriabycodefahpDAO.getcriteriabycodefahp(codefahp);
+        //obtener personas que respondieron a la encuesta
+        List<SentemailbycodefahpContainer> personListanswered = sentemailbycodefahpDAO.searchbycodefahp(codefahp, "STATUSSENTFAHPCAT", "answered");
+        List<CriteriaMatrixValueContainer> criteriadatabypersonList = new ArrayList();
+
+        //Realiza los promedios de las personas
+        personListanswered.forEach(personanswered -> {
+            Long codeperson = personanswered.getSentemailbycodefahpPK().getCodePerson();
+            List<CriteriaMatrixValueContainer> criteriadatabyperson = matrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
+
+            boolean isConsistency = fahpconsistencybycriteriaDAO.processConsistency(
+                    criteriadatabyperson,
+                    criteriaList,
+                    codeperson,
+                    codefahp);
+            //Verifica la consistencia y se añade solo si es consistente
+            //if (isConsistency == true) {
+                criteriadatabyperson.forEach(data -> {
+                    criteriadatabypersonList.add(data);
+                });
+           // }
+        });
+        criteriaList.forEach(criteria -> {
+            criteriaList.forEach(criteriaaux -> {
+                List<CriteriaMatrixValueContainer> filtered = criteriadatabypersonList.stream().filter(datafilter -> datafilter.getCriteriaMatrixValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria() && datafilter.getCriteriaMatrixValuePK().getCodeCriteriaCouple() == criteriaaux.getCriteriabycodefahpPK().getCodeCriteria()).collect(Collectors.toList());
+                if (personListanswered.size() > 0 && filtered.size() > 0) {
+                    //calcula promedios
+                    CriteriaMatrixAverageValue averageValue = getAverageTriangleNumber(filtered, personListanswered.size());
+                    //guarda en la tabla de promedios
+                    criteriaMatrixAverageValueDAO.save(averageValue);
+                }
+            });
+        });
+        //Calcular los pesos de los criterios
+        List<CriteriaprocessContainer> criteriaWeigth = calculate_criteriadatabyperson(criteriaList, codefahp);
+        //Insertar los pesos calculados
+        buildProcessFahpweightbycriteria(criteriaWeigth);
+    }
+
+    public List<CriteriaprocessContainer> calculate_criteriadatabyperson(List<CriteriabycodefahpContainer> criteriaList, Long codefahp) {
+        List<CriteriaprocessContainer> container = new ArrayList();
+        //obtenemos la data de los criterios por codefahp y persona
+        List<CriteriaMatrixAverageValue> criteriaAverageValues = criteriaMatrixAverageValueDAO.getAverageData(codefahp);
+
         criteriaList.forEach(criteria -> {
             CriteriaprocessContainer criteriaprocessContainer = new CriteriaprocessContainer();
 
-            List<CriteriaMatrixValueContainer> datacriteriafiltered = criteriadatalist.stream().filter(datacriteria -> datacriteria.getCriteriaMatrixValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria()).collect(Collectors.toList());
+            List<CriteriaMatrixAverageValue> datacriteriafiltered = criteriaAverageValues.stream().filter(datacriteria -> datacriteria.getCriteriaMatrixAverageValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria()).collect(Collectors.toList());
             criteriaprocessContainer.setCodecriteria(criteria.getCriteriabycodefahpPK().getCodeCriteria());
-//            criteriaprocessContainer.setCodeperson(codeperson);
+            // criteriaprocessContainer.setCodeperson(codeperson);
             criteriaprocessContainer.setCodefahp(criteria.getCriteriabycodefahpPK().getCodefahp());
 
             List<Double> triangularNumber = calculate_diffuseTriangularNumber(datacriteriafiltered);
@@ -155,7 +192,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         });
     }
 
-    public List<Double> calculate_diffuseTriangularNumber(List<CriteriaMatrixValueContainer> datacriteriafiltered) {
+    public List<Double> calculate_diffuseTriangularNumber(List<CriteriaMatrixAverageValue> datacriteriafiltered) {
         List<Double> lowerArray = new ArrayList();
         List<Double> mediaArray = new ArrayList();
         List<Double> upperArray = new ArrayList();
@@ -208,5 +245,49 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
             valueconvert = Double.parseDouble(value);
         }
         return valueconvert;
+    }
+
+    public CriteriaMatrixAverageValue getAverageTriangleNumber(List<CriteriaMatrixValueContainer> criteriaMatrixValue, int numberofExpert) {
+
+        List<Double> lowerArray = new ArrayList();
+        List<Double> mediaArray = new ArrayList();
+        List<Double> upperArray = new ArrayList();
+        CriteriaMatrixAverageValuePK criteriaMatrixAverageValuePK = new CriteriaMatrixAverageValuePK();
+        criteriaMatrixAverageValuePK.setCodefahp(criteriaMatrixValue.get(0).getCriteriaMatrixValuePK().getCodefahp());
+        criteriaMatrixAverageValuePK.setCodeCriteria(criteriaMatrixValue.get(0).getCriteriaMatrixValuePK().getCodeCriteria());
+        criteriaMatrixAverageValuePK.setCodeCriteriaCouple(criteriaMatrixValue.get(0).getCriteriaMatrixValuePK().getCodeCriteriaCouple());
+        CriteriaMatrixAverageValue averageValue = new CriteriaMatrixAverageValue(criteriaMatrixAverageValuePK);
+        criteriaMatrixValue.forEach(databycriteria -> {
+
+            String valueCat = databycriteria.getValuecriteriaFAHP();
+            String[] parts = valueCat.split(",");
+            String part1 = parts[0].trim();
+            String part2 = "";
+            String part3 = "";
+            if (parts.length > 1) {
+                part2 = parts[1].trim();
+                part3 = parts[2].trim();
+            } else {
+                part2 = "1";
+                part3 = "1";
+            }
+
+            lowerArray.add(stringtoDouble(part1));
+            mediaArray.add(stringtoDouble(part2));
+            upperArray.add(stringtoDouble(part3));
+        });
+        double lowervalue = lowerArray.stream().reduce(1.0, (a, b) -> a * b);
+        double mediavalue = mediaArray.stream().reduce(1.0, (a, b) -> a * b);
+        double uppervalue = upperArray.stream().reduce(1.0, (a, b) -> a * b);
+
+        double exponent = (1.0 / numberofExpert);
+        double lowervaluepow = Math.pow(lowervalue, exponent);
+        double mediavaluepow = Math.pow(mediavalue, exponent);
+        double uppervaluepow = Math.pow(uppervalue, exponent);
+
+        String newvalueCat = lowervaluepow + "," + mediavaluepow + "," + uppervaluepow;
+        averageValue.setValuecriteriaFAHP(newvalueCat);
+        averageValue.setValuecriteriaFAHPCatt("VALUEFAHPCAT");
+        return averageValue;
     }
 }

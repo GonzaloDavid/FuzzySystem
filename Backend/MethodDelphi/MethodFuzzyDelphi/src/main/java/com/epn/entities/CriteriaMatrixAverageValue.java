@@ -38,10 +38,12 @@ public class CriteriaMatrixAverageValue implements Serializable {
     @Basic(optional = false)
     @Column(name = "valuecriteriaFAHP")
     private String valuecriteriaFAHP;
+    @Column(name = "valuecriteriaFAHPCat")
+    private String valuecriteriaFAHPCatt;
     @JoinColumn(name = "codefahp", referencedColumnName = "codefahp", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Fahp fahp;
-    @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "code")
+    @JoinColumn(name = "valuecriteriaFAHPCat", referencedColumnName = "code", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Catalogue valuecriteriaFAHPCat;
     @JoinColumn(name = "codeCriteria", referencedColumnName = "codeCriteria", insertable = false, updatable = false)
@@ -104,6 +106,14 @@ public class CriteriaMatrixAverageValue implements Serializable {
         this.criteria = criteria;
     }
 
+    public String getValuecriteriaFAHPCatt() {
+        return valuecriteriaFAHPCatt;
+    }
+
+    public void setValuecriteriaFAHPCatt(String valuecriteriaFAHPCatt) {
+        this.valuecriteriaFAHPCatt = valuecriteriaFAHPCatt;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -128,5 +138,5 @@ public class CriteriaMatrixAverageValue implements Serializable {
     public String toString() {
         return "com.epn.entities.CriteriaMatrixAverageValue[ criteriaMatrixAverageValuePK=" + criteriaMatrixAverageValuePK + " ]";
     }
-    
+
 }
