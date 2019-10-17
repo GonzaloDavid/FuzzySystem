@@ -120,7 +120,7 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
         FahpPK fahpPK = new FahpPK();
         fahpPK.setCodefahp(saveContainer.getSentemailbycodefahp().getCodefahp());
 
-        fahpDAO.updatestatus(fahpPK);
+        fahpDAO.updatestatus(fahpPK,"answered");
         sentemailbycodefahpDAO.updatestatus(saveContainer.getSentemailbycodefahp());
         attributesMatrixValueDAO.save(saveContainer.getAttributesMatrixlist());
         criteriaMatrixValueDAO.save(saveContainer.getCriteriaMatrixlist());

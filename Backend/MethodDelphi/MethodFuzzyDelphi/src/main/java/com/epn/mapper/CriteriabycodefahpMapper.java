@@ -19,6 +19,7 @@ import org.mapstruct.Mapping;
 public interface CriteriabycodefahpMapper {
 
     @Mapping(target = "namecriteria", expression = "java(source.getCriteria().getNameCriteria())")
+    @Mapping(target = "criteriaDescription", expression = "java(source.getCriteria().getDescriptionCriteria())")
     CriteriabycodefahpContainer sourceToDestination(Criteriabycodefahp source);
 
     List<CriteriabycodefahpContainer> sourceListToDestination(List<Criteriabycodefahp> source);

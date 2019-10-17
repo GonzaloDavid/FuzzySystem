@@ -15,6 +15,7 @@ public class CriteriabycodefahpContainer {
 
     private CriteriabycodefahpPK criteriabycodefahpPK;
     private String namecriteria;
+    private String criteriaDescription;
 
     public CriteriabycodefahpContainer() {
     }
@@ -38,6 +39,14 @@ public class CriteriabycodefahpContainer {
 
     public void setNamecriteria(String namecriteria) {
         this.namecriteria = namecriteria;
+    }
+
+    public String getCriteriaDescription() {
+        return criteriaDescription;
+    }
+
+    public void setCriteriaDescription(String criteriaDescription) {
+        this.criteriaDescription = criteriaDescription;
     }
 
 }

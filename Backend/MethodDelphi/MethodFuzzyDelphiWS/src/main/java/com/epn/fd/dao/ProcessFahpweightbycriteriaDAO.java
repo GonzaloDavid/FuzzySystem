@@ -186,8 +186,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
             fahpweightbycriteriaPK.setCodefahp(criteriacalculated.getCodefahp());
 
             ProcessFahpweightbycriteria fahpweightbycriteria = new ProcessFahpweightbycriteria(fahpweightbycriteriaPK);
-            BigDecimal weigth = new BigDecimal(criteriacalculated.getWeigth());
-            fahpweightbycriteria.setWeight(weigth);
+            fahpweightbycriteria.setWeight(new BigDecimal(criteriacalculated.getWeigth()*100));
             save(fahpweightbycriteria);
         });
     }

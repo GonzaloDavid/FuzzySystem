@@ -9,6 +9,7 @@ import com.epn.dtos.ProcessFahpweightbycriteriaContainer;
 import com.epn.entities.ProcessFahpweightbycriteria;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  *
@@ -17,6 +18,8 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface ProcessFahpweightbycriteriaMapper {
 
+    @Mapping(target = "namecriteria", expression = "java(source.getCriteria().getNameCriteria())")
+    @Mapping(target = "criteriadescription", expression = "java(source.getCriteria().getDescriptionCriteria())")
     ProcessFahpweightbycriteriaContainer sourceToDestination(ProcessFahpweightbycriteria source);
 
     List<ProcessFahpweightbycriteriaContainer> sourceListToDestination(List<ProcessFahpweightbycriteria> source);

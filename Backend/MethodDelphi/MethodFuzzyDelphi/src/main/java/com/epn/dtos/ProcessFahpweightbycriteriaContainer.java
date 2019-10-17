@@ -14,7 +14,9 @@ import java.math.BigDecimal;
  */
 public class ProcessFahpweightbycriteriaContainer {
 
-    protected ProcessFahpweightbycriteriaPK processFahpweightbycriteriaPK;
+    private ProcessFahpweightbycriteriaPK processFahpweightbycriteriaPK;
+    private String namecriteria;
+    private String criteriadescription;
     private BigDecimal weight;
 
     public ProcessFahpweightbycriteriaContainer() {
@@ -34,6 +36,22 @@ public class ProcessFahpweightbycriteriaContainer {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public String getNamecriteria() {
+        return namecriteria;
+    }
+
+    public void setNamecriteria(String namecriteria) {
+        this.namecriteria = namecriteria;
+    }
+
+    public String getCriteriadescription() {
+        return criteriadescription;
+    }
+
+    public void setCriteriadescription(String criteriadescription) {
+        this.criteriadescription = criteriadescription;
     }
     
 }

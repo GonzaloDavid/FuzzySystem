@@ -41,10 +41,10 @@ public class FahpDAO extends GenericDAO<Fahp> {
         return resultList.get(0);
     }
 
-    public void updatestatus(FahpPK fahpPK) {
+    public void updatestatus(FahpPK fahpPK,String status) {
         Fahp exist = find(fahpPK);
         if (exist != null) {
-            exist.setStatusfahp("answered");
+            exist.setStatusfahp(status);
             update(exist);
         }
     }
