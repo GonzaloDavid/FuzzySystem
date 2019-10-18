@@ -37,4 +37,7 @@ public class ResultFAHPDAO extends GenericDAO<ResultFAHP> {
         List<ResultFAHPContainer> fAHPContainers = rfahpm.sourceListToDestination(resultList);
         return fAHPContainers;
     }
+    public void save(ResultFAHP resultFAHP){
+        update(resultFAHP);
+    }
 }

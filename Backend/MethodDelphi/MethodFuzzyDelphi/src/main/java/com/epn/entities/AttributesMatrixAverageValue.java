@@ -42,6 +42,8 @@ public class AttributesMatrixAverageValue implements Serializable {
     @Basic(optional = false)
     @Column(name = "valuecriteriaFAHP")
     private String valuecriteriaFAHP;
+    @Column(name = "valuecriteriaFAHPCat")
+    private String valuecriteriaFAHPCatt;
     @JoinColumn(name = "codefahp", referencedColumnName = "codefahp", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Fahp fahp;
@@ -160,6 +162,14 @@ public class AttributesMatrixAverageValue implements Serializable {
         this.criteria = criteria;
     }
 
+    public String getValuecriteriaFAHPCatt() {
+        return valuecriteriaFAHPCatt;
+    }
+
+    public void setValuecriteriaFAHPCatt(String valuecriteriaFAHPCatt) {
+        this.valuecriteriaFAHPCatt = valuecriteriaFAHPCatt;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -184,5 +194,5 @@ public class AttributesMatrixAverageValue implements Serializable {
     public String toString() {
         return "com.epn.entities.AttributesMatrixAverageValue[ attributesMatrixAverageValuePK=" + attributesMatrixAverageValuePK + " ]";
     }
-    
+
 }

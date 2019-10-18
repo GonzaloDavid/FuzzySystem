@@ -6,18 +6,22 @@
 package com.epn.dtos;
 
 import com.epn.entities.AttributesMatrixValuePK;
+import java.util.List;
 
 /**
  *
  * @author david
  */
-public class AttributesMatrixValueContainer {
+public class ProcessAttributeContainer {
     private AttributesMatrixValuePK attributesMatrixValuePK;
-    private String valuecriteriaFAHPCatt;
-    private String valuecriteriaFAHP;
-    
+    private List<Double> tfn;
 
-    public AttributesMatrixValueContainer() {
+    public ProcessAttributeContainer() {
+    }
+
+    public ProcessAttributeContainer(AttributesMatrixValuePK attributesMatrixValuePK, List<Double> tfn) {
+        this.attributesMatrixValuePK = attributesMatrixValuePK;
+        this.tfn = tfn;
     }
 
     public AttributesMatrixValuePK getAttributesMatrixValuePK() {
@@ -28,20 +32,13 @@ public class AttributesMatrixValueContainer {
         this.attributesMatrixValuePK = attributesMatrixValuePK;
     }
 
-    public String getValuecriteriaFAHPCatt() {
-        return valuecriteriaFAHPCatt;
+    public List<Double> getTfn() {
+        return tfn;
     }
 
-    public void setValuecriteriaFAHPCatt(String valuecriteriaFAHPCatt) {
-        this.valuecriteriaFAHPCatt = valuecriteriaFAHPCatt;
+    public void setTfn(List<Double> tfn) {
+        this.tfn = tfn;
     }
-
-    public String getValuecriteriaFAHP() {
-        return valuecriteriaFAHP;
-    }
-
-    public void setValuecriteriaFAHP(String valuecriteriaFAHP) {
-        this.valuecriteriaFAHP = valuecriteriaFAHP;
-    }
+    
     
 }

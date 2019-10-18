@@ -28,6 +28,7 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
 
     @Inject()
     FahpDAO fahpDAO;
+    
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
     private final SurveybycodefahpMapper mapper = Mappers.getMapper(SurveybycodefahpMapper.class);
@@ -35,7 +36,6 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
     public SurveybycodefahpDAO() {
         super(Surveybycodefahp.class);
     }
-
     public String getfahplist(Long codefahp, Long codequiz, String namequiz, Integer from, Integer to) throws JsonProcessingException {
         SearchObject search = new SearchObject("surveybycodefahpPK");
         search.addParameter("surveybycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);

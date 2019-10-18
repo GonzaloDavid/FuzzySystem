@@ -46,6 +46,9 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
 
     @Inject()
     ProcessFahpconsistencybycriteriaDAO fahpconsistencybycriteriaDAO;
+
+    @Inject()
+    ProcessFahpatributebycriteriaDAO fahpatributebycriteriaDAO;
     private final ProcessFahpweightbycriteriaMapper mapper = Mappers.getMapper(ProcessFahpweightbycriteriaMapper.class);
 
     public ProcessFahpweightbycriteriaDAO() {
@@ -61,6 +64,15 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         List<ProcessFahpweightbycriteria> resultList = search(search);
         List<ProcessFahpweightbycriteriaContainer> processcontainer = mapper.sourceListToDestination(resultList);
         return processcontainer;
+    }
+    public List<ProcessFahpweightbycriteria> getcriteriaWeightbycodefahp(Long codefahp) {
+        SearchObject search = new SearchObject("processFahpweightbycriteriaPK");
+        search.addParameter("processFahpweightbycriteriaPK.codefahp", FilterTypes.EQUAL, codefahp);
+        search.setOrderPropertyName("processFahpweightbycriteriaPK.codefahp");
+        search.asc();
+
+        List<ProcessFahpweightbycriteria> resultList = search(search);
+        return resultList;
     }
 
     public void save(ProcessFahpweightbycriteria fahpweightbycriteria) {
@@ -86,10 +98,10 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
                     codefahp);
             //Verifica la consistencia y se añade solo si es consistente
             //if (isConsistency == true) {
-                criteriadatabyperson.forEach(data -> {
-                    criteriadatabypersonList.add(data);
-                });
-           // }
+            criteriadatabyperson.forEach(data -> {
+                criteriadatabypersonList.add(data);
+            });
+            // }
         });
         criteriaList.forEach(criteria -> {
             criteriaList.forEach(criteriaaux -> {
@@ -106,6 +118,9 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         List<CriteriaprocessContainer> criteriaWeigth = calculate_criteriadatabyperson(criteriaList, codefahp);
         //Insertar los pesos calculados
         buildProcessFahpweightbycriteria(criteriaWeigth);
+        //Calcular los fahp de atributos
+        fahpatributebycriteriaDAO.calculate_attributeAverage(criteriaList, personListanswered, codefahp);
+
     }
 
     public List<CriteriaprocessContainer> calculate_criteriadatabyperson(List<CriteriabycodefahpContainer> criteriaList, Long codefahp) {
@@ -116,9 +131,11 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
         criteriaList.forEach(criteria -> {
             CriteriaprocessContainer criteriaprocessContainer = new CriteriaprocessContainer();
 
-            List<CriteriaMatrixAverageValue> datacriteriafiltered = criteriaAverageValues.stream().filter(datacriteria -> datacriteria.getCriteriaMatrixAverageValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria()).collect(Collectors.toList());
+            List<CriteriaMatrixAverageValue> datacriteriafiltered = criteriaAverageValues.stream().
+                    filter(datacriteria -> datacriteria.getCriteriaMatrixAverageValuePK().getCodeCriteria() == criteria.getCriteriabycodefahpPK().getCodeCriteria())
+                    .collect(Collectors.toList());
+            
             criteriaprocessContainer.setCodecriteria(criteria.getCriteriabycodefahpPK().getCodeCriteria());
-            // criteriaprocessContainer.setCodeperson(codeperson);
             criteriaprocessContainer.setCodefahp(criteria.getCriteriabycodefahpPK().getCodefahp());
 
             List<Double> triangularNumber = calculate_diffuseTriangularNumber(datacriteriafiltered);
@@ -186,7 +203,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
             fahpweightbycriteriaPK.setCodefahp(criteriacalculated.getCodefahp());
 
             ProcessFahpweightbycriteria fahpweightbycriteria = new ProcessFahpweightbycriteria(fahpweightbycriteriaPK);
-            fahpweightbycriteria.setWeight(new BigDecimal(criteriacalculated.getWeigth()*100));
+            fahpweightbycriteria.setWeight(new BigDecimal(criteriacalculated.getWeigth() * 100));
             save(fahpweightbycriteria);
         });
     }
