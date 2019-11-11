@@ -14,8 +14,15 @@ import com.epn.entities.Questions;
 import com.epn.entities.SearchObject;
 import com.epn.exception.AppException;
 import com.epn.mapper.ItemQuestionMapper;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -25,10 +32,26 @@ import org.mapstruct.factory.Mappers;
 @Stateless
 public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
 
+    @Inject()
+    FileService fileService;
     private final ItemQuestionMapper questionMapper = Mappers.getMapper(ItemQuestionMapper.class);
 
     public ItemQuestionDAO() {
         super(QuestionItem.class);
+    }
+
+    public ItemQuestionContainer getItembycodeItem(Long codeQuiz, Long codeQuestion, Long codeQuizItem) {
+        ItemQuestionContainer container = new ItemQuestionContainer();
+        SearchObject search = new SearchObject("questionItemPK");
+        search.addParameter("questionItemPK.codeQuiz", FilterTypes.EQUAL, codeQuiz);
+        search.addParameter("questionItemPK.codeQuestions", FilterTypes.EQUAL, codeQuestion);
+        search.addParameter("questionItemPK.codeQuizItem", FilterTypes.EQUAL, codeQuizItem);
+
+        List<QuestionItem> resultList = search(search);
+        if (resultList.size() > 0) {
+            container = questionMapper.sourceToDestination(resultList.get(0));
+        }
+        return container;
     }
 
     public List<ItemQuestionContainer> getItembycodeQuestion(Long codeQuestion) {
@@ -61,17 +84,30 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
 
     public List<QuestionItem> saveItem(Questions questions, List<QuestionItem> questionItemList) {
         questionItemList.forEach(item -> {
+            String image = item.getImage();
             QuestionItemPK questionItemPK = new QuestionItemPK();
             questionItemPK.setCodeQuizItem(item.getQuestionItemPK().getCodeQuizItem());
             questionItemPK.setCodeQuestions(questions.getQuestionsPK().getCodeQuestions());
             questionItemPK.setCodeQuiz(questions.getQuestionsPK().getCodeQuiz());
             item.setQuestionItemPK(questionItemPK);
+            item.setImage(null);
+            update(item);
+            flush();
+            try {
+                if (image != null) {
+                    String path = fileService.saveFileB64(item.getQuestionItemPK().getCodeQuizItem(), image);
+                    item.setImageUrl(path);
+                    update(item);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ItemQuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
-        try {
-            updateList(questionItemList);
-        } catch (Exception ex) {
-            throw new AppException(ex.toString(), "NO SE GUARDO ITEMS");
-        }
+        /* try {
+         updateList(questionItemList);
+         } catch (Exception ex) {
+         throw new AppException(ex.toString(), "NO SE GUARDO ITEMS");
+         }*/
         return questionItemList;
     }
 
@@ -88,6 +124,18 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
                 }
             }
         });
+    }
+
+    public String getImage(Long codeQuiz, Long codeQuestion, Long codeQuizItem) {
+        ItemQuestionContainer itemquiz = getItembycodeItem(codeQuiz, codeQuestion, codeQuizItem);
+        File file = new File(itemquiz.getImageUrl());
+        String encodeImage;
+        try {
+            encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+        }
+        return encodeImage;
     }
 
 }

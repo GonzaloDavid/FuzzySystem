@@ -41,7 +41,7 @@ public class FahpDAO extends GenericDAO<Fahp> {
         return resultList.get(0);
     }
 
-    public void updatestatus(FahpPK fahpPK,String status) {
+    public void updatestatus(FahpPK fahpPK, String status) {
         Fahp exist = find(fahpPK);
         if (exist != null) {
             exist.setStatusfahp(status);
@@ -55,7 +55,7 @@ public class FahpDAO extends GenericDAO<Fahp> {
         return codefahp;
     }
 
-    public void saveSurveyandCriteriabycode(FahpSaveContainer container) {
+    public long saveSurveyandCriteriabycode(FahpSaveContainer container) {
         Fahp fahp = new Fahp();
         fahp = container.getFahp();
         long codefahp = savefahp(fahp);
@@ -70,10 +70,12 @@ public class FahpDAO extends GenericDAO<Fahp> {
             criteriabyfahp.getCriteriabycodefahpPK().setCodefahp(codefahp);
         });
         criteriabycodefahpDAO.savecriteriafahp(criteriabycodefahp);
+        return codefahp;
     }
 
     public void deletedfahp(FahpPK fahpPK) {
         Fahp foundelement = find(fahpPK);
+
         try {
             if (foundelement != null) {
                 remove(foundelement);

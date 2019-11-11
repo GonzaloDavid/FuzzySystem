@@ -388,4 +388,5 @@ public class QuizDAO extends GenericDAO<Quiz> {
             throw new AppException(e.toString(), "NO SE ENVIO EMAIL");
         }
     }
+    
 }

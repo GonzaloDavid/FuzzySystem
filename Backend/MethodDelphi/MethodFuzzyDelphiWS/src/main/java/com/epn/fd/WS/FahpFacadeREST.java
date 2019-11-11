@@ -50,11 +50,12 @@ public class FahpFacadeREST extends AbstractFacade<Fahp> {
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void savefahp(FahpSaveContainer fahpSaveContainer,
+    public long savefahp(FahpSaveContainer fahpSaveContainer,
             @HeaderParam("authorization") String authString) {
         // if (userDAO.existToken(authString) == true) {
-        fahpDAO.saveSurveyandCriteriabycode(fahpSaveContainer);
+        long codefahp=fahpDAO.saveSurveyandCriteriabycode(fahpSaveContainer);
         //}
+        return codefahp;
     }
 
     @Override

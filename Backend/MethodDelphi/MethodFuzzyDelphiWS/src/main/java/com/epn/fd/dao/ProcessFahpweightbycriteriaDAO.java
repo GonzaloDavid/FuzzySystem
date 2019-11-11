@@ -1,4 +1,4 @@
-/*
+            /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -97,7 +97,7 @@ public class ProcessFahpweightbycriteriaDAO extends GenericDAO<ProcessFahpweight
                     codeperson,
                     codefahp);
             //Verifica la consistencia y se añade solo si es consistente
-            //if (isConsistency == true) {
+            //if     (isConsistency == true) {
             criteriadatabyperson.forEach(data -> {
                 criteriadatabypersonList.add(data);
             });

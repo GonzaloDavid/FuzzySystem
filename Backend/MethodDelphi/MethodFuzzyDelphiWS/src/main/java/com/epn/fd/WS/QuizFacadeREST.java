@@ -6,6 +6,8 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.EmailContainer;
+import com.epn.dtos.FileObjectB64;
+import com.epn.dtos.ItemQuestionContainer;
 import com.epn.dtos.QuizContainer;
 import com.epn.dtos.QuizSave;
 import com.epn.entities.QuestionItem;
@@ -16,12 +18,18 @@ import com.epn.entities.Rounds;
 import com.epn.entities.RoundsPK;
 import com.epn.exception.AppException;
 import com.epn.fd.dao.EnvironmentDAO;
+import com.epn.fd.dao.FileService;
+import com.epn.fd.dao.ItemQuestionDAO;
 import com.epn.fd.dao.QuizDAO;
 import com.epn.fd.dao.RoundsDAO;
 import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,10 +42,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -49,15 +59,22 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
     @Inject()
     QuizDAO quizDAO;
-    
+
     @Inject()
     RoundsDAO roundsDAO;
-    
+
     @Inject()
     UserDAO userDAO;
-    
+
     @Inject()
     EnvironmentDAO environmentDAO;
+
+    @Inject()
+    FileService fileService;
+
+    @Inject()
+    ItemQuestionDAO itemQuestionDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -179,9 +196,48 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
                 round.setSentstatusCatalogue("SENTSTATUSCAT");
                 round.setSentstatus(emailcontainer.getSentstatus());
                 roundsDAO.save(round);
-                quizDAO.sendquiz(quiz, person, uribase, emailcontainer.getRoundNumber(), jwt.getString("JWT"),emailcontainer.getDescriptionemail());
+                quizDAO.sendquiz(quiz, person, uribase, emailcontainer.getRoundNumber(), jwt.getString("JWT"), emailcontainer.getDescriptionemail());
             });
         }
+    }
+
+    @POST
+    @Path("itemImage")
+    @Transactional
+    public String uploadLogo(
+            @PathParam("id") Long id,
+            FileObjectB64 file) throws IOException {
+
+        String path = fileService.saveFileB64(id, file.getBase64Object());
+        ObjectMapper mapper = new ObjectMapper();
+        String response = mapper.writeValueAsString(path);
+        return response;
+
+    }
+
+    @GET
+    @Path("image")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getImage(
+            @QueryParam("codeQuiz") Long codeQuiz,
+            @QueryParam("codeQuestion") Long codeQuestion,
+            @QueryParam("codeQuizItem") Long codeQuizItem
+    ) {
+
+        ItemQuestionContainer itemquiz = itemQuestionDAO.getItembycodeItem(codeQuiz, codeQuestion, codeQuizItem);
+        File file = new File(itemquiz.getImageUrl());
+        String encodeImage;
+        try {
+            encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+        }
+
+        return Response.ok(encodeImage, "image/jpg")
+                .header("Content-Disposition", "inline; filename = \"" + "item.image" + "\"").build();
+
     }
 
     @Override

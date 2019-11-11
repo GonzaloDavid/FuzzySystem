@@ -1,0 +1,2 @@
+mysqldump -h localhost -u root -p DephiFuzzyMethod > bdd_fuzzysystem_full.sql
+3gAk&wzf?m4

@@ -119,12 +119,8 @@ public class Person implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
-    @Basic(optional = false)
-    @Column(name = "bibliography")
-    private String bibliography;
     
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    // private List<AdminisEmail> adminisEmailList;
+
     @JoinColumns({
         @JoinColumn(name = "typePersonCat", referencedColumnName = "codeCatalogue", insertable = false, updatable = false),
         @JoinColumn(name = "typePerson", referencedColumnName = "codeItem", insertable = false, updatable = false)})
@@ -411,14 +407,6 @@ public class Person implements Serializable {
 
     public void setWorkArea(String workArea) {
         this.workArea = workArea;
-    }
-
-    public String getBibliography() {
-        return bibliography;
-    }
-
-    public void setBibliography(String bibliography) {
-        this.bibliography = bibliography;
     }
 
     

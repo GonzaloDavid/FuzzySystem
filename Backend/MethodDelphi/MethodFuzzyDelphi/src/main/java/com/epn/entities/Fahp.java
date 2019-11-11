@@ -86,6 +86,14 @@ public class Fahp implements Serializable {
     private List<AttributesMatrixAverageValue> attributesMatrixAverageValueList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
     private List<CriteriaMatrixAverageValue> criteriaMatrixAverageValueList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<ProcessFahpconsistencybycriteria> processFahpconsistencybycriteriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<ResultFAHP> resultFAHPList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fahp")
+    private List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList;
 
     public Fahp() {
     }
@@ -266,5 +274,42 @@ public class Fahp implements Serializable {
     public void setCriteriaMatrixAverageValueList(List<CriteriaMatrixAverageValue> criteriaMatrixAverageValueList) {
         this.criteriaMatrixAverageValueList = criteriaMatrixAverageValueList;
     }
+
+    @XmlTransient
+    public List<ProcessFahpconsistencybycriteria> getProcessFahpconsistencybycriteriaList() {
+        return processFahpconsistencybycriteriaList;
+    }
+
+    public void setProcessFahpconsistencybycriteriaList(List<ProcessFahpconsistencybycriteria> processFahpconsistencybycriteriaList) {
+        this.processFahpconsistencybycriteriaList = processFahpconsistencybycriteriaList;
+    }
+
+    @XmlTransient
+    public List<ResultFAHP> getResultFAHPList() {
+        return resultFAHPList;
+    }
+
+    public void setResultFAHPList(List<ResultFAHP> resultFAHPList) {
+        this.resultFAHPList = resultFAHPList;
+    }
+
+    @XmlTransient
+    public List<ProcessFahpatributebycriteria> getProcessFahpatributebycriteriaList() {
+        return processFahpatributebycriteriaList;
+    }
+
+    public void setProcessFahpatributebycriteriaList(List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList) {
+        this.processFahpatributebycriteriaList = processFahpatributebycriteriaList;
+    }
+    
+    @XmlTransient
+    public List<ProcessFahpweightbycriteria> getProcessFahpweightbycriteriaList() {
+        return processFahpweightbycriteriaList;
+    }
+
+    public void setProcessFahpweightbycriteriaList(List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList) {
+        this.processFahpweightbycriteriaList = processFahpweightbycriteriaList;
+    }
+    
 
 }

@@ -32,8 +32,6 @@ public class PersonDAO extends GenericDAO<Person> {
 
     public String getallperson(Integer from, Integer to) throws JsonProcessingException {
         SearchObject search = new SearchObject("codePerson");
-        //search.addParameter("codePerson.codeCompany", FilterTypes.EQUAL, codeCompany);
-        //search.addParameter("regularPhrase", FilterTypes.LIKE, regularPhrase);
         search.setOrderPropertyName("codePerson");
         search.asc();
         long count = search(search).size();

@@ -23,6 +23,7 @@ public class ItemQuestionContainer {
     private String itemobservation;
     private String statusCat;
     private String status;
+    private String imageUrl;
 
     private long userCreate;
     private long userLastModify;
@@ -141,4 +142,12 @@ public class ItemQuestionContainer {
         this.status = status;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
 }

@@ -28,14 +28,16 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
 
     @Inject()
     FahpDAO fahpDAO;
-    
+
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
+
     private final SurveybycodefahpMapper mapper = Mappers.getMapper(SurveybycodefahpMapper.class);
 
     public SurveybycodefahpDAO() {
         super(Surveybycodefahp.class);
     }
+
     public String getfahplist(Long codefahp, Long codequiz, String namequiz, Integer from, Integer to) throws JsonProcessingException {
         SearchObject search = new SearchObject("surveybycodefahpPK");
         search.addParameter("surveybycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
@@ -73,18 +75,27 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
             item.setItemquestioncontainer(itemQuestionDAO.getItembyCodeQuizAndCodeQuestion(
                     item.getSurveybycodefahpPK().getCodeQuiz(),
                     item.getSurveybycodefahpPK().getCodeQuestions()));
+         /*   item.getItemquestioncontainer().forEach(itemcontainer -> {
+                if (itemcontainer.getImageUrl() != null) {
+                    String imagebase64 = itemQuestionDAO.getImage(
+                            itemcontainer.getQuestionItemPK().getCodeQuiz(),
+                            itemcontainer.getQuestionItemPK().getCodeQuestions(),
+                            itemcontainer.getQuestionItemPK().getCodeQuizItem());
+                    itemcontainer.setImageUrl(imagebase64);
+                }
+            });*/
         });
+
         return surveybycodefahpContainers;
     }
 
     public String getnamequizbycodefahp(Long codefahp) {
-        String namequiz="";
+        String namequiz = "";
         SearchObject search = new SearchObject("surveybycodefahpPK");
         search.addParameter("surveybycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
         List<Surveybycodefahp> resultList = search(search);
-        if(resultList.size()>0)
-        {
-        namequiz = resultList.get(0).getQuiz().getNameQuiz();
+        if (resultList.size() > 0) {
+            namequiz = resultList.get(0).getQuiz().getNameQuiz();
         }
         return namequiz;
     }

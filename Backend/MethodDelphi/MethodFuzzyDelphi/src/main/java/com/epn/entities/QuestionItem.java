@@ -65,6 +65,12 @@ public class QuestionItem implements Serializable {
     @Column(name = "status")
     private String status;
     @Basic(optional = false)
+    @Column(name = "imageUrl")
+    private String imageUrl;
+    @Basic(optional = false)
+    @Column(name = "image")
+    private String image;
+    @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
@@ -78,6 +84,7 @@ public class QuestionItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "userLastModify")
     private long userLastModify;
+
     @JoinColumns({
         @JoinColumn(name = "codeQuestions", referencedColumnName = "codeQuestions", insertable = false, updatable = false),
         @JoinColumn(name = "codeQuiz", referencedColumnName = "codeQuiz", insertable = false, updatable = false)})
@@ -107,7 +114,7 @@ public class QuestionItem implements Serializable {
     public void setClassification(String classification) {
         this.classification = classification;
     }
-    
+
     public QuestionItem(long codeQuizItem, long codeQuestions, long codeQuiz) {
         this.questionItemPK = new QuestionItemPK(codeQuizItem, codeQuestions, codeQuiz);
     }
@@ -200,6 +207,14 @@ public class QuestionItem implements Serializable {
         this.status = status;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -233,5 +248,14 @@ public class QuestionItem implements Serializable {
     public void setQuizvaluesList(List<Quizvalues> quizvaluesList) {
         this.quizvaluesList = quizvaluesList;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
 
 }
