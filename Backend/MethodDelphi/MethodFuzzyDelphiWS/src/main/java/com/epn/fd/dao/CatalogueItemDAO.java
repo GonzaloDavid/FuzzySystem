@@ -10,6 +10,7 @@ import com.epn.dtos.ListAndCountContainer;
 import com.epn.entities.Catalogueitem;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
+import com.epn.exception.AppException;
 import com.epn.mapper.CatalogueItemMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,11 +26,12 @@ import org.mapstruct.factory.Mappers;
 public class CatalogueItemDAO extends GenericDAO<Catalogueitem> {
 
     private final CatalogueItemMapper catalogueItemMapper = Mappers.getMapper(CatalogueItemMapper.class);
+
     public CatalogueItemDAO() {
         super(Catalogueitem.class);
     }
-    
-    public String getCatalogueItembyCodeCat(String codeCat)throws JsonProcessingException {
+
+    public String getCatalogueItembyCodeCat(String codeCat) throws JsonProcessingException {
         SearchObject search = new SearchObject("catalogueitemPK");
         search.addParameter("catalogueitemPK.codeCatalogue", FilterTypes.EQUAL, codeCat);
         search.setOrderPropertyName("catalogueitemPK.codeCatalogue");
@@ -43,5 +45,34 @@ public class CatalogueItemDAO extends GenericDAO<Catalogueitem> {
         String response = mapper.writeValueAsString(cataloguecontainer);
         return response;
 
+    }
+
+    public List<CatalogueItemContainer> getCatalogueItembyCodeCatalogue(String codeCat) {
+        SearchObject search = new SearchObject("catalogueitemPK");
+        search.addParameter("catalogueitemPK.codeCatalogue", FilterTypes.EQUAL, codeCat);
+        search.setOrderPropertyName("catalogueitemPK.codeCatalogue");
+        search.desc();
+
+        List<Catalogueitem> resultList = search(search);
+        List<CatalogueItemContainer> catalogueItemContainers = catalogueItemMapper.sourceListToDestination(resultList);
+        return catalogueItemContainers;
+    }
+
+    public void save(Catalogueitem catalogueitem) {
+        update(catalogueitem);
+    }
+
+    public void deleteCatalogueItem(List<Catalogueitem> idlist) {
+        idlist.forEach(elementremove -> {
+            Catalogueitem foundelement = new Catalogueitem();
+            foundelement = find(elementremove.getCatalogueitemPK());
+            if (foundelement != null) {
+                try {
+                    remove(foundelement);
+                } catch (Exception e) {
+                    throw new AppException(e.toString(), "PROBLEMA DE DEPENDENCIAS");
+                }
+            }
+        });
     }
 }

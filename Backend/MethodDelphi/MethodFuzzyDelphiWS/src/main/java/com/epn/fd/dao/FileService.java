@@ -5,18 +5,12 @@
  */
 package com.epn.fd.dao;
 
-import com.epn.exception.AppException;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
 import javax.ejb.Singleton;
-import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -46,15 +40,15 @@ public class FileService {
     public FileService() {
     }
 
-    public String saveFileB64(Long id, String dataB64) throws IOException {
+    public String saveFileB64(Long id, String dataB64,String pathsave) throws IOException {
 
-        return saveFileAsBase64String(id, dataB64);
+        return saveFileAsBase64String(id, dataB64,pathsave);
 
     }
 
-    private String saveFileAsBase64String(Long id, String dataB64) throws IOException {
+    private String saveFileAsBase64String(Long id, String dataB64,String pathsave) throws IOException {
 
-        String path = searchOrCreateFullPath();
+        String path = searchOrCreateFullPath(pathsave);
 
         String fullPath = path + File.separator + id+".png";
 
@@ -67,8 +61,8 @@ public class FileService {
         return fullPath;
     }
 
-    private String searchOrCreateFullPath() {
-        String fullPath = searchPath();
+    private String searchOrCreateFullPath(String pathsave) {
+        String fullPath = searchPath(pathsave);
         createFolderIfNotExists(fullPath);
         return fullPath;
     }
@@ -80,8 +74,8 @@ public class FileService {
         }
     }
 
-    private String searchPath() {
-        String basePath = "/home/david/Documentos/tesis/front/FuzzySystem-Frontend/src/assets/imagenesItems";
+    private String searchPath(String pathsave) {
+        String basePath = pathsave;
         String totalPath = basePath;
         return totalPath;
     }

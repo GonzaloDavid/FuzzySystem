@@ -31,7 +31,7 @@ import javax.ws.rs.core.PathSegment;
 
 /**
  *
- * @author desarrollador
+ * @author david
  */
 @Stateless
 @Path("com.epn.entities.catalogueitem")

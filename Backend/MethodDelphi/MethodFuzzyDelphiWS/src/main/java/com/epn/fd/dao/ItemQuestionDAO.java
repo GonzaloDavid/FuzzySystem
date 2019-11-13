@@ -34,6 +34,8 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
 
     @Inject()
     FileService fileService;
+    @Inject()
+    EnvironmentDAO environmentDAO;
     private final ItemQuestionMapper questionMapper = Mappers.getMapper(ItemQuestionMapper.class);
 
     public ItemQuestionDAO() {
@@ -83,6 +85,8 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
     }
 
     public List<QuestionItem> saveItem(Questions questions, List<QuestionItem> questionItemList) {
+             String pathImage = environmentDAO.getenvironmentbyuseplace(
+                "pathImageItem", "backend").get(0).getEnvironmentPK().getUri();
         questionItemList.forEach(item -> {
             String image = item.getImage();
             QuestionItemPK questionItemPK = new QuestionItemPK();
@@ -95,7 +99,7 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
             flush();
             try {
                 if (image != null) {
-                    String path = fileService.saveFileB64(item.getQuestionItemPK().getCodeQuizItem(), image);
+                    String path = fileService.saveFileB64(item.getQuestionItemPK().getCodeQuizItem(), image,pathImage);
                     item.setImageUrl(path);
                     update(item);
                 }
@@ -103,11 +107,6 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
                 Logger.getLogger(ItemQuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        /* try {
-         updateList(questionItemList);
-         } catch (Exception ex) {
-         throw new AppException(ex.toString(), "NO SE GUARDO ITEMS");
-         }*/
         return questionItemList;
     }
 

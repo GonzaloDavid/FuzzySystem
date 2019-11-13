@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "catalogue")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Catalogue.findAll", query = "SELECT c FROM Catalogue c")
-    , @NamedQuery(name = "Catalogue.findByCode", query = "SELECT c FROM Catalogue c WHERE c.code = :code")
-    , @NamedQuery(name = "Catalogue.findByName", query = "SELECT c FROM Catalogue c WHERE c.name = :name")
-    , @NamedQuery(name = "Catalogue.findByDescripcion", query = "SELECT c FROM Catalogue c WHERE c.descripcion = :descripcion")
-    , @NamedQuery(name = "Catalogue.findByDateCreate", query = "SELECT c FROM Catalogue c WHERE c.dateCreate = :dateCreate")
-    , @NamedQuery(name = "Catalogue.findByDateLastModify", query = "SELECT c FROM Catalogue c WHERE c.dateLastModify = :dateLastModify")
-    , @NamedQuery(name = "Catalogue.findByUserCreate", query = "SELECT c FROM Catalogue c WHERE c.userCreate = :userCreate")
-    , @NamedQuery(name = "Catalogue.findByUserLastModify", query = "SELECT c FROM Catalogue c WHERE c.userLastModify = :userLastModify")})
+    @NamedQuery(name = "Catalogue.findAll", query = "SELECT c FROM Catalogue c"),
+    @NamedQuery(name = "Catalogue.findByCode", query = "SELECT c FROM Catalogue c WHERE c.code = :code"),
+    @NamedQuery(name = "Catalogue.findByName", query = "SELECT c FROM Catalogue c WHERE c.name = :name"),
+    @NamedQuery(name = "Catalogue.findByDescripcion", query = "SELECT c FROM Catalogue c WHERE c.descripcion = :descripcion"),
+    @NamedQuery(name = "Catalogue.findByDateCreate", query = "SELECT c FROM Catalogue c WHERE c.dateCreate = :dateCreate"),
+    @NamedQuery(name = "Catalogue.findByDateLastModify", query = "SELECT c FROM Catalogue c WHERE c.dateLastModify = :dateLastModify"),
+    @NamedQuery(name = "Catalogue.findByUserCreate", query = "SELECT c FROM Catalogue c WHERE c.userCreate = :userCreate"),
+    @NamedQuery(name = "Catalogue.findByUserLastModify", query = "SELECT c FROM Catalogue c WHERE c.userLastModify = :userLastModify")})
 public class Catalogue implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sentstatusCat")
@@ -142,7 +142,8 @@ public class Catalogue implements Serializable {
         this.userLastModify = userLastModify;
     }
 
-    @XmlTransient
+   
+
     public List<Catalogueitem> getCatalogueitemList() {
         return catalogueitemList;
     }
@@ -184,5 +185,5 @@ public class Catalogue implements Serializable {
     public void setRoundsList(List<Rounds> roundsList) {
         this.roundsList = roundsList;
     }
-    
+
 }

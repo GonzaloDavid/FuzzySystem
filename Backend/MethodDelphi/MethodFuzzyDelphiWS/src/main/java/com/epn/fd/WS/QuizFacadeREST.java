@@ -207,8 +207,9 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     public String uploadLogo(
             @PathParam("id") Long id,
             FileObjectB64 file) throws IOException {
-
-        String path = fileService.saveFileB64(id, file.getBase64Object());
+        String pathImage = environmentDAO.getenvironmentbyuseplace(
+                "pathImageItem", "backend").get(0).getEnvironmentPK().getUri();
+        String path = fileService.saveFileB64(id, file.getBase64Object(),pathImage);
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(path);
         return response;
