@@ -5,6 +5,7 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.UserContainer;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
 import com.epn.entities.User;
@@ -53,9 +54,10 @@ public class UserDAO extends GenericDAO<User> {
         return resultList;
     }
 
-    public JsonObject comparePassword(String email, String password) {
+    public UserContainer comparePassword(String email, String password) {
         List<User> userselected = getuserbyemail(email);
         if (userselected.size() > 0) {
+            UserContainer usercontainer=new UserContainer();
             String passwordEncrypted = encryptAES(password, "FuzziDelphiKey");
             if (userselected.get(0).getPassword().equals(passwordEncrypted)) {
                 String key = "FuzziDelphiKey";
@@ -64,15 +66,35 @@ public class UserDAO extends GenericDAO<User> {
                 //esta una semana en milisegundos la duracion del token
                 long expirationTime = System.currentTimeMillis() + 604800000;
                 String emailsigned = userselected.get(0).getUserPK().getEmail();
+                usercontainer.setUserPK(userselected.get(0).getUserPK());
+                usercontainer.setRecoveryMail(userselected.get(0).getRecoveryMail());
+                usercontainer.setWorkarea(userselected.get(0).getWorkarea());
+                
                 JsonObject token = generateJWT(key, subject, namejson, emailsigned, expirationTime);
+                String token_string = generateJWT_string(key, subject, namejson, emailsigned, expirationTime);
                 saveUser(userselected.get(0), token);
-                return token;
+                usercontainer.setJwt(token_string);
+                return usercontainer;
             } else {
                 throw new AppException("CONTRASEÑA ERRONEA", "CONTRASEÑAS NO COINCIDEN");
             }
         } else {
             throw new AppException("USUARIO NO EXISTE", "USUARIO NO EXISTE,CORREO NO REGISTRADO");
         }
+    }
+      public String generateJWT_string(String key, String subject,
+            String namejson, String claim, long expirationTime) {
+
+        long time = System.currentTimeMillis();
+        String jwt = Jwts.builder()
+                .signWith(SignatureAlgorithm.HS256, key)
+                .setSubject(subject)
+                .setIssuedAt(new Date(time))
+                .setExpiration(new Date(time + expirationTime))
+                .claim(namejson, claim)
+                .compact();
+
+        return jwt;
     }
 
     public JsonObject generateJWT(String key, String subject,

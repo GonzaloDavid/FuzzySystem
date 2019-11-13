@@ -52,6 +52,8 @@ public class User implements Serializable {
     private String password;
     @Column(name = "token")
     private String token;
+    @Column(name = "workarea")
+    private String workarea;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -64,7 +66,7 @@ public class User implements Serializable {
     @Column(name = "userCreate")
     private long userCreate;
     @Basic(optional = false)
-    @Column(name    = "userLastModify")
+    @Column(name = "userLastModify")
     private long userLastModify;
 
     public User() {
@@ -152,6 +154,15 @@ public class User implements Serializable {
         this.userLastModify = userLastModify;
     }
 
+    public String getWorkarea() {
+        return workarea;
+    }
+
+    public void setWorkarea(String workarea) {
+        this.workarea = workarea;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -176,5 +187,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.epn.entities.User[ userPK=" + userPK + " ]";
     }
-    
+
 }

@@ -1,7 +1,3 @@
-ALTER TABLE DephiFuzzyMethod.Person DROP COLUMN bibliography;
-ALTER TABLE DephiFuzzyMethod.QuestionItem ADD imageUrl varchar(100) NULL;
-ALTER TABLE DephiFuzzyMethod.QuestionItem ADD image varchar(100) NULL;
-ALTER TABLE DephiFuzzyMethod.criteria MODIFY COLUMN descriptionCriteria varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
-ALTER TABLE DephiFuzzyMethod.Person ADD CONSTRAINT Person_FK FOREIGN KEY (sexCat,sex) REFERENCES DephiFuzzyMethod.catalogueitem(codeCatalogue,codeItem);
-
+ALTER TABLE DephiFuzzyMethod.`User` ADD workarea varchar(300) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.`User` CHANGE workarea workarea varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER token;
 

@@ -6,6 +6,7 @@
 package com.epn.fd.WS;
 
 import com.epn.dtos.Login;
+import com.epn.dtos.UserContainer;
 import com.epn.entities.User;
 import com.epn.entities.UserPK;
 import com.epn.fd.dao.UserDAO;
@@ -81,7 +82,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public JsonObject login(Login login) {
+    public UserContainer login(Login login) {
         return userDAO.comparePassword(login.getEmail(), login.getPassword());
     }
 
