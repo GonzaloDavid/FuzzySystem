@@ -29,4 +29,8 @@ public class EnvironmentDAO extends GenericDAO<Environment> {
         List<Environment> resultList = search(search);
         return resultList;
     }
+    public void save(List<Environment> enviromentList)
+    {
+        updateList(enviromentList);
+    }
 }

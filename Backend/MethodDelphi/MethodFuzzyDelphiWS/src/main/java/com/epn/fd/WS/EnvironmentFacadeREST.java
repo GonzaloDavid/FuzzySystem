@@ -7,12 +7,21 @@ package com.epn.fd.WS;
 
 import com.epn.entities.Environment;
 import com.epn.entities.EnvironmentPK;
+import com.epn.fd.dao.EnvironmentDAO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
@@ -23,10 +32,13 @@ import javax.ws.rs.core.PathSegment;
 @Stateless
 @Path("com.epn.entities.environment")
 public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
-
+    
+    @Inject()
+    EnvironmentDAO environmentDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
-
+    
     private EnvironmentPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
@@ -51,16 +63,38 @@ public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
         }
         return key;
     }
-
+    
     public EnvironmentFacadeREST() {
         super(Environment.class);
     }
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Environment entity) {
-        super.create(entity);
+    
+    @GET
+    @Path("getenviroment")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Environment> getEnviromentList(
+            @HeaderParam("authorization") String authString
+    ) throws JsonProcessingException {
+        List<Environment> enviromentList = new ArrayList();
+        //  if (userDAO.existToken(authString) == true) {
+        enviromentList = environmentDAO.getenvironmentbyuseplace(null, null);
+        //  }
+        return enviromentList;
     }
+    
+    @POST
+    @Path("save")
+    @Transactional
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void saveEnviromentList(
+            List<Environment> enviromentlist,
+            @HeaderParam("authorization") String authString) {
+
+        //  if (userDAO.existToken(authString) == true) {
+        environmentDAO.save(enviromentlist);
+        //  }
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
