@@ -109,9 +109,9 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         List<QuizValuesContainer> containers = null;
-        if (roundsDAO.validateRoundbytoken(authString, codeQuiz, codePerson, roundNumber) == true) {
+       // if (roundsDAO.validateRoundbytoken(authString, codeQuiz, codePerson, roundNumber) == true) {
             containers = quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
-        }
+       // }
         return containers;
     }
 
