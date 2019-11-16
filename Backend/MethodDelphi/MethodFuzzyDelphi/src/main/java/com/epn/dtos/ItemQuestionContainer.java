@@ -24,6 +24,7 @@ public class ItemQuestionContainer {
     private String statusCat;
     private String status;
     private String imageUrl;
+    private long numberofcomments;
 
     private long userCreate;
     private long userLastModify;
@@ -148,6 +149,14 @@ public class ItemQuestionContainer {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public long getNumberofcomments() {
+        return numberofcomments;
+    }
+
+    public void setNumberofcomments(long numberofcomments) {
+        this.numberofcomments = numberofcomments;
     }
     
 }

@@ -19,6 +19,7 @@ import com.epn.entities.RoundsPK;
 import com.epn.exception.AppException;
 import com.epn.fd.dao.EnvironmentDAO;
 import com.epn.fd.dao.FileService;
+import com.epn.fd.dao.ItemCommentDAO;
 import com.epn.fd.dao.ItemQuestionDAO;
 import com.epn.fd.dao.QuizDAO;
 import com.epn.fd.dao.RoundsDAO;
@@ -75,6 +76,9 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
 
+    @Inject()
+    ItemCommentDAO itemCommentDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -111,6 +115,16 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
         String response = null;
         List<QuizContainer> containers = new ArrayList<>();
         containers = quizDAO.getQuizbycode(codeQuiz);
+        containers.forEach(quiz -> {
+            quiz.getQuestionsList().forEach(question -> {
+                question.getQuestionItemList().forEach(item -> {
+                    Long codeQuiz1 = item.getQuestionItemPK().getCodeQuiz();
+                    Long codeQuestion = item.getQuestionItemPK().getCodeQuestions();
+                    Long codeItem = item.getQuestionItemPK().getCodeQuizItem();
+                 item.setNumberofcomments(itemCommentDAO.getnumberofcoment(codeQuiz1, codeQuestion, codeItem, null, null));
+                });
+            });
+        });
         ObjectMapper mapper = new ObjectMapper();
         response = mapper.writeValueAsString(containers);
         return response;
