@@ -9,7 +9,9 @@ import com.epn.dtos.SurveybycodefahpContainer;
 import com.epn.entities.Surveybycodefahp;
 import com.epn.entities.SurveybycodefahpPK;
 import com.epn.fd.dao.SurveybycodefahpDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -38,6 +40,10 @@ public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp>
 
     @Inject()
     SurveybycodefahpDAO surveybycodefahpDAO;
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -83,9 +89,9 @@ public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp>
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         String fahplist = null;
-        //if (userDAO.existToken(authString) == true) {
-        fahplist = surveybycodefahpDAO.getfahplist(codefahp, codequiz, namequiz, from, to);
-        // }
+        if (userDAO.existToken(authString) == true) {
+            fahplist = surveybycodefahpDAO.getfahplist(codefahp, codequiz, namequiz, from, to);
+        }
         return fahplist;
     }
 
@@ -96,10 +102,11 @@ public class SurveybycodefahpFacadeREST extends AbstractFacade<Surveybycodefahp>
     public List<SurveybycodefahpContainer> getsurveybycodefahp(
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
-    ) throws JsonProcessingException {
-        //if (userDAO.existToken(authString) == true) {
-        List<SurveybycodefahpContainer> containers= surveybycodefahpDAO.getquizbycodefahp(codefahp);
-        // }
+    ) {
+        List<SurveybycodefahpContainer> containers = new ArrayList();
+       // if (userDAO.existToken(authString) == true) {
+            containers = surveybycodefahpDAO.getquizbycodefahp(codefahp);
+       // }
         return containers;
     }
 

@@ -14,7 +14,9 @@ import com.epn.fd.dao.AttributesMatrixValueDAO;
 import com.epn.fd.dao.CriteriaMatrixValueDAO;
 import com.epn.fd.dao.FahpDAO;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -50,6 +52,9 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
 
     @Inject()
     FahpDAO fahpDAO;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -104,9 +109,10 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
             @QueryParam("codeperson") Long codeperson,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        //if (userDAO.existToken(authString) == true) {
-        List<AttributesMatrixValueContainer> criteriadatamatrix = attributesMatrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
-        // }
+        List<AttributesMatrixValueContainer> criteriadatamatrix = new ArrayList();
+        // if (userDAO.existToken(authString) == true) {
+        criteriadatamatrix = attributesMatrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
+        //   }
         return criteriadatamatrix;
     }
 
@@ -116,15 +122,15 @@ public class AttributesMatrixValueFacadeREST extends AbstractFacade<AttributesMa
     @Consumes({MediaType.APPLICATION_JSON})
     public void save(AttributeMatrixvalueSaveContainer saveContainer,
             @HeaderParam("authorization") String authString) {
-        // if (userDAO.existToken(authString) == true) {
-        FahpPK fahpPK = new FahpPK();
-        fahpPK.setCodefahp(saveContainer.getSentemailbycodefahp().getCodefahp());
+        if (sentemailbycodefahpDAO.validateJWT(saveContainer.getSentemailbycodefahp(),authString) == true) {
+            FahpPK fahpPK = new FahpPK();
+            fahpPK.setCodefahp(saveContainer.getSentemailbycodefahp().getCodefahp());
 
-        fahpDAO.updatestatus(fahpPK,"answered");
-        sentemailbycodefahpDAO.updatestatus(saveContainer.getSentemailbycodefahp());
-        attributesMatrixValueDAO.save(saveContainer.getAttributesMatrixlist());
-        criteriaMatrixValueDAO.save(saveContainer.getCriteriaMatrixlist());
-        //}
+            fahpDAO.updatestatus(fahpPK, "answered");
+            sentemailbycodefahpDAO.updatestatus(saveContainer.getSentemailbycodefahp());
+            attributesMatrixValueDAO.save(saveContainer.getAttributesMatrixlist());
+            criteriaMatrixValueDAO.save(saveContainer.getCriteriaMatrixlist());
+        }
     }
 
     @Override

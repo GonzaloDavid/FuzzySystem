@@ -109,18 +109,19 @@ public class RoundsDAO extends GenericDAO<Rounds> {
                     valid = true;
                 } else {
                     valid = false;
-                    //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
+                    throw new AppException(401, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
                 }
             } else {
                 valid = false;
+                throw new AppException(401, 1, "No contiene token", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
             }
         } else {
             valid = false;
-            //throw new AppException(460, 1, "No contiene token", "Usuario no logeado", "www.google.com", "USERNOTSIGNIN");
+            throw new AppException(401, 1, "No contiene token", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return valid;
     }
-    
+
     public boolean validateJWT(String token, Long codeQuiz, Long codeperson, Long roundNumber) {
         boolean valid = false;
         RoundsPK payloadRoundPK = getpayloadJWT(token);
@@ -128,10 +129,10 @@ public class RoundsDAO extends GenericDAO<Rounds> {
             List<Rounds> round = getRoundbyroundPK(payloadRoundPK.getCodeQuiz(), payloadRoundPK.getRoundNumber(), payloadRoundPK.getCodePerson());
             if (round.size() > 0) {
                 if (round.get(0).getToken().equals(token)) {
-                    Long codepersontoken=round.get(0).getRoundsPK().getCodePerson();
-                    Long roundNumbertoken=round.get(0).getRoundsPK().getRoundNumber();
-                    Long codequiztoken=round.get(0).getRoundsPK().getCodeQuiz();
-                    if (codepersontoken.compareTo(codeperson) == 0  && codequiztoken.compareTo(codeQuiz)== 0 ) {
+                    Long codepersontoken = round.get(0).getRoundsPK().getCodePerson();
+                    Long roundNumbertoken = round.get(0).getRoundsPK().getRoundNumber();
+                    Long codequiztoken = round.get(0).getRoundsPK().getCodeQuiz();
+                    if (codepersontoken.compareTo(codeperson) == 0 && codequiztoken.compareTo(codeQuiz) == 0) {
                         valid = true;
                         // throw new AppException("TOKEN NO VALIDO", "Los tokens no son iguales");
                     }

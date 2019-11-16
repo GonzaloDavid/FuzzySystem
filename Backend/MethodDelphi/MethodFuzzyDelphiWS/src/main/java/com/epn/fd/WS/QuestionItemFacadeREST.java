@@ -7,7 +7,9 @@ package com.epn.fd.WS;
 
 import com.epn.entities.QuestionItem;
 import com.epn.entities.QuestionItemPK;
+import com.epn.fd.dao.UserDAO;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -24,6 +26,9 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.questionitem")
 public class QuestionItemFacadeREST extends AbstractFacade<QuestionItem> {
 
+    @Inject()
+    UserDAO userDAO;
+    
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 

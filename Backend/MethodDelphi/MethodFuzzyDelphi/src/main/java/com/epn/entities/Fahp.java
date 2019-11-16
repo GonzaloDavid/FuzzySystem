@@ -50,6 +50,8 @@ public class Fahp implements Serializable {
     private String statusfahpCatt;
     @Column(name = "statusfahp")
     private String statusfahp;
+    @Column(name = "valueFAHPCat")
+    private String valueFAHPCat;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -182,6 +184,14 @@ public class Fahp implements Serializable {
         this.statusfahp = statusfahp;
     }
 
+    public String getValueFAHPCat() {
+        return valueFAHPCat;
+    }
+
+    public void setValueFAHPCat(String valueFAHPCat) {
+        this.valueFAHPCat = valueFAHPCat;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -301,7 +311,7 @@ public class Fahp implements Serializable {
     public void setProcessFahpatributebycriteriaList(List<ProcessFahpatributebycriteria> processFahpatributebycriteriaList) {
         this.processFahpatributebycriteriaList = processFahpatributebycriteriaList;
     }
-    
+
     @XmlTransient
     public List<ProcessFahpweightbycriteria> getProcessFahpweightbycriteriaList() {
         return processFahpweightbycriteriaList;
@@ -310,6 +320,5 @@ public class Fahp implements Serializable {
     public void setProcessFahpweightbycriteriaList(List<ProcessFahpweightbycriteria> processFahpweightbycriteriaList) {
         this.processFahpweightbycriteriaList = processFahpweightbycriteriaList;
     }
-    
 
 }

@@ -56,6 +56,13 @@ public class CatalogueDAO extends GenericDAO<Catalogue> {
         String response = mapper.writeValueAsString(patientlistandcount);
         return response;
     }
+      public List<CatalogueContainer> getCatalogueListbyvalueFAHP(String valueFAHP) {
+        SearchObject search = new SearchObject("code");
+        search.addParameter("code", FilterTypes.LIKE_RIGHT, valueFAHP);
+        List<Catalogue> resultList = search(search);
+        List<CatalogueContainer> catalogueContainers = catalogueMapper.sourceListToDestination(resultList);
+        return catalogueContainers;
+    }
 
     public void saveCatalogueanCatalogueItem(Catalogue catalogue) {
         Catalogue catalogueNEW = new Catalogue();

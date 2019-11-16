@@ -20,6 +20,7 @@ public interface SurveybycodefahpMapper {
 
     @Mapping(target = "namequiz", expression = "java(source.getQuiz().getNameQuiz())")
     @Mapping(target = "namequestion", expression = "java(source.getQuestions().getQuestion())")
+    @Mapping(target = "description", expression = "java(source.getQuestions().getDescription())")
     SurveybycodefahpContainer sourceToDestination(Surveybycodefahp source); //Mapear objetos
 
     List<SurveybycodefahpContainer> sourceListToDestination(List<Surveybycodefahp> source); //Mapear lista

@@ -1,3 +1,6 @@
-ALTER TABLE DephiFuzzyMethod.`User` ADD workarea varchar(300) NOT NULL;
-ALTER TABLE DephiFuzzyMethod.`User` CHANGE workarea workarea varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER token;
+ALTER TABLE DephiFuzzyMethod.FAHP ADD valueFAHPCat varchar(100) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.FAHP ADD CONSTRAINT FAHP_FK FOREIGN KEY (valueFAHPCat) REFERENCES DephiFuzzyMethod.catalogue(code);
+ALTER TABLE DephiFuzzyMethod.sentemailbycodefahp ADD token varchar(1000) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.sentemailbycodefahp ADD token varchar(1000) NOT NULL;
+ALTER TABLE DephiFuzzyMethod.sentemailbycodefahp CHANGE token token varchar(1000) NOT NULL AFTER statussentfahp;
 

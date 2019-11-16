@@ -5,10 +5,12 @@
  */
 package com.epn.fd.WS;
 
+import com.epn.dtos.CatalogueContainer;
 import com.epn.dtos.CatalogueSaveContainer;
 import com.epn.entities.Catalogue;
 import com.epn.fd.dao.CatalogueDAO;
 import com.epn.fd.dao.CatalogueItemDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -37,10 +39,13 @@ public class CatalogueFacadeREST extends AbstractFacade<Catalogue> {
 
     @Inject()
     CatalogueDAO catalogueDAO;
-        
+
     @Inject()
     CatalogueItemDAO catalogueItemDAO;
-    
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -57,11 +62,25 @@ public class CatalogueFacadeREST extends AbstractFacade<Catalogue> {
             @QueryParam("to") Integer to,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        String allperson = null;
+        String cataloguelist = null;
         // if (userDAO.existToken(authString) == true) {
-        allperson = catalogueDAO.getCatalogueList(from, to);
+        cataloguelist = catalogueDAO.getCatalogueList(from, to);
         // }
-        return allperson;
+        return cataloguelist;
+    }
+
+    @GET
+    @Path("getcataloguebyvalueFAHP")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CatalogueContainer> getCataloguebyvalueFAHP(
+            @QueryParam("catalogue") String valuefahp,
+            @HeaderParam("authorization") String authString
+    ) {
+        // if (userDAO.existToken(authString) == true) {
+        List<CatalogueContainer> cataloguelist = catalogueDAO.getCatalogueListbyvalueFAHP(valuefahp);
+        // }
+        return cataloguelist;
     }
 
     @POST
@@ -71,21 +90,22 @@ public class CatalogueFacadeREST extends AbstractFacade<Catalogue> {
     public void saveCatalogue(
             CatalogueSaveContainer catalogueobject,
             @HeaderParam("authorization") String authString) {
+        if (userDAO.existToken(authString) == true) {
+            catalogueDAO.saveCatalogueanCatalogueItem(catalogueobject.getCatalogueobject());
+            catalogueItemDAO.deleteCatalogueItem(catalogueobject.getCatalogueItemdeleteList());
+        }
 
-        catalogueDAO.saveCatalogueanCatalogueItem(catalogueobject.getCatalogueobject());
-        catalogueItemDAO.deleteCatalogueItem(catalogueobject.getCatalogueItemdeleteList());
-        
     }
 
     @POST
     @Path("delete")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void deleteCatalogue(
-            Catalogue catalogueobject,
+    public void deleteCatalogue(Catalogue catalogueobject,
             @HeaderParam("authorization") String authString) {
-
-        catalogueDAO.deleteCatalogue(catalogueobject);
+        if (userDAO.existToken(authString) == true) {
+            catalogueDAO.deleteCatalogue(catalogueobject);
+        }
     }
 
     @Override

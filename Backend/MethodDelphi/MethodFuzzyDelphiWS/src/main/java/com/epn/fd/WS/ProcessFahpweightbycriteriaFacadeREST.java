@@ -11,6 +11,8 @@ import com.epn.entities.ProcessFahpweightbycriteria;
 import com.epn.entities.ProcessFahpweightbycriteriaPK;
 import com.epn.fd.dao.FahpDAO;
 import com.epn.fd.dao.ProcessFahpweightbycriteriaDAO;
+import com.epn.fd.dao.UserDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -35,9 +37,12 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
 
     @Inject()
     ProcessFahpweightbycriteriaDAO processFahpweightbycriteriaDAO;
-    
+
     @Inject()
     FahpDAO fahpDAO;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -74,7 +79,10 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) {
-        List<ProcessFahpweightbycriteriaContainer> processcontainer = processFahpweightbycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        List<ProcessFahpweightbycriteriaContainer> processcontainer = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            processcontainer = processFahpweightbycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        }
         return processcontainer;
     }
 
@@ -85,13 +93,13 @@ public class ProcessFahpweightbycriteriaFacadeREST extends AbstractFacade<Proces
     public void executeFAHP(
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString) {
-        //  if (userDAO.existToken(authString) == true) {
-        
-        FahpPK fahpPK = new FahpPK();
-        fahpPK.setCodefahp(codefahp);
-        fahpDAO.updatestatus(fahpPK, "executed");
-        processFahpweightbycriteriaDAO.executeFAHP(codefahp);
-        // }
+        if (userDAO.existToken(authString) == true) {
+
+            FahpPK fahpPK = new FahpPK();
+            fahpPK.setCodefahp(codefahp);
+            fahpDAO.updatestatus(fahpPK, "executed");
+            processFahpweightbycriteriaDAO.executeFAHP(codefahp);
+        }
     }
 
     @Override

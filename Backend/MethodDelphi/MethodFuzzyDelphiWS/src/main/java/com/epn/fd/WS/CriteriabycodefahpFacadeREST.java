@@ -9,7 +9,9 @@ import com.epn.dtos.CriteriabycodefahpContainer;
 import com.epn.entities.Criteriabycodefahp;
 import com.epn.entities.CriteriabycodefahpPK;
 import com.epn.fd.dao.CriteriabycodefahpDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,7 +36,10 @@ public class CriteriabycodefahpFacadeREST extends AbstractFacade<Criteriabycodef
 
     @Inject()
     CriteriabycodefahpDAO criteriabycodefahpDAO;
-    
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -71,9 +76,10 @@ public class CriteriabycodefahpFacadeREST extends AbstractFacade<Criteriabycodef
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        //if (userDAO.existToken(authString) == true) {
-        List<CriteriabycodefahpContainer> criteriafahplist = criteriabycodefahpDAO.getcriteriabycodefahp(codefahp);
-        // }
+        List<CriteriabycodefahpContainer> criteriafahplist = new ArrayList();
+       // if (userDAO.existToken(authString) == true) {
+            criteriafahplist = criteriabycodefahpDAO.getcriteriabycodefahp(codefahp);
+       // }
         return criteriafahplist;
     }
 

@@ -93,7 +93,6 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
             @QueryParam("codeItem") Long codeItem
     ) {
         List<ItemCommentContainer> commentContainers = null;
-
         commentContainers = itemCommentDAO.getcommentbyquiz(codeQuiz, codeQuestion, codeItem, roundNumber, codeperson);
 
         return commentContainers;
@@ -103,7 +102,9 @@ public class ItemCommentFacadeREST extends AbstractFacade<ItemComment> {
     @Path("save")
     @Transactional
     @Consumes({MediaType.APPLICATION_JSON})
-    public void saveperson(ItemComment comment) {
+    public void saveperson(
+            ItemComment comment,
+            @HeaderParam("authorization") String authString) {
 
         itemCommentDAO.saveItemComment(comment);
 

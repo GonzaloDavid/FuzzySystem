@@ -46,6 +46,8 @@ public class Sentemailbycodefahp implements Serializable {
     private String statussentfahpCatt;
     @Column(name = "statussentfahp")
     private String statussentfahp;
+    @Column(name = "token")
+    private String token;
     @Basic(optional = false)
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -180,6 +182,14 @@ public class Sentemailbycodefahp implements Serializable {
 
     public void setStatussentfahp(String statussentfahp) {
         this.statussentfahp = statussentfahp;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
     
     @Override

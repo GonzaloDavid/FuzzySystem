@@ -9,6 +9,8 @@ import com.epn.dtos.ResultFAHPContainer;
 import com.epn.entities.ResultFAHP;
 import com.epn.entities.ResultFAHPPK;
 import com.epn.fd.dao.ResultFAHPDAO;
+import com.epn.fd.dao.UserDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,6 +34,9 @@ public class ResultFAHPFacadeREST extends AbstractFacade<ResultFAHP> {
 
     @Inject()
     ResultFAHPDAO rfahpdao;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -76,7 +81,10 @@ public class ResultFAHPFacadeREST extends AbstractFacade<ResultFAHP> {
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) {
-        List<ResultFAHPContainer> resultfahp = rfahpdao.getresultbycode(codefahp);
+        List<ResultFAHPContainer> resultfahp = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            resultfahp = rfahpdao.getresultbycode(codefahp);
+        }
         return resultfahp;
     }
 

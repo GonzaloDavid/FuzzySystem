@@ -9,6 +9,8 @@ import com.epn.dtos.ProcessFahpatributebycriteriaContainer;
 import com.epn.entities.ProcessFahpatributebycriteria;
 import com.epn.entities.ProcessFahpatributebycriteriaPK;
 import com.epn.fd.dao.ProcessFahpatributebycriteriaDAO;
+import com.epn.fd.dao.UserDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,6 +34,9 @@ public class ProcessFahpatributebycriteriaFacadeREST extends AbstractFacade<Proc
 
     @Inject()
     ProcessFahpatributebycriteriaDAO fahpatributebycriteriaDAO;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -80,7 +85,10 @@ public class ProcessFahpatributebycriteriaFacadeREST extends AbstractFacade<Proc
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) {
-        List<ProcessFahpatributebycriteriaContainer> processcontainer = fahpatributebycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        List<ProcessFahpatributebycriteriaContainer> processcontainer = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            processcontainer = fahpatributebycriteriaDAO.getprocesslistbycodefahp(codefahp);
+        }
         return processcontainer;
     }
 

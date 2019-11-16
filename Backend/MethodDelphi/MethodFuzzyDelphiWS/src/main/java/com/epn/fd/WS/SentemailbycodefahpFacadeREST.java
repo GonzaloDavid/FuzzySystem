@@ -12,7 +12,9 @@ import com.epn.dtos.SentemailbycodefahpSavefowardContainer;
 import com.epn.entities.Sentemailbycodefahp;
 import com.epn.entities.SentemailbycodefahpPK;
 import com.epn.fd.dao.SentemailbycodefahpDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -39,6 +41,9 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
 
     @Inject()
     SentemailbycodefahpDAO sentemailbycodefahpDAO;
+
+    @Inject()
+    UserDAO userDAO;
 
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
@@ -78,10 +83,11 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
             @QueryParam("statussentfahp") String statussentfahp,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        //if (userDAO.existToken(authString) == true) {
-        List<SentemailbycodefahpContainer> personlist = sentemailbycodefahpDAO.searchbycodefahp(
-                codefahp,statussentfahpCatt,statussentfahp);
-        // }
+        List<SentemailbycodefahpContainer> personlist = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            personlist = sentemailbycodefahpDAO.searchbycodefahp(
+                    codefahp, statussentfahpCatt, statussentfahp);
+        }
         return personlist;
     }
 
@@ -92,11 +98,11 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
     public void sentemailFAHP(
             SentemailbycodefahpSaveContainer saveContainer,
             @HeaderParam("authorization") String authString) {
-        // if (userDAO.existToken(authString) == true) {
-        sentemailbycodefahpDAO.sendprocess(
-                saveContainer.getPersonsselectedlist(),
-                saveContainer.getDescriptionMail());
-        // }
+        if (userDAO.existToken(authString) == true) {
+            sentemailbycodefahpDAO.sendprocess(
+                    saveContainer.getPersonsselectedlist(),
+                    saveContainer.getDescriptionMail());
+        }
     }
 
     @POST
@@ -106,12 +112,11 @@ public class SentemailbycodefahpFacadeREST extends AbstractFacade<Sentemailbycod
     public void sentemailFAHP(
             SentemailbycodefahpSavefowardContainer saveContainer,
             @HeaderParam("authorization") String authString) {
-        // if (userDAO.existToken(authString) == true) {
-        sentemailbycodefahpDAO.save(saveContainer.getSentemailbycodefahp());
-        sentemailbycodefahpDAO.forwardemail(
-                saveContainer.getSentemailbycodefahp(),
-                saveContainer.getMessageMail());
-        // }
+        if (userDAO.existToken(authString) == true) {
+            sentemailbycodefahpDAO.forwardemail(
+                    saveContainer.getSentemailbycodefahp(),
+                    saveContainer.getMessageMail());
+        }
     }
 
     @Override

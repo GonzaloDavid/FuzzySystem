@@ -53,7 +53,7 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
         super(Sentemailbycodefahp.class);
     }
 
-    public List<SentemailbycodefahpContainer> searchbycodefahp(Long codefahp,String statussentfahpCatt,String statussentfahp) {
+    public List<SentemailbycodefahpContainer> searchbycodefahp(Long codefahp, String statussentfahpCatt, String statussentfahp) {
         SearchObject search = new SearchObject("sentemailbycodefahpPK");
         search.addParameter("sentemailbycodefahpPK.codefahp", FilterTypes.EQUAL, codefahp);
         search.addParameter("statussentfahpCatt", FilterTypes.EQUAL, statussentfahpCatt);
@@ -82,6 +82,29 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
         });
     }
 
+    public boolean validateJWT(SentemailbycodefahpPK sentemailbycodefahpPK, String token) {
+        boolean isvalid = true;
+        if (token != null) {
+            if (!token.equals("")) {
+                Sentemailbycodefahp foundelement = find(sentemailbycodefahpPK);
+                if (foundelement.getToken().equals(token)) {
+                    isvalid = true;
+                } else {
+                    isvalid = false;
+                    throw new AppException(401, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
+                }
+            } else {
+                isvalid = false;
+                throw new AppException(401, 1, "No contiene token", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
+            }
+        } else {
+            isvalid = false;
+            throw new AppException(401, 1, "No contiene token", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
+        }
+
+        return isvalid;
+    }
+
     public void save(Sentemailbycodefahp sentemailbycodefahp) {
         update(sentemailbycodefahp);
     }
@@ -98,7 +121,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
                 sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson(),
                 sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp(),
                 expirationTime);
-
+        
+        sentemailbycodefahp.setToken(jwt.getString("JWT"));
+        update(sentemailbycodefahp);
+        
         String namesurvey = surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp());
         Person persons = personDAO.getpersonbycodeperson(sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson());
 
@@ -117,8 +143,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
             Fahp fahp = new Fahp(fahpPK);
             fahp.setStatusfahpCatt("STATUSFAHPCAT");
             fahp.setStatusfahp("sent");
+            Fahp fahpsaved = fahpDAO.getFahpbycode(personsselectedlist.get(0).getSentemailbycodefahpPK().getCodefahp());
+            fahp.setValueFAHPCat(fahpsaved.getValueFAHPCat());
             fahpDAO.savefahp(fahp);
-            savelist(personsselectedlist);
+           // savelist(personsselectedlist);
 
             String uribase = environmentDAO.getenvironmentbyuseplace(
                     "fahpclient", "frontend").get(0).getEnvironmentPK().getUri();
@@ -132,7 +160,8 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
                         sentemailbycodeobject.getSentemailbycodefahpPK().getCodePerson(),
                         sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp(),
                         expirationTime);
-
+                sentemailbycodeobject.setToken(jwt.getString("JWT"));
+                update(sentemailbycodeobject);
                 String namesurvey = surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodeobject.getSentemailbycodefahpPK().getCodefahp());
                 Person persons = personDAO.getpersonbycodeperson(sentemailbycodeobject.getSentemailbycodefahpPK().getCodePerson());
 

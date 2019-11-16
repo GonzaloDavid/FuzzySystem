@@ -8,7 +8,9 @@ package com.epn.fd.WS;
 import com.epn.dtos.CriteriaSaveContainer;
 import com.epn.entities.Criteria;
 import com.epn.fd.dao.CriteriaFAHPDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,7 +36,10 @@ public class CriteriaFacadeREST extends AbstractFacade<Criteria> {
 
     @Inject()
     CriteriaFAHPDAO fAHPDAO;
-    
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -51,7 +56,10 @@ public class CriteriaFacadeREST extends AbstractFacade<Criteria> {
             @QueryParam("codeCriteria") Long codeCriteria,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        String response = fAHPDAO.getcriteriabycode(codeCriteria, from, to);
+        String response = null;
+        if (userDAO.existToken(authString) == true) {
+            response = fAHPDAO.getcriteriabycode(codeCriteria, from, to);
+        }
         return response;
     }
 
@@ -62,9 +70,11 @@ public class CriteriaFacadeREST extends AbstractFacade<Criteria> {
     public List<Criteria> savecriteria(
             CriteriaSaveContainer criteriacontainer,
             @HeaderParam("authorization") String authString) {
-
-        List<Criteria> cfahps = fAHPDAO.save(criteriacontainer.getCriterialist());
-        fAHPDAO.deleteCriteria(criteriacontainer.getCriteriadeletedlist());
+        List<Criteria> cfahps = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            cfahps = fAHPDAO.save(criteriacontainer.getCriterialist());
+            fAHPDAO.deleteCriteria(criteriacontainer.getCriteriadeletedlist());
+        }
         return cfahps;
 
     }

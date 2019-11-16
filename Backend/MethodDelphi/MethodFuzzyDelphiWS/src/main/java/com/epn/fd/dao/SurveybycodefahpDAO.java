@@ -54,6 +54,7 @@ public class SurveybycodefahpDAO extends GenericDAO<Surveybycodefahp> {
             item.setStatusfahpCat(fahp.getStatusfahpCatt());
             item.setStatusfahp(fahp.getStatusfahp());
             item.setNamestatusfahp(fahp.getCatalogueitem().getNameItem());
+            item.setComparison_mechanism(fahp.getValueFAHPCat());
         });
         ListAndCountContainer countContainer = new ListAndCountContainer(count, surveybycodefahpContainers);
 

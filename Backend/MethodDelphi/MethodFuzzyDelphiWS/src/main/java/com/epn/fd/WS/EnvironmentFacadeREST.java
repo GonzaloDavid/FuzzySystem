@@ -8,6 +8,7 @@ package com.epn.fd.WS;
 import com.epn.entities.Environment;
 import com.epn.entities.EnvironmentPK;
 import com.epn.fd.dao.EnvironmentDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,16 @@ import javax.ws.rs.core.PathSegment;
 @Stateless
 @Path("com.epn.entities.environment")
 public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
-    
+
     @Inject()
     EnvironmentDAO environmentDAO;
-    
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
-    
+
     private EnvironmentPK getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
@@ -63,11 +67,11 @@ public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
         }
         return key;
     }
-    
+
     public EnvironmentFacadeREST() {
         super(Environment.class);
     }
-    
+
     @GET
     @Path("getenviroment")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -76,12 +80,12 @@ public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         List<Environment> enviromentList = new ArrayList();
-        //  if (userDAO.existToken(authString) == true) {
-        enviromentList = environmentDAO.getenvironmentbyuseplace(null, null);
-        //  }
+        if (userDAO.existToken(authString) == true) {
+            enviromentList = environmentDAO.getenvironmentbyuseplace(null, null);
+        }
         return enviromentList;
     }
-    
+
     @POST
     @Path("save")
     @Transactional
@@ -90,14 +94,14 @@ public class EnvironmentFacadeREST extends AbstractFacade<Environment> {
             List<Environment> enviromentlist,
             @HeaderParam("authorization") String authString) {
 
-        //  if (userDAO.existToken(authString) == true) {
-        environmentDAO.save(enviromentlist);
-        //  }
+        if (userDAO.existToken(authString) == true) {
+            environmentDAO.save(enviromentlist);
+        }
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

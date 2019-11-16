@@ -90,14 +90,10 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
     @Consumes({MediaType.APPLICATION_JSON})
     public void customerquizvalues(
             QuizValueSaveContainer quizvalues,
-            @HeaderParam("authorization") String authString)
-            throws JsonProcessingException {
-        //  if (roundsDAO.validateRoundbytoken(authString,quizvalues.getQuiz().getQuizPK().getCodeQuiz(),quizvalues.getCodeperson(),quizvalues.getRoundNumber())==true) {
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString, quizvalues.getQuiz().getQuizPK().getCodeQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber()) == true) {
+            @HeaderParam("authorization") String authString) {
+        if (roundsDAO.validateRoundbytoken(authString, quizvalues.getQuiz().getQuizPK().getCodeQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber()) == true) {
             roundsDAO.setsentstatus(quizvalues);
             quizValuesDAO.savequizvalues(quizvalues.getQuiz(), quizvalues.getCodeperson(), quizvalues.getRoundNumber());
-        } else {
-            throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
     }
 
@@ -113,10 +109,8 @@ public class QuizvaluesFacadeREST extends AbstractFacade<Quizvalues> {
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
         List<QuizValuesContainer> containers = null;
-        if (userDAO.existToken(authString) == true || roundsDAO.validateRoundbytoken(authString, codeQuiz, codePerson, roundNumber) == true) {
+        if (roundsDAO.validateRoundbytoken(authString, codeQuiz, codePerson, roundNumber) == true) {
             containers = quizValuesDAO.getquizvalues(codeQuiz, codeQuestions, codeQuizItem, codePerson, roundNumber);
-        } else {
-            throw new AppException(460, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
         }
         return containers;
     }

@@ -10,7 +10,9 @@ import com.epn.dtos.CriteriabycodefahpContainer;
 import com.epn.entities.CriteriaMatrixValue;
 import com.epn.entities.CriteriaMatrixValuePK;
 import com.epn.fd.dao.CriteriaMatrixValueDAO;
+import com.epn.fd.dao.UserDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -33,8 +35,12 @@ import javax.ws.rs.core.PathSegment;
 @Path("com.epn.entities.criteriamatrixvalue")
 public class CriteriaMatrixValueFacadeREST extends AbstractFacade<CriteriaMatrixValue> {
 
-    @Inject() CriteriaMatrixValueDAO criteriaMatrixValueDAO;
-    
+    @Inject()
+    UserDAO userDAO;
+
+    @Inject()
+    CriteriaMatrixValueDAO criteriaMatrixValueDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -80,9 +86,10 @@ public class CriteriaMatrixValueFacadeREST extends AbstractFacade<CriteriaMatrix
             @QueryParam("codeperson") Long codeperson,
             @HeaderParam("authorization") String authString
     ) throws JsonProcessingException {
-        //if (userDAO.existToken(authString) == true) {
-        List<CriteriaMatrixValueContainer> criteriadatamatrix = criteriaMatrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
-        // }
+        List<CriteriaMatrixValueContainer> criteriadatamatrix = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            criteriadatamatrix = criteriaMatrixValueDAO.getMatrixvaluelist(codefahp, codeperson);
+        }
         return criteriadatamatrix;
     }
 
@@ -90,5 +97,5 @@ public class CriteriaMatrixValueFacadeREST extends AbstractFacade<CriteriaMatrix
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.FahpContainer;
 import com.epn.dtos.FahpSaveContainer;
 import com.epn.entities.Criteriabycodefahp;
 import com.epn.entities.Fahp;
@@ -13,9 +14,12 @@ import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
 import com.epn.entities.Surveybycodefahp;
 import com.epn.exception.AppException;
+import com.epn.mapper.FahpMapper;
+import com.epn.mapper.ItemCommentMapper;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.mapstruct.factory.Mappers;
 
 /**
  *
@@ -29,6 +33,8 @@ public class FahpDAO extends GenericDAO<Fahp> {
 
     @Inject()
     CriteriabycodefahpDAO criteriabycodefahpDAO;
+    
+    private final FahpMapper fahpMapper = Mappers.getMapper(FahpMapper.class);
 
     public FahpDAO() {
         super(Fahp.class);
@@ -39,6 +45,14 @@ public class FahpDAO extends GenericDAO<Fahp> {
         search.addParameter("fahpPK.codefahp", FilterTypes.EQUAL, codefahp);
         List<Fahp> resultList = search(search);
         return resultList.get(0);
+    }
+
+    public FahpContainer getFahpbycodeContainer(Long codefahp) {
+        SearchObject search = new SearchObject("fahpPK");
+        search.addParameter("fahpPK.codefahp", FilterTypes.EQUAL, codefahp);
+        List<Fahp> resultList = search(search);
+        List<FahpContainer> fahplist=fahpMapper.sourceListToDestination(resultList);
+        return fahplist.get(0);
     }
 
     public void updatestatus(FahpPK fahpPK, String status) {

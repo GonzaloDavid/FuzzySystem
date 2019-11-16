@@ -9,6 +9,8 @@ import com.epn.dtos.ProcessFahpconsistencybycriteriaContainer;
 import com.epn.entities.ProcessFahpconsistencybycriteria;
 import com.epn.entities.ProcessFahpconsistencybycriteriaPK;
 import com.epn.fd.dao.ProcessFahpconsistencybycriteriaDAO;
+import com.epn.fd.dao.UserDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,7 +34,10 @@ public class ProcessFahpconsistencybycriteriaFacadeREST extends AbstractFacade<P
 
     @Inject()
     ProcessFahpconsistencybycriteriaDAO fahpconsistencybycriteriaDAO;
-    
+
+    @Inject()
+    UserDAO userDAO;
+
     @PersistenceContext(unitName = "com.epn.fuzzydelphi_MethodFuzzyDelphiWS_war_1.0PU")
     private EntityManager em;
 
@@ -68,7 +73,10 @@ public class ProcessFahpconsistencybycriteriaFacadeREST extends AbstractFacade<P
             @QueryParam("codefahp") Long codefahp,
             @HeaderParam("authorization") String authString
     ) {
-        List<ProcessFahpconsistencybycriteriaContainer> processcontainer = fahpconsistencybycriteriaDAO.getconsistencybycodefahp(codefahp);
+        List<ProcessFahpconsistencybycriteriaContainer> processcontainer = new ArrayList();
+        if (userDAO.existToken(authString) == true) {
+            processcontainer = fahpconsistencybycriteriaDAO.getconsistencybycodefahp(codefahp);
+        }
         return processcontainer;
     }
 

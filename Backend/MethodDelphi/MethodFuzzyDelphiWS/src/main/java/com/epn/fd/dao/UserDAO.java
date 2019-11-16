@@ -57,7 +57,7 @@ public class UserDAO extends GenericDAO<User> {
     public UserContainer comparePassword(String email, String password) {
         List<User> userselected = getuserbyemail(email);
         if (userselected.size() > 0) {
-            UserContainer usercontainer=new UserContainer();
+            UserContainer usercontainer = new UserContainer();
             String passwordEncrypted = encryptAES(password, "FuzziDelphiKey");
             if (userselected.get(0).getPassword().equals(passwordEncrypted)) {
                 String key = "FuzziDelphiKey";
@@ -69,7 +69,7 @@ public class UserDAO extends GenericDAO<User> {
                 usercontainer.setUserPK(userselected.get(0).getUserPK());
                 usercontainer.setRecoveryMail(userselected.get(0).getRecoveryMail());
                 usercontainer.setWorkarea(userselected.get(0).getWorkarea());
-                
+
                 JsonObject token = generateJWT(key, subject, namejson, emailsigned, expirationTime);
                 String token_string = generateJWT_string(key, subject, namejson, emailsigned, expirationTime);
                 saveUser(userselected.get(0), token);
@@ -82,7 +82,8 @@ public class UserDAO extends GenericDAO<User> {
             throw new AppException("USUARIO NO EXISTE", "USUARIO NO EXISTE,CORREO NO REGISTRADO");
         }
     }
-      public String generateJWT_string(String key, String subject,
+
+    public String generateJWT_string(String key, String subject,
             String namejson, String claim, long expirationTime) {
 
         long time = System.currentTimeMillis();
@@ -179,14 +180,17 @@ public class UserDAO extends GenericDAO<User> {
                     valid = true;
                 } else {
                     valid = false;
-                    // throw new AppException("TOKEN NO VALIDO", "Los tokens no son iguales");
+                    throw new AppException(2985, 1, "token no son iguales", "Token no válido", "www.google.com", "USERNOTSIGNIN");
                 }
             } else {
                 valid = false;
-                //throw new AppException("TOKEN NO VALIDO", "Email no registrado");
+                throw new AppException(401, 1, "No contiene token", "Email no registrado", "www.google.com", "USERNOTSIGNIN");
+
             }
         } else {
             valid = false;
+            throw new AppException(401, 1, "No contiene token", "Email no registrado", "www.google.com", "USERNOTSIGNIN");
+
         }
 
         return valid;
@@ -200,14 +204,15 @@ public class UserDAO extends GenericDAO<User> {
                     valid = true;
                 } else {
                     valid = false;
-                    //throw new AppException(460, 1, "Token no valido", "Usuario no logeado", "www.google.com", "PERSONUNAUTHORIZED");
+                    throw new AppException(401, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
                 }
             } else {
                 valid = false;
+                throw new AppException(401, 1, "Token no valido", "Usuario no autorizado", "www.google.com", "PERSONUNAUTHORIZED");
             }
         } else {
             valid = false;
-            // throw new AppException(460, 1, "No contiene token", "Usuario no logeado", "www.google.com", "USERNOTSIGNIN");
+            throw new AppException(401, 1, "No contiene token", "Usuario no autorizado", "www.google.com", "USERNOTSIGNIN");
         }
         return valid;
     }

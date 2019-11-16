@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class SurveybycodefahpContainer {
     private SurveybycodefahpPK surveybycodefahpPK;
+    private String comparison_mechanism;
+    private String description;
     private String namequiz;
     private String namequestion;
     private String statusfahp;
@@ -84,5 +86,22 @@ public class SurveybycodefahpContainer {
     public void setItemquestioncontainer(List<ItemQuestionContainer> itemquestioncontainer) {
         this.itemquestioncontainer = itemquestioncontainer;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getComparison_mechanism() {
+        return comparison_mechanism;
+    }
+
+    public void setComparison_mechanism(String comparison_mechanism) {
+        this.comparison_mechanism = comparison_mechanism;
+    }
+    
     
 }
