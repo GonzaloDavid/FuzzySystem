@@ -18,6 +18,7 @@ public class ResultFAHPContainer {
     private String namequiz;
     private String namequestion;
     private String nameitem;
+    private String description;
 
     public ResultFAHPContainer() {
     }
@@ -60,6 +61,14 @@ public class ResultFAHPContainer {
 
     public void setNameitem(String nameitem) {
         this.nameitem = nameitem;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

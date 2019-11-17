@@ -21,7 +21,7 @@ public interface ResultFAHPMapper {
     @Mapping(target = "namequiz", expression = "java(source.getQuiz().getNameQuiz())")
     @Mapping(target = "namequestion", expression = "java(source.getQuestions().getQuestion())")
     @Mapping(target = "nameitem", expression = "java(source.getQuestionItem().getItemLabel())")
-
+    @Mapping(target = "description", expression = "java(source.getQuestions().getDescription())")
     ResultFAHPContainer sourceToDestination(ResultFAHP source);
 
     List<ResultFAHPContainer> sourceListToDestination(List<ResultFAHP> source);
