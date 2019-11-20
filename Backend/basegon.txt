@@ -1,2 +1,5 @@
 mysqldump -h localhost -u root -p DephiFuzzyMethod > bdd_fuzzysystem_full.sql
 3gAk&wzf?m4
+
+ sudo ssh -i "key-windows.pem" ubuntu@ec2-3-87-244-220.compute-1.amazonaws.com
+

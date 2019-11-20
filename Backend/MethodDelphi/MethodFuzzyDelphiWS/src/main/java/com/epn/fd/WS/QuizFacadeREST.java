@@ -121,7 +121,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
                     Long codeQuiz1 = item.getQuestionItemPK().getCodeQuiz();
                     Long codeQuestion = item.getQuestionItemPK().getCodeQuestions();
                     Long codeItem = item.getQuestionItemPK().getCodeQuizItem();
-                 item.setNumberofcomments(itemCommentDAO.getnumberofcoment(codeQuiz1, codeQuestion, codeItem, null, null));
+                    item.setNumberofcomments(itemCommentDAO.getnumberofcoment(codeQuiz1, codeQuestion, codeItem, null, null));
                 });
             });
         });
@@ -242,12 +242,16 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
     ) {
 
         ItemQuestionContainer itemquiz = itemQuestionDAO.getItembycodeItem(codeQuiz, codeQuestion, codeQuizItem);
-        File file = new File(itemquiz.getImageUrl());
-        String encodeImage;
-        try {
-            encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
-        } catch (IOException e) {
-            throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+        String encodeImage=null;
+        if (itemquiz.getImageUrl() != null) {
+            File file = new File(itemquiz.getImageUrl());
+
+            try {
+                encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+            } catch (IOException e) {
+                throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+            }
+
         }
 
         return Response.ok(encodeImage, "image/jpg")
