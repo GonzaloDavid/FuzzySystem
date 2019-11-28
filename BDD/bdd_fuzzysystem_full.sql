@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.26, for Win64 (x86_64)
 --
--- Host: localhost    Database: DephiFuzzyMethod
+-- Host: localhost    Database: dephifuzzymethod
 -- ------------------------------------------------------
--- Server version	5.7.27-0ubuntu0.18.04.1
+-- Server version	5.7.26-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,42 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `AdminisEmail`
+--
+
+DROP TABLE IF EXISTS `AdminisEmail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `AdminisEmail` (
+  `seqadminisemail` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codePerson` bigint(20) NOT NULL,
+  `statusEmailCat` varchar(100) NOT NULL,
+  `statusEmail` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`seqadminisemail`,`codeQuiz`,`codePerson`),
+  UNIQUE KEY `seqAdminisEmail_UNIQUE` (`seqadminisemail`),
+  KEY `AdminisEmail_Person_FK` (`codePerson`),
+  KEY `AdminisEmail_Quiz_FK` (`codeQuiz`),
+  KEY `AdminisEmail_catalogueitem_FK` (`statusEmailCat`,`statusEmail`),
+  CONSTRAINT `AdminisEmail_Person_FK` FOREIGN KEY (`codePerson`) REFERENCES `Person` (`codePerson`),
+  CONSTRAINT `AdminisEmail_catalogueitem_FK` FOREIGN KEY (`statusEmailCat`, `statusEmail`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `AdminisEmail`
+--
+
+LOCK TABLES `AdminisEmail` WRITE;
+/*!40000 ALTER TABLE `AdminisEmail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `AdminisEmail` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `DelphiCalculations`
@@ -100,6 +136,106 @@ LOCK TABLES `FAHP` WRITE;
 /*!40000 ALTER TABLE `FAHP` DISABLE KEYS */;
 INSERT INTO `FAHP` VALUES (28,'STATUSFAHPCAT','executed','2019-11-07 22:30:57','2019-11-07 22:32:09',0,0),(29,'STATUSFAHPCAT','created','2019-11-08 12:47:42','2019-11-08 12:47:42',0,0),(30,'STATUSFAHPCAT','sent','2019-11-13 04:01:52','2019-11-13 04:01:52',0,0),(31,'STATUSFAHPCAT','created','2019-11-12 02:36:18','2019-11-12 02:36:18',0,0);
 /*!40000 ALTER TABLE `FAHP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `GraphicsData`
+--
+
+DROP TABLE IF EXISTS `GraphicsData`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `GraphicsData` (
+  `seqgraphicsdata` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codeGraphicsParam` varchar(50) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `codeQuizItem` bigint(20) NOT NULL,
+  `xAxisvalues` varchar(100) NOT NULL,
+  `yAxisvalues` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`seqgraphicsdata`),
+  UNIQUE KEY `seqgraphicsdata_UNIQUE` (`seqgraphicsdata`),
+  KEY `GraphicsData_GraphicsParam_FK` (`codeGraphicsParam`),
+  KEY `GraphicsData_Quiz_FK` (`codeQuiz`),
+  KEY `GraphicsData_Questions_FK` (`codeQuestions`),
+  KEY `GraphicsData_QuestionItem_FK` (`codeQuizItem`),
+  CONSTRAINT `GraphicsData_GraphicsParam_FK` FOREIGN KEY (`codeGraphicsParam`) REFERENCES `GraphicsParam` (`codeGraphicsParam`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `GraphicsData`
+--
+
+LOCK TABLES `GraphicsData` WRITE;
+/*!40000 ALTER TABLE `GraphicsData` DISABLE KEYS */;
+/*!40000 ALTER TABLE `GraphicsData` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `GraphicsParam`
+--
+
+DROP TABLE IF EXISTS `GraphicsParam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `GraphicsParam` (
+  `codeGraphicsParam` varchar(50) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `xAxis` varchar(100) NOT NULL,
+  `yAxis` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeGraphicsParam`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `GraphicsParam`
+--
+
+LOCK TABLES `GraphicsParam` WRITE;
+/*!40000 ALTER TABLE `GraphicsParam` DISABLE KEYS */;
+/*!40000 ALTER TABLE `GraphicsParam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Menu`
+--
+
+DROP TABLE IF EXISTS `Menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Menu` (
+  `seqMenu` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent` bigint(20) NOT NULL,
+  `nameMenu` varchar(100) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `group` tinyint(1) NOT NULL DEFAULT '0',
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`seqMenu`),
+  UNIQUE KEY `seqMenu_UNIQUE` (`seqMenu`),
+  KEY `Menu_Menu_FK` (`parent`),
+  CONSTRAINT `Menu_Menu_FK` FOREIGN KEY (`parent`) REFERENCES `Menu` (`seqMenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Menu`
+--
+
+LOCK TABLES `Menu` WRITE;
+/*!40000 ALTER TABLE `Menu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -391,11 +527,12 @@ CREATE TABLE `User` (
   `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `userCreate` bigint(20) NOT NULL,
   `userLastModify` bigint(20) NOT NULL,
+  `workarea` varchar(500) NOT NULL,
   PRIMARY KEY (`codeuser`,`email`,`username`),
   UNIQUE KEY `codeuser_UNIQUE` (`codeuser`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,7 +541,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'byron@epn.edu.ec','Byron','byron@epn.edu.ec','yJzDaB0vwaCn1ypAC4ymNw==',NULL,'2019-08-21 16:47:12','2019-09-06 02:56:58',1,1),(9,'davidgonzalomejia@hotmail.com','Davidthebest','davidgonzalomejia@hotmail.com','F5X2KjKG5hfOlceRxG589w==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU3MzYxNzEwMiwiZXhwIjozMTQ3ODM5MDA0LCJlbWFpbCI6ImRhdmlkZ29uemFsb21lamlhQGhvdG1haWwuY29tIn0.51sCZ98t06oR_-M7NZ8rn1XSeTyxZPk5O1eT1PlGogs','2019-10-08 07:22:43','2019-11-13 03:51:42',1,1),(10,'renriquez@uce.edu.ec','renriquez','renriquez@uce.edu.ec','CBFiBN385nOiSTMBQEm5yQ==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU2OTg4Mjk4OSwiZXhwIjozMTQwMzcwNzc5LCJlbWFpbCI6InJlbnJpcXVlekB1Y2UuZWR1LmVjIn0.-BP0Boy0U1ulJ-d6l2WwSmJf28BTaH-rsZ5XRg5uzeI','2019-10-08 07:22:43','2019-10-08 07:22:58',1,1);
+INSERT INTO `User` VALUES (4,'byron@epn.edu.ec','Byron','byron@epn.edu.ec','yJzDaB0vwaCn1ypAC4ymNw==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU3MzYxNzEwMiwiZXhwIjozMTQ3ODM5MDA0LCJlbWFpbCI6ImRhdmlkZ29uemFsb21lamlhQGhvdG1haWwuY29tIn0.51sCZ98t06oR_-M7NZ8rn1XSeTyxZPk5O1eT1PlGogs','2019-08-21 16:47:12','2019-11-28 16:38:22',1,1,''),(9,'davidgonzalomejia@hotmail.com','Davidthebest','davidgonzalomejia@hotmail.com','F5X2KjKG5hfOlceRxG589w==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU3MzYxNzEwMiwiZXhwIjozMTQ3ODM5MDA0LCJlbWFpbCI6ImRhdmlkZ29uemFsb21lamlhQGhvdG1haWwuY29tIn0.51sCZ98t06oR_-M7NZ8rn1XSeTyxZPk5O1eT1PlGogs','2019-10-08 07:22:43','2019-11-13 03:51:42',1,1,''),(10,'renriquez@uce.edu.ec','renriquez','renriquez@uce.edu.ec','CBFiBN385nOiSTMBQEm5yQ==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU2OTg4Mjk4OSwiZXhwIjozMTQwMzcwNzc5LCJlbWFpbCI6InJlbnJpcXVlekB1Y2UuZWR1LmVjIn0.-BP0Boy0U1ulJ-d6l2WwSmJf28BTaH-rsZ5XRg5uzeI','2019-10-08 07:22:43','2019-10-08 07:22:58',1,1,''),(14,'brandom@epn.edu.ec','Brandom','brandom@epn.edu.ec','yJzDaB0vwaCn1ypAC4ymNw==','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGdXp6aURlbHBoaVN5c3RlbSIsImlhdCI6MTU3NDk1OTIyMCwiZXhwIjozMTUwNTIzMjQwLCJlbWFpbCI6ImJyYW5kb21AZXBuLmVkdS5lYyJ9.vWw_SGBu_4AOI8UEJxXjJz5QBtnIW9msESR9AO5JaSo','2019-11-28 16:40:07','2019-11-28 16:40:20',1,1,'Sistemas');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,6 +728,36 @@ INSERT INTO `criteria` VALUES (3,'Disponibilidad','concepto de disponiblidad','2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `criteriaFAHP`
+--
+
+DROP TABLE IF EXISTS `criteriaFAHP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `criteriaFAHP` (
+  `codeCriteria` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nameCriteria` varchar(100) NOT NULL,
+  `descriptionCriteria` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeCriteria`),
+  UNIQUE KEY `codeQuiz_UNIQUE` (`codeCriteria`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `criteriaFAHP`
+--
+
+LOCK TABLES `criteriaFAHP` WRITE;
+/*!40000 ALTER TABLE `criteriaFAHP` DISABLE KEYS */;
+INSERT INTO `criteriaFAHP` VALUES (1,'rr','tt','2019-09-10 14:57:01','2019-09-10 14:57:01',0,0),(3,'ttt','ttt','2019-09-10 14:57:01','2019-09-10 14:57:01',0,0);
+/*!40000 ALTER TABLE `criteriaFAHP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `criteriaMatrixAverageValue`
 --
 
@@ -757,6 +924,42 @@ CREATE TABLE `itemComment` (
 LOCK TABLES `itemComment` WRITE;
 /*!40000 ALTER TABLE `itemComment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `itemComment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `processFAHP`
+--
+
+DROP TABLE IF EXISTS `processFAHP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processFAHP` (
+  `codeCriteria` bigint(20) NOT NULL,
+  `codeQuiz` bigint(20) NOT NULL,
+  `codeQuestions` bigint(20) NOT NULL,
+  `indexConsistency` decimal(30,8) NOT NULL,
+  `ratioConsistency` decimal(30,8) NOT NULL,
+  `consistency` decimal(30,8) NOT NULL,
+  `statusresultFAHP` varchar(100) NOT NULL,
+  `statusresultFAHPcat` varchar(100) NOT NULL,
+  `dateCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dateLastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `userCreate` bigint(20) NOT NULL,
+  `userLastModify` bigint(20) NOT NULL,
+  PRIMARY KEY (`codeCriteria`,`codeQuiz`,`codeQuestions`),
+  KEY `processFAHP_catalogueitem_FK` (`statusresultFAHPcat`,`statusresultFAHP`),
+  CONSTRAINT `processFAHP_catalogueitem_FK` FOREIGN KEY (`statusresultFAHPcat`, `statusresultFAHP`) REFERENCES `catalogueitem` (`codeCatalogue`, `codeItem`),
+  CONSTRAINT `processFAHP_criteriaFAHP_FK` FOREIGN KEY (`codeCriteria`) REFERENCES `criteriaFAHP` (`codeCriteria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `processFAHP`
+--
+
+LOCK TABLES `processFAHP` WRITE;
+/*!40000 ALTER TABLE `processFAHP` DISABLE KEYS */;
+/*!40000 ALTER TABLE `processFAHP` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -983,4 +1186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-12 23:34:41
+-- Dump completed on 2019-11-28 12:04:18
