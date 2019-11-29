@@ -1,0 +1,18 @@
+user: root
+password: Root2020
+serverName: ip-172-31-26-247
+databaseName: dephifuzzymethod
+url: jdbc:mysql://localhost:3306/dephifuzzymethod?zeroDateTimeBehavior=convertToNull
+
+Coneccion remota> password> Root2020!
+GRANT ALL ON *.* to root@'3.227.79.1' IDENTIFIED BY 'Root2020!';
+
+JDBC Resources
+java/app/jdbc/fuzzySystem
+
+
+Apache: 34.198.201.3
+Payara: 3.227.79.1
+MySQL: 34.237.196.241
+
+
