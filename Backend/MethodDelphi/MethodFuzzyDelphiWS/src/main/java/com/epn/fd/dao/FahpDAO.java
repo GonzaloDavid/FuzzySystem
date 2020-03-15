@@ -95,7 +95,7 @@ public class FahpDAO extends GenericDAO<Fahp> {
                 remove(foundelement);
             }
         } catch (Exception e) {
-            throw new AppException(e.toString(), "PROBLEMA DE DEPENDENCIAS");
+            throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
         }
     }
 

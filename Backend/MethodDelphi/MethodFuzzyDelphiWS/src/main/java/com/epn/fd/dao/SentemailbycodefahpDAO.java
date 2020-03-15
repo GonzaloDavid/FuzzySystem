@@ -5,6 +5,7 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.CatalogueItemContainer;
 import com.epn.dtos.SentemailbycodefahpContainer;
 import com.epn.entities.Fahp;
 import com.epn.entities.FahpPK;
@@ -46,6 +47,9 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
 
     @Inject()
     PersonDAO personDAO;
+
+    @Inject()
+    CatalogueItemDAO catalogueItemDAO;
 
     private final SentemailbycodefahpMapper mapper = Mappers.getMapper(SentemailbycodefahpMapper.class);
 
@@ -111,7 +115,7 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
 
     public void forwardemail(Sentemailbycodefahp sentemailbycodefahp, String descriptionMail) {
         String uribase = environmentDAO.getenvironmentbyuseplace(
-                "fahpclient", "frontend").get(0).getEnvironmentPK().getUri();
+                "fahpclient", "frontend").get(0).getUri();
 
         String key = "FAHP";
         String subject = "FuzzyAnalyticHierarchyProcess";
@@ -121,10 +125,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
                 sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson(),
                 sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp(),
                 expirationTime);
-        
+
         sentemailbycodefahp.setToken(jwt.getString("JWT"));
         update(sentemailbycodefahp);
-        
+
         String namesurvey = surveybycodefahpDAO.getnamequizbycodefahp(sentemailbycodefahp.getSentemailbycodefahpPK().getCodefahp());
         Person persons = personDAO.getpersonbycodeperson(sentemailbycodefahp.getSentemailbycodefahpPK().getCodePerson());
 
@@ -146,10 +150,10 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
             Fahp fahpsaved = fahpDAO.getFahpbycode(personsselectedlist.get(0).getSentemailbycodefahpPK().getCodefahp());
             fahp.setValueFAHPCat(fahpsaved.getValueFAHPCat());
             fahpDAO.savefahp(fahp);
-           // savelist(personsselectedlist);
+            // savelist(personsselectedlist);
 
             String uribase = environmentDAO.getenvironmentbyuseplace(
-                    "fahpclient", "frontend").get(0).getEnvironmentPK().getUri();
+                    "fahpclient", "frontend").get(0).getUri();
 
             String key = "FAHP";
             String subject = "FuzzyAnalyticHierarchyProcess";
@@ -192,7 +196,7 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
 
     public void sendquizbyfahp(String namesurvey, Person person,
             Long codefahp, String uribase, String token, String descriptionMail) {
-        try {
+       
             String message = "";
             if (descriptionMail != null) {
                 message = "<div style='text-align: justify;'><span> " + descriptionMail + "</span></div>";
@@ -453,9 +457,36 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
                     + "    </table>\n"
                     + "  </body>\n"
                     + "</html>";
-            mail.sendEmail(person.getEmail(), nameQuiz, html);
-        } catch (Exception e) {
-            throw new AppException(e.toString(), "NO SE ENVIO EMAIL");
-        }
+
+            List<CatalogueItemContainer> catalogueItemList = catalogueItemDAO.getCatalogueItembyCodeCatalogue("EMAIL_SETTING_CAT");
+            int portNumber = 0;
+            String port = "";
+            String emailDefault = "";
+            String smtpHost = "";
+            String password = "";
+            for (CatalogueItemContainer catalogueItemObj : catalogueItemList) {
+                if (catalogueItemObj.equals("port")) {
+                    port = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.equals("emailDefault")) {
+                    emailDefault = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.equals("smtpHost")) {
+                    smtpHost = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.equals("password")) {
+                    password = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+            }
+            try {
+                portNumber = Integer.parseInt(port);
+            } catch (Exception e) {
+                throw new AppException(e.toString(), "ERROR DE PARSEO EN EL PUERTO DE SNMTP, REVISE PARAMETRIZACIÓN");
+            }
+
+            if (portNumber != 0 && !emailDefault.equals("") && !smtpHost.equals("") && !password.equals("")) {
+
+                mail.sendEmail(emailDefault, password, smtpHost, portNumber, person.getEmail(), nameQuiz, html);
+            }
     }
 }

@@ -64,7 +64,7 @@ public class QuestionDAO extends GenericDAO<Questions> {
                     try {
                         remove(foundelement);
                     } catch (Exception e) {
-                        throw new AppException(e.toString(), "NO PUDO ELIMINAR LAS PREGUNTAS");
+                        throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
                     }
                 }
             }

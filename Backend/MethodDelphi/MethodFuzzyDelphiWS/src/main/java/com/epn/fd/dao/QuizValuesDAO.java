@@ -56,7 +56,7 @@ public class QuizValuesDAO extends GenericDAO<Quizvalues> {
                     try {
                         em.persist(quizvalues);
                     } catch (Exception e) {
-                        throw new AppException(e.toString(), "ENCUESTA YA INGRESADA");
+                        throw new AppException(e.toString(),e.toString(), "SURVEY_EXIST","ENCUESTA YA INGRESADA");
                     }
                 }
             });

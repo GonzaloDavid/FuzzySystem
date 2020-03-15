@@ -5,6 +5,7 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.exception.AppException;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,8 +26,8 @@ public class Mail {
 
     private final String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";//los caractees que permite un mail
-    private final String from = "fuzzydelphi2019@gmail.com";//es el correo del cual encviamos
-    private final String pwd = "Temporal2019.";//es la clave del correo
+   // private final String from = "fuzzyDelphifahp@gmail.com";//es el correo del cual encviamos
+   // private final String pwd = "Temporal2020.";//es la clave del correo
     private final Properties properties = new Properties();//
     private Session session;
 
@@ -37,32 +38,35 @@ public class Mail {
         return match.matches();
     }
 
-    private void init() {
+    private void init(String smtpHost) {
         //adicionamos la propiedades del servidor  gmail 
         properties.put("mail.transport.protocol", "smtps");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.host", smtpHost);
         properties.put("mail.smtp.auth", "true");//para que ingeese con tu usuario y contarseña 
 
         session = Session.getDefaultInstance(properties);
         session.setDebug(true);
     }
 
-    public void sendEmail(String destinatarioMail, String asunto, String mensaje) {
-        init();
+    public void sendEmail(String emailFrom,String password,String smtpHost,int port, String destinatarioMail, String asunto, String mensaje) {
+        //"smtp.gmail.com"
+        //465
+        init(smtpHost);
         //creando los campos del mensaje
         try {
             MimeMessage mimemessage = new MimeMessage(session);
-            mimemessage.setFrom(new InternetAddress(from));
+            mimemessage.setFrom(new InternetAddress(emailFrom));
             mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatarioMail));
             mimemessage.setSubject(asunto);
             mimemessage.setContent(mensaje, "text/html; charset=UTF-8");
 
             Transport t = session.getTransport();//conecta y envia el mensahje
-            t.connect("smtp.gmail.com", 465, from, pwd);
+            t.connect(smtpHost, port, emailFrom, password);
             t.sendMessage(mimemessage, mimemessage.getRecipients(Message.RecipientType.TO));
             t.close();
-        } catch (MessagingException ex) {
-            System.out.println(ex);
+        } catch (Exception ex) {
+            
+            throw new AppException(ex.toString(),ex.toString(), "EMAIL_NOT_SEND","Email no enviado");
         }
     }
 

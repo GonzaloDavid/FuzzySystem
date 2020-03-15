@@ -76,10 +76,10 @@ public class UserDAO extends GenericDAO<User> {
                 usercontainer.setJwt(token_string);
                 return usercontainer;
             } else {
-                throw new AppException("CONTRASEÑA ERRONEA", "CONTRASEÑAS NO COINCIDEN");
+                throw new AppException("CONTRASEÑA ERRONEA","CONTRASEÑA ERRONEA", "PASSW0RD_NOT_EQUAL","CONTRASEÑA ERRONEA");
             }
         } else {
-            throw new AppException("USUARIO NO EXISTE", "USUARIO NO EXISTE,CORREO NO REGISTRADO");
+            throw new AppException("USUARIO NO EXISTE","USUARIO NO EXISTE", "EMAIL_NOT_REGISTERED","CORREO NO REGISTRADO");
         }
     }
 
@@ -97,7 +97,7 @@ public class UserDAO extends GenericDAO<User> {
 
         return jwt;
     }
-
+ 
     public JsonObject generateJWT(String key, String subject,
             String namejson, String claim, long expirationTime) {
 

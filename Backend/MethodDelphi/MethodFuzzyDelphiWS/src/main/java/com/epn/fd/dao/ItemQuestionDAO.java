@@ -86,7 +86,7 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
 
     public List<QuestionItem> saveItem(Questions questions, List<QuestionItem> questionItemList) {
              String pathImage = environmentDAO.getenvironmentbyuseplace(
-                "pathImageItem", "backend").get(0).getEnvironmentPK().getUri();
+                "pathImageItem", "backend").get(0).getUri();
         questionItemList.forEach(item -> {
             String image = item.getImage();
             QuestionItemPK questionItemPK = new QuestionItemPK();
@@ -118,7 +118,7 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
                     try {
                         remove(foundelement);
                     } catch (Exception e) {
-                        throw new AppException(e.toString(), "NO PUDO ELIMINAR LOS ITEMS");
+                        throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class ItemQuestionDAO extends GenericDAO<QuestionItem> {
         try {
             encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
         } catch (IOException e) {
-            throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+            throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
         }
         return encodeImage;
     }

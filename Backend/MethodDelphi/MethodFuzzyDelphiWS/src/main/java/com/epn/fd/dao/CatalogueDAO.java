@@ -93,7 +93,7 @@ public class CatalogueDAO extends GenericDAO<Catalogue> {
             try {
                 remove(foundelement);
             } catch (Exception e) {
-                throw new AppException(e.toString(), "PROBLEMA DE DEPENDENCIAS");
+                throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
             }
         }
     }

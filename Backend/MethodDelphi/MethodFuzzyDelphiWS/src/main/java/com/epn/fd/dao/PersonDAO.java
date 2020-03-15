@@ -91,7 +91,7 @@ public class PersonDAO extends GenericDAO<Person> {
                     remove(foundelement);
                 }
             } catch (Exception e) {
-                throw new AppException(e.toString(), "NO SE ELIMINÓ EXPERTO");
+                throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
             }
 
         });

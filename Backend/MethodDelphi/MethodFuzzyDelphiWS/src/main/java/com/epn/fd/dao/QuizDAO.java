@@ -5,6 +5,7 @@
  */
 package com.epn.fd.dao;
 
+import com.epn.dtos.CatalogueItemContainer;
 import com.epn.dtos.EmailContainer;
 import com.epn.dtos.ListAndCountContainer;
 import com.epn.dtos.QuizContainer;
@@ -33,12 +34,18 @@ public class QuizDAO extends GenericDAO<Quiz> {
 
     @Inject()
     QuestionDAO questionDAO;
+
     @Inject()
     ItemQuestionDAO itemQuestionDAO;
+
     @Inject()
     Mail mail;
+
     @Inject()
     EnvironmentDAO environmentDAO;
+
+    @Inject()
+    CatalogueItemDAO catalogueItemDAO;
 
     private final QuizMapper quizMapper = Mappers.getMapper(QuizMapper.class);
 
@@ -115,14 +122,14 @@ public class QuizDAO extends GenericDAO<Quiz> {
                 remove(foundelement);
             }
         } catch (Exception e) {
-            throw new AppException(e.toString(), "NO SE ELIMINO CORRECTAMENTE");
+            throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
         }
 
     }
 
     public void sendquiz(Quiz quiz, Person person, String uribase, Long roundNumber,
             String token, String descriptionMail) {
-        try {
+        
             String message = "";
             if (descriptionMail != null) {
                 message = descriptionMail;
@@ -383,10 +390,42 @@ public class QuizDAO extends GenericDAO<Quiz> {
                     + "    </table>\n"
                     + "  </body>\n"
                     + "</html>";
-            mail.sendEmail(person.getEmail(), quiz.getNameQuiz(), html);
-        } catch (Exception e) {
-            throw new AppException(e.toString(), "NO SE ENVIO EMAIL");
-        }
+            
+            
+            
+            List<CatalogueItemContainer> catalogueItemList = catalogueItemDAO.getCatalogueItembyCodeCatalogue("EMAIL_SETTING_CAT");
+            int portNumber=0;
+            String port = "";
+            String emailDefault = "";
+            String smtpHost = "";
+            String password = "";
+            for (CatalogueItemContainer catalogueItemObj : catalogueItemList) {
+                if (catalogueItemObj.getNameItem().equals("port")) {
+                    port = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.getNameItem().equals("emailDefault")) {
+                    emailDefault = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.getNameItem().equals("smtpHost")) {
+                    smtpHost = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+                if (catalogueItemObj.getNameItem().equals("password")) {
+                    password = catalogueItemObj.getCatalogueitemPK().getCodeItem();
+                }
+            }
+            try{
+                portNumber=Integer.parseInt(port);
+            }catch(Exception e)
+            {
+                throw new AppException(e.toString(), "ERROR DE PARSEO EN EL PUERTO DE SNMTP, REVISE PARAMETRIZACIÓN");
+            }
+            
+            if (portNumber!=0 && !emailDefault.equals("") && !smtpHost.equals("") && !password.equals("") ) {
+
+                mail.sendEmail(emailDefault,password,smtpHost,portNumber, person.getEmail(), quiz.getNameQuiz(), html);
+            }
+
+     
     }
-    
+
 }

@@ -181,7 +181,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
 
         if (userDAO.existToken(authString) == true) {
 
-            String uribase = environmentDAO.getenvironmentbyuseplace("quizclient", "frontend").get(0).getEnvironmentPK().getUri();
+            String uribase = environmentDAO.getenvironmentbyuseplace("quizclient", "frontend").get(0).getUri();
             Quiz quiz = quizDAO.getQuizbycodes(emailcontainer.getQuiz().getQuizPK().getCodeQuiz());
 
             List<Questions> questiondeleted = new ArrayList();
@@ -222,7 +222,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             @PathParam("id") Long id,
             FileObjectB64 file) throws IOException {
         String pathImage = environmentDAO.getenvironmentbyuseplace(
-                "pathImageItem", "backend").get(0).getEnvironmentPK().getUri();
+                "pathImageItem", "backend").get(0).getUri();
         String path = fileService.saveFileB64(id, file.getBase64Object(), pathImage);
         ObjectMapper mapper = new ObjectMapper();
         String response = mapper.writeValueAsString(path);
@@ -249,7 +249,7 @@ public class QuizFacadeREST extends AbstractFacade<Quiz> {
             try {
                 encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
             } catch (IOException e) {
-                throw new AppException("IO Exception error", null, "NO_IMAGE_FOUND");
+                 throw new AppException(e.toString(),e.toString(), "NO_IMAGE_FOUND","Imagen no encontrada");
             }
 
         }

@@ -8,6 +8,7 @@ package com.epn.fd.dao;
 import com.epn.entities.Environment;
 import com.epn.entities.FilterTypes;
 import com.epn.entities.SearchObject;
+import com.epn.exception.AppException;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -24,13 +25,31 @@ public class EnvironmentDAO extends GenericDAO<Environment> {
     public List<Environment>  getenvironmentbyuseplace(String placeofuse,String typeenvironment)
     {
         SearchObject search = new SearchObject("environmentPK");
-        search.addParameter("environmentPK.placeofuse", FilterTypes.EQUAL, placeofuse);
-        search.addParameter("environmentPK.typeenvironment", FilterTypes.EQUAL, typeenvironment);
+        search.addParameter("placeofuse", FilterTypes.EQUAL, placeofuse);
+        search.addParameter("typeenvironment", FilterTypes.EQUAL, typeenvironment);
         List<Environment> resultList = search(search);
         return resultList;
     }
-    public void save(List<Environment> enviromentList)
+    public List<Environment> save(List<Environment> enviromentList)
     {
         updateList(enviromentList);
+        flush();
+        return enviromentList;
     }
+       public void deleteEnvironment(List<Environment> idlist) {
+        idlist.forEach(elementremove -> {
+            Environment foundelement = new Environment();
+            foundelement = find(elementremove.getEnvironmentPK());
+            try {
+                if (foundelement != null) {
+                    remove(foundelement);
+                }
+            } catch (Exception e) {
+                throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
+            }
+
+        });
+
+    }
+
 }
