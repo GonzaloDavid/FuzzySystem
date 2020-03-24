@@ -22,32 +22,35 @@ public class EnvironmentDAO extends GenericDAO<Environment> {
     public EnvironmentDAO() {
         super(Environment.class);
     }
-    public List<Environment>  getenvironmentbyuseplace(String placeofuse,String typeenvironment)
-    {
+
+    public List<Environment> getenvironmentbyuseplace(String placeofuse, String typeenvironment) {
         SearchObject search = new SearchObject("environmentPK");
         search.addParameter("placeofuse", FilterTypes.EQUAL, placeofuse);
         search.addParameter("typeenvironment", FilterTypes.EQUAL, typeenvironment);
         List<Environment> resultList = search(search);
         return resultList;
     }
-    public List<Environment> save(List<Environment> enviromentList)
-    {
+
+    public List<Environment> save(List<Environment> enviromentList) {
         updateList(enviromentList);
         flush();
         return enviromentList;
     }
-       public void deleteEnvironment(List<Environment> idlist) {
+
+    public void deleteEnvironment(List<Environment> idlist) {
         idlist.forEach(elementremove -> {
             Environment foundelement = new Environment();
-            foundelement = find(elementremove.getEnvironmentPK());
-            try {
-                if (foundelement != null) {
-                    remove(foundelement);
-                }
-            } catch (Exception e) {
-                throw new AppException(e.toString(),e.toString(), "mysql_forenkey","PROBLEMA DE DEPENDENCIAS");
-            }
 
+            if (elementremove.getEnvironmentPK().getSeqenvironment() != null) {
+                foundelement = find(elementremove.getEnvironmentPK());
+                try {
+                    if (foundelement != null) {
+                        remove(foundelement);
+                    }
+                } catch (Exception e) {
+                    throw new AppException(e.toString(), e.toString(), "mysql_forenkey", "PROBLEMA DE DEPENDENCIAS");
+                }
+            }
         });
 
     }
