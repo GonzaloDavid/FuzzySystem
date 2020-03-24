@@ -21,7 +21,7 @@ mysql -u root -p dephifuzzymethod < BDD/bdd_fuzzysystem_full.sql
 
 
 mysqldump -h localhost -u root -p DephiFuzzyMethod > bdd_fuzzysystem_full.sql
-
+:: Gonzalo base mysqldump -h localhost -u david -p DephiFuzzyMethod > bdd_fuzzysystem_full.sql 
 
 ::========================= PROBLEMA WINDOWS CamelCase ====
 :: C:\ProgramData\MySQL\MySQL Server 5.7\my.ini y cambiar a lower_case_table_names=2
