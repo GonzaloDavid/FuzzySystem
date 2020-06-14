@@ -50,8 +50,15 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
 
     @Inject()
     CatalogueItemDAO catalogueItemDAO;
-
-    private final String ERROR_SMTP_ORT="ERROR_PARSING_SMTP_PORT";
+    
+    //Mensajes de validacion
+    private final String ERROR_SMTP_ORT = "ERROR_PARSING_SMTP_PORT";
+    private final String SMTP_PORT_CERO_VALUE="SMTP_PORT_CERO_VALUE";
+    private final String SMTPHOST_DEFAULT_EMPHTY="SMTPHOST_DEFAULT_EMPHTY";
+    private final String PASSWORD_DEFAULT_EMPHTY="PASSWORD_DEFAULT_EMPHTY";
+    private final String EMAIL_DEFAULT_EMPHTY="EMAIL_DEFAULT_EMPHTY";
+    
+    
     private final SentemailbycodefahpMapper mapper = Mappers.getMapper(SentemailbycodefahpMapper.class);
 
     public SentemailbycodefahpDAO() {
@@ -483,14 +490,33 @@ public class SentemailbycodefahpDAO extends GenericDAO<Sentemailbycodefahp> {
             String portAux = port;
             portNumber = Integer.parseInt(portAux);
         } catch (Exception e) {
-            String customerMesage="ERROR DE PARSEO EN EL PUERTO DE SNMTP, REVISE PARAMETRIZACIÓN. Valor parametrizado:"+port;
-            String errorMessage=e.toString();
-            throw new AppException(errorMessage,errorMessage,ERROR_SMTP_ORT,customerMesage);
+            String customerMesage = "ERROR DE PARSEO EN EL PUERTO DE SNMTP, REVISE PARAMETRIZACIÓN. Valor parametrizado:" + port;
+            String errorMessage = e.toString();
+            throw new AppException(errorMessage, errorMessage, ERROR_SMTP_ORT, customerMesage);
         }
-
+        validationEmailParam(portNumber,emailDefault,smtpHost,password);
         if (portNumber != 0 && !emailDefault.equals("") && !smtpHost.equals("") && !password.equals("")) {
 
             mail.sendEmail(emailDefault, password, smtpHost, portNumber, person.getEmail(), nameQuiz, html);
+        }
+    }
+
+    public void validationEmailParam(int portNumber, String emailDefault, String smtpHost, String password) {
+        if (portNumber == 0) {
+            String customMesage = SMTP_PORT_CERO_VALUE;
+            throw new AppException(customMesage, customMesage);
+        }
+        if (emailDefault.equals("")) {
+            String customMesage = EMAIL_DEFAULT_EMPHTY;
+            throw new AppException(customMesage, customMesage);
+        }
+        if (smtpHost.equals("")) {
+            String customMesage = SMTPHOST_DEFAULT_EMPHTY;
+            throw new AppException(customMesage, customMesage);
+        }
+        if (password.equals("")) {
+            String customMesage = PASSWORD_DEFAULT_EMPHTY;
+            throw new AppException(customMesage, customMesage);
         }
     }
 }
